@@ -69,14 +69,16 @@ const Form = () => {
 
         {/* Link to switch between login and signup pages */}
         <p className="text-sm mt-3">
-          Don't have an account?{" "}
+          {`${"Don't have an account?"}`}
           <span
             className="text-primary cursor-pointer"
             onClick={() => {
               // Navigate to the opposite page (signup/login) based on current pathname
-              pathname === "/login"
-                ? path.push("/signup")
-                : path.push("/login");
+              if (pathname === "/login") {
+                path.push("/signup");
+              } else {
+                path.push("/login");
+              }
             }}
           >
             {pathname === "/login" ? "Signup" : "Login"}
