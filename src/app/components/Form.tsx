@@ -1,7 +1,7 @@
 "use client"; // Indicates that this component is a client component in Next.js
 
 import { UserType } from "@/types";
-import { userLogin, userSignup } from "@/utils/userApiRequest";
+import { setCookie, userLogin, userSignup } from "@/utils/userApiRequest";
 import { usePathname, useRouter } from "next/navigation"; // Import necessary hooks for routing
 import { Result } from "postcss";
 import React, { useState } from "react"; // Import React and useState for state management
@@ -23,7 +23,7 @@ const Form = () => {
 
   // State for error messages for each form field
   const [error, setError] = useState({
-    userName: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -73,6 +73,7 @@ const Form = () => {
 
       if (success) {
         console.log({ success, message });
+
         path.push("/");
       } else {
         console.log({ success, message });
@@ -115,6 +116,7 @@ const Form = () => {
       console.log({ success, message });
 
       if (success) {
+        setCookie("userSession", userData.email);
         path.push("/");
       } else {
         console.log({ success, message });
@@ -142,14 +144,14 @@ const Form = () => {
             <div>
               <input
                 type="text"
-                name="userName"
+                name="name"
                 placeholder="Name"
                 value={form.name}
                 onChange={formHandler}
               />
               {/* Display error for username if any */}
               <p className="text-red-600 text-sm md:text-lg ml-2 tracking-wide mt-1">
-                {error.userName}
+                {error.name}
               </p>
             </div>
           )}

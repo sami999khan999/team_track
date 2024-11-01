@@ -56,3 +56,13 @@ export const userLogin = async (userData: LoginUserType) => {
     };
   }
 };
+
+export const setCookie = (sessoinName: string, value: string, days = 7) => {
+  const date = new Date();
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000); // Set expiration
+
+  document.cookie = `${sessoinName}=${value}; expires=${date.toUTCString()}; path=/; SameSite=Lax;`;
+
+  console.log("Cookies after setting:", document.cookie);
+  console.log("iehfuieghfue");
+};
