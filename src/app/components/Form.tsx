@@ -1,6 +1,9 @@
 "use client"; // Indicates that this component is a client component in Next.js
 
+import { UserType } from "@/types";
+import { userLogin, userSignup } from "@/utils/userApiRequest";
 import { usePathname, useRouter } from "next/navigation"; // Import necessary hooks for routing
+import { Result } from "postcss";
 import React, { useState } from "react"; // Import React and useState for state management
 import { IoMdEye, IoMdEyeOff } from "react-icons/io"; // Import eye icons for password visibility toggle
 
@@ -12,7 +15,7 @@ const Form = () => {
 
   // State for form input values
   const [form, setForm] = useState<UserType>({
-    userName: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -65,11 +68,19 @@ const Form = () => {
         email: form.email,
         password: form.password,
       };
-      console.log(userData);
+
+      const { success, message } = await userLogin(userData);
+
+      if (success) {
+        console.log({ success, message });
+        path.push("/");
+      } else {
+        console.log({ success, message });
+      }
 
       // Clear form after submission
       setForm({
-        userName: "",
+        name: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -94,37 +105,20 @@ const Form = () => {
 
       // Log user data for testing purposes (could be replaced by API call)
       const userData = {
-        name: form.userName,
+        name: form.name,
         email: form.email,
         password: form.password,
       };
 
-      console.log(JSON.stringify(userData));
+      const { success, message } = await userSignup(userData);
 
-      const response = await fetch("http://127.0.0.1:8000/api/register", {
-        // API route for POST request
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData), // Convert payload to JSON string
-      });
+      console.log({ success, message });
 
-      if (!response.ok) {
-        console.log("Registration failed");
-
-        return;
+      if (success) {
+        path.push("/");
+      } else {
+        console.log({ success, message });
       }
-
-      console.log(userData);
-
-      // Clear form after submission
-      setForm({
-        userName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
     }
   };
 
@@ -150,7 +144,7 @@ const Form = () => {
                 type="text"
                 name="userName"
                 placeholder="Name"
-                value={form.userName}
+                value={form.name}
                 onChange={formHandler}
               />
               {/* Display error for username if any */}
