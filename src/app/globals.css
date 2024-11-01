@@ -23,7 +23,7 @@
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 142.1 76.2% 36.3%;
-    --radius: 0.3rem;
+    --radius: 0.5rem;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -61,14 +61,10 @@
 
 @layer base {
   body {
-    @apply bg-primary/20;
-  }
-
-  h2 {
-    @apply text-black text-xl md:text-2xl font-bold text-center mb-7;
+    @apply bg-white;
   }
 
   input {
-    @apply border border-primary/30 p-2 rounded-md outline-none;
+    @apply border border-primary/30 p-2 xl:p-3 rounded text-secondary-foreground outline-none w-full text-lg xl:text-xl;
   }
 }

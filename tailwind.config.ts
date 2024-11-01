@@ -9,12 +9,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -51,9 +45,13 @@ const config: Config = {
         },
       },
 
-      fontFamily: {
-        IBMPlex: ["var(--font-ibm-plex)"],
+      borderRadius: {
+        DEFAULT: "var(--radius)",
       },
+
+      // fontFamily: {
+      //   IBMPlex: ["var(--font-ibm-plex)"],
+      // },
     },
   },
   plugins: [],
