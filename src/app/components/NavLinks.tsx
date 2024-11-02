@@ -7,7 +7,6 @@ import { CiMemoPad } from "react-icons/ci";
 import { FaFileInvoice } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { GrUserWorker } from "react-icons/gr";
-import { IoLogOut } from "react-icons/io5";
 import { MdDashboard, MdOutlinePayment } from "react-icons/md";
 import { RiCustomerServiceFill, RiMenuUnfoldLine } from "react-icons/ri";
 

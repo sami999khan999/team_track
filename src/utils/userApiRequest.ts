@@ -24,6 +24,7 @@ export const userSignup = async (userData: SignupUserType) => {
       message: data.message || "Registration successful",
     };
   } catch (err) {
+    console.log(err);
     return {
       success: false,
       message: "An error occurred during registration. Please try again.",
@@ -54,6 +55,7 @@ export const userLogin = async (userData: LoginUserType) => {
 
     return { success: true, message: data.message || "Login succeeded" };
   } catch (err) {
+    console.log(err);
     return {
       success: false,
       message: "An error occurred during login. Please try again.",

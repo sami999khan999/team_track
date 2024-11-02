@@ -3,7 +3,7 @@ import React from "react";
 import { HiPlus } from "react-icons/hi";
 
 const page = () => {
-  const totalPage = 10;
+  // const totalPage = 10;
   return (
     <div className="bg-secondary w-full mt-[5rem] rounded-t-[1.3rem] p-3 xl:p-8">
       <div className="flex justify-end">

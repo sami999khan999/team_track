@@ -223,10 +223,11 @@ const Form = () => {
           <span
             className="text-primary cursor-pointer transform rounded"
             onClick={() => {
-              // Switch page based on current path
-              pathname === "/login"
-                ? path.push("/signup")
-                : path.push("/login");
+              if (pathname === "/login") {
+                path.push("/signup");
+              } else {
+                path.push("/login");
+              }
             }}
           >
             {pathname === "/login" ? " Signup" : " Login"}

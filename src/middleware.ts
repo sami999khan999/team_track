@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest, response: NextResponse) {
+export function middleware(request: NextRequest) {
   const authToken = request.cookies.get("userSession");
 
   const isLoginOrSignupPage =
