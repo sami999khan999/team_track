@@ -1,17 +1,20 @@
+// layout.js
 import React from "react";
 import Sidebar from "../components/Sidebar";
+import ModileNav from "../components/ModileNav";
 
-const layout = ({
+const Layout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
   return (
-    <main className="flex">
+    <main className="flex h-screen">
       <Sidebar />
-      <div className="flex-1">{children}</div>
+      <ModileNav />
+      <div className="overflow-y-auto px-2 xl:px-10 w-full">{children}</div>
     </main>
   );
 };
 
-export default layout;
+export default Layout;

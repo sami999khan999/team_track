@@ -1,21 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
+export function middleware(request: NextRequest, response: NextResponse) {
   const authToken = request.cookies.get("userSession");
-
-  console.log(authToken);
 
   const isLoginOrSignupPage =
     request.nextUrl.pathname === "/login" ||
     request.nextUrl.pathname === "/signup";
 
-  // If there's an authToken and the user is on login/signup page, redirect to the homepage or dashboard
+  // console.log(request.nextUrl.pathname);
+
   if (authToken && isLoginOrSignupPage) {
-    const homepageUrl = new URL("/", request.url); // Redirect to homepage or any other page
+    console.log("Auth Token:", authToken);
+    const homepageUrl = new URL("/", request.url);
     return NextResponse.redirect(homepageUrl);
   }
 
-  if (!authToken) {
+  if (!authToken && !isLoginOrSignupPage) {
     const loginUrl = new URL("/login", request.url);
     return NextResponse.redirect(loginUrl);
   }
@@ -24,7 +24,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/((?!api|_next|login|signup|.*\\..*).*)", // Exclude API routes, _next, login, and signup
-  ],
+  matcher: ["/((?!api|_next|.*\\..*).*)"],
 };

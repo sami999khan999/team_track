@@ -41,7 +41,11 @@ export const userLogin = async (userData: LoginUserType) => {
       body: JSON.stringify(userData),
     });
 
+    console.log("============================");
+
     const data = await response.json();
+
+    console.log(data);
 
     if (!response.ok) {
       console.log("Login failed");
@@ -64,5 +68,4 @@ export const setCookie = (sessoinName: string, value: string, days = 7) => {
   document.cookie = `${sessoinName}=${value}; expires=${date.toUTCString()}; path=/; SameSite=Lax;`;
 
   console.log("Cookies after setting:", document.cookie);
-  console.log("iehfuieghfue");
 };

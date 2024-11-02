@@ -3,7 +3,6 @@
 import { UserType } from "@/types";
 import { setCookie, userLogin, userSignup } from "@/utils/userApiRequest";
 import { usePathname, useRouter } from "next/navigation"; // Import necessary hooks for routing
-import { Result } from "postcss";
 import React, { useState } from "react"; // Import React and useState for state management
 import { IoMdEye, IoMdEyeOff } from "react-icons/io"; // Import eye icons for password visibility toggle
 
@@ -72,9 +71,8 @@ const Form = () => {
       const { success, message } = await userLogin(userData);
 
       if (success) {
-        console.log({ success, message });
-
         path.push("/");
+        setCookie("userSession", userData.email);
       } else {
         console.log({ success, message });
       }
@@ -116,8 +114,8 @@ const Form = () => {
       console.log({ success, message });
 
       if (success) {
-        setCookie("userSession", userData.email);
         path.push("/");
+        setCookie("userSession", userData.email);
       } else {
         console.log({ success, message });
       }
