@@ -94,15 +94,15 @@ const EmployeeTable = () => {
           <input
             type="text"
             placeholder="Search..."
-            className="border border-gray-200 w-[50%] xl:w-[20rem] h-10 xl:h-14 rounded-md text-base"
+            className="border border-gray-200 w-[50%] xl:w-[20rem] h-10 xl:h-12 rounded-md text-base"
           />
           <div className="flex  gap-2">
-            <div className="border flex items-center gap-2 px-2 xl:px-4 rounded-md">
+            <div className="border flex items-center gap-2 px-2 xl:px-6 rounded-md">
               <IoFilterSharp />
 
               <p>Filter</p>
             </div>
-            <div className="border flex items-center gap-2 px-2 xl:px-4 rounded-md">
+            <div className="border flex items-center gap-2 px-2 xl:px-6 rounded-md">
               <MdOutlineSort />
               <p>Sort</p>
             </div>
@@ -126,7 +126,7 @@ const EmployeeTable = () => {
             return (
               <div
                 key={i}
-                className={`flex justify-between border-b px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 text-xs bg-white text-secondary-foreground`}
+                className={`flex justify-between border-b border-primary/20 px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 text-xs bg-white text-secondary-foreground`}
               >
                 <div className="w-1/12">{employee.id}</div>{" "}
                 {/* Fixed width for ID */}

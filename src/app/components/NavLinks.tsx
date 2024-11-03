@@ -38,7 +38,7 @@ const NavLinks = () => {
 
   return (
     <div className="flex xl:flex-col justify-around xl:justify-between h-full ">
-      <div className="flex xl:flex-col justify-center xl:justify-start gap-5 ">
+      <div className="flex xl:flex-col justify-center xl:justify-start gap-2">
         <div className="hidden xl:flex p-6 mb-2 text-3xl group">
           <RiMenuUnfoldLine className="transition-transform duration-300 group-hover:rotate-180 transform origin-center" />
         </div>
@@ -46,13 +46,13 @@ const NavLinks = () => {
           <Link
             key={i}
             href={navItem.path}
-            className={`flex items-center gap-2 px-1 xl:px-6 py-4 hover:bg-primary/80 duration-300  ${
-              pathName === navItem.path ? "bg-primary" : ""
+            className={`flex items-center gap-2 px-1 xl:px-6 py-2 hover:bg-secondary-foreground/20 duration-300 ${
+              pathName === navItem.path ? "bg-primary/80" : ""
             }`}
           >
             <div
-              className={`text-2xl xl:text-3xl text-gray-500 ${
-                pathName === navItem.path ? "text-gray-200" : ""
+              className={`text-xl xl:text-2xl text-secondary-foreground/80 ${
+                pathName === navItem.path ? "text-white" : ""
               }`}
             >
               {navItem.logo}
@@ -68,7 +68,7 @@ const NavLinks = () => {
         ))}
       </div>
       <div className="flex items-center gap-5 xl:p-6" onClick={logOutHandler}>
-        <div className="text-2xl xl:text-3xl text-slate-700">
+        <div className="text-xl xl:text-2xl text-secondary-foreground/80">
           <FiLogOut />
         </div>
         <p className="hidden xl:block xl:opacity-0 text-lg font-semibold tracking-wide xl:group-hover:opacity-100 transform group-hover:translate-x-0 transition-all duration-300 ease-in-out">

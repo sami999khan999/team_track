@@ -42,8 +42,6 @@ export const userLogin = async (userData: LoginUserType) => {
       body: JSON.stringify(userData),
     });
 
-    console.log("============================");
-
     const data = await response.json();
 
     console.log(data);
@@ -58,7 +56,7 @@ export const userLogin = async (userData: LoginUserType) => {
     console.log(err);
     return {
       success: false,
-      message: "An error occurred during login. Please try again.",
+      message: err || "An error occurred during login. Please try again.",
     };
   }
 };
