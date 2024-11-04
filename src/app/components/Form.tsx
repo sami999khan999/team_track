@@ -148,9 +148,7 @@ const Form = () => {
                 onChange={formHandler}
               />
               {/* Display error for username if any */}
-              <p className="text-red-600 text-sm md:text-lg ml-2 tracking-wide mt-1">
-                {error.name}
-              </p>
+              <p className="error_message">{error.name}</p>
             </div>
           )}
 
@@ -164,9 +162,7 @@ const Form = () => {
               onChange={formHandler}
             />
             {/* Display error for email if any */}
-            <p className="text-red-600 text-sm md:text-lg ml-2 tracking-wide mt-1">
-              {error.email}
-            </p>
+            <p className="error_message">{error.email}</p>
           </div>
 
           {/* Password input field with toggleable visibility */}
@@ -186,9 +182,7 @@ const Form = () => {
               {passwordVisibility ? <IoMdEye /> : <IoMdEyeOff />}
             </div>
             {/* Display error for password if any */}
-            <p className="text-red-600 text-sm md:text-lg ml-2 tracking-wide mt-1">
-              {error.password}
-            </p>
+            <p className="error_message">{error.password}</p>
           </div>
 
           {/* Conditionally render confirm password input on signup page */}
@@ -210,9 +204,7 @@ const Form = () => {
                 {confirmPasswordVisibility ? <IoMdEye /> : <IoMdEyeOff />}
               </div>
               {/* Display error for confirm password if any */}
-              <p className="text-red-600 text-sm md:text-lg ml-2 tracking-wide mt-1">
-                {error.confirmPassword}
-              </p>
+              <p className="error_message">{error.confirmPassword}</p>
             </div>
           )}
         </div>

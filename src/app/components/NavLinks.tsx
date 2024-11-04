@@ -20,34 +20,28 @@ export const navLinks = [
 ];
 
 const NavLinks = () => {
-  const path = useRouter();
   const pathName = usePathname();
 
-  const logOutHandler = () => {
-    const cookieName = "userSession";
-    document.cookie = `${cookieName}=; Max-Age=0; path=/`;
-
-    const cookieDeleted = !document.cookie
-      .split("; ")
-      .find((cookie) => cookie.startsWith(`${cookieName}=`));
-
-    if (cookieDeleted) {
-      path.push("/login");
-    }
-  };
-
   return (
-    <div className="flex xl:flex-col justify-around xl:justify-between h-full ">
-      <div className="flex xl:flex-col justify-center xl:justify-start gap-2">
-        <div className="hidden xl:flex p-6 mb-2 text-3xl group">
-          <RiMenuUnfoldLine className="transition-transform duration-300 group-hover:rotate-180 transform origin-center" />
+    <div className="flex xl:flex-col justify-around xl:justify-between h-full">
+      <div className="flex xl:flex-col justify-center xl:justify-start gap-4">
+        {/* Sidebar Menu Icon */}
+        <div className="hidden xl:block group  mb-6">
+          <div className="relative px-6 py-5 mb-2 text-3xl gap-2">
+            <RiMenuUnfoldLine className="transition-transform duration-300 group-hover:rotate-180 transform origin-center" />
+            <p className="absolute top-[21px] left-[4.5rem] opacity-0 text-lg font-semibold tracking-wide transition-opacity duration-300 ease-in-out group-hover:opacity-100">
+              NFT
+            </p>
+          </div>
         </div>
+
+        {/* Navigation Links */}
         {navLinks.map((navItem, i) => (
           <Link
             key={i}
             href={navItem.path}
-            className={`flex items-center gap-2 px-1 xl:px-6 py-2 hover:bg-secondary-foreground/20 duration-300 ${
-              pathName === navItem.path ? "bg-primary/80" : ""
+            className={`group flex items-center gap-2 px-1 xl:px-6 py-2 hover:bg-secondary-foreground/20 duration-300 ${
+              pathName === navItem.path ? "bg-primary" : ""
             }`}
           >
             <div
@@ -58,7 +52,7 @@ const NavLinks = () => {
               {navItem.logo}
             </div>
             <p
-              className={`hidden xl:block xl:opacity-0 text-lg font-semibold tracking-wide xl:group-hover:opacity-100 transform group-hover:translate-x-0 transition-all duration-300 ease-in-out ${
+              className={`hidden xl:block opacity-0 text-lg font-semibold tracking-wide transition-opacity duration-300 ease-in-out group-hover:opacity-100 ${
                 pathName === navItem.path ? "text-secondary" : ""
               }`}
             >
@@ -66,14 +60,6 @@ const NavLinks = () => {
             </p>
           </Link>
         ))}
-      </div>
-      <div className="flex items-center gap-5 xl:p-6" onClick={logOutHandler}>
-        <div className="text-xl xl:text-2xl text-secondary-foreground/80">
-          <FiLogOut />
-        </div>
-        <p className="hidden xl:block xl:opacity-0 text-lg font-semibold tracking-wide xl:group-hover:opacity-100 transform group-hover:translate-x-0 transition-all duration-300 ease-in-out">
-          Logout
-        </p>
       </div>
     </div>
   );
