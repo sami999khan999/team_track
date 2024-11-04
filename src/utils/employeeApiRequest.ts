@@ -48,8 +48,15 @@ export const deleteEmployee = async () => {
     const response = await fetch(
       `http://127.0.0.1:8000/api/employee/delete/${72}`
     );
+
+    if (!response.ok) {
+      return { success: false, message: "Failed to delete employee" };
+    }
+
+    return { success: true, message: "Employee deleted successfully" };
   } catch (err) {
     console.log(err);
+    return { success: false, message: "Failed to delete employee" };
   }
 };
 

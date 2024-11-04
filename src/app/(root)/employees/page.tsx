@@ -1,6 +1,5 @@
 import EmployeeTable from "@/app/components/EmployeeTable";
 import React from "react";
-import { HiPlus } from "react-icons/hi";
 
 const page = () => {
   // const totalPage = 10;

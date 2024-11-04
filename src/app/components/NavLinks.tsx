@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { CiMemoPad } from "react-icons/ci";
 import { FaFileInvoice } from "react-icons/fa";
-import { FiLogOut } from "react-icons/fi";
 import { GrUserWorker } from "react-icons/gr";
 import { MdDashboard, MdOutlinePayment } from "react-icons/md";
 import { RiCustomerServiceFill, RiMenuUnfoldLine } from "react-icons/ri";

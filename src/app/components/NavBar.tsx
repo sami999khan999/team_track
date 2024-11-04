@@ -2,7 +2,6 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
-import { FiLogOut } from "react-icons/fi";
 
 const NavBar = () => {
   const path = useRouter();

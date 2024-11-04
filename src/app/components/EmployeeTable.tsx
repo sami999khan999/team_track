@@ -29,7 +29,7 @@ const EmployeeTable = () => {
   };
 
   const pageNumber = () => {
-    let pages: number[] = [];
+    const pages: number[] = [];
     const pagesToShow = 5;
     const start = Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
     const end = Math.min(start + pagesToShow - 1, totalPage!);
