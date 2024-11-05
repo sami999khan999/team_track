@@ -21,12 +21,27 @@ export type EmployeeType = {
   name: string;
   address: string;
   mobile: string;
-  nid_no: string;
+  nid_no?: string;
 };
 
 export type CreateEmployeeType = {
   name: string;
   address: string;
   mobile: string;
-  nid_no: string;
+  nid_no?: string | undefined;
+};
+
+export type CustomerType = {
+  id: number;
+  name: string;
+  company_name: string;
+  address: string;
+  mobile: string;
+};
+
+export type CreateCustomerType = {
+  name: string;
+  company_name: string;
+  address: string;
+  mobile: string;
 };

@@ -6,12 +6,14 @@ import { IoFilterSharp } from "react-icons/io5";
 import { MdOutlineSort } from "react-icons/md";
 import AddButton from "./AddButton";
 import Table from "./Table";
-import { getEmployee } from "@/utils/employeeApiRequest";
-import { EmployeeType } from "@/types";
+import { CustomerType, EmployeeType } from "@/types";
 import AddFormModal from "./AddFormModal";
+import { getCustoer } from "@/utils/customerApiRerquest";
 
-const EmployeeTable = () => {
-  const [employees, setEmployees] = useState<EmployeeType[]>([]);
+type TableDataType = EmployeeType | CustomerType;
+
+const CustomerTable = () => {
+  const [customer, setcustomer] = useState<TableDataType[]>([]);
   const [currentPage, setCurrentPage] = useState(1); // Starting at page 1
   const [totalPage, setTotalPage] = useState<number | undefined>(undefined);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -41,43 +43,43 @@ const EmployeeTable = () => {
     return pages;
   };
 
-  const columns = employees?.length > 0 ? Object.keys(employees[0]) : [];
+  const columns = customer?.length > 0 ? Object.keys(customer[0]) : [];
 
   useEffect(() => {
-    const fetchEmployees = async () => {
-      const response = await getEmployee(currentPage);
+    const fetchCustomer = async () => {
+      const response = await getCustoer(currentPage);
 
       if (response.success && response.data) {
         const firstElememt = response.data.shift();
         const totalPages = firstElememt ? firstElememt.total_page : undefined;
 
-        setEmployees(response.data);
+        setcustomer(response.data);
         setTotalPage(totalPages);
       } else {
-        console.error(response.message || "Failed to fetch employees");
-        setEmployees([]);
+        console.error(response.message || "Failed to fetch customer");
+        setcustomer([]);
         setTotalPage(undefined);
       }
     };
 
-    fetchEmployees();
+    fetchCustomer();
   }, [currentPage]);
 
   return (
     <div>
       <div onClick={() => setIsFormOpen((prv) => !prv)}>
-        <AddButton text="Add Employee" />
+        <AddButton text="Add Customer" />
       </div>
 
       {isFormOpen && (
         <div className="">
           <div onClick={(e) => e.stopPropagation()}>
             <AddFormModal
-              title="Add Employee"
+              title="Add Customer"
               setIsFormOpen={setIsFormOpen}
-              action="addEmployee"
-              setData={setEmployees}
-              data={employees}
+              action="addCustomer"
+              setData={setcustomer}
+              data={customer}
               // currentPage={currentPage}
               // setCurrentPage={setCurrentPage}
               closeModal={() => {}}
@@ -89,7 +91,7 @@ const EmployeeTable = () => {
       <div className="w-full h-fit bg-white rounded-t-[1.3rem]">
         <div className="flex flex-col xl:flex-row gap-4 justify-between text-center">
           <div className="text-lg xl:text-2xl font-semibold tracking-wide text-secondary-foreground">
-            Employee Table
+            Cusotmer Table
           </div>
           <div className="flex gap-2 justify-around">
             <input
@@ -112,10 +114,10 @@ const EmployeeTable = () => {
 
         {/* Table */}
         <Table
-          tableData={employees}
-          setData={setEmployees}
+          tableData={customer}
+          setData={setcustomer}
           columns={columns}
-          format="Employee"
+          format="Customer"
         />
 
         <div className="flex items-center mt-6 xl:gap-4 justify-center mb-16 xl:mb-0">
@@ -152,4 +154,4 @@ const EmployeeTable = () => {
   );
 };
 
-export default EmployeeTable;
+export default CustomerTable;

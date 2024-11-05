@@ -1,0 +1,101 @@
+import { CreateCustomerType, CustomerType } from "@/types";
+
+export const getCustoer = async (page: number) => {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/customer/view/${page}`
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message || "Failed to fetch employee data.",
+      };
+    }
+
+    console.log(data);
+
+    return { success: true, data };
+  } catch (err) {
+    console.log(err);
+    return { success: false, message: "Failed to fetch employee data." };
+  }
+};
+
+export const createCustomer = async (data: CreateCustomerType) => {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/api/customer/create/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log(response);
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: "Failed to create customer.",
+      };
+    }
+
+    return { success: true, message: "Customer created successfully." };
+  } catch (err) {
+    console.log(err);
+    return { success: false, message: "Failed to create customer." };
+  }
+};
+
+export const deleteCustomer = async (id: Number | undefined) => {
+  try {
+    const rsoponse = await fetch(
+      `http://127.0.0.1:8000/api/customer/delete/${id}/`
+    );
+
+    if (!rsoponse.ok) {
+      return {
+        success: false,
+        message: "Failed to delete customer.",
+      };
+    }
+
+    return { success: true, message: "Customer deleted successfully." };
+  } catch (err) {
+    console.log(err);
+    return { success: false, message: "Failed to delete customer." };
+  }
+};
+
+export const updateCustomer = async (
+  id: number | undefined,
+  data: CreateCustomerType
+) => {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/customer/update/${id}/`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: "Failed to update customer.",
+      };
+    }
+
+    return { success: true, message: "Customer updated successfully." };
+  } catch (err) {
+    console.log(err);
+    return { success: false, message: "Failed to update customer." };
+  }
+};
