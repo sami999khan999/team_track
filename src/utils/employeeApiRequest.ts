@@ -1,4 +1,4 @@
-import { CreateEmployeeType } from "@/types";
+import { CreateEmployeeType, EmployeeType } from "@/types";
 
 export const getEmployee = async (page: number) => {
   try {
@@ -7,7 +7,6 @@ export const getEmployee = async (page: number) => {
     );
 
     const data = await response.json();
-    console.log(data);
 
     if (!response.ok) {
       return { success: true, message: data.message };
@@ -43,10 +42,10 @@ export const createEmployee = async (employee: CreateEmployeeType) => {
   }
 };
 
-export const deleteEmployee = async () => {
+export const deleteEmployee = async (id: number | undefined) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/employee/delete/${72}`
+      `http://127.0.0.1:8000/api/employee/delete/${id}`
     );
 
     if (!response.ok) {
@@ -60,4 +59,29 @@ export const deleteEmployee = async () => {
   }
 };
 
-// deleteEmployee();
+export const updateEmployee = async (
+  id: number | undefined,
+  employee: CreateEmployeeType
+) => {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/employee/update/${id}/`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(employee),
+      }
+    );
+
+    if (!response.ok) {
+      return { success: false, message: "Failed to update employee" };
+    }
+
+    return { success: true, message: "Employee updated successfully" };
+  } catch (err) {
+    console.log(err);
+    return { success: false, message: "Failed to update employee" };
+  }
+};
