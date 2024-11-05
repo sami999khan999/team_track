@@ -1,4 +1,4 @@
-import { CreateCustomerType, CustomerType } from "@/types";
+import { CreateCustomerType } from "@/types";
 
 export const getCustoer = async (page: number) => {
   try {
@@ -50,7 +50,7 @@ export const createCustomer = async (data: CreateCustomerType) => {
   }
 };
 
-export const deleteCustomer = async (id: Number | undefined) => {
+export const deleteCustomer = async (id: number | undefined) => {
   try {
     const rsoponse = await fetch(
       `http://127.0.0.1:8000/api/customer/delete/${id}/`

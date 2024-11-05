@@ -1,4 +1,4 @@
-import { CreateEmployeeType, EmployeeType } from "@/types";
+import { CreateEmployeeType } from "@/types";
 
 export const getEmployee = async (page: number) => {
   try {
