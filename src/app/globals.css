@@ -61,7 +61,7 @@
 
 @layer base {
   body {
-    @apply bg-white;
+    @apply bg-secondary;
   }
 
   input {
@@ -76,5 +76,12 @@
 
   .error_message {
     @apply text-red-600/70 text-xs ml-1 xl:text-lg font-medium;
+  }
+
+  .truncate-text {
+    /* max-width: 8rem; Set a maximum width */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }

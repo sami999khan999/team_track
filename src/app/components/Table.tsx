@@ -11,11 +11,13 @@ const Table = ({
   setData,
   columns,
   format,
+  setReload,
 }: {
   tableData: EmployeeType[] | CustomerType[];
   setData: React.Dispatch<React.SetStateAction<TableDataType[]>>;
   columns: string[];
   format: string;
+  setReload: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [activeId, setActiveId] = useState<number | null>(null);
   const [modalAction, setModalAction] = useState<"update" | "delete" | null>(
@@ -62,20 +64,32 @@ const Table = ({
             {format === "Employee" ? (
               <>
                 <div className="w-1/12">{(data as EmployeeType).id}</div>
-                <div className="flex-1">{(data as EmployeeType).name}</div>
-                <div className="flex-1">{(data as EmployeeType).address}</div>
-                <div className="flex-1">{(data as EmployeeType).mobile}</div>
-                <div className="flex-1">{(data as EmployeeType).nid_no}</div>
+                <div className="flex-1 ">{(data as EmployeeType).name}</div>
+                <div className="flex-1 truncate-text">
+                  {(data as EmployeeType).address}
+                </div>
+                <div className="flex-1 truncate-text">
+                  {(data as EmployeeType).mobile}
+                </div>
+                <div className="flex-1 truncate-text">
+                  {(data as EmployeeType).nid_no}
+                </div>
               </>
             ) : (
               <>
                 <div className="w-1/12">{(data as CustomerType).id}</div>
-                <div className="flex-1">{(data as CustomerType).name}</div>
-                <div className="flex-1">
+                <div className="flex-1 truncate-text">
+                  {(data as CustomerType).name}
+                </div>
+                <div className="flex-1 truncate-text">
                   {(data as CustomerType).company_name}
                 </div>
-                <div className="flex-1">{(data as CustomerType).address}</div>
-                <div className="flex-1">{(data as CustomerType).mobile}</div>
+                <div className="flex-1 truncate-text">
+                  {(data as CustomerType).address}
+                </div>
+                <div className="flex-1 truncate-text">
+                  {(data as CustomerType).mobile}
+                </div>
               </>
             )}
 
@@ -116,20 +130,22 @@ const Table = ({
           }
           setData={setData}
           closeModal={closeModal}
+          setReload={setReload}
         />
       )}
       {modalAction === "update" && (
         <AddFormModal
           title="Update Employyee"
           closeModal={closeModal}
-          setData={setData}
+          // setData={setData}
           action={`update${format}`}
-          data={tableData}
+          // data={tableData}
           currentData={
             activeId != null
               ? tableData.find((emp) => emp.id === activeId)
               : undefined
           }
+          setReload={setReload}
         />
       )}
     </div>

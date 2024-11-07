@@ -13,10 +13,10 @@ const Layout = ({
     <main className="flex h-screen">
       <Sidebar />
       <ModileNav />
-      <div className="overflow-y-auto w-full">
+      <div className="overflow-y-auto w-full ">
         <NavBar />
 
-        <div className="p-3 xl:p-8 mt-4">{children}</div>
+        <div className="p-2 xl:px-16 my-8">{children}</div>
       </div>
     </main>
   );

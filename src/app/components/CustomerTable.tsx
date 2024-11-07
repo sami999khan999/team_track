@@ -9,14 +9,20 @@ import Table from "./Table";
 import { CustomerType, EmployeeType } from "@/types";
 import AddFormModal from "./AddFormModal";
 import { getCustoer } from "@/utils/customerApiRerquest";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type TableDataType = EmployeeType | CustomerType;
 
 const CustomerTable = () => {
+  const param = useSearchParams();
+  const path = useRouter();
   const [customer, setcustomer] = useState<TableDataType[]>([]);
-  const [currentPage, setCurrentPage] = useState(1); // Starting at page 1
+  const [currentPage, setCurrentPage] = useState(
+    Number(param.get("page")) || 1
+  );
   const [totalPage, setTotalPage] = useState<number | undefined>(undefined);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [reload, setReload] = useState(true);
 
   const handlePrevious = () => {
     if (currentPage > 1) {
@@ -63,6 +69,11 @@ const CustomerTable = () => {
     };
 
     fetchCustomer();
+  }, [currentPage, reload]);
+
+  useEffect(() => {
+    path.push(`?page=${currentPage}`);
+    console.log("hife");
   }, [currentPage]);
 
   return (
@@ -78,17 +89,18 @@ const CustomerTable = () => {
               title="Add Customer"
               setIsFormOpen={setIsFormOpen}
               action="addCustomer"
-              setData={setcustomer}
-              data={customer}
+              // setData={setcustomer}
+              // data={customer}
               // currentPage={currentPage}
-              // setCurrentPage={setCurrentPage}
+              setCurrentPage={setCurrentPage}
               closeModal={() => {}}
+              setReload={setReload}
             />
           </div>
         </div>
       )}
 
-      <div className="w-full h-fit bg-white rounded-t-[1.3rem]">
+      <div className="w-full h-fit bg-white px-3 py-6 xl:py-12 xl:px-8 rounded-[.8rem] xl:rounded-[1.3rem]">
         <div className="flex flex-col xl:flex-row gap-4 justify-between text-center">
           <div className="text-lg xl:text-2xl font-semibold tracking-wide text-secondary-foreground">
             Cusotmer Table
@@ -118,10 +130,11 @@ const CustomerTable = () => {
           setData={setcustomer}
           columns={columns}
           format="Customer"
+          setReload={setReload}
         />
 
-        <div className="flex items-center mt-6 xl:gap-4 justify-center mb-16 xl:mb-0">
-          <div className="flex items-center justify-center text-sm xl:text-xl gap-5 border xl:px-8 px-3 py-2 rounded w-fit cursor-pointer">
+        <div className="flex items-center mt-6 xl:gap-4 justify-center">
+          <div className="flex items-center justify-center text-sm xl:text-xl gap-5 border-2 shadow-sm xl:px-8 px-3 py-2 rounded w-fit cursor-pointer">
             <button onClick={handlePrevious} disabled={currentPage === 1}>
               <IoIosArrowBack />
             </button>
@@ -132,16 +145,30 @@ const CustomerTable = () => {
                   <div
                     key={i}
                     className={`px-2 py-1 rounded-sm text-center ${
-                      currentPage === i && "bg-primary"
+                      currentPage === i && "bg-primary text-secondary"
                     }`}
-                    onClick={() => setCurrentPage(i)}
+                    onClick={() =>
+                      setCurrentPage(() => {
+                        path.push(`?page=${i}`);
+                        return i;
+                      })
+                    }
                   >
                     {i}
                   </div>
                 ))}
               </div>
-              <p className="px-4">••••</p>
-              <p onClick={() => setCurrentPage(totalPage!)}>{totalPage}</p>
+              <p className="px-4">•••</p>
+              <p
+                onClick={() =>
+                  setCurrentPage(() => {
+                    path.push(`?page=${totalPage}`);
+                    return totalPage!;
+                  })
+                }
+              >
+                {totalPage}
+              </p>
             </div>
 
             <button onClick={handleNext} disabled={currentPage === totalPage}>

@@ -12,10 +12,12 @@ const DeleteModal = ({
   activeElement,
   closeModal,
   setData,
+  setReload,
 }: {
   activeElement: TableDataType | undefined;
   closeModal: () => void;
   setData: React.Dispatch<React.SetStateAction<TableDataType[]>>;
+  setReload: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const path = usePathname();
   console.log(path);
@@ -28,7 +30,7 @@ const DeleteModal = ({
 
       if (response.success) {
         closeModal();
-        setData((prv) => prv.filter((emp) => emp.id !== element));
+        setReload((prv) => !prv);
       }
     }
 
@@ -39,7 +41,7 @@ const DeleteModal = ({
 
       if (response.success) {
         closeModal();
-        setData((prv) => prv.filter((emp) => emp.id !== element));
+        setReload((prv) => !prv);
       }
     }
   };

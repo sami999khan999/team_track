@@ -12,22 +12,24 @@ const AddFormModal = ({
   title,
   setIsFormOpen,
   action,
-  setData,
-  data,
+  // setData,
+  // data,
   // currentPage,
-  // setCurrentPage,
+  setCurrentPage,
   closeModal,
   currentData,
+  setReload,
 }: {
   title: string;
   setIsFormOpen?: Dispatch<SetStateAction<boolean>>;
   action: string;
-  setData: React.Dispatch<React.SetStateAction<TableDataType[]>>;
-  data: TableDataType[];
-  // currentPage?: number;
-  // setCurrentPage?: Dispatch<SetStateAction<number>>;
+  // setData: React.Dispatch<React.SetStateAction<TableDataType[]>>;
+  // data: TableDataType[];
+  // currentPage: number;
+  setCurrentPage?: Dispatch<SetStateAction<number>>;
   closeModal: () => void;
   currentData?: TableDataType;
+  setReload: Dispatch<SetStateAction<boolean>>;
 }) => {
   const isEmployeeType = (
     data: TableDataType | undefined
@@ -98,12 +100,11 @@ const AddFormModal = ({
         const response = await createEmployee(employee);
 
         if (response.success) {
-          const newEmployee = {
-            id: data[data.length - 1].id + 1,
-            ...employee,
-          };
-          const newEmployees = [...data, newEmployee];
-          setData(newEmployees);
+          setReload((prv) => !prv);
+
+          if (setCurrentPage) {
+            setCurrentPage(1);
+          }
 
           if (setIsFormOpen) {
             setIsFormOpen(false);
@@ -126,12 +127,11 @@ const AddFormModal = ({
         const response = await createCustomer(customer);
 
         if (response.success) {
-          const newCustomer = {
-            id: data[data.length - 1].id + 1,
-            ...customer,
-          };
-          const newEmployees = [...data, newCustomer];
-          setData(newEmployees);
+          setReload((prv) => !prv);
+
+          if (setCurrentPage) {
+            setCurrentPage(1);
+          }
 
           if (setIsFormOpen) {
             setIsFormOpen(false);
@@ -142,55 +142,52 @@ const AddFormModal = ({
   };
 
   const updateHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (action === "updateEmployee") {
-      const newErrors = {
-        name: employee.name ? "" : "Name is required",
-        address: employee.address ? "" : "Address is required",
-        mobile: employee.mobile ? "" : "Mobile No is required",
-        nid_no: employee.nid_no ? "" : "NID No is required",
-      };
+    try {
+      e.preventDefault();
+      if (action === "updateEmployee") {
+        const newErrors = {
+          name: employee.name ? "" : "Name is required",
+          address: employee.address ? "" : "Address is required",
+          mobile: employee.mobile ? "" : "Mobile No is required",
+          nid_no: employee.nid_no ? "" : "NID No is required",
+        };
 
-      setEmployeeInputError(newErrors);
+        setEmployeeInputError(newErrors);
 
-      const hasError = Object.values(newErrors).some((error) => error);
+        const hasError = Object.values(newErrors).some((error) => error);
 
-      if (!hasError && action === "updateEmployee") {
-        const response = await updateEmployee(currentData?.id, employee);
+        if (!hasError) {
+          const response = await updateEmployee(currentData?.id, employee);
 
-        if (response.success) {
-          const updatedData = data.map((emp) =>
-            emp.id === currentData?.id ? { ...emp, ...employee } : emp
-          );
-          setData(updatedData);
-          closeModal();
+          if (response.success) {
+            setReload((prv) => !prv);
+            closeModal();
+          }
+        }
+      } else {
+        const newErrors = {
+          name: customer.name ? "" : "Name is required",
+          address: customer.address ? "" : "Address is required",
+          mobile: customer.mobile ? "" : "Mobile No is required",
+          company_name: customer.company_name ? "" : "Company name is required",
+        };
+
+        setCustomerInputError(newErrors);
+
+        const hasError = Object.values(newErrors).some((error) => error);
+
+        if (!hasError) {
+          console.log(customer);
+          const response = await updateCustomer(currentData?.id, customer);
+
+          if (response.success) {
+            setReload((prv) => !prv);
+            closeModal();
+          }
         }
       }
-    } else {
-      const newErrors = {
-        name: customer.name ? "" : "Name is required",
-        address: customer.address ? "" : "Address is required",
-        mobile: customer.mobile ? "" : "Mobile No is required",
-        company_name: customer.company_name ? "" : "Company name is required",
-      };
-
-      setCustomerInputError(newErrors);
-
-      const hasError = Object.values(newErrors).some((error) => error);
-
-      if (!hasError) {
-        console.log(customer);
-        const response = await updateCustomer(currentData?.id, customer);
-        console.log(response);
-
-        if (response.success) {
-          const updatedData = data.map((emp) =>
-            emp.id === currentData?.id ? { ...emp, ...employee } : emp
-          );
-          setData(updatedData);
-          closeModal();
-        }
-      }
+    } catch (err) {
+      console.log(err);
     }
   };
 

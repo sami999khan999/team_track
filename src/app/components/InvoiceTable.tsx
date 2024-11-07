@@ -1,24 +1,72 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { EmployeeType } from "@/types";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { IoFilterSharp } from "react-icons/io5";
 import { MdOutlineSort } from "react-icons/md";
 import AddButton from "./AddButton";
-import Table from "./Table";
-import { getEmployee } from "@/utils/employeeApiRequest";
-import { EmployeeType } from "@/types";
-import AddFormModal from "./AddFormModal";
-import { useRouter, useSearchParams } from "next/navigation";
+import CreateInvoice from "./CreateInvoice";
 
-const EmployeeTable = () => {
+const invoices = [
+  {
+    id: 1,
+    customer_id: 101,
+    produced_goods: [
+      { employee_id: 1, Quantity: "20+2" },
+      { employee_id: 2, Quantity: "15+3" },
+    ],
+    grand_total: 2500,
+    created_at: "2024-01-15T10:30:00Z",
+  },
+  {
+    id: 2,
+    customer_id: 102,
+    produced_goods: [
+      { employee_id: 3, Quantity: "30+5" },
+      { employee_id: 4, Quantity: "10+1" },
+    ],
+    grand_total: 5300,
+    created_at: "2024-01-20T14:15:00Z",
+  },
+  {
+    id: 3,
+    customer_id: 103,
+    produced_goods: [{ employee_id: 5, Quantity: "12+2" }],
+    grand_total: 1200,
+    created_at: "2024-02-02T09:45:00Z",
+  },
+  {
+    id: 4,
+    customer_id: 104,
+    produced_goods: [
+      { employee_id: 6, Quantity: "25+5" },
+      { employee_id: 7, Quantity: "40+8" },
+    ],
+    grand_total: 3000,
+    created_at: "2024-02-10T16:00:00Z",
+  },
+  {
+    id: 5,
+    customer_id: 105,
+    produced_goods: [
+      { employee_id: 8, Quantity: "18+4" },
+      { employee_id: 9, Quantity: "22+3" },
+    ],
+    grand_total: 4100,
+    created_at: "2024-03-05T12:00:00Z",
+  },
+];
+
+const InvoiceTable = () => {
   const param = useSearchParams();
   const path = useRouter();
   const [employees, setEmployees] = useState<EmployeeType[]>([]);
   const [currentPage, setCurrentPage] = useState(
     Number(param.get("page")) || 1
   );
-  const [totalPage, setTotalPage] = useState<number | undefined>(undefined);
+  const [totalPage, setTotalPage] = useState<number | undefined>(10);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [reload, setReload] = useState(true);
 
@@ -49,27 +97,27 @@ const EmployeeTable = () => {
     return pages;
   };
 
-  const columns = employees?.length > 0 ? Object.keys(employees[0]) : [];
+  const columns = invoices?.length > 0 ? Object.keys(invoices[0]) : [];
 
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      const response = await getEmployee(currentPage);
+  // useEffect(() => {
+  //   const fetchEmployees = async () => {
+  //     const response = await getEmployee(currentPage);
 
-      if (response.success && response.data) {
-        const firstElememt = response.data.shift();
-        const totalPages = firstElememt ? firstElememt.total_page : undefined;
+  //     if (response.success && response.data) {
+  //       const firstElememt = response.data.shift();
+  //       const totalPages = firstElememt ? firstElememt.total_page : undefined;
 
-        setEmployees(response.data);
-        setTotalPage(totalPages);
-      } else {
-        console.error(response.message || "Failed to fetch employees");
-        setEmployees([]);
-        setTotalPage(undefined);
-      }
-    };
+  //       setEmployees(response.data);
+  //       setTotalPage(totalPages);
+  //     } else {
+  //       console.error(response.message || "Failed to fetch employees");
+  //       setEmployees([]);
+  //       setTotalPage(undefined);
+  //     }
+  //   };
 
-    fetchEmployees();
-  }, [currentPage, reload]);
+  //   fetchEmployees();
+  // }, [currentPage, reload]);
 
   useEffect(() => {
     path.push(`?page=${currentPage}`);
@@ -84,17 +132,7 @@ const EmployeeTable = () => {
       {isFormOpen && (
         <div className="">
           <div onClick={(e) => e.stopPropagation()}>
-            <AddFormModal
-              title="Add Employee"
-              setIsFormOpen={setIsFormOpen}
-              action="addEmployee"
-              // setData={setEmployees}
-              // data={employees}
-              // currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              closeModal={() => {}}
-              setReload={setReload}
-            />
+            <CreateInvoice />
           </div>
         </div>
       )}
@@ -124,13 +162,25 @@ const EmployeeTable = () => {
         </div>
 
         {/* Table */}
-        <Table
-          tableData={employees}
-          setData={setEmployees}
-          columns={columns}
-          format="Employee"
-          setReload={setReload}
-        />
+        <div className="">
+          <div className="flex justify-between border px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 mt-3 text-xs bg-secondary text-secondary-foreground">
+            <div className="w-1/6">ID</div>
+            <div className="flex-1">Customer ID</div>
+            <div className="flex-1">Grand Total</div>
+            <div className="flex-1">Created At</div>
+          </div>
+          {invoices.map((invoice, i) => (
+            <div
+              className="flex justify-between border-b px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 text-xs bg-white text-secondary-foreground cursor-pointer hover:bg-gray-50 duration-200"
+              onClick={() => path.push(`/invoice/${invoice.id}`)}
+            >
+              <div className="w-1/6">{invoice.id}</div>
+              <div className="flex-1">{invoice.customer_id}</div>
+              <div className="flex-1">{invoice.grand_total}</div>
+              <div className="flex-1">{invoice.created_at}</div>
+            </div>
+          ))}
+        </div>
 
         <div className="flex items-center mt-6 xl:gap-4 justify-center mb-16 xl:mb-0">
           <div className="flex items-center justify-center text-sm xl:text-xl gap-5 border xl:px-8 px-3 py-2 rounded w-fit cursor-pointer">
@@ -180,4 +230,4 @@ const EmployeeTable = () => {
   );
 };
 
-export default EmployeeTable;
+export default InvoiceTable;

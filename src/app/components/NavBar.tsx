@@ -27,7 +27,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between w-full bg-secondary shadow-md h-fit py-3 xl:py-5 xl:px-10 px-3">
+    <div className="flex items-center justify-between w-full bg-white h-fit py-3 xl:py-5 xl:px-10 px-3">
       {/* This div will take the remaining space and center the title */}
       <h1 className="xl:text-center flex-grow text-xl xl:text-3xl font-semibold text-secondary-foreground tracking-wide">
         Site Name
