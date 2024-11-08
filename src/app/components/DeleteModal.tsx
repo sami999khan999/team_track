@@ -11,12 +11,10 @@ type TableDataType = EmployeeType | CustomerType;
 const DeleteModal = ({
   activeElement,
   closeModal,
-  setData,
   setReload,
 }: {
   activeElement: TableDataType | undefined;
   closeModal: () => void;
-  setData: React.Dispatch<React.SetStateAction<TableDataType[]>>;
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const path = usePathname();

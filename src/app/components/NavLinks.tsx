@@ -6,11 +6,20 @@ import React from "react";
 import { CiMemoPad } from "react-icons/ci";
 import { FaFileInvoice } from "react-icons/fa";
 import { GrUserWorker } from "react-icons/gr";
-import { MdDashboard, MdOutlinePayment } from "react-icons/md";
+import {
+  MdDashboard,
+  MdOutlinePayment,
+  MdOutlineProductionQuantityLimits,
+} from "react-icons/md";
 import { RiCustomerServiceFill, RiMenuUnfoldLine } from "react-icons/ri";
 
 export const navLinks = [
   { path: "/", name: "Dashboard", logo: <MdDashboard /> },
+  {
+    path: "/products",
+    name: "Products",
+    logo: <MdOutlineProductionQuantityLimits />,
+  },
   { path: "/employees", name: "Employees", logo: <GrUserWorker /> },
   { path: "/customers", name: "Customers", logo: <RiCustomerServiceFill /> },
   { path: "/invoice", name: "Invoice", logo: <FaFileInvoice /> },

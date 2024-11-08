@@ -45,3 +45,10 @@ export type CreateCustomerType = {
   address: string;
   mobile: string;
 };
+
+export type ProductType = {
+  id: number;
+  name: string;
+  rate: number;
+  category: string;
+};

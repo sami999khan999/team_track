@@ -3,18 +3,19 @@ import React, { useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import DeleteModal from "./DeleteModal";
 import AddFormModal from "./AddFormModal";
+import { MdOutlineEdit } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 type TableDataType = EmployeeType | CustomerType;
 
 const Table = ({
   tableData,
-  setData,
+
   columns,
   format,
   setReload,
 }: {
   tableData: EmployeeType[] | CustomerType[];
-  setData: React.Dispatch<React.SetStateAction<TableDataType[]>>;
   columns: string[];
   format: string;
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,9 +25,9 @@ const Table = ({
     null
   );
 
-  const handleActionClick = (id: number) => {
-    setActiveId(activeId === id ? null : id);
-  };
+  // const handleActionClick = (id: number) => {
+  //   setActiveId(activeId === id ? null : id);
+  // };
 
   const openModal = (action: "update" | "delete", id: number) => {
     setModalAction(action);
@@ -93,30 +94,25 @@ const Table = ({
               </>
             )}
 
-            <div className="relative">
+            <div className="flex items-center gap-2 text-secondary-foreground">
               <div
-                className="bg-secondary px-2 py-1 cursor-pointer"
-                onClick={() => handleActionClick(data.id)}
+                className="hover:bg-primary p-1 rounded hover:text-gray-200 duration-200"
+                onClick={() => {
+                  setActiveId(data.id);
+                  setModalAction("update");
+                }}
               >
-                <HiDotsHorizontal />
+                <MdOutlineEdit />
               </div>
-
-              {activeId === data.id && (
-                <div className="absolute right-0 mt-2 w-32 bg-white shadow-lg rounded-lg py-2 z-10">
-                  <button
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                    onClick={() => openModal("update", data.id)}
-                  >
-                    Update
-                  </button>
-                  <button
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                    onClick={() => openModal("delete", data.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              )}
+              <div
+                className="hover:bg-primary p-1 rounded hover:text-gray-200 duration-200"
+                onClick={() => {
+                  setActiveId(data.id);
+                  setModalAction("delete");
+                }}
+              >
+                <RiDeleteBin6Line />
+              </div>
             </div>
           </div>
         ))}
@@ -128,7 +124,6 @@ const Table = ({
               ? tableData.find((emp) => emp.id === activeId)
               : undefined
           }
-          setData={setData}
           closeModal={closeModal}
           setReload={setReload}
         />

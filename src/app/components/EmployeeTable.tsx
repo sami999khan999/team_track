@@ -10,6 +10,8 @@ import { getEmployee } from "@/utils/employeeApiRequest";
 import { EmployeeType } from "@/types";
 import AddFormModal from "./AddFormModal";
 import { useRouter, useSearchParams } from "next/navigation";
+import Pagination from "./Pagination";
+import TableActions from "./TableActions";
 
 const EmployeeTable = () => {
   const param = useSearchParams();
@@ -21,6 +23,9 @@ const EmployeeTable = () => {
   const [totalPage, setTotalPage] = useState<number | undefined>(undefined);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [reload, setReload] = useState(true);
+  const [modalAction, setModalAction] = useState<
+    "create" | "update" | "delete" | undefined
+  >();
 
   console.log(reload);
 
@@ -34,19 +39,6 @@ const EmployeeTable = () => {
     if (currentPage < (totalPage || 0)) {
       setCurrentPage((prev) => prev + 1);
     }
-  };
-
-  const pageNumber = () => {
-    const pages: number[] = [];
-    const pagesToShow = 5;
-    const start = Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
-    const end = Math.min(start + pagesToShow - 1, totalPage!);
-
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
-
-    return pages;
   };
 
   const columns = employees?.length > 0 ? Object.keys(employees[0]) : [];
@@ -73,14 +65,10 @@ const EmployeeTable = () => {
 
   useEffect(() => {
     path.push(`?page=${currentPage}`);
-  }, [currentPage]);
+  }, [currentPage, path]);
 
   return (
     <div className="">
-      <div onClick={() => setIsFormOpen((prv) => !prv)}>
-        <AddButton text="Add Employee" />
-      </div>
-
       {isFormOpen && (
         <div className="">
           <div onClick={(e) => e.stopPropagation()}>
@@ -99,40 +87,50 @@ const EmployeeTable = () => {
         </div>
       )}
 
-      <div className="w-full h-fit bg-white px-2 py-6 xl:py-12 xl:px-8 rounded-[1.3rem]">
-        <div className="flex flex-col xl:flex-row gap-4 justify-between text-center">
-          <div className="text-lg xl:text-2xl font-semibold tracking-wide text-secondary-foreground">
-            Employee Table
+      <div className="w-full h-fit bg-white px-2 py-6 xl:py-8 xl:px-8 rounded-[1.3rem] border">
+        {/* <div>
+          <div onClick={() => setIsFormOpen((prv) => !prv)}>
+            <AddButton text="Add Employee" />
           </div>
-          <div className="flex gap-2 justify-around">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="border border-gray-200 w-[50%] xl:w-[20rem] h-10 xl:h-12 rounded-md text-base"
-            />
-            <div className="flex gap-2">
-              <div className="border flex items-center gap-2 px-2 xl:px-6 rounded-md">
-                <IoFilterSharp />
-                <p>Filter</p>
-              </div>
-              <div className="border flex items-center gap-2 px-2 xl:px-6 rounded-md">
-                <MdOutlineSort />
-                <p>Sort</p>
+          <div className="flex flex-col xl:flex-row gap-4 justify-between text-center">
+            <div className="text-lg xl:text-2xl font-semibold tracking-wide text-secondary-foreground">
+              Employee Table
+            </div>
+            <div className="flex gap-2 justify-around">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="border border-gray-200 w-[50%] xl:w-[20rem] h-10 xl:h-12 rounded-md text-base"
+              />
+              <div className="flex gap-2">
+                <div className="border flex items-center gap-2 px-2 xl:px-6 rounded-md">
+                  <IoFilterSharp />
+                  <p>Filter</p>
+                </div>
+                <div className="border flex items-center gap-2 px-2 xl:px-6 rounded-md">
+                  <MdOutlineSort />
+                  <p>Sort</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+
+        <TableActions
+          setIsOpen={setIsFormOpen}
+          tableName="Employee"
+          setModalAction={setModalAction}
+        />
 
         {/* Table */}
         <Table
           tableData={employees}
-          setData={setEmployees}
           columns={columns}
           format="Employee"
           setReload={setReload}
         />
 
-        <div className="flex items-center mt-6 xl:gap-4 justify-center mb-16 xl:mb-0">
+        {/* <div className="flex items-center mt-6 xl:gap-4 justify-center mb-16 xl:mb-0">
           <div className="flex items-center justify-center text-sm xl:text-xl gap-5 border xl:px-8 px-3 py-2 rounded w-fit cursor-pointer">
             <button onClick={handlePrevious} disabled={currentPage === 1}>
               <IoIosArrowBack />
@@ -174,7 +172,14 @@ const EmployeeTable = () => {
               <IoIosArrowForward />
             </button>
           </div>
-        </div>
+        </div> */}
+        <Pagination
+          handleNext={handleNext}
+          handlePrevious={handlePrevious}
+          totalPage={totalPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );

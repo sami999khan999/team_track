@@ -61,7 +61,7 @@
 
 @layer base {
   body {
-    @apply bg-secondary;
+    @apply inset-0 -z-10 h-full w-full bg-gray-50 bg-[radial-gradient(#1FC07A_1px,transparent_1px)] [background-size:16px_16px];
   }
 
   input {

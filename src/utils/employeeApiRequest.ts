@@ -29,10 +29,14 @@ export const createEmployee = async (employee: CreateEmployeeType) => {
       body: JSON.stringify(employee),
     });
 
-    console.log(response);
+    const data = await response.json();
+    console.log(data);
 
     if (!response.ok) {
-      return { success: false, message: "Failed to create employee" };
+      return {
+        success: false,
+        message: data.error || "Failed to create employee",
+      };
     }
 
     return { success: true, message: "Employee created successfully" };

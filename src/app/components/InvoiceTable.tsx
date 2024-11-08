@@ -8,6 +8,7 @@ import { IoFilterSharp } from "react-icons/io5";
 import { MdOutlineSort } from "react-icons/md";
 import AddButton from "./AddButton";
 import CreateInvoice from "./CreateInvoice";
+import Pagination from "./Pagination";
 
 const invoices = [
   {
@@ -182,49 +183,13 @@ const InvoiceTable = () => {
           ))}
         </div>
 
-        <div className="flex items-center mt-6 xl:gap-4 justify-center mb-16 xl:mb-0">
-          <div className="flex items-center justify-center text-sm xl:text-xl gap-5 border xl:px-8 px-3 py-2 rounded w-fit cursor-pointer">
-            <button onClick={handlePrevious} disabled={currentPage === 1}>
-              <IoIosArrowBack />
-            </button>
-
-            <div className=" flex gap-3 items-center">
-              <div className=" xl:w-[10rem] flex items-center">
-                {pageNumber().map((i) => (
-                  <div
-                    key={i}
-                    className={`px-2 py-1 rounded-sm text-center ${
-                      currentPage === i && "bg-primary text-secondary"
-                    }`}
-                    onClick={() =>
-                      setCurrentPage(() => {
-                        path.push(`?page=${i}`);
-                        return i;
-                      })
-                    }
-                  >
-                    {i}
-                  </div>
-                ))}
-              </div>
-              <p className="px-4">•••</p>
-              <p
-                onClick={() =>
-                  setCurrentPage(() => {
-                    path.push(`?page=${totalPage}`);
-                    return totalPage!;
-                  })
-                }
-              >
-                {totalPage}
-              </p>
-            </div>
-
-            <button onClick={handleNext} disabled={currentPage === totalPage}>
-              <IoIosArrowForward />
-            </button>
-          </div>
-        </div>
+        <Pagination
+          handleNext={handleNext}
+          handlePrevious={handlePrevious}
+          totalPage={totalPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );
