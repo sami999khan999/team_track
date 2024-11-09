@@ -41,7 +41,7 @@ const Table = ({
 
   return (
     <div>
-      <div className="flex justify-between border px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 mt-3 text-xs bg-secondary text-secondary-foreground">
+      <div className="flex justify-between  px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 mt-3 text-xs bg-background text-secondary-foreground">
         {columns.map((col, i) => {
           return (
             <p
@@ -60,7 +60,7 @@ const Table = ({
         {tableData?.map((data, i) => (
           <div
             key={i}
-            className="flex justify-between border-b px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 text-xs bg-white text-secondary-foreground relative"
+            className="flex justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 text-xs text-secondary-foreground relative"
           >
             {format === "Employee" ? (
               <>

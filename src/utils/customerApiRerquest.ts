@@ -15,8 +15,6 @@ export const getCustoer = async (page: number) => {
       };
     }
 
-    console.log(data);
-
     return { success: true, data };
   } catch (err) {
     console.log(err);

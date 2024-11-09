@@ -33,7 +33,7 @@ const Pagination = ({
   };
   return (
     <div className="flex items-center mt-6 xl:gap-4 justify-center mb-16 xl:mb-0">
-      <div className="flex items-center justify-center text-sm xl:text-xl gap-5 border xl:px-8 px-3 py-2 rounded w-fit cursor-pointer">
+      <div className="flex items-center justify-center text-sm xl:text-xl gap-5 border border-border_color  xl:px-8 px-3 py-2 rounded w-fit cursor-pointer">
         <button onClick={handlePrevious} disabled={currentPage === 1}>
           <IoIosArrowBack />
         </button>

@@ -1,38 +1,42 @@
 "use client";
 
-import { ProductType } from "@/types";
-import React, { useState } from "react";
+import { CategoryType, ProductType } from "@/types";
+import {
+  categoryDelete,
+  createCategory,
+  getCategories,
+} from "@/utils/categoryApiRequests";
+import React, { SetStateAction, useEffect, useState } from "react";
 import {
   IoIosArrowDown,
   IoIosArrowRoundForward,
   IoMdAdd,
 } from "react-icons/io";
-
-const categories = [
-  { id: 1, name: "Category1" },
-  { id: 2, name: "Category2" },
-  { id: 3, name: "Category3" },
-  { id: 4, name: "Category4" },
-  { id: 5, name: "Category5" },
-  { id: 5, name: "Category5" },
-];
+import { RxCross2 } from "react-icons/rx";
 
 const Dropdown = ({
-  activeProduct,
+  setReload,
+  reload,
+  selectedCategory,
+  setSelectedCategory,
+  setCategoryId,
 }: {
-  activeProduct?: ProductType | undefined;
+  setReload: React.Dispatch<SetStateAction<boolean>>;
+  reload: boolean;
+  selectedCategory: string;
+  setSelectedCategory: React.Dispatch<SetStateAction<string>>;
+  setCategoryId: React.Dispatch<SetStateAction<number | undefined>>;
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(
-    activeProduct ? activeProduct.category : ""
-  );
   const [inputIsOpen, setInputOpen] = useState(false);
   const [categoryInput, setCategoryInput] = useState("");
+  const [categories, setCategories] = useState<CategoryType[]>();
 
   const handleCategoryClick = (category: string, event: React.MouseEvent) => {
     event.stopPropagation();
     setDropdownOpen(false);
     setSelectedCategory(category);
+    console.log(selectedCategory);
   };
 
   const handleBackdropClick = () => {
@@ -40,12 +44,46 @@ const Dropdown = ({
     setInputOpen(false);
   };
 
-  const addCtegory = () => {
+  const addCtegory = async () => {
     setInputOpen(false);
-    console.log(categoryInput);
-    setCategoryInput("");
-    console.log("==========");
+
+    const category = {
+      name: categoryInput,
+    };
+
+    const response = await createCategory(category);
+
+    if (response.success) {
+      setReload((prv) => !prv);
+      setSelectedCategory("");
+    } else {
+      response.message;
+    }
   };
+
+  const deleteCategory = async (id: number) => {
+    const response = await categoryDelete(id);
+
+    if (response.success) {
+      setReload((prv) => !prv);
+      console.log(response);
+    } else {
+      console.log(response.message);
+    }
+  };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await getCategories();
+
+      if (response.success) {
+        setCategories(response.data);
+      }
+    };
+    console.log(categories);
+
+    fetchCategories();
+  }, [reload]);
 
   return (
     <>
@@ -53,20 +91,26 @@ const Dropdown = ({
         <div className="flex justify-center items-center">
           <div className="items-center space-y-2 w-full relative">
             <div
-              className="flex items-center justify-between gap-3 bg-white hover:bg-white border py-2 w-full rounded-full px-6 cursor-pointer group border-gray-300"
+              className="flex items-center justify-between gap-3 bg-white hover:bg-white border py-2 w-full rounded px-6 cursor-pointer group border-gray-300"
               onClick={() => setDropdownOpen((prv) => !prv)}
             >
-              <p>{selectedCategory ? selectedCategory : "Select Category"}</p>
+              <p
+                className={`text-sm ${
+                  selectedCategory === "Inter a category!" && "text-red-500"
+                }`}
+              >
+                {selectedCategory ? selectedCategory : "Select Category"}
+              </p>
               <div className="transition-transform group-hover:rotate-180">
                 <IoIosArrowDown />
               </div>
             </div>
             <div>
               <div
-                className="py-1 flex items-center gap-3 w-full bg-white rounded-full justify-center hover:bg-white duration-200 cursor-pointer border"
+                className="py-1 flex items-center gap-3 w-full bg-white rounded justify-center hover:bg-white duration-200 cursor-pointer border"
                 onClick={() => setInputOpen((prv) => !prv)}
               >
-                <p className="text-sm">Add Category</p>
+                <p className="text-base">Add Category</p>
                 <IoMdAdd />
               </div>
             </div>
@@ -79,12 +123,12 @@ const Dropdown = ({
                   type="text"
                   placeholder="Enter new category"
                   name="category"
-                  className="w-full px-5 py-1 text-xs border-gray-300 rounded-l-full focus:outline-none"
+                  className="w-full px-5 py-1 text-base border-gray-300 rounded-l-md rounded-r-none focus:outline-none"
                   value={categoryInput}
                   onChange={(e) => setCategoryInput(e.target.value)}
                 />
                 <div
-                  className="border px-5 py-1 border-gray-300 bg-gray-100 hover:bg-white rounded-r-full"
+                  className="border px-5 py-2 border-gray-300 bg-gray-100 hover:bg-white rounded rounded-r-md rounded-l-none"
                   onClick={addCtegory}
                 >
                   <IoIosArrowRoundForward />
@@ -94,19 +138,28 @@ const Dropdown = ({
 
             {dropdownOpen ? (
               <div
-                className="absolute w-full h-[10rem] overflow-auto bg-white rounded-md z-50"
+                className="absolute w-full h-[10rem] overflow-auto rounded-md z-50 remove-scrollbar bg-white"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="p-2">
-                  {categories.map((category) => (
-                    <div
-                      key={category.id}
-                      className="py-1 px-4 border-b cursor-pointer rounded-md hover:bg-gray-100"
-                      onClick={(event) =>
-                        handleCategoryClick(category.name, event)
-                      }
-                    >
-                      {category.name}
+                  {categories?.map((category) => (
+                    <div className="flex w-full items-center bg-secondary mt-1 hover:bg-white px-1">
+                      <div
+                        key={category.id}
+                        className="py-1 px-4 cursor-pointer rounded-md w-full "
+                        onClick={(event) => {
+                          handleCategoryClick(category.name, event);
+                          setCategoryId(category.id);
+                        }}
+                      >
+                        {category.name}
+                      </div>
+                      <div
+                        className="ml-auto bg-black"
+                        onClick={() => deleteCategory(category.id)}
+                      >
+                        <RxCross2 />
+                      </div>
                     </div>
                   ))}
                 </div>

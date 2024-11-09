@@ -1,35 +1,14 @@
 "use client";
 
+import { ProductType } from "@/types";
+import { getProducts } from "@/utils/productApiRequests";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import ProductModal from "./ProductModal";
 import Pagination from "./Pagination";
+import ProductModal from "./ProductModal";
 import TableActions from "./TableActions";
-
-const products = [
-  { id: 1, name: "Wireless Mouse", category: "Electronics", rate: 29.99 },
-  { id: 2, name: "Laptop Stand", category: "Accessories", rate: 19.99 },
-  {
-    id: 3,
-    name: "Bluetooth Headphones",
-    category: "Electronics",
-    rate: 59.99,
-  },
-  { id: 4, name: "Smartphone Charger", category: "Electronics", rate: 15.49 },
-  { id: 5, name: "USB Flash Drive", category: "Accessories", rate: 9.99 },
-  { id: 6, name: "Gaming Keyboard", category: "Electronics", rate: 89.99 },
-  { id: 7, name: "Smartwatch", category: "Electronics", rate: 199.99 },
-  { id: 8, name: "Bluetooth Speaker", category: "Electronics", rate: 49.99 },
-  { id: 9, name: "Phone Case", category: "Accessories", rate: 12.99 },
-  {
-    id: 10,
-    name: "External Hard Drive",
-    category: "Electronics",
-    rate: 119.99,
-  },
-];
 
 const ProductsTable = () => {
   const param = useSearchParams();
@@ -38,12 +17,15 @@ const ProductsTable = () => {
   const [modalAction, setModalAction] = useState<
     "create" | "update" | "delete" | undefined
   >();
-  const [activeId, setActiveId] = useState<number | undefined>(undefined);
+  const [activeId, setActiveId] = useState<number | undefined | string>(
+    undefined
+  );
   const [currentPage, setCurrentPage] = useState(
     Number(param.get("page")) || 1
   );
   const [totalPage, setTotalPage] = useState<number | undefined>(10);
   const [reload, setReload] = useState(false);
+  const [products, setProducts] = useState<ProductType[]>([]);
 
   const handlePrevious = () => {
     if (currentPage > 1) {
@@ -62,6 +44,23 @@ const ProductsTable = () => {
   const activeProduct = products.find((porduct) => porduct.id === activeId);
 
   useEffect(() => {
+    const productsGet = async () => {
+      const response = await getProducts(currentPage);
+
+      if (response.success) {
+        const firstElement = response.data.shift();
+        const totalePage = firstElement ? firstElement.total_page : undefined;
+
+        setProducts(response?.data);
+        console.log(products);
+        setTotalPage(totalePage);
+      }
+    };
+
+    productsGet();
+  }, [reload, currentPage]);
+
+  useEffect(() => {
     path.push(`?page=${currentPage}`);
   }, [currentPage, path]);
 
@@ -72,6 +71,8 @@ const ProductsTable = () => {
           modalAction={modalAction}
           activeProduct={activeProduct}
           setIsModalOpen={setIsModalOpen}
+          setReload={setReload}
+          reload={reload}
         />
       )}
       <div className="w-full h-fit bg-white px-2 py-6 xl:py-8 xl:px-8 rounded-[1.3rem] border">
@@ -84,7 +85,15 @@ const ProductsTable = () => {
         <div>
           <div className="flex border px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 mt-3 text-xs bg-secondary text-secondary-foreground">
             {columns.map((cols, i) => (
-              <div className={`${i === 0 ? "w-1/12" : "flex-1"}`}>{cols}</div>
+              <div
+                className={`${
+                  i === 0
+                    ? "w-1/12 uppercase                                                     "
+                    : "flex-1"
+                } capitalize`}
+              >
+                {cols}
+              </div>
             ))}
             <div>Actions</div>
           </div>
@@ -93,8 +102,10 @@ const ProductsTable = () => {
               <div className="flex justify-between border-b px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 text-xs bg-white text-secondary-foreground relative">
                 <div className="w-1/12 truncate-text">{product.id}</div>
                 <div className="flex-1 truncate-text">{product.name}</div>
-                <div className="flex-1 truncate-text">{product.category}</div>
                 <div className="flex-1 truncate-text">{product.rate}</div>
+                <div className="flex-1 truncate-text">
+                  {product.catagory_id}
+                </div>
                 <div className="flex items-center gap-2 text-secondary-foreground">
                   <div
                     className="hover:bg-primary p-1 rounded hover:text-gray-200 duration-200"

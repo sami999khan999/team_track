@@ -2,7 +2,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="w-fit">
+    <div className="w-fit text-primary">
       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque suscipit
       tempore repellendus minus vero unde laudantium beatae, porro sed corrupti
       quod assumenda, reiciendis ex quam voluptates eaque tenetur fugiat omnis

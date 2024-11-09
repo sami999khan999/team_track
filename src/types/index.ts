@@ -47,8 +47,30 @@ export type CreateCustomerType = {
 };
 
 export type ProductType = {
+  id: number | string;
+  name: string;
+  rate: number | string;
+  catagory_id: string | string;
+};
+
+export type CreateProductType = {
+  name: string;
+  rate: number | undefined;
+  catagory_id: number | undefined;
+};
+
+export type CategoryType = {
   id: number;
   name: string;
-  rate: number;
-  category: string;
 };
+
+export type reateCategoryType = {
+  name: string;
+};
+
+// export type ProductType = {
+//   id: number;
+//   name: string;
+//   rate: number;
+
+// }

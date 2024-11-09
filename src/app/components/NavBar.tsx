@@ -27,13 +27,15 @@ const NavBar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between w-full bg-white/80 h-fit py-3 xl:py-5 xl:px-10 px-3">
-      {/* This div will take the remaining space and center the title */}
-      <h1 className="xl:text-center flex-grow text-xl xl:text-3xl font-semibold text-secondary-foreground tracking-wide">
-        Site Name
+    <div className="flex items-center justify-between w-full bg-secondary h-[5.4rem] xl:px-10 px-3">
+      <h1
+        className="xl:text-center flex-grow text-lg xl:text-4xl font-bold text-slate-400 tracking-widest font-sour_gummy"
+        // style={{ fontFamily: "var(--font-geist)" }}
+      >
+        NEXT FASHION TEXTILE
       </h1>
       <button
-        className="flex items-center gap-5 cursor-pointer text-base xl:text-xl hover:bg-primary  duration-200 border px-6 py-2 rounded hover:text-secondary font-medium"
+        className="flex items-center gap-5 bg-primary cursor-pointer text-sm xl:text-xl  duration-200 px-6 py-2 hover:text-secondary font-medium rounded-full"
         onClick={logOutHandler}
       >
         Logout

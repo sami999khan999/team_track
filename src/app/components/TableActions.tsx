@@ -35,21 +35,21 @@ const TableActions = ({
       </div>
 
       <div className="flex flex-col xl:flex-row gap-4 justify-between text-center ">
-        <div className="text-lg xl:text-2xl font-semibold tracking-wide text-secondary-foreground">
+        <div className="text-lg xl:text-2xl font-semibold tracking-wide text-primary-foreground">
           {`${tableName}`}
         </div>
         <div className="flex gap-2 justify-around">
           <input
             type="text"
             placeholder="Search..."
-            className="border border-gray-200 w-[50%] xl:w-[20rem] h-10 xl:h-12 rounded-md text-base"
+            className="outline-none text-sm rounded-full bg-secondary border border-border_color w-[50%] xl:w-[20rem] h-8 xl:h-12 xl:text-xl px-4 text-primary-foreground hover:text-background hover:bg-gray-300 duration-300"
           />
-          <div className="flex gap-2">
-            <div className="border flex items-center gap-2 px-2 xl:px-6 rounded-md">
+          <div className="flex gap-2 xl:text-xl text-sm">
+            <div className=" flex items-center gap-2 px-2 xl:px-6 text-primary-foreground rounded-full bg-secondary border border-border_color">
               <IoFilterSharp />
               <p>Filter</p>
             </div>
-            <div className="border flex items-center gap-2 px-2 xl:px-6 rounded-md">
+            <div className=" flex items-center gap-2 px-2 xl:px-6 text-primary-foreground rounded-full bg-secondary border border-border_color">
               <MdOutlineSort />
               <p>Sort</p>
             </div>

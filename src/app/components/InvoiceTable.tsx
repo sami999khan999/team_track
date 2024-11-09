@@ -3,10 +3,8 @@
 import { EmployeeType } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { IoFilterSharp } from "react-icons/io5";
 import { MdOutlineSort } from "react-icons/md";
-import AddButton from "./AddButton";
 import CreateInvoice from "./CreateInvoice";
 import Pagination from "./Pagination";
 
@@ -127,7 +125,7 @@ const InvoiceTable = () => {
   return (
     <div className="">
       <div onClick={() => setIsFormOpen((prv) => !prv)}>
-        <AddButton text="Add Employee" />
+        {/* <AddButton text="Add Employee" /> */}
       </div>
 
       {isFormOpen && (
