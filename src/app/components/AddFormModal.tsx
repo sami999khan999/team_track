@@ -219,8 +219,10 @@ const AddFormModal = ({
           <p className="text-primary-foreground text-xs xl:text-base mt-6 text-center">
             Please fill out the form with the employee's{" "}
             <span className="text-primary">
-              Name, Address, Phone Number, and NID.
-            </span>{" "}
+              {action === "addEmployee"
+                ? "Name, Address, Phone Number, and NID."
+                : "Name, Company Name, Address and Phone Number"}
+            </span>
             All fields are required.
           </p>
         </div>
