@@ -30,6 +30,7 @@ const config: Config = {
 
       fontFamily: {
         sour_gummy: "var(--sour-gummy)",
+        baloo: "var(--baloo)",
       },
 
       borderRadius: {

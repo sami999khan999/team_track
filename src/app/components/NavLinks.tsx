@@ -36,7 +36,7 @@ const NavLinks = () => {
     <div className="flex xl:flex-col  xl:rounded-none justify-around xl:justify-between h-full">
       <div className="flex xl:flex-col justify-center xl:justify-start gap-4">
         {/* Sidebar Menu Icon */}
-        <div className="hidden xl:block group mb-6">
+        <div className="hidden xl:block group mb-6 ">
           <div className="relative px-6 h-[5.4rem] flex items-center mb-3 text-3xl gap-2 text bg-primary">
             <RiMenuUnfoldLine className="transition-transform duration-300 group-hover:rotate-180 transform origin-center" />
             <p className="absolute top-[25px] left-[4.5rem] opacity-0 text-2xl font-semibold tracking-wide transition-opacity duration-300 ease-in-out group-hover:opacity-100">
@@ -57,7 +57,7 @@ const NavLinks = () => {
             }`}
           >
             <div
-              className={`text-xl xl:text-2xl text-primary ${
+              className={`text-xl xl:text-2xl text-primary-foreground ${
                 pathName === navItem.path ? "text-secondary " : ""
               }`}
             >

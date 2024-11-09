@@ -50,7 +50,7 @@ export type ProductType = {
   id: number | string;
   name: string;
   rate: number | string;
-  catagory_id: string | string;
+  catagory_name: string;
 };
 
 export type CreateProductType = {
