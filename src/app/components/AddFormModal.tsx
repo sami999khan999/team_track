@@ -198,17 +198,12 @@ const AddFormModal = ({
         action && setIsFormOpen ? setIsFormOpen((prv) => !prv) : closeModal()
       }
     >
-      <form
-        className="bg-secondary xl:px-8 px-5 xl:py-10 py-6 shadow-md flex flex-col w-[90%] xl:w-[35%] relative border rounded"
+      <div
+        className="relative bg-secondary flex flex-col xl:flex-row px-2 py-10 border border-border_color rounded-xl w-[90%] xl:w-[50%]"
         onClick={(e) => e.stopPropagation()}
-        onSubmit={
-          action === "addEmployee" || action === "addCustomer"
-            ? submieHandler
-            : updateHandler
-        }
       >
         <button
-          className="absolute top-4 right-4 rounded text-xl xl:text-3xl transition-transform hover:rotate-90 duration-300 origin-center"
+          className="absolute top-4 right-4 rounded text-xl xl:text-3xl transition-transform hover:rotate-90 duration-300 origin-center text-primary-foreground"
           onClick={() =>
             action && setIsFormOpen
               ? setIsFormOpen((prv) => !prv)
@@ -217,114 +212,137 @@ const AddFormModal = ({
         >
           <IoMdClose />
         </button>
-        <h2 className="text-center text-lg xl:text-2xl mb-5 mt-5 font-semibold tracking-wider text-secondary-foreground capitalize">
-          {title}
-        </h2>
-        {action === "addEmployee" || action === "updateEmployee" ? (
-          <div className="space-y-4">
-            <div>
-              <input
-                type="text"
-                placeholder="Employee Name..."
-                name="name"
-                value={employee.name}
-                onChange={employeeChangeHandler}
-                className="add_field"
-              />
-              <p className="error_message">{employeeInputError.name}</p>
-            </div>
-
-            <div>
-              <input
-                type="text"
-                placeholder="Address..."
-                name="address"
-                value={employee.address}
-                onChange={employeeChangeHandler}
-                className="add_field"
-              />
-              <p className="error_message">{employeeInputError.address}</p>
-            </div>
-
-            <div>
-              <input
-                type="text"
-                placeholder="Phone Number..."
-                name="mobile"
-                value={employee.mobile}
-                onChange={employeeChangeHandler}
-                className="add_field"
-              />
-              <p className="error_message">{employeeInputError.mobile}</p>
-            </div>
-
-            <div>
-              <input
-                type="text"
-                placeholder="NID"
-                name="nid_no"
-                value={employee.nid_no || ""}
-                onChange={employeeChangeHandler}
-                className="add_field"
-              />
-              <p className="error_message">{employeeInputError.nid_no}</p>
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            <div>
-              <input
-                type="text"
-                placeholder="Customer Name..."
-                name="name"
-                value={customer.name}
-                onChange={customerChangeHandler}
-                className="add_field"
-              />
-              <p className="error_message">{customerInputError.name}</p>
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="Company Name..."
-                name="company_name"
-                value={customer.company_name}
-                onChange={customerChangeHandler}
-                className="add_field"
-              />
-              <p className="error_message">{customerInputError.company_name}</p>
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="Address..."
-                name="address"
-                value={customer.address}
-                onChange={customerChangeHandler}
-                className="add_field"
-              />
-              <p className="error_message">{customerInputError.address}</p>
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="Phone Number..."
-                name="mobile"
-                value={customer.mobile}
-                onChange={customerChangeHandler}
-                className="add_field"
-              />
-              <p className="error_message">{customerInputError.mobile}</p>
-            </div>
-          </div>
-        )}
-        <button
-          type="submit"
-          className="w-full bg-primary mt-6 xl:text-xl rounded-sm font-medium tracking-wide py-2 xl:py-3 capitalize text-gray-100 hover:bg-primary/80 duration-200"
+        <div className="w-full items-center xl:w-[28%] xl:mt-4 px-2">
+          <h2 className="text-center text-lg xl:text-2xl font-semibold tracking-wider capitalize text-primary">
+            {title}
+          </h2>
+          <p className="text-primary-foreground text-xs xl:text-base mt-6 text-center">
+            Please fill out the form with the employee's{" "}
+            <span className="text-primary">
+              {action === "addEmployee"
+                ? "Name, Address, Phone Number, and NID."
+                : "Name, Company Name, Address and Phone Number"}
+            </span>
+            All fields are required.
+          </p>
+        </div>
+        <div className="border-t xl:border-l border-border_color my-4 py-0"></div>
+        <form
+          className="xl:px-8 px-2 xl:py-10 w-full xl:w-[72%] flex flex-col relative rounded"
+          onSubmit={
+            action === "addEmployee" || action === "addCustomer"
+              ? submieHandler
+              : updateHandler
+          }
         >
-          {title}
-        </button>
-      </form>
+          {action === "addEmployee" || action === "updateEmployee" ? (
+            <div className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  placeholder="Employee Name..."
+                  name="name"
+                  value={employee.name}
+                  onChange={employeeChangeHandler}
+                  className="add_field"
+                />
+                <p className="error_message">{employeeInputError.name}</p>
+              </div>
+
+              <div>
+                <input
+                  type="text"
+                  placeholder="Address..."
+                  name="address"
+                  value={employee.address}
+                  onChange={employeeChangeHandler}
+                  className="add_field"
+                />
+                <p className="error_message">{employeeInputError.address}</p>
+              </div>
+
+              <div>
+                <input
+                  type="text"
+                  placeholder="Phone Number..."
+                  name="mobile"
+                  value={employee.mobile}
+                  onChange={employeeChangeHandler}
+                  className="add_field"
+                />
+                <p className="error_message">{employeeInputError.mobile}</p>
+              </div>
+
+              <div>
+                <input
+                  type="text"
+                  placeholder="NID"
+                  name="nid_no"
+                  value={employee.nid_no || ""}
+                  onChange={employeeChangeHandler}
+                  className="add_field"
+                />
+                <p className="error_message">{employeeInputError.nid_no}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  placeholder="Customer Name..."
+                  name="name"
+                  value={customer.name}
+                  onChange={customerChangeHandler}
+                  className="add_field"
+                />
+                <p className="error_message">{customerInputError.name}</p>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Company Name..."
+                  name="company_name"
+                  value={customer.company_name}
+                  onChange={customerChangeHandler}
+                  className="add_field"
+                />
+                <p className="error_message">
+                  {customerInputError.company_name}
+                </p>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Address..."
+                  name="address"
+                  value={customer.address}
+                  onChange={customerChangeHandler}
+                  className="add_field"
+                />
+                <p className="error_message">{customerInputError.address}</p>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Phone Number..."
+                  name="mobile"
+                  value={customer.mobile}
+                  onChange={customerChangeHandler}
+                  className="add_field"
+                />
+                <p className="error_message">{customerInputError.mobile}</p>
+              </div>
+            </div>
+          )}
+          <button
+            type="submit"
+            className="w-full bg-primary mt-6 xl:text-xl tracking-wide py-2 xl:py-3 capitalize text-background font-semibold hover:bg-primary/80 rounded-full duration-200"
+          >
+            {title}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -50,7 +50,11 @@ export type ProductType = {
   id: number | string;
   name: string;
   rate: number | string;
+<<<<<<< HEAD
   catagory_name: string | string;
+=======
+  catagory_name: string;
+>>>>>>> db8f4772235c5242f40f9073840c9b3a37adf7ea
 };
 
 export type CreateProductType = {

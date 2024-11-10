@@ -23,7 +23,7 @@ const ProductsTable = () => {
   const [currentPage, setCurrentPage] = useState(
     Number(param.get("page")) || 1
   );
-  const [totalPage, setTotalPage] = useState<number | undefined>(10);
+  const [totalPage, setTotalPage] = useState<number | undefined>(undefined);
   const [reload, setReload] = useState(false);
   const [products, setProducts] = useState<ProductType[]>([]);
 
@@ -64,6 +64,8 @@ const ProductsTable = () => {
     path.push(`?page=${currentPage}`);
   }, [currentPage, path]);
 
+  console.log(products.length);
+
   return (
     <div>
       {isModalOpen && (
@@ -75,7 +77,7 @@ const ProductsTable = () => {
           reload={reload}
         />
       )}
-      <div className="w-full h-fit bg-white px-2 py-6 xl:py-8 xl:px-8 rounded-[1.3rem] border">
+      <div className="w-full h-fit bg-secondary px-2 py-6 xl:py-8 xl:px-8 rounded-2xl shadow-2xl shadow-[#19253859] ">
         <TableActions
           setIsOpen={setIsModalOpen}
           tableName="Products"
@@ -83,14 +85,14 @@ const ProductsTable = () => {
         />
 
         <div>
-          <div className="flex border px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 mt-3 text-xs bg-secondary text-secondary-foreground">
+          <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-xl text-xs gap-2 mt-3 bg-background font-semibold tracking-wide capitalize ">
             {columns.map((cols, i) => (
               <div
                 className={`${
                   i === 0
                     ? "w-1/12 uppercase                                                     "
                     : "flex-1"
-                } capitalize`}
+                } `}
               >
                 {cols}
               </div>
@@ -99,16 +101,18 @@ const ProductsTable = () => {
           </div>
           <div className="">
             {products.map((product, i) => (
-              <div className="flex justify-between border-b px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 text-xs bg-white text-secondary-foreground relative">
+              <div
+                className={`flex justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 xl:text-xl gap-2 text-xs  text-primary-foreground font-medium relative hover:bg-secondary-foreground duration-200`}
+              >
                 <div className="w-1/12 truncate-text">{product.id}</div>
                 <div className="flex-1 truncate-text">{product.name}</div>
                 <div className="flex-1 truncate-text">{product.rate}</div>
                 <div className="flex-1 truncate-text">
                   {product.catagory_name}
                 </div>
-                <div className="flex items-center gap-2 text-secondary-foreground">
+                <div className="flex items-center gap-2 text-primary-foreground ">
                   <div
-                    className="hover:bg-primary p-1 rounded hover:text-gray-200 duration-200"
+                    className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
                     onClick={() => {
                       setActiveId(product.id);
                       setModalAction("update");
@@ -118,7 +122,7 @@ const ProductsTable = () => {
                     <MdOutlineEdit />
                   </div>
                   <div
-                    className="hover:bg-primary p-1 rounded hover:text-gray-200 duration-200"
+                    className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
                     onClick={() => {
                       setActiveId(product.id);
                       setModalAction("delete");

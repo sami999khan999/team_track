@@ -1,16 +1,14 @@
 import { CustomerType, EmployeeType } from "@/types";
 import React, { useState } from "react";
-import { HiDotsHorizontal } from "react-icons/hi";
-import DeleteModal from "./DeleteModal";
-import AddFormModal from "./AddFormModal";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import AddFormModal from "./AddFormModal";
+import DeleteModal from "./DeleteModal";
 
 type TableDataType = EmployeeType | CustomerType;
 
 const Table = ({
   tableData,
-
   columns,
   format,
   setReload,
@@ -41,62 +39,68 @@ const Table = ({
 
   return (
     <div>
-      <div className="flex justify-between  px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 mt-3 text-xs bg-background text-secondary-foreground">
+      <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-xl text-xs gap-2 mt-3 bg-background font-semibold tracking-wide">
         {columns.map((col, i) => {
           return (
             <p
               key={i}
               className={`${
                 i === 0 ? "w-1/12 uppercase" : "flex-1 capitalize "
-              }`}
+              } cursor-pointer`}
             >
               {col}
             </p>
           );
         })}
-        <p className="">Action</p>
+        <p className="cursor-pointer">Action</p>
       </div>
       <div>
         {tableData?.map((data, i) => (
           <div
             key={i}
-            className="flex justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 text-xs text-secondary-foreground relative"
+            className="flex text-primary-foreground justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 relative hover:bg-secondary-foreground duration-200 font-medium"
           >
             {format === "Employee" ? (
               <>
-                <div className="w-1/12">{(data as EmployeeType).id}</div>
-                <div className="flex-1 ">{(data as EmployeeType).name}</div>
-                <div className="flex-1 truncate-text">
+                <div className="w-1/12 text-xs xl:text-xl">
+                  {(data as EmployeeType).id}
+                </div>
+                <div className="flex-1 text-xs xl:text-xl">
+                  {(data as EmployeeType).name}
+                </div>
+                <div className="flex-1 truncate-text text-xs xl:text-xl">
                   {(data as EmployeeType).address}
                 </div>
-                <div className="flex-1 truncate-text">
+                <div className="flex-1 truncate-text text-xs xl:text-xl">
                   {(data as EmployeeType).mobile}
                 </div>
-                <div className="flex-1 truncate-text">
+                <div className="flex-1 truncate-text text-xs xl:text-xl">
                   {(data as EmployeeType).nid_no}
                 </div>
               </>
             ) : (
               <>
-                <div className="w-1/12">{(data as CustomerType).id}</div>
-                <div className="flex-1 truncate-text">
+                <div className="w-1/12 text-xs xl:text-xl">
+                  {(data as CustomerType).id}
+                </div>
+                <div className="flex-1 truncate-text text-xs xl:text-xl">
                   {(data as CustomerType).name}
                 </div>
-                <div className="flex-1 truncate-text">
+                <div className="flex-1 truncate-text text-xs xl:text-xl">
                   {(data as CustomerType).company_name}
                 </div>
-                <div className="flex-1 truncate-text">
+                <div className="flex-1 truncate-text text-xs xl:text-xl">
                   {(data as CustomerType).address}
                 </div>
-                <div className="flex-1 truncate-text">
+                <div className="flex-1 truncate-text text-xs xl:text-xl">
                   {(data as CustomerType).mobile}
                 </div>
               </>
             )}
 
-            <div className="flex items-center gap-2 text-secondary-foreground">
+            <div className="flex items-center gap-2 text-primary-foreground">
               <div
-                className="hover:bg-primary p-1 rounded hover:text-gray-200 duration-200"
+                className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
                 onClick={() => {
                   setActiveId(data.id);
                   setModalAction("update");
@@ -105,7 +109,7 @@ const Table = ({
                 <MdOutlineEdit />
               </div>
               <div
-                className="hover:bg-primary p-1 rounded hover:text-gray-200 duration-200"
+                className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
                 onClick={() => {
                   setActiveId(data.id);
                   setModalAction("delete");
@@ -130,7 +134,7 @@ const Table = ({
       )}
       {modalAction === "update" && (
         <AddFormModal
-          title="Update Employyee"
+          title="Update Employee"
           closeModal={closeModal}
           // setData={setData}
           action={`update${format}`}
