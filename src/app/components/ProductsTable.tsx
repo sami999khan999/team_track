@@ -104,7 +104,7 @@ const ProductsTable = () => {
                 <div className="flex-1 truncate-text">{product.name}</div>
                 <div className="flex-1 truncate-text">{product.rate}</div>
                 <div className="flex-1 truncate-text">
-                  {product.catagory_id}
+                  {product.catagory_name}
                 </div>
                 <div className="flex items-center gap-2 text-secondary-foreground">
                   <div
