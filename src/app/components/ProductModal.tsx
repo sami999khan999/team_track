@@ -1,12 +1,11 @@
 import { ProductType } from "@/types";
-import React, { SetStateAction, useEffect, useState } from "react";
-import Dropdown from "./Dropdown";
-import { DiVim } from "react-icons/di";
 import {
   createProduct,
   deleteProduct,
   updateProduct,
 } from "@/utils/productApiRequests";
+import React, { SetStateAction, useEffect, useState } from "react";
+import CategoryDropdown from "./CategoryDropdown";
 
 const ProductModal = ({
   modalAction,
@@ -116,31 +115,31 @@ const ProductModal = ({
 
   return (
     <div
-      className="flex items-center justify-center absolute bg-gray-400/30 top-0 left-0  z-50 w-full h-full backdrop-blur-md"
+      className="flex items-center justify-center absolute top-0 left-0  z-50 w-full h-full backdrop-blur-md"
       onClick={() => {
         setIsModalOpen((prv) => !prv);
       }}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-[95%] xl:h-[60%] xl:w-[30%] rounded"
+        className="w-[95%] xl:w-[50%] rounded"
       >
         {modalAction === "create" && (
-          <div className="bg-secondary h-full w-full px-4 py-8">
-            <div className="border-b ">
-              <h2 className="text-2xl font-semibold text-gray-700 text-center mb-6">
+          <div className="bg-secondary border border-border_color rounded-xl h-full w-full px-4 py-8">
+            <div className="border-b border-border_color">
+              <h2 className="text-2xl xl:text-3xl font-semibold text-primary-foreground text-center mb-6">
                 Create Product
               </h2>
             </div>
-            <div className="flex flex-col mt-6 gap-8">
-              <div className="flex flex-col xl:gap-4 ">
+            <div className="flex flex-col xl:flex-row mt-6 gap-8">
+              <div className="flex flex-col gap-2 xl:gap-4 xl:w-[50%] ">
                 <div>
                   <input
                     type="text"
                     name="name"
                     value={productName}
                     placeholder="Product Name"
-                    className="border border-gray-300 text-base bg-white rounded py-2 px-6"
+                    className="border border-border_color text-primary-foreground text-base xl:text-lg bg-secondary-foreground rounded-full py-2 px-6"
                     onChange={(e) => {
                       setProductName(e.target.value);
                       setInputError({ ...inputError, name: "" });
@@ -154,7 +153,7 @@ const ProductModal = ({
                     name="rate"
                     value={productRate}
                     placeholder="Product Rate"
-                    className="border border-gray-300 text-base bg-white rounded py-2 px-6"
+                    className="border border-border_color text-primary-foreground text-base xl:text-lg  bg-secondary-foreground rounded-full py-2 px-6"
                     onChange={(e) => {
                       setProductRate(e.target.value);
                       setInputError({ ...inputError, rate: "" });
@@ -162,16 +161,9 @@ const ProductModal = ({
                   />
                   <p className="error_message">{inputError.rate}</p>
                 </div>
-
-                <button
-                  className="bg-primary py-1 px-4 w-full rounded text-gray-200 font-medium tracking-wider hover:bg-primary/90 cursor-pointer duration-200"
-                  onClick={handleCreate}
-                >
-                  Create Product
-                </button>
               </div>
-              <div className="">
-                <Dropdown
+              <div className="xl:w-[50%]">
+                <CategoryDropdown
                   setReload={setReload}
                   reload={reload}
                   setSelectedCategory={setSelectedCategory}
@@ -180,24 +172,30 @@ const ProductModal = ({
                 />
               </div>
             </div>
+            <button
+              className="bg-primary mt-4 py-2 px-4 w-full rounded-full text-lg font-semibold xl:text-xl text-background tracking-wider hover:bg-primary/90 cursor-pointer duration-200"
+              onClick={handleCreate}
+            >
+              Create Product
+            </button>
           </div>
         )}
         {modalAction === "update" && (
-          <div className="bg-secondary h-full w-full px-4 py-8">
-            <div className="border-b ">
-              <h2 className="text-2xl font-semibold text-gray-700 text-center mb-6">
-                Create Product
+          <div className="bg-secondary border border-border_color rounded-xl h-full w-full px-4 py-8">
+            <div className="border-b border-border_color">
+              <h2 className="text-2xl xl:text-3xl font-semibold text-primary-foreground text-center mb-6">
+                Update Product
               </h2>
             </div>
-            <div className="flex flex-col mt-6 gap-8">
-              <div className="flex flex-col xl:gap-4 ">
+            <div className="flex flex-col xl:flex-row mt-6 gap-8">
+              <div className="flex flex-col gap-2 xl:gap-4 xl:w-[50%] ">
                 <div>
                   <input
                     type="text"
                     name="name"
                     value={productName}
                     placeholder="Product Name"
-                    className="border border-gray-300 text-base bg-white rounded py-2 px-6"
+                    className="border border-border_color text-base xl:text-lg bg-secondary-foreground text-primary-foreground rounded-full py-2 px-6"
                     onChange={(e) => {
                       setProductName(e.target.value);
                       setInputError({ ...inputError, name: "" });
@@ -211,7 +209,7 @@ const ProductModal = ({
                     name="rate"
                     value={productRate}
                     placeholder="Product Rate"
-                    className="border border-gray-300 text-base bg-white rounded py-2 px-6"
+                    className="border border-border_color text-primary-foreground text-base xl:text-lg  bg-secondary-foreground rounded-full py-2 px-6"
                     onChange={(e) => {
                       setProductRate(e.target.value);
                       setInputError({ ...inputError, rate: "" });
@@ -219,16 +217,9 @@ const ProductModal = ({
                   />
                   <p className="error_message">{inputError.rate}</p>
                 </div>
-
-                <button
-                  className="bg-primary py-1 px-4 w-full rounded text-gray-200 font-medium tracking-wider hover:bg-primary/90 cursor-pointer duration-200"
-                  onClick={handleUpdate}
-                >
-                  Create Product
-                </button>
               </div>
-              <div className="">
-                <Dropdown
+              <div className="xl:w-[50%]">
+                <CategoryDropdown
                   setReload={setReload}
                   reload={reload}
                   setSelectedCategory={setSelectedCategory}
@@ -237,37 +228,43 @@ const ProductModal = ({
                 />
               </div>
             </div>
+            <button
+              className="bg-primary mt-4 py-2 px-4 w-full rounded-full text-lg font-semibold xl:text-xl text-background tracking-wider hover:bg-primary/90 cursor-pointer duration-200"
+              onClick={handleUpdate}
+            >
+              Update Product
+            </button>
           </div>
         )}
         {modalAction === "delete" && (
           <div
-            className="flex items-center justify-center absolute bg-gray-400/30 top-0 left-0  z-50 w-full h-full backdrop-blur-md"
+            className="flex items-center justify-center absolute  top-0 left-0  z-50 w-full h-full backdrop-blur-md"
             onClick={() => setIsModalOpen((prv) => !prv)}
           >
             <div
-              className="bg-gray-100 rounded py-5 px-3 xl:px-5 w-[90%] xl:w-[30%]"
+              className="bg-secondary border border-border_color rounded-xl py-5 px-3 xl:px-5 w-[90%] xl:w-[35%]"
               onClick={(e) => e.stopPropagation()}
             >
-              <h2 className="text-center font-semibold xl:text-2xl text-gray-800 mb-3">
+              <h2 className="text-center font-semibold xl:text-2xl text-primary-foreground mb-3">
                 Delete Product
               </h2>
 
-              <p className="text-xs xl:text-lg">
+              <p className="text-xs xl:text-xl text-primary-foreground  ">
                 Would you like to delete
                 <span className="text-primary font-semibold ">
-                  {`{ id: ${activeProduct?.id} | Product: ${activeProduct?.name} }`}
+                  {`{ id: ${activeProduct?.id} | Product: ${activeProduct?.name} } `}
                 </span>
                 this Product?
               </p>
               <div className="flex justify-end gap-2 xl:gap-3 mt-2 xl:mt-4">
                 <button
-                  className="bg-slate-200 xl:text-lg text-sm px-4 xl:px-6 xl:py-1 py-1 rounded-sm"
+                  className="bg-primary-foreground hover:bg-gray-300 duration-200 font-semibold tracking-wide xl:text-lg text-background text-sm px-4 xl:px-6 xl:py-1 py-1 rounded-md"
                   onClick={() => setIsModalOpen((prv) => !prv)}
                 >
                   Cancle
                 </button>
                 <button
-                  className="bg-primary text-gray-100 xl:text-lg text-sm px-4 xl:px-6 xl:py-1 py-1 rounded-sm"
+                  className="bg-primary text-background font-semibold tracking-wide hover:bg-[#0ea30e] duration-200 rounded-md xl:text-lg text-sm px-4 xl:px-6 xl:py-1 py-1"
                   onClick={deleteHandler}
                 >
                   Delete

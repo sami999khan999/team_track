@@ -1,10 +1,10 @@
-import EmployeeTable from "@/app/components/EmployeeTable";
+import ProductionTable from "@/app/components/ProductionTable";
 import React from "react";
 
 const page = () => {
   return (
     <div>
-      <EmployeeTable />
+      <ProductionTable />
     </div>
   );
 };

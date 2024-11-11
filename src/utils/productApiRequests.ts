@@ -1,5 +1,4 @@
 import { CreateProductType } from "@/types";
-import { ResponseCookies } from "next/dist/compiled/@edge-runtime/cookies";
 
 export const createProduct = async (product: CreateProductType) => {
   try {

@@ -39,14 +39,14 @@ const Table = ({
 
   return (
     <div>
-      <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-xl text-xs gap-2 mt-3 bg-background font-semibold tracking-wide">
+      <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 bg-background font-semibold tracking-wide uppercase">
         {columns.map((col, i) => {
           return (
             <p
               key={i}
               className={`${
-                i === 0 ? "w-1/12 uppercase" : "flex-1 capitalize "
-              } cursor-pointer`}
+                i === 0 ? "w-1/12 " : "flex-1 "
+              } cursor-pointer truncate-text`}
             >
               {col}
             </p>
@@ -65,17 +65,17 @@ const Table = ({
                 <div className="w-1/12 text-xs xl:text-xl">
                   {(data as EmployeeType).id}
                 </div>
-                <div className="flex-1 text-xs xl:text-xl">
+                <div className="flex-1 truncate-text text-xs xl:text-xl">
                   {(data as EmployeeType).name}
                 </div>
                 <div className="flex-1 truncate-text text-xs xl:text-xl">
                   {(data as EmployeeType).address}
                 </div>
                 <div className="flex-1 truncate-text text-xs xl:text-xl">
-                  {(data as EmployeeType).mobile}
+                  {(data as EmployeeType).nid_no}
                 </div>
                 <div className="flex-1 truncate-text text-xs xl:text-xl">
-                  {(data as EmployeeType).nid_no}
+                  {(data as EmployeeType).mobile}
                 </div>
               </>
             ) : (

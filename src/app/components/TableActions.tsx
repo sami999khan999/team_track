@@ -2,15 +2,16 @@ import React, { SetStateAction } from "react";
 import { IoFilterSharp } from "react-icons/io5";
 import { MdOutlineSort } from "react-icons/md";
 import { HiPlus } from "react-icons/hi";
+import { CiShoppingCart } from "react-icons/ci";
 
 const TableActions = ({
   setIsOpen,
   tableName,
   setModalAction,
 }: {
-  setIsOpen: React.Dispatch<SetStateAction<boolean>>;
+  setIsOpen?: React.Dispatch<SetStateAction<boolean>>;
   tableName: string;
-  setModalAction: React.Dispatch<
+  setModalAction?: React.Dispatch<
     SetStateAction<"create" | "update" | "delete" | undefined>
   >;
 }) => {
@@ -23,8 +24,8 @@ const TableActions = ({
       <div
         className=" xl:w-fit ml-auto mb-3"
         onClick={() => {
-          setIsOpen((prv) => !prv);
-          setModalAction("create");
+          setIsOpen!((prv) => !prv);
+          setModalAction!("create");
         }}
       >
         <div className="bg-primary text-sm lg:text-xl w-full xl:w-fit text-center py-2 lg:py-3 px-3 lg:px-5 flex items-center gap-3 rounded-full self-end text-secondary font-medium hover:bg-primary/90 duration-300 group justify-center cursor-pointer mb-5">
@@ -37,8 +38,9 @@ const TableActions = ({
       </div>
 
       <div className="flex flex-col xl:flex-row gap-4 justify-between text-center ">
-        <div className="text-xl xl:text-2xl font-semibold tracking-wide text-primary-foreground">
-          {`${tableName}`}
+        <div className="text-xl flex items-center justify-center gap-4 xl:text-left font-sour_gummy xl:text-3xl font-semibold tracking-wider text-primary-foreground">
+          <CiShoppingCart className="text-2xl xl:text-4xl font-bold" />
+          <p>{`${tableName}`}</p>
         </div>
         <div className="flex gap-2 justify-around">
           <input
