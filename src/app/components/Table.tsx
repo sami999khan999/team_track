@@ -27,10 +27,10 @@ const Table = ({
   //   setActiveId(activeId === id ? null : id);
   // };
 
-  const openModal = (action: "update" | "delete", id: number) => {
-    setModalAction(action);
-    setActiveId(id);
-  };
+  // const openModal = (action: "update" | "delete", id: number) => {
+  //   setModalAction(action);
+  //   setActiveId(id);
+  // };
 
   const closeModal = () => {
     setModalAction(null);

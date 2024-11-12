@@ -217,7 +217,7 @@ const AddFormModal = ({
             {title}
           </h2>
           <p className="text-primary-foreground text-xs xl:text-base mt-6 text-center">
-            Please fill out the form with the employee's{" "}
+            {`${"Please fill out the form with the employee's"}`}
             <span className="text-primary">
               {action === "addEmployee"
                 ? "Name, Address, Phone Number, and NID."

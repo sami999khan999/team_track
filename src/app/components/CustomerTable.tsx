@@ -21,9 +21,6 @@ const CustomerTable = () => {
   const [totalPage, setTotalPage] = useState<number | undefined>(undefined);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [reload, setReload] = useState(true);
-  const [modalAction, setModalAction] = useState<
-    "create" | "update" | "delete" | undefined
-  >();
 
   const handlePrevious = () => {
     if (currentPage > 1) {
@@ -101,11 +98,7 @@ const CustomerTable = () => {
       )}
 
       <div className="w-full h-fit bg-secondary shadow-2xl shadow-[#19253859] px-2 py-6 xl:py-8 xl:px-8 rounded-xl">
-        <TableActions
-          setIsOpen={setIsFormOpen}
-          tableName="Customer"
-          setModalAction={setModalAction}
-        />
+        <TableActions setIsOpen={setIsFormOpen} tableName="Customer" />
 
         {/* Table */}
         <Table

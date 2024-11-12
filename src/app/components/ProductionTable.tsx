@@ -1,15 +1,14 @@
 "use client";
 
+import { PorductionType } from "@/types";
+import { getProduction } from "@/utils/productionApiRequests";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import TableActions from "./TableActions";
-import Pagination from "./Pagination";
-import { getProduction } from "@/utils/productionApiRequests";
-import ProductionModal from "./ProductionModal";
-import { PorductionType, ProductType } from "@/types";
-import { create } from "domain";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import Pagination from "./Pagination";
+import ProductionModal from "./ProductionModal";
+import TableActions from "./TableActions";
 
 const ProductionTable = () => {
   const path = useRouter();
@@ -82,6 +81,7 @@ const ProductionTable = () => {
           <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 bg-background font-semibold tracking-wide uppercase">
             {columns.map((col, i) => (
               <div
+                key={i}
                 className={`text-primary-foreground uppercase ${
                   i === 0 ? "w-1/12" : "flex-1"
                 }`}
@@ -93,7 +93,10 @@ const ProductionTable = () => {
           </div>
           <div>
             {production.map((item, i) => (
-              <div className="flex text-primary-foreground justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 relative hover:bg-secondary-foreground duration-200 font-medium">
+              <div
+                key={i}
+                className="flex text-primary-foreground justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 relative hover:bg-secondary-foreground duration-200 font-medium"
+              >
                 <div className="w-1/12 truncate-text">{item.id}</div>
                 <div className="flex-1 truncate-text">{item.products.name}</div>
                 <div className="flex-1 truncate-text">{item.employee.name}</div>
