@@ -86,3 +86,10 @@ export type PorductionType = {
   quantity: number;
   rate: number;
 };
+
+export type CreatePorductionType = {
+  employee_id: number;
+  products_id: number;
+  rate: number;
+  quantity: number;
+};
