@@ -35,21 +35,21 @@ const Pagination = ({
     <div>
       {totalPage! < 2 || (
         <div className="flex items-center mt-6 xl:gap-4 justify-center mb-16 xl:mb-0 ">
-          <div className="flex items-center justify-center text-sm xl:text-xl gap-5 border border-border_color xl:px-8 px-3 rounded-md w-fit cursor-pointer font-semibold">
+          <div className="flex items-center justify-center text-sm xl:text-xl gap-5 xl:px-8 px-3 rounded-md w-fit cursor-pointer font-semibold">
             <button
-              className="text-primary-foreground "
+              className="text-primary-foreground hover:bg-primary hover:text-background py-1 rounded-full"
               onClick={handlePrevious}
               disabled={currentPage === 1}
             >
               <IoIosArrowBack />
             </button>
 
-            <div className=" flex gap-3 justify-center items-center text-primary-foreground">
-              <div className=" xl:w-[10rem] flex items-center">
+            <div className="flex justify-center items-center text-primary-foreground">
+              <div className=" flex gap-3 items-center">
                 {pageNumber().map((i) => (
                   <div
                     key={i}
-                    className={`px-2 py-1 text-center ${
+                    className={`text-center px-2 rounded-full ${
                       currentPage === i && "bg-primary text-secondary"
                     } `}
                     onClick={() =>
@@ -77,7 +77,7 @@ const Pagination = ({
             </div>
 
             <button
-              className="text-primary-foreground hover:bg-secondary-foreground py-1"
+              className="text-primary-foreground hover:bg-primary rounded-full hover:text-background py-1"
               onClick={handleNext}
               disabled={currentPage === totalPage}
             >

@@ -46,33 +46,33 @@ const DeleteModal = ({
 
   return (
     <div
-      className="flex items-center justify-center absolute bg-gray-400/30 top-0 left-0  z-50 w-full h-full backdrop-blur-md"
+      className="flex items-center justify-center absolute  top-0 left-0  z-50 w-full h-full backdrop-blur-md"
       onClick={closeModal}
     >
       <div
-        className="bg-gray-100 rounded py-5 px-3 xl:px-5 w-[90%] xl:w-[30%]"
+        className="bg-secondary border border-border_color rounded-xl py-5 px-3 xl:px-5 w-[90%] xl:w-[35%]"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-center font-semibold xl:text-2xl text-gray-800 mb-3">
-          Delete Employee
+        <h2 className="text-center font-semibold xl:text-2xl text-primary-foreground mb-3">
+          {path === "/employees" ? "Delete Employee" : "Delete Customer"}
         </h2>
 
-        <p className="text-xs xl:text-lg">
+        <p className="text-xs xl:text-xl text-primary-foreground">
           Would you like to delete{" "}
           <span className="text-primary font-semibold ">
-            {`{ id: ${activeElement?.id} | Name: ${activeElement?.name} }`}
+            {`{ id: ${activeElement?.id} | Name: ${activeElement?.name} } `}
           </span>
           this employee?
         </p>
         <div className="flex justify-end gap-2 xl:gap-3 mt-2 xl:mt-4">
           <button
-            className="bg-slate-200 xl:text-lg text-sm px-4 xl:px-6 xl:py-1 py-1 rounded-sm"
+            className="bg-primary-foreground hover:bg-gray-300 duration-200 font-semibold tracking-wide xl:text-lg text-background text-sm px-4 xl:px-6 xl:py-1 py-1 rounded-md"
             onClick={closeModal}
           >
             Cancle
           </button>
           <button
-            className="bg-primary text-gray-100 xl:text-lg text-sm px-4 xl:px-6 xl:py-1 py-1 rounded-sm"
+            className="bg-primary text-background font-semibold tracking-wide hover:bg-[#0ea30e] duration-200 rounded-md xl:text-lg text-sm px-4 xl:px-6 xl:py-1 py-1"
             onClick={deleteHandler}
           >
             Delete

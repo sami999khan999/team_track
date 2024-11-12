@@ -14,7 +14,7 @@ import {
 } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 
-const Dropdown = ({
+const CategoryDropdown = ({
   setReload,
   reload,
   selectedCategory,
@@ -87,15 +87,15 @@ const Dropdown = ({
 
   return (
     <>
-      <div className="relative">
+      <div className="">
         <div className="flex justify-center items-center">
           <div className="items-center space-y-2 w-full relative">
             <div
-              className="flex items-center justify-between gap-3 bg-white hover:bg-white border py-2 w-full rounded px-6 cursor-pointer group border-gray-300"
+              className="flex items-center justify-between gap-3 border border-border_color bg-secondary-foreground  text-primary-foreground py-2 w-full rounded-full px-6 cursor-pointer group font-semibold"
               onClick={() => setDropdownOpen((prv) => !prv)}
             >
               <p
-                className={`text-sm ${
+                className={`text-base xl:text-xl ${
                   selectedCategory === "Inter a category!" && "text-red-500"
                 }`}
               >
@@ -107,10 +107,10 @@ const Dropdown = ({
             </div>
             <div>
               <div
-                className="py-1 flex items-center gap-3 w-full bg-white rounded justify-center hover:bg-white duration-200 cursor-pointer border"
+                className="py-2 xl:text-lg flex items-center gap-3 w-full bg-secondary-foreground text-primary-foreground font-semibold justify-center border border-border_color duration-200 cursor-pointer rounded-full mt-4"
                 onClick={() => setInputOpen((prv) => !prv)}
               >
-                <p className="text-base">Add Category</p>
+                <p>Add Category</p>
                 <IoMdAdd />
               </div>
             </div>
@@ -123,12 +123,12 @@ const Dropdown = ({
                   type="text"
                   placeholder="Enter new category"
                   name="category"
-                  className="w-full px-5 py-1 text-base border-gray-300 rounded-l-md rounded-r-none focus:outline-none"
+                  className="w-full px-6 text-xl text-primary-foreground h-10 bg-secondary-foreground border font-medium border-border_color rounded-l-full rounded-r-none focus:outline-none "
                   value={categoryInput}
                   onChange={(e) => setCategoryInput(e.target.value)}
                 />
                 <div
-                  className="border px-5 py-2 border-gray-300 bg-gray-100 hover:bg-white rounded rounded-r-md rounded-l-none"
+                  className="px-5 border border-border_color h-10 flex items-center text-3xl bg-secondary-foreground hover:bg-secondary text-primary-foreground rounded rounded-r-full rounded-l-none duration-200"
                   onClick={addCtegory}
                 >
                   <IoIosArrowRoundForward />
@@ -138,12 +138,12 @@ const Dropdown = ({
 
             {dropdownOpen ? (
               <div
-                className="absolute w-full h-[10rem] overflow-auto rounded-md z-50 remove-scrollbar bg-white"
+                className="absolute w-full h-[10rem] transition-transform ease-in-out duration-200 overflow-auto rounded-lg z-50 remove-scrollbar bg-secondary-foreground border border-border_color"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="p-2">
                   {categories?.map((category) => (
-                    <div className="flex w-full items-center bg-secondary mt-1 hover:bg-white px-1">
+                    <div className="flex w-full items-center bg-secondary text-primary-foreground text-lg capitalize font-semibold tracking-wide mt-1  hover:bg-background duration-200 rounded-md px-1">
                       <div
                         key={category.id}
                         className="py-1 px-4 cursor-pointer rounded-md w-full "
@@ -152,10 +152,13 @@ const Dropdown = ({
                           setCategoryId(category.id);
                         }}
                       >
-                        {category.name}
+                        <div className="flex gap-2">
+                          <p>{category.id}.</p>
+                          <p>{category.name}</p>
+                        </div>
                       </div>
                       <div
-                        className="ml-auto bg-black"
+                        className="ml-auto bg-secondary-foreground hover:bg-primary rounded-sm text-primary-foreground hover:text-background duration-200"
                         onClick={() => deleteCategory(category.id)}
                       >
                         <RxCross2 />
@@ -178,4 +181,4 @@ const Dropdown = ({
   );
 };
 
-export default Dropdown;
+export default CategoryDropdown;

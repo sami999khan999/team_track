@@ -85,12 +85,12 @@ const ProductsTable = () => {
         />
 
         <div>
-          <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-xl text-xs gap-2 mt-3 bg-background font-semibold tracking-wide capitalize ">
+          <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 bg-background font-semibold tracking-wide uppercase ">
             {columns.map((cols, i) => (
               <div
-                className={`${
+                className={`truncate-text ${
                   i === 0
-                    ? "w-1/12 uppercase                                                     "
+                    ? "w-1/12                                                      "
                     : "flex-1"
                 } `}
               >

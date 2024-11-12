@@ -43,7 +43,7 @@ const EmployeeTable = () => {
     const fetchEmployees = async () => {
       const response = await getEmployee(currentPage);
 
-      if (response.success && response.data) {
+      if (response.success) {
         const firstElememt = response.data.shift();
         const totalPages = firstElememt ? firstElememt.total_page : undefined;
 

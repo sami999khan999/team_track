@@ -72,9 +72,17 @@ export type reateCategoryType = {
   name: string;
 };
 
-// export type ProductType = {
-//   id: number;
-//   name: string;
-//   rate: number;
-
-// }
+export type PorductionType = {
+  id: number;
+  products: {
+    id: number;
+    name: string;
+    rate?: number;
+  };
+  employee: {
+    id: number;
+    name: string;
+  };
+  quantity: number;
+  rate: number;
+};
