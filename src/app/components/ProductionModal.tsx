@@ -1,17 +1,25 @@
 "use client";
 
-import { EmployeeType, ProductType } from "@/types";
+import { EmployeeType, PorductionType, ProductType } from "@/types";
 import { getEmployee } from "@/utils/employeeApiRequest";
 import { getProducts } from "@/utils/productApiRequests";
 import React, { SetStateAction, useEffect, useState } from "react";
 import ProductionDropdown from "./ProductionDropdown";
+import {
+  createProduction,
+  updateProduction,
+} from "@/utils/productionApiRequests";
 
 const ProductionModal = ({
   setIsOpen,
   defalutValue,
+  action,
+  setReload,
 }: {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
-  defalutValue?: ProductType | undefined;
+  defalutValue?: PorductionType | undefined;
+  action: "create" | "update" | "delete" | undefined;
+  setReload: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   const [productCurrentPage, setProductCurrentPage] = useState(1);
   const [productsTotalPage, setProductsTotalPage] = useState<
@@ -26,11 +34,14 @@ const ProductionModal = ({
   const [employees, setEmployees] = useState<EmployeeType[]>();
 
   const [productionInput, setProductionInput] = useState({
-    rate: undefined,
-    quantity: undefined,
+    rate: defalutValue ? defalutValue.rate : undefined,
+    quantity: defalutValue ? defalutValue.quantity : undefined,
   });
-  const [employeeId, setEmployeeId] = useState<number | undefined>();
-  const [productId, setProductId] = useState<number | undefined>();
+  const [employeeId, setEmployeeId] = useState<number | undefined>(undefined);
+  const [productId, setProductId] = useState<number | undefined>(undefined);
+
+  console.log(employeeId);
+  console.log(productId);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProductionInput({
@@ -39,9 +50,41 @@ const ProductionModal = ({
     });
   };
 
-  const createPorduction = () => {
-    console.log(typeof productionInput.quantity);
+  const handleSubmit = async () => {
+    const data = {
+      rate: Number(productionInput.rate),
+      quantity: Number(productionInput.quantity),
+      employee_id: Number(employeeId),
+      products_id: Number(productId),
+    };
+
+    // console.log(data);
+    // console.log(defalutValue?.id);
+
+    if (action === "create") {
+      const response = await createProduction(data);
+
+      if (response.success) {
+        setIsOpen(false);
+        setReload((prv) => !prv);
+      }
+    }
+
+    if (action === "update") {
+      console.log(data);
+      const response = await updateProduction(defalutValue?.id, data);
+
+      if (response.success) {
+        setIsOpen(false);
+        setReload((prv) => !prv);
+      }
+    }
   };
+
+  useEffect(() => {
+    setEmployeeId(defalutValue ? defalutValue.employee.id : undefined);
+    setProductId(defalutValue ? defalutValue.products.id : undefined);
+  }, []);
 
   useEffect(() => {
     const getEmployees = async () => {
@@ -73,7 +116,7 @@ const ProductionModal = ({
 
   return (
     <div
-      className="absolute top-0 left-0 w-full h-full backdrop-blur-md flex items-center justify-center"
+      className="absolute top-0 left-0 w-full h-full backdrop-blur-md flex items-center justify-center z-20"
       onClick={() => setIsOpen((prv) => !prv)}
     >
       <div
@@ -85,20 +128,24 @@ const ProductionModal = ({
             <div className="text-xl xl:text-3xl font-semibold flex flex-col items-center justify-center gap-2">
               <p>Update Production</p>
               <div className="hidden xl:block text-base w-[60%]">
-                This section covers updating product, employee, and quantity
-                details, including product id, name, optional rate, employee id
-                and name, as well as quantity and rate values for accurate data
-                handling.
+                To update production records, include{" "}
+                <span className="text-primary">
+                  dropdowns for selecting an employee and product
+                </span>
+                , along with input fields for rate and quantity. This ensures
+                accurate assignments and streamlines data tracking.
               </div>
             </div>
           ) : (
             <div className="text-xl xl:text-3xl font-semibold flex flex-col items-center justify-center gap-2">
               <p>Creaate Production</p>
               <div className="hidden xl:block text-base w-[60%]">
-                This section handles creating details for products, employees,
-                and quantities. It includes fields like product id, name, and
-                optional rate, along with employee id and name. The quantity and
-                rate values ensure precise data tracking and management.
+                To create production records, include{" "}
+                <span className="text-primary">
+                  dropdowns for selecting an employee and product
+                </span>
+                , along with input fields for rate and quantity. This ensures
+                accurate assignments and streamlines data tracking.
               </div>
             </div>
           )}
@@ -159,7 +206,7 @@ const ProductionModal = ({
         <div className="w-full flex items-center justify-center mt-5 xl:mt-8">
           <button
             className="bg-primary w-full py-2 xl:py-3 font-semibold text-background text-base xl:text-[1.4rem] rounded-full"
-            onClick={createPorduction}
+            onClick={handleSubmit}
           >
             {defalutValue ? "Update" : "Create"} Production
           </button>
