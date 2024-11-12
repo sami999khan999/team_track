@@ -54,8 +54,8 @@ const ProductionModal = ({
     const data = {
       rate: Number(productionInput.rate),
       quantity: Number(productionInput.quantity),
-      employee_id: Number(employeeId),
-      products_id: Number(productId),
+      employee: Number(employeeId),
+      products: Number(productId),
     };
 
     // console.log(data);
@@ -84,7 +84,7 @@ const ProductionModal = ({
   useEffect(() => {
     setEmployeeId(defalutValue ? defalutValue.employee.id : undefined);
     setProductId(defalutValue ? defalutValue.products.id : undefined);
-  }, []);
+  }, [defalutValue]);
 
   useEffect(() => {
     const getEmployees = async () => {

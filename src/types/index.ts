@@ -88,8 +88,8 @@ export type PorductionType = {
 };
 
 export type CreatePorductionType = {
-  employee_id: number;
-  products_id: number;
+  employee: number;
+  products: number;
   rate: number;
   quantity: number;
 };

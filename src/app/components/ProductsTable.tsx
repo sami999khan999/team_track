@@ -88,6 +88,7 @@ const ProductsTable = () => {
           <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 bg-background font-semibold tracking-wide uppercase ">
             {columns.map((cols, i) => (
               <div
+                key={i}
                 className={`truncate-text ${
                   i === 0
                     ? "w-1/12                                                      "
@@ -102,6 +103,7 @@ const ProductsTable = () => {
           <div className="">
             {products.map((product, i) => (
               <div
+                key={i}
                 className={`flex justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 xl:text-xl gap-2 text-xs  text-primary-foreground font-medium relative hover:bg-secondary-foreground duration-200`}
               >
                 <div className="w-1/12 truncate-text">{product.id}</div>

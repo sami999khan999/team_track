@@ -1,4 +1,3 @@
-import { reateCategoryType } from "@/types";
 import { CreateContextOptions } from "vm";
 
 export const getCategories = async () => {

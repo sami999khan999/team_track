@@ -1,6 +1,6 @@
 "use client";
 
-import { CategoryType, ProductType } from "@/types";
+import { CategoryType } from "@/types";
 import {
   categoryDelete,
   createCategory,
@@ -57,7 +57,7 @@ const CategoryDropdown = ({
       setReload((prv) => !prv);
       setSelectedCategory("");
     } else {
-      response.message;
+      console.log(response.message);
     }
   };
 
@@ -80,7 +80,6 @@ const CategoryDropdown = ({
         setCategories(response.data);
       }
     };
-    console.log(categories);
 
     fetchCategories();
   }, [reload]);
@@ -142,10 +141,10 @@ const CategoryDropdown = ({
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="p-2">
-                  {categories?.map((category) => (
+                  {categories?.map((category, i) => (
                     <div className="flex w-full items-center bg-secondary text-primary-foreground text-lg capitalize font-semibold tracking-wide mt-1  hover:bg-background duration-200 rounded-md px-1">
                       <div
-                        key={category.id}
+                        key={i}
                         className="py-1 px-4 cursor-pointer rounded-md w-full "
                         onClick={(event) => {
                           handleCategoryClick(category.name, event);
