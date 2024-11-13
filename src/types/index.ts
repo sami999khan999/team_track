@@ -50,13 +50,13 @@ export type ProductType = {
   id: number | string;
   name: string;
   rate: number | string;
-  catagory_name: string;
+  category: string;
 };
 
 export type CreateProductType = {
   name: string;
   rate: number | undefined;
-  catagory_id: number | undefined;
+  category: number | undefined;
 };
 
 export type CategoryType = {
@@ -70,7 +70,7 @@ export type reateCategoryType = {
 
 export type PorductionType = {
   id: number;
-  products: {
+  product: {
     id: number;
     name: string;
     rate?: number;
@@ -81,11 +81,58 @@ export type PorductionType = {
   };
   quantity: number;
   rate: number;
+  date: string;
+  payment: string;
 };
 
 export type CreatePorductionType = {
-  employee: number;
-  products: number;
-  rate: number;
+  employee: number | undefined;
+  product: number | undefined;
+  rate: number | undefined;
+  quantity: number | undefined;
+};
+
+export type InventoryType = {
+  id: number;
+  product: {
+    id: number;
+    name: string;
+  };
+  employee: {
+    id: number;
+    name: string;
+  };
+  production: number;
   quantity: number;
+  status: "IN-STOCK" | "OUT-OF-STOCK";
+  date: string;
+};
+
+export type CreateInventoryType = {
+  production: number | undefined;
+  current_status: string | undefined;
+};
+
+export type DropdownType = {
+  id?: number | string;
+  name?: string;
+  rate?: number | string;
+  catagory_name?: string;
+
+  address?: string;
+  mobile?: string;
+  nid_no?: string;
+
+  product?: {
+    id: number;
+    name: string;
+    rate?: number;
+  };
+  employee?: {
+    id: number;
+    name: string;
+  };
+  quantity?: number;
+
+  status?: string;
 };

@@ -9,6 +9,7 @@ import { GrUserWorker } from "react-icons/gr";
 import { LuFactory } from "react-icons/lu";
 import {
   MdDashboard,
+  MdOutlineInventory,
   MdOutlinePayment,
   MdOutlineProductionQuantityLimits,
 } from "react-icons/md";
@@ -22,6 +23,7 @@ export const navLinks = [
     logo: <MdOutlineProductionQuantityLimits />,
   },
   { path: "/production", name: "Production", logo: <LuFactory /> },
+  { path: "/inventory", name: "Inventory", logo: <MdOutlineInventory /> },
   { path: "/employees", name: "Employees", logo: <GrUserWorker /> },
   { path: "/customers", name: "Customers", logo: <RiCustomerServiceFill /> },
   { path: "/invoice", name: "Invoice", logo: <FaFileInvoice /> },
@@ -36,7 +38,7 @@ const NavLinks = () => {
 
   return (
     <div className="flex xl:flex-col xl:rounded-none justify-around xl:justify-between h-full">
-      <div className="flex xl:flex-col justify-center xl:justify-start gap-3">
+      <div className="flex xl:flex-col justify-center xl:justify-start gap-2">
         {/* Sidebar Menu Icon */}
         <div className="hidden xl:block group mb-6 ">
           <div className="relative px-6 h-[5.4rem] flex items-center mb-3 text-3xl gap-2 text bg-primary">

@@ -73,7 +73,7 @@
   }
 
   .error_message {
-    @apply text-xs ml-1 xl:text-lg font-medium;
+    @apply text-red-700 text-sm xl:text-lg font-medium px-3;
   }
 
   .truncate-text {

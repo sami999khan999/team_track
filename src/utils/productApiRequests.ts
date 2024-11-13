@@ -11,6 +11,7 @@ export const createProduct = async (product: CreateProductType) => {
     });
 
     const data = await response.json();
+    console.log(data);
 
     if (!response.ok) {
       return {
@@ -106,9 +107,8 @@ export const updateProduct = async (
         body: JSON.stringify(product),
       }
     );
-    console.log(response);
+
     const data = await response.json();
-    console.log(data);
 
     if (!response.ok) {
       return {

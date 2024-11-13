@@ -5,19 +5,23 @@ import React, { SetStateAction } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const Pagination = ({
-  handleNext,
-  handlePrevious,
   totalPage,
   setCurrentPage,
   currentPage,
 }: {
-  handleNext: () => void;
-  handlePrevious: () => void;
   totalPage: number | undefined;
   setCurrentPage: React.Dispatch<SetStateAction<number>>;
   currentPage: number;
 }) => {
   const path = useRouter();
+
+  const handleNext = () => {
+    setCurrentPage((pre) => pre + 1);
+  };
+
+  const handlePrevious = () => {
+    setCurrentPage((pre) => pre - 1);
+  };
 
   const pageNumber = () => {
     const pages: number[] = [];

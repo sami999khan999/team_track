@@ -19,23 +19,6 @@ const EmployeeTable = () => {
   const [totalPage, setTotalPage] = useState<number | undefined>(undefined);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [reload, setReload] = useState(true);
-  const [modalAction, setModalAction] = useState<
-    "create" | "update" | "delete" | undefined
-  >();
-
-  // console.log(reload);
-
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentPage < (totalPage || 0)) {
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
 
   const columns = employees?.length > 0 ? Object.keys(employees[0]) : [];
 
@@ -84,11 +67,7 @@ const EmployeeTable = () => {
       )}
 
       <div className="w-full h-fit bg-secondary shadow-2xl shadow-[#19253859] px-2 py-6 xl:py-8 xl:px-8 rounded-xl">
-        <TableActions
-          setIsOpen={setIsFormOpen}
-          tableName="Employee"
-          setModalAction={setModalAction}
-        />
+        <TableActions setIsOpen={setIsFormOpen} tableName="Employee" />
 
         {/* Table */}
         <Table
@@ -99,8 +78,6 @@ const EmployeeTable = () => {
         />
 
         <Pagination
-          handleNext={handleNext}
-          handlePrevious={handlePrevious}
           totalPage={totalPage}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}

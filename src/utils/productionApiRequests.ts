@@ -6,10 +6,7 @@ export const getProduction = async (page: number) => {
       `http://127.0.0.1:8000/api/production/view/${page}/`
     );
 
-    console.log(response);
-
     const data = await response.json();
-    console.log(data);
 
     if (!response.ok) {
       return {
@@ -34,6 +31,7 @@ export const getProduction = async (page: number) => {
 
 export const createProduction = async (production: CreatePorductionType) => {
   try {
+    console.log(production);
     const response = await fetch(
       "http://127.0.0.1:8000/api/production/create/",
       {
@@ -45,6 +43,7 @@ export const createProduction = async (production: CreatePorductionType) => {
       }
     );
 
+    console.log(response);
     const data = await response.json();
 
     if (!response.ok) {
@@ -103,6 +102,33 @@ export const updateProduction = async (
     return {
       success: false,
       message: "Error updating production",
+    };
+  }
+};
+
+export const deleteProduction = async (id: number | undefined) => {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/production/delete/${id}/`
+    );
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message || "Can't delete production",
+      };
+    }
+
+    return {
+      success: true,
+      message: data.message || "Production deleted successfully",
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Error deleting production",
     };
   }
 };

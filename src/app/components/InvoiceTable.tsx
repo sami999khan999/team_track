@@ -1,62 +1,54 @@
 "use client";
 
-import { EmployeeType } from "@/types";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { IoFilterSharp } from "react-icons/io5";
-import { MdOutlineSort } from "react-icons/md";
-import CreateInvoice from "./CreateInvoice";
-import Pagination from "./Pagination";
-
-const invoices = [
-  {
-    id: 1,
-    customer_id: 101,
-    produced_goods: [
-      { employee_id: 1, Quantity: "20+2" },
-      { employee_id: 2, Quantity: "15+3" },
-    ],
-    grand_total: 2500,
-    created_at: "2024-01-15T10:30:00Z",
-  },
-  {
-    id: 2,
-    customer_id: 102,
-    produced_goods: [
-      { employee_id: 3, Quantity: "30+5" },
-      { employee_id: 4, Quantity: "10+1" },
-    ],
-    grand_total: 5300,
-    created_at: "2024-01-20T14:15:00Z",
-  },
-  {
-    id: 3,
-    customer_id: 103,
-    produced_goods: [{ employee_id: 5, Quantity: "12+2" }],
-    grand_total: 1200,
-    created_at: "2024-02-02T09:45:00Z",
-  },
-  {
-    id: 4,
-    customer_id: 104,
-    produced_goods: [
-      { employee_id: 6, Quantity: "25+5" },
-      { employee_id: 7, Quantity: "40+8" },
-    ],
-    grand_total: 3000,
-    created_at: "2024-02-10T16:00:00Z",
-  },
-  {
-    id: 5,
-    customer_id: 105,
-    produced_goods: [
-      { employee_id: 8, Quantity: "18+4" },
-      { employee_id: 9, Quantity: "22+3" },
-    ],
-    grand_total: 4100,
-    created_at: "2024-03-05T12:00:00Z",
-  },
-];
+// const invoices = [
+//   {
+//     id: 1,
+//     customer_id: 101,
+//     produced_goods: [
+//       { employee_id: 1, Quantity: "20+2" },
+//       { employee_id: 2, Quantity: "15+3" },
+//     ],
+//     grand_total: 2500,
+//     created_at: "2024-01-15T10:30:00Z",
+//   },
+//   {
+//     id: 2,
+//     customer_id: 102,
+//     produced_goods: [
+//       { employee_id: 3, Quantity: "30+5" },
+//       { employee_id: 4, Quantity: "10+1" },
+//     ],
+//     grand_total: 5300,
+//     created_at: "2024-01-20T14:15:00Z",
+//   },
+//   {
+//     id: 3,
+//     customer_id: 103,
+//     produced_goods: [{ employee_id: 5, Quantity: "12+2" }],
+//     grand_total: 1200,
+//     created_at: "2024-02-02T09:45:00Z",
+//   },
+//   {
+//     id: 4,
+//     customer_id: 104,
+//     produced_goods: [
+//       { employee_id: 6, Quantity: "25+5" },
+//       { employee_id: 7, Quantity: "40+8" },
+//     ],
+//     grand_total: 3000,
+//     created_at: "2024-02-10T16:00:00Z",
+//   },
+//   {
+//     id: 5,
+//     customer_id: 105,
+//     produced_goods: [
+//       { employee_id: 8, Quantity: "18+4" },
+//       { employee_id: 9, Quantity: "22+3" },
+//     ],
+//     grand_total: 4100,
+//     created_at: "2024-03-05T12:00:00Z",
+//   },
+// ];
 
 const InvoiceTable = () => {
   // const param = useSearchParams();
