@@ -4,7 +4,7 @@ import { EmployeeType, PorductionType, ProductType } from "@/types";
 import { getEmployee } from "@/utils/employeeApiRequest";
 import { getProducts } from "@/utils/productApiRequests";
 import React, { SetStateAction, useEffect, useState } from "react";
-import ProductionDropdown from "./ProductionDropdown";
+import Dropdown from "./Dropdown";
 import {
   createProduction,
   deleteProduction,
@@ -213,7 +213,7 @@ const ProductionModal = ({
                   and
                   <span className="text-primary font-semibold"> Product</span>
                 </p>
-                <ProductionDropdown
+                <Dropdown
                   data={employees}
                   totalPage={employeesTotalPage}
                   currentPage={employeeCurrentPage}
@@ -225,7 +225,7 @@ const ProductionModal = ({
                 {inputError.employee && (
                   <p className="error_message">{inputError.employee}</p>
                 )}
-                <ProductionDropdown
+                <Dropdown
                   data={products}
                   totalPage={productsTotalPage}
                   currentPage={productCurrentPage}

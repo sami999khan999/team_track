@@ -1,4 +1,4 @@
-import { CreateInventoryType } from "@/types";
+import { CreateInventoryType, InventoryType } from "@/types";
 
 export const createInventory = async (inventory: CreateInventoryType) => {
   try {
@@ -59,6 +59,45 @@ export const getInventory = async (page: number) => {
       success: false,
       message: "An error occurred while fetching the inventory.",
       data: [],
+    };
+  }
+};
+
+export const updateInventory = async (
+  id: number | undefined,
+  inventory: { current_status: string | undefined }
+) => {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/inventory/update/${id}/`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inventory),
+      }
+    );
+    console.log(response);
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message || "Inventory update failed.",
+      };
+    }
+
+    return {
+      success: true,
+      message: data.message || "Inventory updated successfully.",
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "An error occurred while updating the inventory.",
     };
   }
 };

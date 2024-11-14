@@ -1,9 +1,9 @@
 import { InventoryType, PorductionType, ProductType } from "@/types";
 import React, { SetStateAction, useEffect, useState } from "react";
 import DeleteModal from "./DeleteModal";
-import ProductionDropdown from "./ProductionDropdown";
+import Dropdown from "./Dropdown";
 import { getProduction } from "@/utils/productionApiRequests";
-import { createInventory } from "@/utils/inventoryApiRequests";
+import { createInventory, updateInventory } from "@/utils/inventoryApiRequests";
 
 const InventoryModal = ({
   setIsOpen,
@@ -76,8 +76,20 @@ const InventoryModal = ({
         const response = await createInventory(data);
 
         if (response.success) {
-          setIsOpen(false);
-          setReload(true);
+          setIsOpen((prv) => !prv);
+          setReload((prv) => !prv);
+        }
+      }
+
+      if (action === "update") {
+        const updateData = {
+          current_status: data.current_status,
+        };
+        const response = await updateInventory(defaultValue?.id, updateData);
+
+        if (response.success) {
+          setIsOpen((prv) => !prv);
+          setReload((prv) => !prv);
         }
       }
     }
@@ -178,16 +190,22 @@ const InventoryModal = ({
                   <span className="text-primary font-semibold"> Status</span>
                 </p>
                 <div className="space-y-9">
-                  <ProductionDropdown
-                    data={production}
-                    totalPage={productionTotalPage}
-                    currentPage={productionCurrentPage}
-                    setCurrentPage={setProductionCurrentPage}
-                    setId={setProductionId}
-                    defalutValue={defaultValue}
-                    type="production"
-                  />
-                  <ProductionDropdown
+                  {action === "create" ? (
+                    <Dropdown
+                      data={production}
+                      totalPage={productionTotalPage}
+                      currentPage={productionCurrentPage}
+                      setCurrentPage={setProductionCurrentPage}
+                      setId={setProductionId}
+                      defalutValue={defaultValue}
+                      type="production"
+                    />
+                  ) : (
+                    <div className="bg-secondary-foreground text-primary-foreground rounded-full py-2 px-5 border border-border_color text-base xl:text-xl flex items-center justify-between">
+                      <p>{defaultValue?.product.name}</p>
+                    </div>
+                  )}
+                  <Dropdown
                     data={status}
                     currentPage={statusCurrentPage}
                     setCurrentPage={setStatusCurrentPage}
@@ -197,26 +215,50 @@ const InventoryModal = ({
                   />
                 </div>
               </div>
-              <div className="border-b xl:border-l border-border_color"></div>
+              <div className="border-b xl:border-l  border-border_color"></div>
 
-              <div className="xl:w-[50%] space-y-2 xl:space-y-3">
+              <div className="w-full h-[13rem] rounded-lg xl:w-[50%] space-y-2  bg-background xl:space-y-3">
                 {activeProduction && (
-                  <div className="text-primary-foreground text-base xl:text-[21px] flex gap-4">
-                    <div className="flex flex-col gap-2">
-                      <p className="font-semibold">Production ID: </p>
-                      <p className="font-semibold">Product: </p>
-                      <p className="font-semibold">Employee: </p>
-                      <p className="font-semibold">Rate: </p>
-                      <p className="font-semibold">Quantity: </p>
-                      <p className="font-semibold">Date: </p>
+                  <div className="text-primary-foreground rounded-md text-base xl:text-[21px] flex p-3">
+                    <div className="flex flex-col gap-2 w-[40%] xl:w-[25%] ">
+                      <p className="font-semibold bg-secondary px-2 border-r border-border_color">
+                        ID:
+                      </p>
+                      <p className="font-semibold bg-secondary px-2 border-r border-border_color">
+                        Product:
+                      </p>
+                      <p className="font-semibold bg-secondary px-2 border-r border-border_color">
+                        Employee:
+                      </p>
+                      <p className="font-semibold bg-secondary px-2 border-r border-border_color">
+                        Rate:{" "}
+                      </p>
+                      <p className="font-semibold bg-secondary px-2 border-r border-border_color">
+                        Quantity:
+                      </p>
+                      <p className="font-semibold bg-secondary px-2 border-r border-border_color">
+                        Date:{" "}
+                      </p>
                     </div>
-                    <div className="flex flex-col gap-2 w-[60%] xl:w-[80%] font-medium">
-                      <p className="rounded-sm px-3">{activeProduction.id}</p>
-                      <p className="px-3">{activeProduction.product.name}</p>
-                      <p className="px-3">{activeProduction.employee.name}</p>
-                      <p className="px-3">{activeProduction.rate}</p>
-                      <p className="px-3">{activeProduction.quantity}</p>
-                      <p className="px-3">{activeProduction.date}</p>
+                    <div className="flex flex-col gap-2 w-[60%] xl:w-[75%] ">
+                      <p className="bg-secondary font-medium px-4">
+                        {activeProduction.id}
+                      </p>
+                      <p className="bg-secondary font-medium px-4">
+                        {activeProduction.product.name}
+                      </p>
+                      <p className="bg-secondary font-medium px-4">
+                        {activeProduction.employee.name}
+                      </p>
+                      <p className="bg-secondary font-medium px-4">
+                        {activeProduction.rate}
+                      </p>
+                      <p className="bg-secondary font-medium px-4">
+                        {activeProduction.quantity}
+                      </p>
+                      <p className="bg-secondary font-medium px-4">
+                        {activeProduction.date}
+                      </p>
                     </div>
                   </div>
                 )}
