@@ -49,7 +49,7 @@ export const createEmployee = async (employee: CreateEmployeeType) => {
 export const deleteEmployee = async (id: number | undefined) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/employee/delete/${id}`
+      `http://127.0.0.1:8000/api/employee/delete/${id}/`
     );
 
     if (!response.ok) {

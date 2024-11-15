@@ -177,7 +177,6 @@ const AddFormModal = ({
         const hasError = Object.values(newErrors).some((error) => error);
 
         if (!hasError) {
-          console.log(customer);
           const response = await updateCustomer(currentData?.id, customer);
 
           if (response.success) {

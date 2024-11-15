@@ -4,8 +4,11 @@ import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import AddFormModal from "./AddFormModal";
 import DeleteModal from "./DeleteModal";
+import { deleteCustomer } from "@/utils/customerApiRerquest";
+import { deleteEmployee } from "@/utils/employeeApiRequest";
+import { usePathname } from "next/navigation";
 
-type TableDataType = EmployeeType | CustomerType;
+// type TableDataType = EmployeeType | CustomerType;
 
 const Table = ({
   tableData,
@@ -18,10 +21,13 @@ const Table = ({
   format: string;
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [activeId, setActiveId] = useState<number | null>(null);
+  const [activeId, setActiveId] = useState<number | undefined>();
   const [modalAction, setModalAction] = useState<"update" | "delete" | null>(
     null
   );
+  const [isOpen, setIsOpen] = useState(false);
+
+  const path = usePathname();
 
   // const handleActionClick = (id: number) => {
   //   setActiveId(activeId === id ? null : id);
@@ -34,7 +40,39 @@ const Table = ({
 
   const closeModal = () => {
     setModalAction(null);
-    setActiveId(null);
+    setActiveId(undefined);
+  };
+
+  const deleteHandler = async () => {
+    if (path === "/employees") {
+      const response = await deleteEmployee(activeId);
+      console.log(activeId);
+
+      if (response.success) {
+        if (closeModal) {
+          closeModal();
+        }
+        setReload((prv) => !prv);
+      }
+    }
+
+    if (path === "/customers") {
+      const response = await deleteCustomer(activeId);
+      console.log(response);
+
+      if (response.success) {
+        if (closeModal) {
+          closeModal();
+        }
+        setReload((prv) => !prv);
+      }
+    }
+  };
+
+  const activeElement = tableData.find((item) => item.id === activeId);
+  const activeElementData = {
+    id: activeElement?.id,
+    name: activeElement?.name,
   };
 
   return (
@@ -113,6 +151,7 @@ const Table = ({
                 onClick={() => {
                   setActiveId(data.id);
                   setModalAction("delete");
+                  setIsOpen(true);
                 }}
               >
                 <RiDeleteBin6Line />
@@ -121,15 +160,12 @@ const Table = ({
           </div>
         ))}
       </div>
-      {modalAction === "delete" && (
+      {modalAction === "delete" && isOpen && (
         <DeleteModal
-          activeElement={
-            activeId != null
-              ? tableData.find((emp) => emp.id === activeId)
-              : undefined
-          }
-          closeModal={closeModal}
-          setReload={setReload}
+          activeElement={activeElementData}
+          handler={deleteHandler}
+          setIsOpen={setIsOpen}
+          title={format}
         />
       )}
       {modalAction === "update" && (

@@ -47,7 +47,7 @@ const ProductModal = ({
       const data = {
         name: productName,
         rate: Number(productRate),
-        catagory_id: categoryId,
+        category: categoryId,
       };
       console.log(data);
 
@@ -91,7 +91,7 @@ const ProductModal = ({
       const data = {
         name: productName,
         rate: Number(productRate),
-        catagory_id: categoryId,
+        category: categoryId,
       };
       console.log(data, activeProduct?.id);
 

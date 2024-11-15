@@ -22,18 +22,6 @@ const CustomerTable = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [reload, setReload] = useState(true);
 
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentPage < (totalPage || 0)) {
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
-
   // const pageNumber = () => {
   //   const pages: number[] = [];
   //   const pagesToShow = 5;
@@ -109,8 +97,6 @@ const CustomerTable = () => {
         />
 
         <Pagination
-          handleNext={handleNext}
-          handlePrevious={handlePrevious}
           totalPage={totalPage}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}

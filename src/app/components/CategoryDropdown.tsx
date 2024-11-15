@@ -142,9 +142,11 @@ const CategoryDropdown = ({
               >
                 <div className="p-2">
                   {categories?.map((category, i) => (
-                    <div className="flex w-full items-center bg-secondary text-primary-foreground text-lg capitalize font-semibold tracking-wide mt-1  hover:bg-background duration-200 rounded-md px-1">
+                    <div
+                      key={i}
+                      className="flex w-full items-center bg-secondary text-primary-foreground text-lg capitalize font-semibold tracking-wide mt-1  hover:bg-background duration-200 rounded-md px-1"
+                    >
                       <div
-                        key={i}
                         className="py-1 px-4 cursor-pointer rounded-md w-full "
                         onClick={(event) => {
                           handleCategoryClick(category.name, event);

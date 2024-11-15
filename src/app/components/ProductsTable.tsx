@@ -27,18 +27,6 @@ const ProductsTable = () => {
   const [reload, setReload] = useState(false);
   const [products, setProducts] = useState<ProductType[]>([]);
 
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentPage < (totalPage || 0)) {
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
-
   const columns = products.length > 0 ? Object.keys(products[0]) : [];
 
   const activeProduct = products.find((porduct) => porduct.id === activeId);
@@ -52,7 +40,6 @@ const ProductsTable = () => {
         const totalePage = firstElement ? firstElement.total_page : undefined;
 
         setProducts(response?.data);
-        console.log(products);
         setTotalPage(totalePage);
       }
     };
@@ -64,7 +51,7 @@ const ProductsTable = () => {
     path.push(`?page=${currentPage}`);
   }, [currentPage, path]);
 
-  console.log(products.length);
+  console.log(products);
 
   return (
     <div>
@@ -109,9 +96,7 @@ const ProductsTable = () => {
                 <div className="w-1/12 truncate-text">{product.id}</div>
                 <div className="flex-1 truncate-text">{product.name}</div>
                 <div className="flex-1 truncate-text">{product.rate}</div>
-                <div className="flex-1 truncate-text">
-                  {product.catagory_name}
-                </div>
+                <div className="flex-1 truncate-text">{product.category}</div>
                 <div className="flex items-center gap-2 text-primary-foreground ">
                   <div
                     className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
@@ -140,8 +125,6 @@ const ProductsTable = () => {
         </div>
 
         <Pagination
-          handleNext={handleNext}
-          handlePrevious={handlePrevious}
           totalPage={totalPage}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
