@@ -12,6 +12,7 @@ const Dropdown = ({
   setCurrentPage,
   setId,
   setValue,
+  setSelectionError,
   defalutValue,
   type,
 }: {
@@ -20,9 +21,10 @@ const Dropdown = ({
   currentPage: number;
   setCurrentPage: React.Dispatch<SetStateAction<number>>;
   setId?: React.Dispatch<SetStateAction<number | undefined>>;
+  setSelectionError?: React.Dispatch<SetStateAction<string>>;
   setValue?: React.Dispatch<SetStateAction<string | undefined>>;
   defalutValue?: DropdownType;
-  type: "product" | "employee" | "production" | "status";
+  type: "product" | "employee" | "production" | "status" | "customer";
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | undefined>();
@@ -73,7 +75,7 @@ const Dropdown = ({
             <div>
               <DorpdownHeader type={type} />
             </div>
-            <div>
+            <div className="cursor-pointer">
               {data?.map((item, i) => (
                 <DropdownBody
                   i={i}
@@ -82,6 +84,8 @@ const Dropdown = ({
                   setValue={setValue}
                   item={item}
                   setIsDropdownOpen={setIsDropdownOpen}
+                  setSelectionError={setSelectionError}
+                  selectedItem={selectedItem}
                   setSelectedItem={setSelectedItem}
                 />
               ))}

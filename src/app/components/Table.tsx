@@ -29,6 +29,8 @@ const Table = ({
 
   const path = usePathname();
 
+  console.log(tableData);
+
   // const handleActionClick = (id: number) => {
   //   setActiveId(activeId === id ? null : id);
   // };
@@ -125,7 +127,9 @@ const Table = ({
                   {(data as CustomerType).name}
                 </div>
                 <div className="flex-1 truncate-text text-xs xl:text-xl">
-                  {(data as CustomerType).company_name}
+                  {(data as CustomerType).company_name === ""
+                    ? "NONE"
+                    : (data as CustomerType).company_name}
                 </div>
                 <div className="flex-1 truncate-text text-xs xl:text-xl">
                   {(data as CustomerType).address}
@@ -136,7 +140,7 @@ const Table = ({
               </>
             )}
 
-            <div className="flex items-center gap-2 text-primary-foreground">
+            <div className="flex text-xs xl:text-base items-center gap-1 xl:gap-2 text-primary-foreground">
               <div
                 className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
                 onClick={() => {

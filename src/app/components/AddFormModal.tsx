@@ -68,7 +68,6 @@ const AddFormModal = ({
     name: "",
     address: "",
     mobile: "",
-    company_name: "",
   });
 
   const employeeChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,7 +115,6 @@ const AddFormModal = ({
         name: customer.name ? "" : "Name is required",
         address: customer.address ? "" : "Address is required",
         mobile: customer.mobile ? "" : "Mobile No is required",
-        company_name: customer.company_name ? "" : "Company name is required",
       };
 
       setCustomerInputError(newErrors);
@@ -169,7 +167,6 @@ const AddFormModal = ({
           name: customer.name ? "" : "Name is required",
           address: customer.address ? "" : "Address is required",
           mobile: customer.mobile ? "" : "Mobile No is required",
-          company_name: customer.company_name ? "" : "Company name is required",
         };
 
         setCustomerInputError(newErrors);
@@ -306,9 +303,6 @@ const AddFormModal = ({
                   onChange={customerChangeHandler}
                   className="add_field"
                 />
-                <p className="error_message">
-                  {customerInputError.company_name}
-                </p>
               </div>
               <div>
                 <input

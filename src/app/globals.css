@@ -59,7 +59,7 @@
 }
 @layer base {
   body {
-    @apply bg-background font-baloo;
+    @apply bg-background font-baloo antialiased;
   }
 
   input {

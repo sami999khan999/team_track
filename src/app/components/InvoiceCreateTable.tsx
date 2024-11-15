@@ -19,7 +19,7 @@ const InvoiceCreateTable = ({
     <div className="">
       {inventories ? (
         <div className="h-[15rem] xl:h-[20rem] overflow-y-auto remove-scrollbar">
-          <div className="flex gap-2 bg-background text-sm xl:text-xl text-primary-foreground px-4 py-2 font-medium sticky top-0">
+          <div className="flex gap-2 bg-background text-sm xl:text-xl text-primary-foreground px-4 py-3 font-medium sticky top-0 rounded-t-md">
             <p className="w-1/12 truncate-text">ID</p>
             <p className="flex-1 truncate-text">Employee</p>
             <p className="flex-1 truncate-text">Product</p>
@@ -27,9 +27,13 @@ const InvoiceCreateTable = ({
             <p className="flex-1 truncate-text">Quantity</p>
             {type === "selection" && <p>Select</p>}
           </div>
-          <div className="">
+          <div className="border border-border_color  rounded-b-xl">
             {inventories?.map((inventory, i) => (
-              <div className="flex gap-2 border-b border-border_color text-sm xl:text-xl text-primary-foreground px-4 py-1">
+              <div
+                className={`flex gap-2 border-b border-border_color text-sm xl:text-xl text-primary-foreground px-4 py-2 hover:bg-secondary-foreground duration-200 ${
+                  i === inventories.length - 1 && "border-none"
+                }`}
+              >
                 <div className="w-1/12 truncate-text">{inventory.id}</div>
                 <div className="flex-1 truncate-text">
                   {inventory.employee.name}
