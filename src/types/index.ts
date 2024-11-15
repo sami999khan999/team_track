@@ -121,6 +121,22 @@ export type CreateInventoryType = {
   current_status: string | undefined;
 };
 
+export type SelectInventoryType = {
+  id: number;
+  employee: {
+    id: number;
+    name: string;
+  };
+  product: {
+    id: number;
+    name: string;
+  };
+  production: {
+    id: number;
+    quantity: number;
+  };
+};
+
 export type DropdownType = {
   id?: number | string;
   name?: string;

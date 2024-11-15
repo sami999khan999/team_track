@@ -18,6 +18,7 @@ const DropdownBody = ({
   setIsDropdownOpen: React.Dispatch<SetStateAction<boolean>>;
   setSelectedItem: React.Dispatch<SetStateAction<string | undefined>>;
 }) => {
+  console.log(item);
   return (
     <>
       {type === "employee" && (

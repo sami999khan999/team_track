@@ -1,6 +1,6 @@
 import { CreateEmployeeType } from "@/types";
 
-export const getEmployee = async (page: number) => {
+export const getEmployee = async (page: number | undefined) => {
   try {
     const response = await fetch(
       `http://127.0.0.1:8000/api/employee/view/${page}`

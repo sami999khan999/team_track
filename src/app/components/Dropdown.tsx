@@ -5,7 +5,7 @@ import Pagination from "./Pagination";
 import DorpdownHeader from "./DorpdownHeader";
 import DropdownBody from "./DropdownBody";
 
-const ProductionDropdown = ({
+const Dropdown = ({
   data,
   totalPage,
   currentPage,
@@ -45,10 +45,10 @@ const ProductionDropdown = ({
   }, [defalutValue, type]);
 
   return (
-    <div>
+    <div className="w-full">
       <div className="relative">
         <div
-          className=" bg-secondary-foreground text-primary-foreground rounded-full py-2 px-5 border border-border_color text-base xl:text-xl flex items-center justify-between "
+          className="bg-secondary-foreground text-primary-foreground rounded-full py-2 px-5 border border-border_color text-base xl:text-xl flex items-center justify-between"
           onClick={() => {
             setIsDropdownOpen(!isDropdownOpen); // This toggles the dropdown open/close state
           }}
@@ -106,4 +106,4 @@ const ProductionDropdown = ({
   );
 };
 
-export default ProductionDropdown;
+export default Dropdown;

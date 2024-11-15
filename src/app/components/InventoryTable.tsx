@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import TableActions from "./TableActions";
-import Pagination from "./Pagination";
-import InventoryModal from "./InventoryModal";
 import { InventoryType } from "@/types";
 import { getInventory } from "@/utils/inventoryApiRequests";
+import { useEffect, useState } from "react";
 import { MdOutlineEdit } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import InventoryModal from "./InventoryModal";
+import Pagination from "./Pagination";
+import TableActions from "./TableActions";
 
 const InventoryTable = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,7 +58,7 @@ const InventoryTable = () => {
             {columns.map((col, i) => (
               <div
                 key={i}
-                className={`text-primary-foreground uppercase ${
+                className={`text-primary-foreground uppercase truncate-text ${
                   i === 0 ? "w-1/12" : "flex-1"
                 }`}
               >
@@ -82,7 +81,7 @@ const InventoryTable = () => {
                 <div className="flex-1 truncate-text">{item.status}</div>
                 <div className="flex-1 truncate-text">{item.date}</div>
 
-                <div className="flex items-center gap-3 text-primary-foreground">
+                <div className="flex xl:px-5 items-center gap-3 text-primary-foreground">
                   <div
                     className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
                     onClick={() => {
@@ -93,7 +92,7 @@ const InventoryTable = () => {
                   >
                     <MdOutlineEdit />
                   </div>
-                  <div
+                  {/* <div
                     className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
                     onClick={() => {
                       setDefaultValue(item);
@@ -102,7 +101,7 @@ const InventoryTable = () => {
                     }}
                   >
                     <RiDeleteBin6Line />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             ))}
