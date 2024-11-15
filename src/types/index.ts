@@ -41,7 +41,7 @@ export type CustomerType = {
 
 export type CreateCustomerType = {
   name: string;
-  company_name: string;
+  company_name?: string;
   address: string;
   mobile: string;
 };
@@ -129,6 +129,40 @@ export type SelectInventoryType = {
   };
 };
 
+// 'id':item.id, 'production': production, 'quantity': item.total, 'current_status': item.current_status, 'date': item.created_at.date()
+
+export type InvoiceType = {
+  id: number;
+  products: string;
+  quantity: string;
+  current_status: string;
+  total: string;
+  date: string;
+};
+
+export type CreateInvoiceType = {
+  customer_id: number | undefined;
+  inventory_id: number[] | undefined;
+  date: string | undefined;
+};
+
+export type InvoiceColomn = {
+  employee: string;
+  product: string;
+  quantity: string;
+  total: number;
+};
+
+export type InvoiceDataType = {
+  challan_no: number;
+  customer_address: string;
+  customer_company: string;
+  customer_name: string;
+  date: string;
+  grand_total: number;
+  total_column: InvoiceColomn[];
+};
+
 export type DropdownType = {
   id?: number | string;
   name?: string;
@@ -151,4 +185,6 @@ export type DropdownType = {
   quantity?: number;
 
   status?: string;
+
+  company_name?: string;
 };
