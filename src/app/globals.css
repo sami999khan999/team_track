@@ -83,6 +83,13 @@
     text-overflow: ellipsis;
   }
 
+  .break-words {
+    overflow-wrap: break-word; /* Ensures text breaks within container */
+    word-wrap: break-word; /* Provides similar behavior */
+    white-space: normal; /* Allows text to wrap to new lines */
+    word-break: break-word; /* Breaks long words as needed */
+  }
+
   /* Hide scrollbar on Webkit browsers */
   .remove-scrollbar {
     -ms-overflow-style: none; /* Internet Explorer 10+ */
