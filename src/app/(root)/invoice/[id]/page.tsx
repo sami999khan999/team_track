@@ -1,11 +1,12 @@
 import Invoice from "@/app/components/Invoice";
 import React from "react";
 
-const page = ({ params }: { params: { id: number } }) => {
-  console.log(params.id);
+const page = async ({ params }: { params: { id: number } }) => {
+  const { id } = await params;
+
   return (
     <div>
-      <Invoice id={params.id} />
+      <Invoice id={id} />
     </div>
   );
 };

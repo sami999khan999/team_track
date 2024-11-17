@@ -1,6 +1,5 @@
 import { SelectInventoryType } from "@/types";
 import React, { SetStateAction } from "react";
-import { DiVim } from "react-icons/di";
 import { ImCheckboxChecked } from "react-icons/im";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
