@@ -16,7 +16,7 @@ import {
 import { RiCustomerServiceFill, RiMenuUnfoldLine } from "react-icons/ri";
 
 export const navLinks = [
-  { path: "/", name: "Dashboard", logo: <MdDashboard /> },
+  { path: "/dashboard", name: "Dashboard", logo: <MdDashboard /> },
   {
     path: "/products",
     name: "Products",
@@ -55,21 +55,21 @@ const NavLinks = () => {
             key={i}
             href={navItem.path}
             className={`group flex items-center gap-2 rounded-lg px-1 xl:px-6 py-2 hover:bg-secondary-foreground duration-300 ${
-              pathName === navItem.path
+              pathName.startsWith(navItem.path)
                 ? "bg-primary hover:bg-slate-500/90"
                 : ""
             }`}
           >
             <div
               className={`text-xl xl:text-2xl text-primary-foreground ${
-                pathName === navItem.path ? "text-secondary " : ""
+                pathName.startsWith(navItem.path) ? "text-secondary " : ""
               }`}
             >
               {navItem.logo}
             </div>
             <p
               className={`hidden xl:block text-primary-foreground opacity-0 text-lg font-semibold tracking-wide transition-opacity duration-300 ease-in-out group-hover:opacity-100 ${
-                pathName === navItem.path ? "text-secondary" : ""
+                pathName.startsWith(navItem.path) ? "text-secondary" : ""
               }`}
             >
               {navItem.name}

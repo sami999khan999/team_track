@@ -2,10 +2,13 @@
 
 import { InvoiceDataType } from "@/types";
 import { getSingleInvoice } from "@/utils/invoiceApiRequests";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { FaArrowLeftLong } from "react-icons/fa6";
 import { ImInsertTemplate } from "react-icons/im";
 
 const Invoice = ({ id }: { id: number }) => {
+  const path = useRouter();
   const [invoiceData, setInvoiceData] = useState<InvoiceDataType>();
 
   const columns = invoiceData ? Object.keys(invoiceData.total_column[0]) : [];
@@ -150,9 +153,15 @@ const Invoice = ({ id }: { id: number }) => {
   return (
     <div className="flex justify-center text-primary-foreground h-screen mt-5">
       <div
-        className="bg-secondary w-[98%] xl:w-[80%] h-fit px-3 xl:px-10 pb-10 rounded-xl"
+        className="relative bg-secondary w-[98%] xl:w-[80%] h-fit px-3 xl:px-10 pb-10 rounded-xl"
         id="pdf-content"
       >
+        <div
+          className="absolute top-4 xl:top-8 left-4 xl:left-8 text-base xl:text-xl bg-secondary-foreground px-2 py-1 rounded-md"
+          onClick={() => path.back()}
+        >
+          <FaArrowLeftLong className="hover:animate-pulse" />
+        </div>
         <div className="header text-center py-10">
           <h1 className="text-2xl xl:text-4xl font-semibold text-primary">
             Next Fashion Textile
@@ -209,12 +218,18 @@ const Invoice = ({ id }: { id: number }) => {
                 key={i}
                 className="table-body border-b border-border_color flex justify-between px-4 xl:px-8 py-2 xl:text-lg text-sm gap-2 xl:gap-3 capitalize cursor-pointer hover:bg-secondary-foreground duration-200"
               >
-                <div className="w-3/12 xl:w-2/12 break-words">
+                <div className="w-3/12 xl:w-2/12 break-words cursor-auto">
                   {item.employee}
                 </div>
-                <div className="w-3/12 break-words ">{item.product}</div>
-                <div className="flex-1 break-words">{item.quantity}</div>
-                <div className="w-2/12 break-words">{item.total}</div>
+                <div className="w-3/12 break-words cursor-auto">
+                  {item.product}
+                </div>
+                <div className="flex-1 break-words cursor-auto">
+                  {item.quantity}
+                </div>
+                <div className="w-2/12 break-words cursor-auto">
+                  {item.total}
+                </div>
               </div>
             ))}
           </div>

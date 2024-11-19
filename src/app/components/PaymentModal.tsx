@@ -14,8 +14,10 @@ import BillFilterTable from "./BillFilterTable";
 
 const PaymentModal = ({
   setIsopen,
+  setReload,
 }: {
   setIsopen: React.Dispatch<SetStateAction<boolean>>;
+  setReload: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   const [filterEmployeeId, setFilterEmployeeId] = useState<
     number | undefined
@@ -95,7 +97,7 @@ const PaymentModal = ({
 
     if (response?.success) {
       setFilteredData(response.data);
-      console.log(filteredData);
+      setReload((prv) => !prv);
     }
   };
 
@@ -124,16 +126,20 @@ const PaymentModal = ({
     fetchEmployees();
   }, [employeeCurrentPage]);
 
+  useEffect(() => {
+    setSelectedData([]);
+  }, [filterEmployeeId]);
+
   return (
     <div>
-      {isInvoiceModalOpen && (
+      {isInvoiceModalOpen === true && (
         <BillInvoiceModal
           setInoviceId={setFliterInoviceId}
           invoiceId={fliterInoviceId}
           setIsInvoiceModalOpen={setIsInvoiceModalOpen}
         />
       )}
-      <div className="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center justify-center">
+      <div className="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center justify-center z-30">
         <div className="relative w-[97%] xl:w-[90%] h-[80%] xl:h-[35rem] bg-secondary px-3 xl:px-8 py-6 xl:py-10 rounded-xl border border-border_color overflow-y-auto remove-scrollbar">
           <div
             className="absolute top-3 xl:top-5 right-3 xl:right-5 text-2xl text-primary-foreground hover:bg-primary hover:text-background p-1 rounded-sm"
