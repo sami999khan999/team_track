@@ -5,7 +5,7 @@ export const getFilteredEmployeeBillData = async (
 ) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/employee/bill/filter/`,
+      `http://192.168.0.136:8000/api/employee/bill/filter/`,
       {
         method: "POST",
         headers: {
@@ -41,7 +41,7 @@ export const getFilteredEmployeeBillData = async (
 export const createBill = async (filteredData: FilteredBill[] | undefined) => {
   try {
     const response = await fetch(
-      "http://127.0.0.1:8000/api/employee/bill/create/",
+      "http://192.168.0.136:8000/api/employee/bill/create/",
       {
         method: "POST",
         headers: {

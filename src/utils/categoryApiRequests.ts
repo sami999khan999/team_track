@@ -2,7 +2,7 @@ import { CreateContextOptions } from "vm";
 
 export const getCategories = async () => {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/catagory/view/");
+    const response = await fetch("http://192.168.0.136:8000/api/catagory/view/");
     const data = await response.json();
 
     if (!response.ok) {
@@ -30,7 +30,7 @@ export const getCategories = async () => {
 
 export const createCategory = async (category: CreateContextOptions) => {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/catagory/create/", {
+    const response = await fetch("http://192.168.0.136:8000/api/catagory/create/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export const createCategory = async (category: CreateContextOptions) => {
 export const categoryDelete = async (id: number) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/catagory/delete/${id}/`
+      `http://192.168.0.136:8000/api/catagory/delete/${id}/`
     );
 
     if (!response.ok) {

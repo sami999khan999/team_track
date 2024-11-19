@@ -2,7 +2,7 @@ import { CreateInventoryType, InventoryType } from "@/types";
 
 export const createInventory = async (inventory: CreateInventoryType) => {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/inventory/add/`, {
+    const response = await fetch(`http://192.168.0.136:8000/api/inventory/add/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export const createInventory = async (inventory: CreateInventoryType) => {
 export const getInventory = async (page: number) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/inventory/view/${page}`
+      `http://192.168.0.136:8000/api/inventory/view/${page}`
     );
 
     const data = await response.json();
@@ -69,7 +69,7 @@ export const updateInventory = async (
 ) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/inventory/update/${id}/`,
+      `http://192.168.0.136:8000/api/inventory/update/${id}/`,
       {
         method: "PUT",
         headers: {
