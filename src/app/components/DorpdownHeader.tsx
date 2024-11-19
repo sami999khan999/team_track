@@ -3,7 +3,13 @@ import React from "react";
 const DorpdownHeader = ({
   type,
 }: {
-  type: "product" | "employee" | "production" | "status" | "customer";
+  type:
+    | "product"
+    | "employee"
+    | "production"
+    | "status"
+    | "customer"
+    | "Method";
 }) => {
   return (
     <div className="flex px-4 bg-background rounded-t-md mt-2 gap-10 py-3 font-semibold">
@@ -44,6 +50,8 @@ const DorpdownHeader = ({
           <div className="flex-1 truncate-text">Company Name</div>
         </>
       )}
+
+      {type === "Method" && <div>Method</div>}
     </div>
   );
 };

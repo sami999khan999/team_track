@@ -24,7 +24,13 @@ const Dropdown = ({
   setSelectionError?: React.Dispatch<SetStateAction<string>>;
   setValue?: React.Dispatch<SetStateAction<string | undefined>>;
   defalutValue?: DropdownType;
-  type: "product" | "employee" | "production" | "status" | "customer";
+  type:
+    | "product"
+    | "employee"
+    | "production"
+    | "status"
+    | "customer"
+    | "Method";
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | undefined>();

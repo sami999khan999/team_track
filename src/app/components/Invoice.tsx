@@ -8,6 +8,8 @@ import { ImInsertTemplate } from "react-icons/im";
 const Invoice = ({ id }: { id: number }) => {
   const [invoiceData, setInvoiceData] = useState<InvoiceDataType>();
 
+  const columns = invoiceData ? Object.keys(invoiceData.total_column[0]) : [];
+
   useEffect(() => {
     const fetchInvoiceData = async () => {
       const response = await getSingleInvoice(id);
@@ -31,6 +33,10 @@ const Invoice = ({ id }: { id: number }) => {
       const printWindow = window.open("", "", "width=900,height=600");
       if (printWindow) {
         // Manually interpolate invoiceData values into the HTML template
+        const columns = invoiceData
+          ? Object.keys(invoiceData.total_column[0])
+          : [];
+
         const customerName =
           invoiceData?.customer_company || invoiceData?.customer_name;
         const customerAddress = invoiceData?.customer_address;
@@ -40,7 +46,7 @@ const Invoice = ({ id }: { id: number }) => {
         const totalColumnHtml = invoiceData?.total_column
           .map(
             (item) => `
-          <div class="table-body border-b flex justify-between px-8 py-1 text-base gap-5">
+          <div class="table-body border-b flex justify-between px-8 py-1 text-base gap-5 font-medium">
             <div class="w-2/12 break-words capitalize">${item.employee}</div>
             <div class="w-3/12 break-words capitalize">${item.product}</div>
             <div class="flex-1 break-words ">${item.quantity}</div>
@@ -76,30 +82,30 @@ const Invoice = ({ id }: { id: number }) => {
               <div class=" bg-white w-[95%]">
                 <div class="text-center pt-4 pb-3">
                   <h1 class="text-4xl mb-1 font-semibold">Next Fashion Textile</h1>
-                  <p class="text-base mb-1 text-[#45484b]">
+                  <p class="text-base mb-1 text-[#5c5f63] font-medium">
                     Garashin, Karatia, Tangail-Sadar call: 01711959527 Mail:
                     mustafatex@gmail.com
                   </p>
-                  <div class="border-b border-green-700"></div>
+                  <div class="border-b border-[#11a560]"></div>
                 </div>
   
-                <div class="flex justify-between">
-                  <div class="text-gray-800">
-                    <p class="customer-name tracking-wider font-bold text-lg capitalize">
+                <div class="flex justify-between px-4">
+                  <div class="text-gray-900">
+                    <p class="tracking-wide font-bold text-lg capitalize">
                       ${customerName}
                     </p>
-                    <p class="address text-base font-medium">
+                    <p class="text-base font-medium capitalize ">
                       ${customerAddress}
                     </p>
                   </div>
                   <div class="text-base">
-                    <p>Date: <span class="bold font-semibold text-[#45484b]">${date}</span></p>
-                    <p>Challan No: <span class="bold font-semibold ">${challanNo}</span></p>
+                    <p>Date: <span class="bold font-semibold text-gray-950">${date}</span></p>
+                    <p>Challan No: <span class="bold font-semibold text-gray-950">${challanNo}</span></p>
                   </div>
                 </div>
   
                 <div class="table w-full mt-4">
-                  <div class="flex text-white px-8 py-1 rounded-t-lg text-base bg-green-600 w-full justify-between font-bold gap-5">
+                  <div class="flex text-white px-8 py-2 rounded-t-lg text-base bg-[#068a4c] w-full justify-between font-bold gap-5">
                     <p class="w-2/12 break-words">Employee</p>
                     <p class="w-3/12 break-words">Product</p>
                     <p class="flex-1 break-words">Rolls (yds)</p>
@@ -109,17 +115,17 @@ const Invoice = ({ id }: { id: number }) => {
                   ${totalColumnHtml}
   
                   <div class="px-8 flex border-b justify-between py-2">
-                    <div class="w-2/12 font-bold text-[#45484b] text-xl">Total</div>
+                    <div class="w-2/12 font-bold text-gray-900 text-lg">Total</div>
                     <div class="w-3/12"></div>
                     <div class="flex-1"></div>
-                    <div class="w-2/12 font-bold text-[#45484b] text-xl">${grandTotal}</div>
+                    <div class="w-2/12 font-bold text-gray-900 text-lg">${grandTotal}</div>
                   </div>
                 </div>
 
                 <div class="mt-20 text-right pr-4">
         <div class="inline-block text-center">
-            <div class="border-t-2 border-[#45484b] w-48"></div> <!-- Signature line -->
-            <p class="mt-1 text-sm font-semibold text-[#45484b]">Authorized Signature</p>
+            <div class="border-t-2 border-gray-900 w-48"></div> <!-- Signature line -->
+            <p class="mt-1 text-sm font-semibold text-gray-900">Authorized Signature</p>
         </div>
     </div>
   
@@ -142,29 +148,34 @@ const Invoice = ({ id }: { id: number }) => {
   };
 
   return (
-    <div className="flex items-center justify-center">
-      <div className=" bg-white w-[80%] px-10" id="pdf-content">
+    <div className="flex justify-center text-primary-foreground h-screen mt-5">
+      <div
+        className="bg-secondary w-[98%] xl:w-[80%] h-fit px-3 xl:px-10 pb-10 rounded-xl"
+        id="pdf-content"
+      >
         <div className="header text-center py-10">
-          <h1 className="text-4xl font-semibold">Next Fashion Textile</h1>
-          <p className="text-lg mb-3">
+          <h1 className="text-2xl xl:text-4xl font-semibold text-primary">
+            Next Fashion Textile
+          </h1>
+          <p className="text-sm xl:text-lg mb-3">
             Garashin, Karatia, Tangail-Sadar call: 01711959527 Mail:
             mustafatex@gmail.com
           </p>
-          <div className="border border-green-600"></div>
+          <div className="border border-border_color"></div>
         </div>
 
-        <div className="customer-info flex justify-between">
+        <div className="customer-info flex justify-between px-4">
           <div className="left">
-            <p className="customer-name tracking-wider font-bold text-xl capitalize">
+            <p className="customer-name tracking-wider font-bold text-base xl:text-xl capitalize">
               {invoiceData?.customer_company
                 ? invoiceData?.customer_company
                 : invoiceData?.customer_name}
             </p>
-            <p className="address text-lg font-medium">
+            <p className="address text-sm xl:text-lg font-medium">
               {invoiceData?.customer_address}
             </p>
           </div>
-          <div className="right text-xl">
+          <div className="right text-base xl:text-xl">
             <p>
               Date:{" "}
               <span className="bold font-semibold">{invoiceData?.date}</span>
@@ -179,38 +190,48 @@ const Invoice = ({ id }: { id: number }) => {
         </div>
 
         <div className="table w-full mt-4">
-          <div className="table-header flex text-white px-8 py-2 rounded-t-lg text-xl bg-green-600 w-full justify-between gap-3">
-            <p className="w-2/12  break-words">Employee</p>
-            <p className="w-3/12 break-words">Product</p>
-            <p className="flex-1 break-words">Rolls (yds)</p>
-            <p className="w-2/12 break-words">Total (yds)</p>
+          <div className="table-header flex text-primary-foreground uppercase font-semibold xl:px-8 px-4 py-3 rounded-t-lg text-xs xl:text-xl bg-background w-full justify-between gap-2 xl:gap-3">
+            {columns.map((col, i) => (
+              <p
+                key={i}
+                className={`${i === 0 && "w-3/12 xl:w-2/12"} ${
+                  i === 1 && "w-3/12"
+                } ${i === 2 && "flex-1"} ${i === 3 && "w-2/12"} break-words`}
+              >
+                {col}
+              </p>
+            ))}
           </div>
 
           <div>
             {invoiceData?.total_column.map((item, i) => (
               <div
                 key={i}
-                className="table-body border-b flex justify-between px-8 py-2 text-lg gap-3"
+                className="table-body border-b border-border_color flex justify-between px-4 xl:px-8 py-2 xl:text-lg text-sm gap-2 xl:gap-3 capitalize cursor-pointer hover:bg-secondary-foreground duration-200"
               >
-                <div className="w-2/12 break-words">{item.employee}</div>
-                <div className="w-3/12 break-words">{item.product}</div>
+                <div className="w-3/12 xl:w-2/12 break-words">
+                  {item.employee}
+                </div>
+                <div className="w-3/12 break-words ">{item.product}</div>
                 <div className="flex-1 break-words">{item.quantity}</div>
                 <div className="w-2/12 break-words">{item.total}</div>
               </div>
             ))}
           </div>
-          <div className="px-8 flex border-b justify-between py-2">
-            <div className="w-2/12 font-bold text-[#45484b] text-xl">Total</div>
+          <div className="px-4 xl:px-8 flex border-b border-border_color justify-between py-2 xl:py-3 text-sm xl:text-xl">
+            <div className="w-2/12 font-bold">Total</div>
             <div className="w-3/12"></div>
             <div className="flex-1"></div>
-            <div className="w-2/12 font-bold text-[#45484b] text-xl">
-              {invoiceData?.grand_total}
-            </div>
+            <div className="w-2/12 font-bold">{invoiceData?.grand_total}</div>
           </div>
         </div>
-
-        <div className="print-button" id="print-button">
-          <button onClick={handlePrint}>Print Invoice</button>
+        <div className="w-full mt-10" id="print-button">
+          <button
+            onClick={handlePrint}
+            className="border border-border_color w-full xl:w-fit text-primary-foreground hover:bg-primary hover:text-background duration-200 font-semibold px-8 py-1 rounded-full text-lg"
+          >
+            Print Invoice
+          </button>
         </div>
       </div>
     </div>

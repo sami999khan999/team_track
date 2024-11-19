@@ -64,7 +64,7 @@ const ProductionTable = () => {
           setReload={setReload}
         />
       )}
-      <div className="w-full h-fit bg-secondary shadow-2xl shadow-[#19253859] px-2 py-6 xl:py-8 xl:px-8 rounded-xl">
+      <div className="w-full h-fit bg-secondary shadow-2xl shadow-[#19253859] px-2 py-6 xl:py-8 xl:px-8 rounded-xl mb-4">
         <TableActions
           tableName="Production"
           setIsOpen={setIsOpen}
@@ -72,57 +72,63 @@ const ProductionTable = () => {
         />
 
         {/* Table */}
-        <div>
-          <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 bg-background font-semibold tracking-wide uppercase">
-            {columns.map((col, i) => (
-              <div
-                key={i}
-                className={`text-primary-foreground uppercase ${
-                  i === 0 ? "w-1/12" : "flex-1"
-                }`}
-              >
-                {col}
-              </div>
-            ))}
-            <div>ACTIONS</div>
-          </div>
-          <div>
-            {production.map((item, i) => (
-              <div
-                key={i}
-                className="flex text-primary-foreground justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 xl:text-lg gap-2 relative hover:bg-secondary-foreground duration-200 font-medium"
-              >
-                <div className="w-1/12 truncate-text">{item.id}</div>
-                <div className="flex-1 truncate-text">{item.product.name}</div>
-                <div className="flex-1 truncate-text">{item.employee.name}</div>
-                <div className="flex-1 truncate-text">{item.quantity}</div>
-                <div className="flex-1 truncate-text">{item.rate}</div>
-                <div className="flex-1 truncate-text">{item.payment}</div>
-                <div className="flex-1 truncate-text">{item.date}</div>
-                <div className="flex items-center gap-3 text-primary-foreground">
-                  <div
-                    className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
-                    onClick={() => {
-                      setDefalutValue(item);
-                      setIsOpen(true);
-                      setModalAction("update");
-                    }}
-                  >
-                    <MdOutlineEdit />
+        <div className="overflow-x-auto">
+          <div className="w-fit xl:w-full">
+            <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-3 mt-3 bg-background font-semibold tracking-wide uppercase">
+              {columns.map((col, i) => (
+                <div
+                  key={i}
+                  className={`text-primary-foreground uppercase truncate-text ${
+                    i === 0 ? "w-1/12" : "flex-1"
+                  }`}
+                >
+                  {col}
+                </div>
+              ))}
+              <div>ACTIONS</div>
+            </div>
+            <div>
+              {production.map((item, i) => (
+                <div
+                  key={i}
+                  className="flex text-primary-foreground justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-xs xl:text-lg gap-3 relative hover:bg-secondary-foreground duration-200 font-medium bg-secondary "
+                >
+                  <div className="w-1/12 truncate-text">{item.id}</div>
+                  <div className="flex-1 truncate-text">
+                    {item.product.name}
                   </div>
-                  <div
-                    className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
-                    onClick={() => {
-                      setDefalutValue(item);
-                      setIsOpen(true);
-                      setModalAction("delete");
-                    }}
-                  >
-                    <RiDeleteBin6Line />
+                  <div className="flex-1 truncate-text">
+                    {item.employee.name}
+                  </div>
+                  <div className="flex-1 truncate-text">{item.quantity}</div>
+                  <div className="flex-1 truncate-text">{item.rate}</div>
+                  <div className="flex-1 truncate-text">{item.payment}</div>
+                  <div className="flex-1 truncate-text">{item.date}</div>
+                  <div className="flex  items-center xl:gap-3 text-primary-foreground">
+                    <div
+                      className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
+                      onClick={() => {
+                        setDefalutValue(item);
+                        setIsOpen(true);
+                        setModalAction("update");
+                      }}
+                    >
+                      <MdOutlineEdit />
+                    </div>
+                    <div
+                      className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
+                      onClick={() => {
+                        setDefalutValue(item);
+                        setIsOpen(true);
+                        setModalAction("delete");
+                      }}
+                    >
+                      <RiDeleteBin6Line />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 

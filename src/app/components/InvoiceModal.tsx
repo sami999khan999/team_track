@@ -165,7 +165,7 @@ const InvoiceModal = ({
           <h2 className="font-sour_gummy text-xl xl:text-3xl font-semibold text-primary tracking-wide ">
             Create Invoice
           </h2>
-          <p className="text-primary-foreground text-base w-[60%] hidden xl:block">
+          <p className="text-primary-foreground text-lg w-[60%] hidden xl:block">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
             minima impedit aliquid.
           </p>

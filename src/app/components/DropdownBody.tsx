@@ -12,7 +12,13 @@ const DropdownBody = ({
   selectedItem,
   setSelectedItem,
 }: {
-  type: "product" | "employee" | "production" | "status" | "customer";
+  type:
+    | "product"
+    | "employee"
+    | "production"
+    | "status"
+    | "customer"
+    | "Method";
   i: number;
   setId?: React.Dispatch<SetStateAction<number | undefined>>;
   setValue?: React.Dispatch<SetStateAction<string | undefined>>;
@@ -22,7 +28,6 @@ const DropdownBody = ({
   selectedItem: string | undefined;
   setSelectedItem: React.Dispatch<SetStateAction<string | undefined>>;
 }) => {
-  console.log(item);
   return (
     <>
       {type === "employee" && (
@@ -33,10 +38,12 @@ const DropdownBody = ({
             if (selectedItem === item.name) {
               setId && setId(undefined);
               setSelectedItem(undefined);
+              setSelectionError && setSelectionError("");
               setIsDropdownOpen((prv) => !prv);
             } else {
               setId && setId(Number(item.id));
               setSelectedItem(item.name);
+              setSelectionError && setSelectionError("");
               setIsDropdownOpen((prv) => !prv);
             }
           }}
@@ -129,6 +136,21 @@ const DropdownBody = ({
           <div className="flex-1 truncate-text">
             {item.company_name === "" ? "NONE" : item.company_name}
           </div>
+        </div>
+      )}
+
+      {type === "Method" && (
+        <div
+          key={i}
+          className="flex px-4 border-b border-border_color py-2 hover:bg-secondary-foreground duration-200 capitalize"
+          onClick={() => {
+            setValue && setValue(item.method);
+            setSelectedItem(item.method);
+            setIsDropdownOpen((prv) => !prv);
+            setSelectionError && setSelectionError("");
+          }}
+        >
+          <div className="">{item.method}</div>
         </div>
       )}
     </>
