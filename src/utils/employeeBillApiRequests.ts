@@ -72,3 +72,61 @@ export const createBill = async (filteredData: FilteredBill[] | undefined) => {
     };
   }
 };
+
+export const getEmployeeBill = async (page: number | undefined) => {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/employee/bill/view/${page}`
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message || "Failed to fetch employee bill data",
+      };
+    }
+
+    return {
+      success: true,
+      message: "Employee bill data fetched successfully",
+      data: data,
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Failed to fetch employee bill data",
+    };
+  }
+};
+
+export const getSingleEmployeeBill = async (id: number) => {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/employee/bill/single/view/${id}`
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message || "Failed to fetch single employee bill data",
+      };
+    }
+
+    return {
+      success: true,
+      message: "Single employee bill data fetched successfully",
+      data: data,
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Failed to fetch single employee bill data",
+    };
+  }
+};

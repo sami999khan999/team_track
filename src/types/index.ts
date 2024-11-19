@@ -197,6 +197,31 @@ export type EmployeeBillFilterParametersType = {
   filter_method: string | undefined;
 };
 
+export type EmployeeBillType = {
+  id: number;
+  employee: {
+    id: number;
+    name: string;
+  };
+  products: string;
+  production: string;
+  quantity: string;
+  Amount: string;
+  current_status: string;
+  date: string;
+};
+
+export type SingleEmployeeBillType = {
+  sl_no: number;
+  products: string;
+  quantity: string;
+  total_pty: string;
+  rate: number;
+  amount: number;
+};
+
+// {'sl_no': sl_no, 'products': f"{products[0].name}", 'quantity':f"{product_qty[:-2]}", 'total_qty':total_qty, 'rate':products[0].rate,'amount': amount}
+
 export type DropdownType = {
   id?: number | string;
   name?: string;
