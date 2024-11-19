@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { SetStateAction } from "react";
+import React, { SetStateAction, useEffect } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const Pagination = ({
@@ -35,10 +35,17 @@ const Pagination = ({
 
     return pages;
   };
+
+  useEffect(() => {
+    if (currentPage !== null) {
+      path.push(`?page=${currentPage}`);
+    }
+  }, [currentPage]);
+
   return (
     <div>
-      {(totalPage! < 2 && totalPage !== undefined) || (
-        <div className="flex items-center mt-6 xl:gap-4 justify-center mb-16 xl:mb-0 ">
+      {totalPage! > 1 && totalPage !== undefined && (
+        <div className="flex items-center mt-6 xl:gap-4 justify-center xl:mb-0 ">
           <div className="flex items-center justify-center text-sm xl:text-xl gap-5 xl:px-8 px-3 rounded-md w-fit cursor-pointer font-semibold">
             <button
               className="text-primary-foreground hover:bg-primary hover:text-background py-1 rounded-full"
@@ -56,12 +63,11 @@ const Pagination = ({
                     className={`text-center px-2 rounded-full ${
                       currentPage === i && "bg-primary text-secondary"
                     } `}
-                    onClick={() =>
+                    onClick={() => {
                       setCurrentPage(() => {
-                        path.push(`?page=${i}`);
                         return i;
-                      })
-                    }
+                      });
+                    }}
                   >
                     {i}
                   </div>
@@ -69,12 +75,11 @@ const Pagination = ({
               </div>
               <p className="px-4">•••</p>
               <p
-                onClick={() =>
+                onClick={() => {
                   setCurrentPage(() => {
-                    path.push(`?page=${totalPage}`);
                     return totalPage!;
-                  })
-                }
+                  });
+                }}
               >
                 {totalPage}
               </p>

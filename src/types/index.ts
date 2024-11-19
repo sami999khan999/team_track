@@ -171,6 +171,32 @@ export type InvoiceDataType = {
   total_column: InvoiceColomn[];
 };
 
+export type FilteredBill = {
+  id: number;
+  employee: {
+    id: number;
+    name: string;
+  };
+  product: {
+    id: number;
+    name: string;
+    category: string;
+  };
+  challan?: {
+    id: number;
+    date: string;
+  };
+  quantity: number;
+  rate: number;
+  amount: number;
+};
+
+export type EmployeeBillFilterParametersType = {
+  employee: number | undefined;
+  challan: number[] | string | undefined;
+  filter_method: string | undefined;
+};
+
 export type DropdownType = {
   id?: number | string;
   name?: string;
@@ -195,4 +221,6 @@ export type DropdownType = {
   status?: string;
 
   company_name?: string;
+
+  method?: string;
 };
