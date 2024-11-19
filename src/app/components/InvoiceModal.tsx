@@ -138,7 +138,7 @@ const InvoiceModal = ({
     };
 
     fetchCustomer();
-  }, [customerCurrentPage]);
+  }, [customerCurrentPage, inventories]);
 
   useEffect(() => {
     setFilterdInventory(

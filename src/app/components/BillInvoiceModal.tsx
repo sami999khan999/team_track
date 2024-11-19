@@ -34,7 +34,7 @@ const BillInvoiceModal = ({
     };
 
     fetchInvoiceData();
-  }, [setIsInvoiceModalOpen]);
+  }, [setIsInvoiceModalOpen, invoiceCurrentPage]);
 
   return (
     <div className="absolute top-0 left-0 h-full w-full backdrop-blur-lg flex items-center justify-center z-50">

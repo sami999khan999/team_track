@@ -108,14 +108,13 @@ const InventoryModal = ({
             (element: ProductType) => element.id === defaultValue?.product.id
           )
         );
-        console.log(defaultValue);
         setProductionTotalPage(totalPages);
         setProduction(response.data);
       }
     };
 
     productions();
-  }, [productionCurrentPage]);
+  }, [productionCurrentPage, defaultValue]);
 
   useEffect(() => {
     if (defaultValue) {
@@ -128,7 +127,7 @@ const InventoryModal = ({
     setActiveProduction(
       production?.find((element) => element.id === productionId)
     );
-  }, [productionId]);
+  }, [productionId, production]);
 
   return (
     <>

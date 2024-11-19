@@ -37,12 +37,12 @@ const DropdownBody = ({
             if (selectedItem === item.name) {
               if (setId) setId(undefined);
               setSelectedItem(undefined);
-              setSelectionError && setSelectionError("");
+              if (setSelectionError) setSelectionError("");
               setIsDropdownOpen((prv) => !prv);
             } else {
               if (setId) setId(Number(item.id));
               setSelectedItem(item.name);
-              setSelectionError && setSelectionError("");
+              if (setSelectionError) setSelectionError("");
               setIsDropdownOpen((prv) => !prv);
             }
           }}

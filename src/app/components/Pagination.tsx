@@ -40,7 +40,7 @@ const Pagination = ({
     if (currentPage !== null) {
       path.push(`?page=${currentPage}`);
     }
-  }, [currentPage]);
+  }, [currentPage, path]);
 
   return (
     <div>
