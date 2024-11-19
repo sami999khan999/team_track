@@ -1,4 +1,4 @@
-import { CreateInventoryType, InventoryType } from "@/types";
+import { CreateInventoryType } from "@/types";
 
 export const createInventory = async (inventory: CreateInventoryType) => {
   try {

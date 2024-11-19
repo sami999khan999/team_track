@@ -1,9 +1,9 @@
 import { InventoryType, PorductionType, ProductType } from "@/types";
+import { createInventory, updateInventory } from "@/utils/inventoryApiRequests";
+import { getProduction } from "@/utils/productionApiRequests";
 import React, { SetStateAction, useEffect, useState } from "react";
 import DeleteModal from "./DeleteModal";
 import Dropdown from "./Dropdown";
-import { getProduction } from "@/utils/productionApiRequests";
-import { createInventory, updateInventory } from "@/utils/inventoryApiRequests";
 
 const InventoryModal = ({
   setIsOpen,
@@ -31,10 +31,8 @@ const InventoryModal = ({
   const [activeProduction, setActiveProduction] = useState<
     PorductionType | undefined
   >();
-  const [inputError, setInputError] = useState({
-    productionId: "",
-    status: "",
-  });
+  const [productionSelectionError, setProductionSelectionError] = useState("");
+  const [statusSelectionError, setStatusSelectionError] = useState("");
 
   // console.log(productionId);
   // console.log(productionStatus);
@@ -64,7 +62,8 @@ const InventoryModal = ({
     );
 
     if (hasError) {
-      setInputError(newError);
+      setProductionSelectionError(newError.productionId);
+      setStatusSelectionError(newError.status);
       return;
     } else {
       const data = {
@@ -191,28 +190,38 @@ const InventoryModal = ({
                 </p>
                 <div className="space-y-9">
                   {action === "create" ? (
-                    <Dropdown
-                      data={production}
-                      totalPage={productionTotalPage}
-                      currentPage={productionCurrentPage}
-                      setCurrentPage={setProductionCurrentPage}
-                      setId={setProductionId}
-                      defalutValue={defaultValue}
-                      type="production"
-                    />
+                    <div>
+                      <Dropdown
+                        data={production}
+                        totalPage={productionTotalPage}
+                        currentPage={productionCurrentPage}
+                        setCurrentPage={setProductionCurrentPage}
+                        setId={setProductionId}
+                        defalutValue={defaultValue}
+                        setSelectionError={setProductionSelectionError}
+                        type="production"
+                      />
+                      <p className="error_message">
+                        {productionSelectionError}
+                      </p>
+                    </div>
                   ) : (
                     <div className="bg-secondary-foreground text-primary-foreground rounded-full py-2 px-5 border border-border_color text-base xl:text-xl flex items-center justify-between">
                       <p>{defaultValue?.product.name}</p>
                     </div>
                   )}
-                  <Dropdown
-                    data={status}
-                    currentPage={statusCurrentPage}
-                    setCurrentPage={setStatusCurrentPage}
-                    defalutValue={defaultValue}
-                    setValue={setProductionStatus}
-                    type="status"
-                  />
+                  <div>
+                    <Dropdown
+                      data={status}
+                      currentPage={statusCurrentPage}
+                      setCurrentPage={setStatusCurrentPage}
+                      defalutValue={defaultValue}
+                      setValue={setProductionStatus}
+                      setSelectionError={setStatusSelectionError}
+                      type="status"
+                    />
+                    <p className="error_message">{statusSelectionError}</p>
+                  </div>
                 </div>
               </div>
               <div className="border-b xl:border-l  border-border_color"></div>

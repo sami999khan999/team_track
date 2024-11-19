@@ -1,11 +1,9 @@
 import { InvoiceType } from "@/types";
 import { getInvoice } from "@/utils/invoiceApiRequests";
 import React, { SetStateAction, useEffect, useState } from "react";
+import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 import { IoCloseSharp } from "react-icons/io5";
 import Pagination from "./Pagination";
-import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
-import { IoIosCheckbox } from "react-icons/io";
-import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 
 const BillInvoiceModal = ({
   setInoviceId,
@@ -31,7 +29,7 @@ const BillInvoiceModal = ({
         const totalPage = firstElement.total_page;
 
         setInvoiceData(response.data);
-        // setInvoiceTotalPage(totalPage);
+        setInvoiceTotalPage(totalPage);
       }
     };
 
@@ -45,8 +43,9 @@ const BillInvoiceModal = ({
           className="absolute top-3 xl:top-5 right-3 xl:right-5 text-2xl text-primary-foreground hover:bg-primary hover:text-background p-1 rounded-sm"
           onClick={() => {
             setIsInvoiceModalOpen((prv) => !prv);
-            invoiceId &&
+            if (invoiceId) {
               setInoviceId(invoiceId?.length === 0 ? undefined : invoiceId);
+            }
           }}
         >
           <IoCloseSharp className="transition-transform hover:rotate-90 duration-200 origin-center" />
@@ -72,11 +71,8 @@ const BillInvoiceModal = ({
             {/* Table Body */}
             <div>
               {invoiceData.map((item, i) => (
-                <div>
-                  <div
-                    key={i}
-                    className="flex text-primary-foreground bg-secondary justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-sm xl:text-lg gap-3 relative hover:bg-secondary-foreground duration-200 font-medium"
-                  >
+                <div key={i}>
+                  <div className="flex text-primary-foreground bg-secondary justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-sm xl:text-lg gap-3 relative hover:bg-secondary-foreground duration-200 font-medium">
                     <div className="w-1/12 xl:w-2/12 truncate-text">
                       {item.id}
                     </div>
