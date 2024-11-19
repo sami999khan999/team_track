@@ -138,13 +138,13 @@ const InvoiceModal = ({
     };
 
     fetchCustomer();
-  }, [customerCurrentPage, inventories]);
+  }, [customerCurrentPage]);
 
   useEffect(() => {
     setFilterdInventory(
       inventories?.filter((inv) => filterdInventoryIds?.includes(inv.id))
     );
-  }, [filterdInventoryIds]);
+  }, [filterdInventoryIds, inventories]);
 
   return (
     <div
