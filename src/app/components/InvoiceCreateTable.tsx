@@ -29,6 +29,7 @@ const InvoiceCreateTable = ({
           <div className="border border-border_color  rounded-b-xl">
             {inventories?.map((inventory, i) => (
               <div
+                key={i}
                 className={`flex gap-2 border-b border-border_color text-sm xl:text-xl text-primary-foreground px-4 py-2 hover:bg-secondary-foreground duration-200 ${
                   i === inventories.length - 1 && "border-none"
                 }`}

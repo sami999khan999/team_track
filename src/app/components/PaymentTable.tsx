@@ -34,7 +34,7 @@ const PaymentTable = () => {
     };
 
     fetchEmployeeBill();
-  }, [currentPage]);
+  }, [currentPage, reload]);
 
   console.log(employeeBill);
 
@@ -61,7 +61,7 @@ const PaymentTable = () => {
             <div>
               {employeeBill?.map((bill, i) => (
                 <div
-                  key={1}
+                  key={i}
                   className="flex text-primary-foreground justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-xs xl:text-lg gap-4 relative hover:bg-secondary-foreground duration-200 font-medium bg-secondary capitalize"
                   onClick={() => {
                     path.push(`/payment/${bill.id}`);

@@ -3,9 +3,8 @@
 import { InvoiceDataType } from "@/types";
 import { getSingleInvoice } from "@/utils/invoiceApiRequests";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { ImInsertTemplate } from "react-icons/im";
 
 const Invoice = ({ id }: { id: number }) => {
   const path = useRouter();
@@ -36,9 +35,9 @@ const Invoice = ({ id }: { id: number }) => {
       const printWindow = window.open("", "", "width=900,height=600");
       if (printWindow) {
         // Manually interpolate invoiceData values into the HTML template
-        const columns = invoiceData
-          ? Object.keys(invoiceData.total_column[0])
-          : [];
+        // const columns = invoiceData
+        //   ? Object.keys(invoiceData.total_column[0])
+        //   : [];
 
         const customerName =
           invoiceData?.customer_company || invoiceData?.customer_name;

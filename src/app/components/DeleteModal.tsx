@@ -1,10 +1,6 @@
 "use client";
 
-import { CustomerType, EmployeeType } from "@/types";
-import { usePathname } from "next/navigation";
 import React from "react";
-
-type TableDataType = EmployeeType | CustomerType;
 
 const DeleteModal = ({
   activeElement,

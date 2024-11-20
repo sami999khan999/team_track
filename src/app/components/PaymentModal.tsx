@@ -97,7 +97,6 @@ const PaymentModal = ({
 
     if (response?.success) {
       setFilteredData(response.data);
-      setReload((prv) => !prv);
     }
   };
 
@@ -106,7 +105,7 @@ const PaymentModal = ({
 
     if (response.success) {
       setIsopen(false);
-      console.log(response);
+      setReload((prv) => !prv);
     }
   };
 

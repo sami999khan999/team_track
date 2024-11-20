@@ -67,7 +67,9 @@ const BillFilterTable = ({
                           className="xl:px-4 px-3 flex items-center"
                           onClick={() => {
                             if (!selectedData) {
-                              setSelectedData && setSelectedData([item]);
+                              if (setSelectedData) {
+                                setSelectedData([item]);
+                              }
                             } else {
                               const isSelected = selectedData.some(
                                 (selectedItem) => selectedItem.id === item.id
@@ -75,16 +77,18 @@ const BillFilterTable = ({
                               console.log(isSelected);
 
                               if (isSelected) {
-                                setSelectedData &&
+                                if (setSelectedData) {
                                   setSelectedData(
                                     selectedData.filter(
                                       (selectedItem) =>
                                         selectedItem.id !== item.id
                                     )
                                   );
+                                }
                               } else {
-                                setSelectedData &&
+                                if (setSelectedData) {
                                   setSelectedData([...selectedData, item]);
+                                }
                               }
                             }
                           }}

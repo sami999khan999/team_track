@@ -1,9 +1,9 @@
-import { DropdownType, PorductionType, ProductType } from "@/types";
+import { DropdownType } from "@/types";
 import React, { SetStateAction, useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import Pagination from "./Pagination";
 import DorpdownHeader from "./DorpdownHeader";
 import DropdownBody from "./DropdownBody";
+import Pagination from "./Pagination";
 
 const Dropdown = ({
   data,
@@ -83,17 +83,19 @@ const Dropdown = ({
             </div>
             <div className="cursor-pointer">
               {data?.map((item, i) => (
-                <DropdownBody
-                  i={i}
-                  type={type}
-                  setId={setId}
-                  setValue={setValue}
-                  item={item}
-                  setIsDropdownOpen={setIsDropdownOpen}
-                  setSelectionError={setSelectionError}
-                  selectedItem={selectedItem}
-                  setSelectedItem={setSelectedItem}
-                />
+                <div key={i}>
+                  <DropdownBody
+                    i={i}
+                    type={type}
+                    setId={setId}
+                    setValue={setValue}
+                    item={item}
+                    setIsDropdownOpen={setIsDropdownOpen}
+                    setSelectionError={setSelectionError}
+                    selectedItem={selectedItem}
+                    setSelectedItem={setSelectedItem}
+                  />
+                </div>
               ))}
             </div>
             <div className="mb-3">
