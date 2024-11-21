@@ -13,7 +13,7 @@ type TableDataType = EmployeeType | CustomerType;
 
 const CustomerTable = () => {
   const param = useSearchParams();
-  const path = useRouter();
+  // const path = useRouter();
   const [customer, setcustomer] = useState<TableDataType[]>([]);
   const [currentPage, setCurrentPage] = useState(
     Number(param.get("page")) || 1
