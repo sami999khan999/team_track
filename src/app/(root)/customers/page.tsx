@@ -1,10 +1,12 @@
 import CustomerTable from "@/app/components/CustomerTable";
-import React from "react";
+import { Suspense } from "react";
 
 const page = () => {
   return (
     <div>
-      <CustomerTable />
+      <Suspense fallback={<div>Loading...</div>}>
+        <CustomerTable />
+      </Suspense>
     </div>
   );
 };
