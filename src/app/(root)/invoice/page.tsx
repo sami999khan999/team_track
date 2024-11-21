@@ -1,10 +1,12 @@
 import InvoiceTable from "@/app/components/InvoiceTable";
-import React from "react";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
     <div>
-      <InvoiceTable />
+      <Suspense fallback={<div>Loading...</div>}>
+        <InvoiceTable />
+      </Suspense>
     </div>
   );
 };

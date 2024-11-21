@@ -1,10 +1,12 @@
 import ProductsTable from "@/app/components/ProductsTable";
-import React from "react";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
     <div>
-      <ProductsTable />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ProductsTable />
+      </Suspense>
     </div>
   );
 };

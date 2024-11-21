@@ -1,10 +1,12 @@
 import EmployeeTable from "@/app/components/EmployeeTable";
-import React from "react";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
     <div>
-      <EmployeeTable />
+      <Suspense fallback={<div>Loading...</div>}>
+        <EmployeeTable />
+      </Suspense>
     </div>
   );
 };
