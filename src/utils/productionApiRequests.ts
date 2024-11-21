@@ -1,10 +1,10 @@
 import { CreatePorductionType } from "@/types";
 
+const url = process.env.NEXT_PUBLIC_API_URL;
+
 export const getProduction = async (page: number) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/production/view/${page}/`
-    );
+    const response = await fetch(`${url}api/production/view/${page}/`);
 
     const data = await response.json();
 
@@ -32,16 +32,13 @@ export const getProduction = async (page: number) => {
 export const createProduction = async (production: CreatePorductionType) => {
   try {
     console.log(production);
-    const response = await fetch(
-      "http://127.0.0.1:8000/api/production/create/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(production),
-      }
-    );
+    const response = await fetch(`${url}api/production/create/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(production),
+    });
 
     console.log(response);
     const data = await response.json();
@@ -71,16 +68,13 @@ export const updateProduction = async (
   production: CreatePorductionType
 ) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/production/update/${id}/`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(production),
-      }
-    );
+    const response = await fetch(`${url}api/production/update/${id}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(production),
+    });
 
     const data = await response.json();
     console.log(data);
@@ -108,9 +102,7 @@ export const updateProduction = async (
 
 export const deleteProduction = async (id: number | undefined) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/production/delete/${id}/`
-    );
+    const response = await fetch(`${url}api/production/delete/${id}/`);
     const data = await response.json();
 
     if (!response.ok) {

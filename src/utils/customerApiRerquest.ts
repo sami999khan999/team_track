@@ -1,10 +1,10 @@
 import { CreateCustomerType } from "@/types";
 
+const url = process.env.NEXT_PUBLIC_API_URL;
+
 export const getCustoer = async (page: number) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/customer/view/${page}`
-    );
+    const response = await fetch(`${url}api/customer/view/${page}`);
 
     const data = await response.json();
 
@@ -24,7 +24,7 @@ export const getCustoer = async (page: number) => {
 
 export const createCustomer = async (data: CreateCustomerType) => {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/customer/create/`, {
+    const response = await fetch(`${url}api/customer/create/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,9 +50,7 @@ export const createCustomer = async (data: CreateCustomerType) => {
 
 export const deleteCustomer = async (id: number | undefined) => {
   try {
-    const rsoponse = await fetch(
-      `http://127.0.0.1:8000/api/customer/delete/${id}/`
-    );
+    const rsoponse = await fetch(`${url}api/customer/delete/${id}/`);
 
     if (!rsoponse.ok) {
       return {
@@ -73,16 +71,13 @@ export const updateCustomer = async (
   data: CreateCustomerType
 ) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/customer/update/${id}/`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const response = await fetch(`${url}api/customer/update/${id}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
     if (!response.ok) {
       return {

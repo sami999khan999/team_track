@@ -1,19 +1,18 @@
 import { EmployeeBillFilterParametersType, FilteredBill } from "@/types";
 
+const url = process.env.NEXT_PUBLIC_API_URL;
+
 export const getFilteredEmployeeBillData = async (
   filterParams: EmployeeBillFilterParametersType
 ) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/employee/bill/filter/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(filterParams),
-      }
-    );
+    const response = await fetch(`${url}api/employee/bill/filter/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(filterParams),
+    });
 
     const data = await response.json();
 
@@ -40,16 +39,13 @@ export const getFilteredEmployeeBillData = async (
 
 export const createBill = async (filteredData: FilteredBill[] | undefined) => {
   try {
-    const response = await fetch(
-      "http://127.0.0.1:8000/api/employee/bill/create/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(filteredData),
-      }
-    );
+    const response = await fetch(`${url}api/employee/bill/create/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(filteredData),
+    });
 
     const data = await response.json();
 
@@ -75,9 +71,7 @@ export const createBill = async (filteredData: FilteredBill[] | undefined) => {
 
 export const getEmployeeBill = async (page: number | undefined) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/employee/bill/view/${page}`
-    );
+    const response = await fetch(`${url}api/employee/bill/view/${page}`);
 
     const data = await response.json();
 
@@ -104,9 +98,7 @@ export const getEmployeeBill = async (page: number | undefined) => {
 
 export const getSingleEmployeeBill = async (id: number) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/employee/bill/single/view/${id}`
-    );
+    const response = await fetch(`${url}api/employee/bill/single/view/${id}`);
 
     const data = await response.json();
 

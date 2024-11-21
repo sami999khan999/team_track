@@ -1,8 +1,10 @@
 import { CreateInventoryType } from "@/types";
 
+const url = process.env.NEXT_PUBLIC_API_URL;
+
 export const createInventory = async (inventory: CreateInventoryType) => {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/inventory/add/`, {
+    const response = await fetch(`${url}api/inventory/add/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,9 +36,7 @@ export const createInventory = async (inventory: CreateInventoryType) => {
 
 export const getInventory = async (page: number) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/inventory/view/${page}`
-    );
+    const response = await fetch(`${url}api/inventory/view/${page}`);
 
     const data = await response.json();
 
@@ -68,16 +68,13 @@ export const updateInventory = async (
   inventory: { current_status: string | undefined }
 ) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/inventory/update/${id}/`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(inventory),
-      }
-    );
+    const response = await fetch(`${url}api/inventory/update/${id}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(inventory),
+    });
     console.log(response);
 
     const data = await response.json();

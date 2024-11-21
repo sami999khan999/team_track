@@ -1,8 +1,10 @@
 import { LoginUserType, SignupUserType } from "@/types";
 
+const url = process.env.NEXT_PUBLIC_API_URL;
+
 export const userSignup = async (userData: SignupUserType) => {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/register/", {
+    const response = await fetch(`${url}api/register/`, {
       // API route for POST request
       method: "POST",
       headers: {
@@ -34,7 +36,7 @@ export const userSignup = async (userData: SignupUserType) => {
 
 export const userLogin = async (userData: LoginUserType) => {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/login/", {
+    const response = await fetch(`${url}api/login/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
