@@ -144,7 +144,9 @@ const InvoiceModal = ({
     setFilterdInventory(
       inventories?.filter((inv) => filterdInventoryIds?.includes(inv.id))
     );
-  }, [filterdInventoryIds, inventories]);
+  }, [filterdInventoryIds]);
+
+  console.log(filterdInventoryIds);
 
   return (
     <div

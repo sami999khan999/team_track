@@ -57,9 +57,9 @@ const CustomerTable = () => {
     fetchCustomer();
   }, [currentPage, reload]);
 
-  useEffect(() => {
-    path.push(`?page=${currentPage}`);
-  }, [currentPage, path]);
+  // useEffect(() => {
+  //   path.push(`?page=${currentPage}`);
+  // }, [currentPage, path]);
 
   return (
     <div>
