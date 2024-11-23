@@ -48,11 +48,9 @@ const InvoiceModal = ({
   const [filterdInventory, setFilterdInventory] = useState<
     SelectInventoryType[] | undefined
   >();
-  const [customers, setCustomers] = useState<CustomerType[] | undefined>();
+  const [customers, setCustomers] = useState<CustomerType[]>();
   const [customerCurrentPage, setCustomerCurrentPage] = useState(1);
-  const [cusotmerTotalPage, setCusotmerTotalPage] = useState<
-    number | undefined
-  >();
+  const [cusotmerTotalPage, setCusotmerTotalPage] = useState<number>();
   const [activeCustomerId, setActiveCustomerId] = useState<
     number | undefined
   >();
@@ -146,7 +144,10 @@ const InvoiceModal = ({
     );
   }, [filterdInventoryIds, inventories]);
 
-  console.log(filterdInventoryIds);
+  // console.log(activeCustomerId);
+  // console.log(activeEmployeeId);
+  // console.log(activeProductId);
+  // console.log(customerCurrentPage);
 
   return (
     <div

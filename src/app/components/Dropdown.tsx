@@ -34,6 +34,7 @@ const Dropdown = ({
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | undefined>();
+  const [selectedId, setSelectedId] = useState<number | undefined>();
 
   useEffect(() => {
     if (defalutValue) {
@@ -92,7 +93,8 @@ const Dropdown = ({
                     item={item}
                     setIsDropdownOpen={setIsDropdownOpen}
                     setSelectionError={setSelectionError}
-                    selectedItem={selectedItem}
+                    setSelectedId={setSelectedId}
+                    selectedId={selectedId}
                     setSelectedItem={setSelectedItem}
                   />
                 </div>

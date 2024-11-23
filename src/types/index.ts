@@ -203,14 +203,31 @@ export type EmployeeBillType = {
   date: string;
 };
 
-export type SingleEmployeeBillType = {
-  sl_no: number;
+export type SingleEmployeeBillDataType = {
+  amount: number;
   products: string;
   quantity: string;
-  total_pty: string;
   rate: number;
-  amount: number;
+  sl_no: number;
+  total_qty: number;
 };
+
+export type SingleEmployeeBillType = {
+  employee: {
+    id: number;
+    name: string;
+  };
+  grand_total: number;
+  data: SingleEmployeeBillDataType[];
+  date: string;
+};
+
+// amount: 234000;
+// products: "pc";
+// quantity: "6, 111";
+// rate: 2000;
+// sl_no: 1;
+// total_qty: 117;
 
 // {'sl_no': sl_no, 'products': f"{products[0].name}", 'quantity':f"{product_qty[:-2]}", 'total_qty':total_qty, 'rate':products[0].rate,'amount': amount}
 
