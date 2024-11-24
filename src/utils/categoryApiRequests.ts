@@ -1,8 +1,10 @@
 import { CreateContextOptions } from "vm";
 
+const url = process.env.NEXT_PUBLIC_API_URL;
+
 export const getCategories = async () => {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/catagory/view/");
+    const response = await fetch(`${url}api/catagory/view/`);
     const data = await response.json();
 
     if (!response.ok) {
@@ -30,7 +32,7 @@ export const getCategories = async () => {
 
 export const createCategory = async (category: CreateContextOptions) => {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/catagory/create/", {
+    const response = await fetch(`${url}api/catagory/create/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,9 +63,7 @@ export const createCategory = async (category: CreateContextOptions) => {
 
 export const categoryDelete = async (id: number) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/catagory/delete/${id}/`
-    );
+    const response = await fetch(`${url}api/catagory/delete/${id}/`);
 
     if (!response.ok) {
       return {

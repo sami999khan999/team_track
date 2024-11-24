@@ -1,10 +1,12 @@
 import PaymentTable from "@/app/components/PaymentTable";
-import React from "react";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
     <div>
-      <PaymentTable />
+      <Suspense fallback={<div>Loading...</div>}>
+        <PaymentTable />
+      </Suspense>
     </div>
   );
 };

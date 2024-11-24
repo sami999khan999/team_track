@@ -1,5 +1,7 @@
+"use client";
+
 import { DropdownType } from "@/types";
-import React, { SetStateAction } from "react";
+import React, { SetStateAction, useState } from "react";
 
 const DropdownBody = ({
   type,
@@ -9,7 +11,8 @@ const DropdownBody = ({
   item,
   setIsDropdownOpen,
   setSelectionError,
-  selectedItem,
+  setSelectedId,
+  selectedId,
   setSelectedItem,
 }: {
   type:
@@ -25,7 +28,8 @@ const DropdownBody = ({
   item: DropdownType;
   setIsDropdownOpen: React.Dispatch<SetStateAction<boolean>>;
   setSelectionError?: React.Dispatch<SetStateAction<string>>;
-  selectedItem: string | undefined;
+  setSelectedId: React.Dispatch<SetStateAction<number | undefined>>;
+  selectedId: number | undefined;
   setSelectedItem: React.Dispatch<SetStateAction<string | undefined>>;
 }) => {
   return (
@@ -34,14 +38,17 @@ const DropdownBody = ({
         <div
           className="flex px-4 gap-10 border-b border-border_color py-2 hover:bg-secondary-foreground duration-200"
           onClick={() => {
-            if (selectedItem === item.name) {
+            const currentId = Number(item.id);
+            if (selectedId === currentId) {
               if (setId) setId(undefined);
               setSelectedItem(undefined);
+              setSelectedId(undefined);
               if (setSelectionError) setSelectionError("");
               setIsDropdownOpen((prv) => !prv);
             } else {
-              if (setId) setId(Number(item.id));
+              if (setId) setId(currentId);
               setSelectedItem(item.name);
+              setSelectedId(currentId);
               if (setSelectionError) setSelectionError("");
               setIsDropdownOpen((prv) => !prv);
             }
@@ -56,13 +63,17 @@ const DropdownBody = ({
         <div
           className="flex px-4 gap-10 border-b border-border_color py-2 hover:bg-secondary-foreground duration-200"
           onClick={() => {
-            if (selectedItem === item.name) {
+            const currentId = Number(item.id);
+
+            if (selectedId === currentId) {
               if (setId) setId(undefined);
               setSelectedItem(undefined);
+              setSelectedId(undefined);
               setIsDropdownOpen((prv) => !prv);
             } else {
-              if (setId) setId(Number(item.id));
+              if (setId) setId(currentId);
               setSelectedItem(item.name);
+              setSelectedId(currentId);
               setIsDropdownOpen((prv) => !prv);
             }
           }}
@@ -77,14 +88,18 @@ const DropdownBody = ({
         <div
           className="flex px-4 gap-10 border-b border-border_color py-2 hover:bg-secondary-foreground duration-200"
           onClick={() => {
-            if (selectedItem === item.product?.name) {
+            const currentId = Number(item.id);
+
+            if (selectedId === currentId) {
               if (setId) setId(undefined);
               setSelectedItem(undefined);
+              setSelectedId(undefined);
               setIsDropdownOpen((prv) => !prv);
               if (setSelectionError) setSelectionError("");
             } else {
-              if (setId) setId(Number(item.id));
+              if (setId) setId(currentId);
               setSelectedItem(item.product?.name);
+              setSelectedId(currentId);
               setIsDropdownOpen((prv) => !prv);
               if (setSelectionError) setSelectionError("");
             }
@@ -116,20 +131,24 @@ const DropdownBody = ({
         <div
           className="flex px-4 gap-10 border-b border-border_color py-2 hover:bg-secondary-foreground duration-200"
           onClick={() => {
-            if (selectedItem === item.name) {
+            const currentId = Number(item.id);
+
+            if (selectedId === currentId) {
               if (setId) setId(undefined);
               setSelectedItem(undefined);
+              setSelectedId(undefined);
               setIsDropdownOpen((prv) => !prv);
               if (setSelectionError) setSelectionError("");
             } else {
-              if (setId) setId(Number(item.id));
+              if (setId) setId(currentId);
               setSelectedItem(item.name);
+              setSelectedId(currentId);
               setIsDropdownOpen((prv) => !prv);
               if (setSelectionError) setSelectionError("");
             }
           }}
         >
-          <div className="w-1/6 truncate-text">{i + 1}</div>
+          <div className="w-1/6 truncate-text">{item.id}</div>
           <div className="flex-1 truncate-text">{item.name}</div>
           <div className="flex-1 truncate-text">
             {item.company_name === "" ? "NONE" : item.company_name}

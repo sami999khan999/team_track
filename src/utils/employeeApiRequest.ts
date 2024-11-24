@@ -1,10 +1,10 @@
 import { CreateEmployeeType } from "@/types";
 
+const url = process.env.NEXT_PUBLIC_API_URL;
+
 export const getEmployee = async (page: number | undefined) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/employee/view/${page}`
-    );
+    const response = await fetch(`${url}api/employee/view/${page}`);
 
     const data = await response.json();
 
@@ -21,7 +21,7 @@ export const getEmployee = async (page: number | undefined) => {
 
 export const createEmployee = async (employee: CreateEmployeeType) => {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/employee/create/", {
+    const response = await fetch(`${url}api/employee/create/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,9 +48,7 @@ export const createEmployee = async (employee: CreateEmployeeType) => {
 
 export const deleteEmployee = async (id: number | undefined) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/employee/delete/${id}/`
-    );
+    const response = await fetch(`${url}api/employee/delete/${id}/`);
 
     if (!response.ok) {
       return { success: false, message: "Failed to delete employee" };
@@ -68,16 +66,13 @@ export const updateEmployee = async (
   employee: CreateEmployeeType
 ) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/employee/update/${id}/`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(employee),
-      }
-    );
+    const response = await fetch(`${url}api/employee/update/${id}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(employee),
+    });
 
     if (!response.ok) {
       return { success: false, message: "Failed to update employee" };

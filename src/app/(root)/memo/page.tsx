@@ -1,11 +1,11 @@
-import ProductsTable from "@/app/components/ProductsTable";
-import React, { Suspense } from "react";
+import MemoTable from "@/app/components/MemoTable";
+import { Suspense } from "react";
 
 const page = () => {
   return (
     <div>
       <Suspense fallback={<div>Loading...</div>}>
-        <ProductsTable />
+        <MemoTable />
       </Suspense>
     </div>
   );

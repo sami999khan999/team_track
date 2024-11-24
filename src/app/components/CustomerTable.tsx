@@ -2,7 +2,7 @@
 
 import { CustomerType, EmployeeType } from "@/types";
 import { getCustoer } from "@/utils/customerApiRerquest";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import AddFormModal from "./AddFormModal";
 import Pagination from "./Pagination";
@@ -13,7 +13,6 @@ type TableDataType = EmployeeType | CustomerType;
 
 const CustomerTable = () => {
   const param = useSearchParams();
-  const path = useRouter();
   const [customer, setcustomer] = useState<TableDataType[]>([]);
   const [currentPage, setCurrentPage] = useState(
     Number(param.get("page")) || 1
@@ -21,19 +20,6 @@ const CustomerTable = () => {
   const [totalPage, setTotalPage] = useState<number | undefined>(undefined);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [reload, setReload] = useState(true);
-
-  // const pageNumber = () => {
-  //   const pages: number[] = [];
-  //   const pagesToShow = 5;
-  //   const start = Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
-  //   const end = Math.min(start + pagesToShow - 1, totalPage!);
-
-  //   for (let i = start; i <= end; i++) {
-  //     pages.push(i);
-  //   }
-
-  //   return pages;
-  // };
 
   const columns = customer?.length > 0 ? Object.keys(customer[0]) : [];
 
@@ -57,9 +43,10 @@ const CustomerTable = () => {
     fetchCustomer();
   }, [currentPage, reload]);
 
-  useEffect(() => {
-    path.push(`?page=${currentPage}`);
-  }, [currentPage, path]);
+  // useEffect(() => {
+  //   const page = Number(param.get("page")) || 1;
+  //   setCurrentPage(page);
+  // }, [param]);
 
   return (
     <div>

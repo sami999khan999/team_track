@@ -1,20 +1,19 @@
 import { CreateInvoiceType } from "@/types";
 
+const url = process.env.NEXT_PUBLIC_API_URL;
+
 export const getFilterInventory = async (filterParam: {
   product: number | string;
   employee: number | string;
 }) => {
   try {
-    const response = await fetch(
-      "http://127.0.0.1:8000/api/inventory/filter/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(filterParam),
-      }
-    );
+    const response = await fetch(`${url}api/inventory/filter/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(filterParam),
+    });
 
     const data = await response.json();
 
@@ -41,7 +40,7 @@ export const getFilterInventory = async (filterParam: {
 
 export const createInvoice = async (invoiceData: CreateInvoiceType) => {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/challan/create/", {
+    const response = await fetch(`${url}api/challan/create/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -76,9 +75,7 @@ export const createInvoice = async (invoiceData: CreateInvoiceType) => {
 
 export const getInvoice = async (page: number) => {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/challan/view/${page}/`
-    );
+    const response = await fetch(`${url}api/challan/view/${page}/`);
 
     const data = await response.json();
 
@@ -107,7 +104,7 @@ export const getInvoice = async (page: number) => {
 
 export const getSingleInvoice = async (id: number) => {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/challan/${id}/`);
+    const response = await fetch(`${url}api/challan/${id}/`);
 
     const data = await response.json();
 
