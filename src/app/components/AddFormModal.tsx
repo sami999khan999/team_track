@@ -4,6 +4,7 @@ import { CustomerType, EmployeeType } from "@/types";
 import { createCustomer, updateCustomer } from "@/utils/customerApiRerquest";
 import { createEmployee, updateEmployee } from "@/utils/employeeApiRequest";
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { CgSpinnerTwo } from "react-icons/cg";
 import { IoMdClose } from "react-icons/io";
 
 type TableDataType = EmployeeType | CustomerType;
@@ -69,6 +70,7 @@ const AddFormModal = ({
     address: "",
     mobile: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const employeeChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmployee({ ...employee, [e.target.name]: e.target.value });
@@ -96,19 +98,24 @@ const AddFormModal = ({
       const hasError = Object.values(newErrors).some((error) => error);
 
       if (!hasError) {
-        const response = await createEmployee(employee);
+        setIsLoading(true);
+        setTimeout(async () => {
+          const response = await createEmployee(employee);
 
-        if (response.success) {
-          setReload((prv) => !prv);
+          if (response.success) {
+            setReload((prv) => !prv);
 
-          if (setCurrentPage) {
-            setCurrentPage(1);
+            if (setCurrentPage) {
+              setCurrentPage(1);
+            }
+
+            if (setIsFormOpen) {
+              setIsFormOpen(false);
+            }
           }
 
-          if (setIsFormOpen) {
-            setIsFormOpen(false);
-          }
-        }
+          setIsLoading(false);
+        }, 1000);
       }
     } else {
       const newErrors = {
@@ -122,19 +129,25 @@ const AddFormModal = ({
       const hasError = Object.values(newErrors).some((error) => error);
 
       if (!hasError) {
-        const response = await createCustomer(customer);
+        setIsLoading(true);
 
-        if (response.success) {
-          setReload((prv) => !prv);
+        setTimeout(async () => {
+          const response = await createCustomer(customer);
 
-          if (setCurrentPage) {
-            setCurrentPage(1);
+          if (response.success) {
+            setReload((prv) => !prv);
+
+            if (setCurrentPage) {
+              setCurrentPage(1);
+            }
+
+            if (setIsFormOpen) {
+              setIsFormOpen(false);
+            }
           }
 
-          if (setIsFormOpen) {
-            setIsFormOpen(false);
-          }
-        }
+          setReload(false);
+        }, 1000);
       }
     }
   };
@@ -155,12 +168,18 @@ const AddFormModal = ({
         const hasError = Object.values(newErrors).some((error) => error);
 
         if (!hasError) {
-          const response = await updateEmployee(currentData?.id, employee);
+          setIsLoading(true);
 
-          if (response.success) {
-            setReload((prv) => !prv);
-            closeModal();
-          }
+          setTimeout(async () => {
+            const response = await updateEmployee(currentData?.id, employee);
+
+            if (response.success) {
+              setReload((prv) => !prv);
+              closeModal();
+            }
+
+            setIsLoading(false);
+          }, 1000);
         }
       } else {
         const newErrors = {
@@ -174,12 +193,18 @@ const AddFormModal = ({
         const hasError = Object.values(newErrors).some((error) => error);
 
         if (!hasError) {
-          const response = await updateCustomer(currentData?.id, customer);
+          setIsLoading(true);
 
-          if (response.success) {
-            setReload((prv) => !prv);
-            closeModal();
-          }
+          setTimeout(async () => {
+            const response = await updateCustomer(currentData?.id, customer);
+
+            if (response.success) {
+              setReload((prv) => !prv);
+              closeModal();
+            }
+
+            setIsLoading(false);
+          }, 1000);
         }
       }
     } catch (err) {
@@ -195,24 +220,24 @@ const AddFormModal = ({
       }
     >
       <div
-        className="relative bg-secondary flex flex-col xl:flex-row px-2 py-10 border border-border_color rounded-xl w-[90%] xl:w-[50%]"
+        className="relative bg-secondary flex flex-col xl:flex-row xl:px-6 px-2 py-10 border border-border_color rounded-xl w-[90%] xl:w-[65%]"
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className="absolute top-4 right-4 rounded text-xl xl:text-3xl transition-transform hover:rotate-90 duration-300 origin-center text-primary-foreground"
+          className="absolute top-4 right-4 rounded text-xl xl:text-3xl duration-300 origin-center text-primary-foreground hover:bg-secondary-foreground"
           onClick={() =>
             action && setIsFormOpen
               ? setIsFormOpen((prv) => !prv)
               : closeModal()
           }
         >
-          <IoMdClose />
+          <IoMdClose className="transition-transform hover:rotate-90" />
         </button>
-        <div className="w-full items-center xl:w-[28%] xl:mt-4 px-2">
-          <h2 className="text-center text-lg xl:text-2xl font-semibold tracking-wider capitalize text-primary">
+        <div className="w-full items-center xl:w-[28%] xl:mt-8 px-2">
+          <h2 className="text-center text-lg xl:text-3xl font-semibold tracking-wider capitalize  font-sour_gummy text-primary">
             {title}
           </h2>
-          <p className="text-primary-foreground text-xs xl:text-base mt-6 text-center">
+          <p className="text-primary-foreground text-xs xl:text-lg mt-6 text-center">
             {`${"Please fill out the form with the employee's"}`}
             <span className="text-primary">
               {action === "addEmployee"
@@ -252,7 +277,7 @@ const AddFormModal = ({
                   name="address"
                   value={employee.address}
                   onChange={employeeChangeHandler}
-                  className="add_field"
+                  className="add_field "
                 />
                 <p className="error_message">{employeeInputError.address}</p>
               </div>
@@ -330,9 +355,16 @@ const AddFormModal = ({
           )}
           <button
             type="submit"
-            className="w-full bg-primary mt-6 xl:text-xl tracking-wide py-2 xl:py-3 capitalize text-background font-semibold hover:bg-primary/80 rounded-full duration-200"
+            className="bg-primary mt-6 py-2 px-4 w-full rounded-full text-lg font-semibold xl:text-xl text-background tracking-wider hover:bg-primary/90 cursor-pointer duration-200 hover:bg-secondary-foreground hover:text-primary-foreground text-center group"
+            disabled={isLoading}
           >
-            {title}
+            {isLoading ? (
+              <div className="flex items-center justify-center w-full">
+                <CgSpinnerTwo className="w-6 h-6 animate-spin text-background group-hover:text-primary-foreground" />
+              </div>
+            ) : (
+              <div>{title}</div>
+            )}
           </button>
         </form>
       </div>

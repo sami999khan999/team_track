@@ -6,13 +6,16 @@ import Pagination from "./Pagination";
 import PaymentModal from "./PaymentModal";
 import { EmployeeBillType } from "@/types";
 import { getEmployeeBill } from "@/utils/employeeBillApiRequests";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const PaymentTable = () => {
   const path = useRouter();
+  const param = useSearchParams();
   const [isOpen, setIsopen] = useState(false);
   const [totalPage, setTotalPage] = useState<number | undefined>(10);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    Number(param.get("page")) || 1
+  );
   const [employeeBill, setEmployeeBill] = useState<
     EmployeeBillType[] | undefined
   >([]);

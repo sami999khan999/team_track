@@ -73,7 +73,7 @@ const ProductionTable = () => {
 
         {/* Table */}
         <div className="overflow-x-auto">
-          <div className="w-fit xl:w-full">
+          <div className="w-[40rem] xl:w-full">
             <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-3 mt-3 bg-background font-semibold tracking-wide uppercase">
               {columns.map((col, i) => (
                 <div
@@ -104,7 +104,7 @@ const ProductionTable = () => {
                   <div className="flex-1 truncate-text">{item.rate}</div>
                   <div className="flex-1 truncate-text">{item.payment}</div>
                   <div className="flex-1 truncate-text">{item.date}</div>
-                  <div className="flex  items-center xl:gap-3 text-primary-foreground">
+                  <div className="flex  items-center xl:gap-3 text-primary-foreground px-1">
                     <div
                       className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
                       onClick={() => {

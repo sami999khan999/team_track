@@ -138,11 +138,11 @@ const InvoiceModal = ({
     fetchCustomer();
   }, [customerCurrentPage]);
 
-  useEffect(() => {
-    setFilterdInventory(
-      inventories?.filter((inv) => filterdInventoryIds?.includes(inv.id))
-    );
-  }, [filterdInventoryIds, inventories]);
+  // useEffect(() => {
+  //   setFilterdInventory(
+  //     inventories?.filter((inv) => filterdInventoryIds?.includes(inv.id))
+  //   );
+  // }, [filterdInventoryIds, inventories]);
 
   // console.log(activeCustomerId);
   // console.log(activeEmployeeId);
@@ -174,7 +174,7 @@ const InvoiceModal = ({
           </p>
         </div>
         <div className="mt-6 flex flex-col xl:flex-row gap-4 remove-scrollbar">
-          <div className="left xl:w-[50%] space-y-8 ">
+          <div className="left xl:w-[50%] space-y-8">
             <div className="flex flex-col xl:flex-row gap-4">
               <div className="flex flex-col w-full">
                 <Dropdown
@@ -204,9 +204,6 @@ const InvoiceModal = ({
               </button>
             </div>
             <div>
-              <h2 className="text-center text-primary text-lg xl:text-2xl font-semibold mb-4">
-                Select Production
-              </h2>
               <div className="">
                 {inventories?.length === 0 ? (
                   <h2 className="text-center text-2xl xl:text-3xl font-bold text-primary-foreground mt-2 xl:mt-[5rem]">
@@ -218,12 +215,24 @@ const InvoiceModal = ({
                     setFilterdInventoryIds={setFilterdInventoryIds}
                     filterdInventoryIds={filterdInventoryIds}
                     inventories={inventories}
+                    setFilterdInventory={setFilterdInventory}
                   />
                 )}
               </div>
             </div>
           </div>
           <div className="border-t-4 xl:border-l-8 border-border_color"></div>
+
+          {inventories?.length === 0 ||
+            (inventories === undefined && (
+              <div className="hidden xl:block absolute top-[50%] left-[35%] text-primary-foreground font-bold text-2xl">
+                <p>
+                  Select <span className="text-primary">Product</span> and{" "}
+                  <span className="text-primary">Employee</span> to get started
+                </p>
+              </div>
+            ))}
+
           <div className="right xl:w-[50%] space-y-8 ">
             <div className="flex flex-col xl:flex-row gap-4 ">
               <div className="w-full">
@@ -247,9 +256,6 @@ const InvoiceModal = ({
               </div>
             </div>
             <div>
-              <h2 className="text-center text-primary text-lg xl:text-2xl font-semibold mb-4">
-                Create Invoice
-              </h2>
               <InvoiceCreateTable
                 type="selected"
                 // setFilterdInventoryIds={setFilterdInventoryIds}

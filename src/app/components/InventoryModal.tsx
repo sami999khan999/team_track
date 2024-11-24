@@ -4,6 +4,8 @@ import { getProduction } from "@/utils/productionApiRequests";
 import React, { SetStateAction, useEffect, useState } from "react";
 import DeleteModal from "./DeleteModal";
 import Dropdown from "./Dropdown";
+import { CgSpinnerTwo } from "react-icons/cg";
+import { IoMdClose } from "react-icons/io";
 
 const InventoryModal = ({
   setIsOpen,
@@ -33,7 +35,7 @@ const InventoryModal = ({
   >();
   const [productionSelectionError, setProductionSelectionError] = useState("");
   const [statusSelectionError, setStatusSelectionError] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
   // console.log(productionId);
   // console.log(productionStatus);
 
@@ -66,31 +68,37 @@ const InventoryModal = ({
       setStatusSelectionError(newError.status);
       return;
     } else {
-      const data = {
-        production: productionId,
-        current_status: productionStatus,
-      };
+      setIsLoading(true);
 
-      if (action === "create") {
-        const response = await createInventory(data);
-
-        if (response.success) {
-          setIsOpen((prv) => !prv);
-          setReload((prv) => !prv);
-        }
-      }
-
-      if (action === "update") {
-        const updateData = {
-          current_status: data.current_status,
+      setTimeout(async () => {
+        const data = {
+          production: productionId,
+          current_status: productionStatus,
         };
-        const response = await updateInventory(defaultValue?.id, updateData);
 
-        if (response.success) {
-          setIsOpen((prv) => !prv);
-          setReload((prv) => !prv);
+        if (action === "create") {
+          const response = await createInventory(data);
+
+          if (response.success) {
+            setIsOpen((prv) => !prv);
+            setReload((prv) => !prv);
+          }
         }
-      }
+
+        if (action === "update") {
+          const updateData = {
+            current_status: data.current_status,
+          };
+          const response = await updateInventory(defaultValue?.id, updateData);
+
+          if (response.success) {
+            setIsOpen((prv) => !prv);
+            setReload((prv) => !prv);
+          }
+        }
+
+        setIsLoading(false);
+      }, 1000);
     }
   };
   const deleteHandler = () => {};
@@ -150,8 +158,17 @@ const InventoryModal = ({
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-secondary w-[90%] xl:w-[80%] border border-border_color rounded-xl px-3 xl:px-8 py-6 xl:py-8"
+            className="bg-secondary w-[90%] xl:w-[80%] border border-border_color rounded-xl px-3 xl:px-8 py-6 xl:py-8 relative"
           >
+            <div
+              className="absolute xl:top-6 top-4 xl:right-6 right-4 text-2xl text-primary-foreground hover:bg-secondary-foreground p-1 w-fit rounded-md"
+              onClick={() => {
+                setIsOpen((prv) => !prv);
+              }}
+            >
+              <IoMdClose className="transition-transform hover:rotate-90 origin-center" />
+            </div>
+
             <div className="text-primary-foreground text-center border-b border-border_color pb-6 xl:pb-8">
               {defaultValue ? (
                 <div className="text-xl xl:text-3xl font-semibold flex flex-col items-center justify-center gap-2">
@@ -167,7 +184,9 @@ const InventoryModal = ({
                 </div>
               ) : (
                 <div className="text-xl xl:text-3xl font-semibold flex flex-col items-center justify-center gap-2">
-                  <p>Creaate Production</p>
+                  <p className="text-primary font-sour_gummy">
+                    Creaate Production
+                  </p>
                   <div className="hidden xl:block text-base w-[60%]">
                     To create production records, include{" "}
                     <span className="text-primary">
@@ -225,46 +244,46 @@ const InventoryModal = ({
               </div>
               <div className="border-b xl:border-l  border-border_color"></div>
 
-              <div className="w-full h-[13rem] rounded-lg xl:w-[50%] space-y-2  bg-background xl:space-y-3">
+              <div className="w-full h-[15rem] rounded-lg xl:w-[50%] space-y-2 border border-border_color xl:space-y-3">
                 {activeProduction && (
                   <div className="text-primary-foreground rounded-md text-base xl:text-[21px] flex p-3">
-                    <div className="flex flex-col gap-2 w-[40%] xl:w-[25%] ">
-                      <p className="font-semibold bg-secondary px-2 border-r border-border_color">
+                    <div className="flex flex-col gap-1 w-[40%] xl:w-[25%] ">
+                      <p className="font-semibold bg-secondary px-2 py-1 border-r border-border_color">
                         ID:
                       </p>
-                      <p className="font-semibold bg-secondary px-2 border-r border-border_color">
+                      <p className="font-semibold bg-secondary px-2 py-1 border-r border-border_color">
                         Product:
                       </p>
-                      <p className="font-semibold bg-secondary px-2 border-r border-border_color">
+                      <p className="font-semibold bg-secondary px-2 py-1 border-r border-border_color">
                         Employee:
                       </p>
-                      <p className="font-semibold bg-secondary px-2 border-r border-border_color">
+                      <p className="font-semibold bg-secondary px-2 py-1 border-r border-border_color">
                         Rate:{" "}
                       </p>
-                      <p className="font-semibold bg-secondary px-2 border-r border-border_color">
+                      <p className="font-semibold bg-secondary px-2 py-1 border-r border-border_color">
                         Quantity:
                       </p>
-                      <p className="font-semibold bg-secondary px-2 border-r border-border_color">
+                      <p className="font-semibold bg-secondary px-2 py-1 border-r border-border_color">
                         Date:{" "}
                       </p>
                     </div>
-                    <div className="flex flex-col gap-2 w-[60%] xl:w-[75%] ">
-                      <p className="bg-secondary font-medium px-4">
+                    <div className="flex flex-col gap-1 w-[60%] xl:w-[75%] capitalize">
+                      <p className="bg-secondary font-medium px-4 py-1">
                         {activeProduction.id}
                       </p>
-                      <p className="bg-secondary font-medium px-4">
+                      <p className="bg-secondary font-medium px-4 py-1">
                         {activeProduction.product.name}
                       </p>
-                      <p className="bg-secondary font-medium px-4">
+                      <p className="bg-secondary font-medium px-4 py-1">
                         {activeProduction.employee.name}
                       </p>
-                      <p className="bg-secondary font-medium px-4">
+                      <p className="bg-secondary font-medium px-4 py-1">
                         {activeProduction.rate}
                       </p>
-                      <p className="bg-secondary font-medium px-4">
+                      <p className="bg-secondary font-medium px-4 py-1">
                         {activeProduction.quantity}
                       </p>
-                      <p className="bg-secondary font-medium px-4">
+                      <p className="bg-secondary font-medium px-4 py-1">
                         {activeProduction.date}
                       </p>
                     </div>
@@ -274,10 +293,17 @@ const InventoryModal = ({
             </div>
             <div className="w-full flex items-center justify-center mt-5 xl:mt-8">
               <button
-                className="bg-primary w-full py-2 xl:py-3 font-semibold text-background text-base xl:text-[1.4rem] rounded-full"
+                className="bg-primary py-2 px-4 w-full rounded-full text-lg font-semibold xl:text-xl text-background tracking-wider hover:bg-primary/90 cursor-pointer duration-200 hover:bg-secondary-foreground hover:text-primary-foreground text-center group"
                 onClick={handleSubmit}
+                disabled={isLoading}
               >
-                {defaultValue ? "Update" : "Create"} Inventory
+                {isLoading ? (
+                  <div className="flex items-center justify-center w-full">
+                    <CgSpinnerTwo className="w-6 h-6 animate-spin text-background group-hover:text-primary-foreground" />
+                  </div>
+                ) : (
+                  <div>{defaultValue ? "Update" : "Create"} Inventory</div>
+                )}
               </button>
             </div>
           </div>

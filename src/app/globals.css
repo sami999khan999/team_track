@@ -69,7 +69,7 @@
 
 @layer components {
   .add_field {
-    @apply h-9 xl:h-12 xl:px-6 px-4 text-sm xl:text-xl bg-secondary-foreground border-none text-primary-foreground rounded-full shadow-xl;
+    @apply h-9 xl:h-12 xl:px-6 px-4 text-sm xl:text-xl bg-secondary-foreground text-primary-foreground rounded-full shadow-xl border border-border_color;
   }
 
   .error_message {

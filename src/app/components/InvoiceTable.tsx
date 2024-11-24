@@ -6,15 +6,18 @@ import Pagination from "./Pagination";
 import InvoiceModal from "./InvoiceModal";
 import { InvoiceType } from "@/types";
 import { getInvoice } from "@/utils/invoiceApiRequests";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const InvoiceTable = () => {
   const path = useRouter();
+  const param = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   // const [action, setAction] = useState<
   //   "create" | "update" | "delete" | undefined
   // >();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    Number(param.get("page")) || 1
+  );
   const [totalPage, setTotalPage] = useState<number | undefined>(1);
   const [invoice, setInvoice] = useState<InvoiceType[]>([]);
 

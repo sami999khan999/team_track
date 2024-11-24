@@ -8,16 +8,44 @@ const InvoiceCreateTable = ({
   setFilterdInventoryIds,
   filterdInventoryIds,
   inventories,
+  setFilterdInventory,
 }: {
   type: "selection" | "selected";
   setFilterdInventoryIds?: React.Dispatch<SetStateAction<number[] | undefined>>;
   filterdInventoryIds?: number[] | undefined;
   inventories: SelectInventoryType[] | undefined;
+  setFilterdInventory?: React.Dispatch<
+    SetStateAction<SelectInventoryType[] | undefined>
+  >;
 }) => {
+  const handleSelect = (inventory: SelectInventoryType) => {
+    if (setFilterdInventoryIds) {
+      if (filterdInventoryIds?.includes(inventory.id)) {
+        setFilterdInventoryIds((prv) =>
+          prv?.filter((item) => item !== inventory.id)
+        );
+      } else {
+        setFilterdInventoryIds((prv) =>
+          prv ? [...prv, inventory.id] : [inventory.id]
+        );
+      }
+    }
+
+    if (setFilterdInventory) {
+      if (filterdInventoryIds?.includes(inventory.id)) {
+        setFilterdInventory((prv) =>
+          prv?.filter((item) => item.id !== inventory.id)
+        );
+      } else {
+        setFilterdInventory((prv) => (prv ? [...prv, inventory] : [inventory]));
+      }
+    }
+  };
+
   return (
     <div className="">
       {inventories ? (
-        <div className="h-[15rem] xl:h-[20rem] overflow-y-auto remove-scrollbar">
+        <div className="h-[15rem] xl:h-[18rem] overflow-y-auto remove-scrollbar">
           <div className="flex gap-2 bg-background text-sm xl:text-xl text-primary-foreground px-4 py-3 font-medium sticky top-0 rounded-t-md">
             <p className="w-1/12 truncate-text">ID</p>
             <p className="flex-1 truncate-text">Employee</p>
@@ -26,7 +54,7 @@ const InvoiceCreateTable = ({
             <p className="flex-1 truncate-text">Quantity</p>
             {type === "selection" && <p>Select</p>}
           </div>
-          <div className="border border-border_color  rounded-b-xl">
+          <div className="border border-border_color rounded-b-xl">
             {inventories?.map((inventory, i) => (
               <div
                 key={i}
@@ -50,19 +78,7 @@ const InvoiceCreateTable = ({
                 {type === "selection" && (
                   <div
                     className="px-3 flex items-center justify-center cursor-pointer"
-                    onClick={() => {
-                      if (setFilterdInventoryIds) {
-                        if (filterdInventoryIds?.includes(inventory.id)) {
-                          setFilterdInventoryIds((prv) =>
-                            prv?.filter((item) => item !== inventory.id)
-                          );
-                        } else {
-                          setFilterdInventoryIds((prv) =>
-                            prv ? [...prv, inventory.id] : [inventory.id]
-                          );
-                        }
-                      }
-                    }}
+                    onClick={() => handleSelect(inventory)}
                   >
                     <div className="">
                       {filterdInventoryIds?.includes(inventory.id) ? (
