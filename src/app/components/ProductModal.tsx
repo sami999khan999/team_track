@@ -6,6 +6,9 @@ import {
 } from "@/utils/productApiRequests";
 import React, { SetStateAction, useEffect, useState } from "react";
 import CategoryDropdown from "./CategoryDropdown";
+import { IoMdClose } from "react-icons/io";
+import { ImSpinner6 } from "react-icons/im";
+import { CgSpinnerTwo } from "react-icons/cg";
 
 const ProductModal = ({
   modalAction,
@@ -28,6 +31,7 @@ const ProductModal = ({
     name: "",
     rate: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCreate = async () => {
     const newError = {
@@ -36,7 +40,7 @@ const ProductModal = ({
     };
 
     if (!selectedCategory) {
-      setSelectedCategory("Inter a category!");
+      setSelectedCategory("Enter a category!");
     }
 
     setInputError(newError);
@@ -44,19 +48,25 @@ const ProductModal = ({
     const hasError = Object.values(newError).some((error) => error);
 
     if (!hasError) {
-      const data = {
-        name: productName,
-        rate: Number(productRate),
-        category: categoryId,
-      };
-      console.log(data);
+      setIsLoading(true);
 
-      const response = await createProduct(data);
+      // Simulate a 2-second delay
+      setTimeout(async () => {
+        const data = {
+          name: productName,
+          rate: Number(productRate),
+          category: categoryId,
+        };
 
-      if (response.success) {
-        setIsModalOpen((prv) => !prv);
-        setReload((prv) => !prv);
-      }
+        const response = await createProduct(data);
+
+        if (response.success) {
+          setIsModalOpen((prv) => !prv);
+          setReload((prv) => !prv);
+        }
+
+        setIsLoading(false);
+      }, 1000);
     }
   };
 
@@ -122,16 +132,28 @@ const ProductModal = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-[95%] xl:w-[50%] rounded"
+        className="w-[95%] xl:w-[50%] bg-secondary "
       >
         {modalAction === "create" && (
-          <div className="bg-secondary border border-border_color rounded-xl h-full w-full px-4 py-8">
-            <div className="border-b border-border_color">
-              <h2 className="text-2xl xl:text-3xl font-semibold text-primary-foreground text-center mb-6">
+          <div className=" h-full w-full px-4 py-8 rounded-xl relative border border-border_color">
+            <div
+              className="absolute top-4 right-4 text-2xl text-primary-foreground hover:bg-secondary-foreground w-fit p-1 rounded-md"
+              onClick={() => {
+                setIsModalOpen((prv) => !prv);
+              }}
+            >
+              <IoMdClose className="transition-transform hover:rotate-90 origin-center" />
+            </div>
+            <div className="border-b border-border_color flex flex-col items-center justify-center w-full gap-2 pb-6">
+              <h2 className="text-2xl xl:text-3xl font-semibold text-center font-sour_gummy text-primary">
                 Create Product
               </h2>
+              <p className="text-primary-foreground w-[70%] text-center text-lg hidden xl:block">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Officiis magni esse est laudantium! Voluptas, dolore!
+              </p>
             </div>
-            <div className="flex flex-col xl:flex-row mt-6 gap-8">
+            <div className="flex flex-col xl:flex-row mt-8 gap-8">
               <div className="flex flex-col gap-2 xl:gap-4 xl:w-[50%] ">
                 <div>
                   <input
@@ -139,7 +161,7 @@ const ProductModal = ({
                     name="name"
                     value={productName}
                     placeholder="Product Name"
-                    className="border border-border_color text-primary-foreground text-base xl:text-lg bg-secondary-foreground rounded-full py-2 px-6"
+                    className="border border-border_color text-primary-foreground text-base xl:text-xl bg-secondary-foreground rounded-full py-2 px-6"
                     onChange={(e) => {
                       setProductName(e.target.value);
                       setInputError({ ...inputError, name: "" });
@@ -153,7 +175,7 @@ const ProductModal = ({
                     name="rate"
                     value={productRate}
                     placeholder="Product Rate"
-                    className="border border-border_color text-primary-foreground text-base xl:text-lg  bg-secondary-foreground rounded-full py-2 px-6"
+                    className="border border-border_color text-primary-foreground text-base xl:text-xl  bg-secondary-foreground rounded-full py-2 px-6"
                     onChange={(e) => {
                       setProductRate(e.target.value);
                       setInputError({ ...inputError, rate: "" });
@@ -173,19 +195,38 @@ const ProductModal = ({
               </div>
             </div>
             <button
-              className="bg-primary mt-4 py-2 px-4 w-full rounded-full text-lg font-semibold xl:text-xl text-background tracking-wider hover:bg-primary/90 cursor-pointer duration-200"
+              className="bg-primary mt-6 py-2 px-4 w-full rounded-full text-lg font-semibold xl:text-xl text-background tracking-wider hover:bg-primary/90 cursor-pointer duration-200 hover:bg-secondary-foreground hover:text-primary-foreground text-center group"
+              disabled={isLoading}
               onClick={handleCreate}
             >
-              Create Product
+              {isLoading ? (
+                <div className="flex items-center justify-center w-full">
+                  <CgSpinnerTwo className="w-6 h-6 animate-spin text-background group-hover:text-primary-foreground" />
+                </div>
+              ) : (
+                <div>Create Product</div>
+              )}
             </button>
           </div>
         )}
         {modalAction === "update" && (
-          <div className="bg-secondary border border-border_color rounded-xl h-full w-full px-4 py-8">
-            <div className="border-b border-border_color">
-              <h2 className="text-2xl xl:text-3xl font-semibold text-primary-foreground text-center mb-6">
+          <div className="h-full w-full px-4 py-8 relative rounded-xl border border-border_color">
+            <div
+              className="absolute top-4 right-4 text-2xl text-primary-foreground hover:bg-primary w-fit hover:text-background rounded-md"
+              onClick={() => {
+                setIsModalOpen((prv) => !prv);
+              }}
+            >
+              <IoMdClose className="transition-transform hover:rotate-90 origin-center" />
+            </div>
+            <div className="border-b border-border_color flex flex-col items-center justify-center w-full gap-2 pb-6">
+              <h2 className="text-2xl xl:text-3xl font-semibold text-center font-sour_gummy text-primary">
                 Update Product
               </h2>
+              <p className="text-primary-foreground w-[70%] text-center text-lg hidden xl:block">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Officiis magni esse est laudantium! Voluptas, dolore!
+              </p>
             </div>
             <div className="flex flex-col xl:flex-row mt-6 gap-8">
               <div className="flex flex-col gap-2 xl:gap-4 xl:w-[50%] ">
@@ -195,7 +236,7 @@ const ProductModal = ({
                     name="name"
                     value={productName}
                     placeholder="Product Name"
-                    className="border border-border_color text-base xl:text-lg bg-secondary-foreground text-primary-foreground rounded-full py-2 px-6"
+                    className="border border-border_color text-primary-foreground text-base xl:text-xl bg-secondary-foreground rounded-full py-2 px-6"
                     onChange={(e) => {
                       setProductName(e.target.value);
                       setInputError({ ...inputError, name: "" });
@@ -209,7 +250,7 @@ const ProductModal = ({
                     name="rate"
                     value={productRate}
                     placeholder="Product Rate"
-                    className="border border-border_color text-primary-foreground text-base xl:text-lg  bg-secondary-foreground rounded-full py-2 px-6"
+                    className="border border-border_color text-primary-foreground text-base xl:text-xl  bg-secondary-foreground rounded-full py-2 px-6"
                     onChange={(e) => {
                       setProductRate(e.target.value);
                       setInputError({ ...inputError, rate: "" });
@@ -229,13 +270,21 @@ const ProductModal = ({
               </div>
             </div>
             <button
-              className="bg-primary mt-4 py-2 px-4 w-full rounded-full text-lg font-semibold xl:text-xl text-background tracking-wider hover:bg-primary/90 cursor-pointer duration-200"
+              className="bg-primary mt-6 py-2 px-4 w-full rounded-full text-lg font-semibold xl:text-xl text-background tracking-wider hover:bg-primary/90 cursor-pointer duration-200 hover:bg-secondary-foreground hover:text-primary-foreground text-center group"
+              disabled={isLoading}
               onClick={handleUpdate}
             >
-              Update Product
+              {isLoading ? (
+                <div className="flex items-center justify-center w-full">
+                  <CgSpinnerTwo className="w-6 h-6 animate-spin text-background group-hover:text-primary-foreground" />
+                </div>
+              ) : (
+                <div>Update Product</div>
+              )}
             </button>
           </div>
         )}
+
         {modalAction === "delete" && (
           <div
             className="flex items-center justify-center absolute  top-0 left-0  z-50 w-full h-full backdrop-blur-md"

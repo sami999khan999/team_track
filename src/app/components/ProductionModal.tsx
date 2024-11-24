@@ -3,14 +3,16 @@
 import { EmployeeType, PorductionType, ProductType } from "@/types";
 import { getEmployee } from "@/utils/employeeApiRequest";
 import { getProducts } from "@/utils/productApiRequests";
-import React, { SetStateAction, useEffect, useState } from "react";
-import Dropdown from "./Dropdown";
 import {
   createProduction,
   deleteProduction,
   updateProduction,
 } from "@/utils/productionApiRequests";
+import React, { SetStateAction, useEffect, useState } from "react";
+import { CgSpinnerTwo } from "react-icons/cg";
+import { IoMdClose } from "react-icons/io";
 import DeleteModal from "./DeleteModal";
+import Dropdown from "./Dropdown";
 
 const ProductionModal = ({
   setIsOpen,
@@ -49,7 +51,7 @@ const ProductionModal = ({
     employee: "",
     products: "",
   });
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const adtiveElement = {
     id: defalutValue?.id,
@@ -88,7 +90,7 @@ const ProductionModal = ({
       setInputError(newError);
       return;
     } else {
-      setIsButtonDisabled(true);
+      setIsLoading(true);
       const data = {
         rate: productionInput.rate,
         quantity: productionInput.quantity,
@@ -115,7 +117,7 @@ const ProductionModal = ({
       }
 
       setTimeout(() => {
-        setIsButtonDisabled(false);
+        setIsLoading(false);
       }, 1000);
     }
   };
@@ -176,12 +178,23 @@ const ProductionModal = ({
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-secondary w-[90%] xl:w-[80%] border border-border_color rounded-xl px-3 xl:px-8 py-6 xl:py-8"
+            className="bg-secondary w-[90%] xl:w-[80%] border border-border_color rounded-xl px-3 xl:px-8 py-6 xl:py-8 relative"
           >
+            <div
+              className="absolute xl:top-6 top-4 xl:right-6 right-4 text-2xl text-primary-foreground hover:bg-secondary-foreground p-1   w-fit rounded-md"
+              onClick={() => {
+                setIsOpen((prv) => !prv);
+              }}
+            >
+              <IoMdClose className="transition-transform hover:rotate-90 origin-center" />
+            </div>
+
             <div className="text-primary-foreground text-center border-b border-border_color pb-6 xl:pb-8">
               {defalutValue ? (
                 <div className="text-xl xl:text-3xl font-semibold flex flex-col items-center justify-center gap-2">
-                  <p>Update Production</p>
+                  <p className="text-primary font-sour_gummy">
+                    Update Production
+                  </p>
                   <div className="hidden xl:block text-base w-[60%]">
                     To update production records, include{" "}
                     <span className="text-primary">
@@ -193,7 +206,9 @@ const ProductionModal = ({
                 </div>
               ) : (
                 <div className="text-xl xl:text-3xl font-semibold flex flex-col items-center justify-center gap-2">
-                  <p>Creaate Production</p>
+                  <p className="text-primary font-sour_gummy">
+                    Creaate Production
+                  </p>
                   <div className="hidden xl:block text-base w-[60%]">
                     To create production records, include{" "}
                     <span className="text-primary">
@@ -272,11 +287,17 @@ const ProductionModal = ({
             </div>
             <div className="w-full flex items-center justify-center mt-5 xl:mt-8">
               <button
-                className="bg-primary w-full py-2 xl:py-3 font-semibold text-background text-base xl:text-[1.4rem] rounded-full disabled:bg-primary-foreground "
-                disabled={isButtonDisabled}
+                className="bg-primary mt-6 py-2 px-4 w-full rounded-full text-lg font-semibold xl:text-xl text-background tracking-wider hover:bg-primary/90 cursor-pointer duration-200 hover:bg-secondary-foreground hover:text-primary-foreground text-center group"
+                disabled={isLoading}
                 onClick={handleSubmit}
               >
-                {defalutValue ? "Update" : "Create"} Production
+                {isLoading ? (
+                  <div className="flex items-center justify-center w-full">
+                    <CgSpinnerTwo className="w-6 h-6 animate-spin text-background group-hover:text-primary-foreground" />
+                  </div>
+                ) : (
+                  <div>{defalutValue ? "Update" : "Create"} Production</div>
+                )}
               </button>
             </div>
           </div>

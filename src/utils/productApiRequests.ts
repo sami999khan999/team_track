@@ -37,7 +37,7 @@ export const createProduct = async (product: CreateProductType) => {
 
 export const getProducts = async (page: number) => {
   try {
-    const response = await fetch(`${url}api/products/view/${page}`);
+    const response = await fetch(`${url}api/products/view/${page}/`);
 
     const data = await response.json();
 
@@ -66,7 +66,7 @@ export const getProducts = async (page: number) => {
 
 export const deleteProduct = async (id: number | string) => {
   try {
-    const response = await fetch(`${url}api/products/delete/${id}`);
+    const response = await fetch(`${url}api/products/delete/${id}/`);
 
     const data = await response.json();
 
@@ -76,6 +76,8 @@ export const deleteProduct = async (id: number | string) => {
         message: data.message || "Product deleted failed",
       };
     }
+
+    console.log(data);
 
     return {
       success: true,

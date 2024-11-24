@@ -7,11 +7,7 @@ import {
   getCategories,
 } from "@/utils/categoryApiRequests";
 import React, { SetStateAction, useEffect, useState } from "react";
-import {
-  IoIosArrowDown,
-  IoIosArrowRoundForward,
-  IoMdAdd,
-} from "react-icons/io";
+import { IoIosArrowDown, IoMdAdd, IoMdArrowDropright } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 
 const CategoryDropdown = ({
@@ -36,7 +32,6 @@ const CategoryDropdown = ({
     event.stopPropagation();
     setDropdownOpen(false);
     setSelectedCategory(category);
-    console.log(selectedCategory);
   };
 
   const handleBackdropClick = () => {
@@ -55,7 +50,7 @@ const CategoryDropdown = ({
 
     if (response.success) {
       setReload((prv) => !prv);
-      setSelectedCategory("");
+      setCategoryInput("");
     } else {
       console.log(response.message);
     }
@@ -100,13 +95,18 @@ const CategoryDropdown = ({
               >
                 {selectedCategory ? selectedCategory : "Select Category"}
               </p>
-              <div className="transition-transform group-hover:rotate-180">
+              <div
+                className={`${
+                  dropdownOpen === true &&
+                  "transition-transform rotate-180 duration-200"
+                }`}
+              >
                 <IoIosArrowDown />
               </div>
             </div>
             <div>
               <div
-                className="py-2 xl:text-lg flex items-center gap-3 w-full bg-secondary-foreground text-primary-foreground font-semibold justify-center border border-border_color duration-200 cursor-pointer rounded-full mt-4"
+                className="py-2 xl:text-lg flex items-center gap-3 w-full bg-secondary-foreground text-primary-foreground font-semibold justify-center border border-border_color duration-200 cursor-pointer rounded-full mt-4 "
                 onClick={() => setInputOpen((prv) => !prv)}
               >
                 <p>Add Category</p>
@@ -122,15 +122,21 @@ const CategoryDropdown = ({
                   type="text"
                   placeholder="Enter new category"
                   name="category"
-                  className="w-full px-6 text-xl text-primary-foreground h-10 bg-secondary-foreground border font-medium border-border_color rounded-l-full rounded-r-none focus:outline-none "
+                  autoFocus
+                  className="w-full px-6 text-xl text-primary-foreground bg-secondary-foreground border font-medium border-border_color rounded-l-full rounded-r-none focus:outline-none "
                   value={categoryInput}
                   onChange={(e) => setCategoryInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && categoryInput.trim() !== "") {
+                      addCtegory();
+                    }
+                  }}
                 />
                 <div
-                  className="px-5 border border-border_color h-10 flex items-center text-3xl bg-secondary-foreground hover:bg-secondary text-primary-foreground rounded rounded-r-full rounded-l-none duration-200"
+                  className="px-5 border border-border_color flex items-center py-2 text-4xl bg-secondary-foreground hover:bg-secondary text-primary-foreground rounded rounded-r-full rounded-l-none duration-200"
                   onClick={addCtegory}
                 >
-                  <IoIosArrowRoundForward />
+                  <IoMdArrowDropright />
                 </div>
               </div>
             )}
@@ -140,11 +146,11 @@ const CategoryDropdown = ({
                 className="absolute w-full h-[10rem] transition-transform ease-in-out duration-200 overflow-auto rounded-lg z-50 remove-scrollbar bg-secondary-foreground border border-border_color"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="p-2">
+                <div className="px-2 py-4 space-y-2">
                   {categories?.map((category, i) => (
                     <div
                       key={i}
-                      className="flex w-full items-center bg-secondary text-primary-foreground text-lg capitalize font-semibold tracking-wide mt-1  hover:bg-background duration-200 rounded-md px-1"
+                      className="flex w-full items-center border border-border_color  text-primary-foreground text-lg capitalize font-semibold tracking-wide mt-1  hover:bg-secondary duration-200 rounded-md px-1"
                     >
                       <div
                         className="py-1 px-4 cursor-pointer rounded-md w-full "

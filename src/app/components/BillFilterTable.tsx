@@ -108,7 +108,7 @@ const BillFilterTable = ({
               </div>
             ) : (
               type && (
-                <div className="text-primary-foreground font-bold text-2xl text-center mt-6">
+                <div className="text-primary-foreground font-bold text-2xl text-center mt-16">
                   No Data Found
                 </div>
               )

@@ -2,16 +2,19 @@
 
 import { InventoryType } from "@/types";
 import { getInventory } from "@/utils/inventoryApiRequests";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { MdOutlineEdit } from "react-icons/md";
 import InventoryModal from "./InventoryModal";
 import Pagination from "./Pagination";
 import TableActions from "./TableActions";
 
 const InventoryTable = () => {
+  const param = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   const [totabPage, setTotalPage] = useState<number | undefined>(1);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    Number(param.get("page")) || 1
+  );
   const [action, setAction] = useState<
     "create" | "update" | "delete" | undefined
   >();
@@ -54,8 +57,8 @@ const InventoryTable = () => {
           setModalAction={setAction}
         />
         <div className="overflow-x-auto">
-          <div className="w-fit xl:w-full">
-            <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 bg-background font-semibold tracking-wide uppercase">
+          <div className="w-[40rem] xl:w-full">
+            <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-4 mt-3 bg-background font-semibold tracking-wide uppercase">
               {columns.map((col, i) => (
                 <p
                   key={i}
@@ -66,13 +69,15 @@ const InventoryTable = () => {
                   {col}
                 </p>
               ))}
-              <div className="">ACTIONS</div>
             </div>
             <div>
               {inventory.map((item, i) => (
                 <div
                   key={i}
-                  className="flex text-primary-foreground bg-secondary justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-sm xl:text-lg gap-2 relative hover:bg-secondary-foreground duration-200 font-medium"
+                  className="flex text-primary-foreground bg-secondary justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-sm xl:text-lg gap-4 relative hover:bg-secondary-foreground duration-200 font-medium"
+                  onClick={() => {
+                    console.log(item);
+                  }}
                 >
                   <div className="w-1/12 truncate-text">{item.id}</div>
                   <div className="flex-1 truncate-text">
@@ -86,7 +91,7 @@ const InventoryTable = () => {
                   <div className="flex-1 truncate-text">{item.status}</div>
                   <div className="flex-1 truncate-text">{item.date}</div>
 
-                  <div className="xl:px-5 px-3 text-primary-foreground">
+                  {/* <div className="xl:px-5 px-3 text-primary-foreground">
                     <div
                       className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
                       onClick={() => {
@@ -97,17 +102,17 @@ const InventoryTable = () => {
                     >
                       <MdOutlineEdit />
                     </div>
-                    {/* <div
-                    className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
-                    onClick={() => {
-                      setDefaultValue(item);
-                      setIsOpen(true);
-                      setAction("delete");
-                    }}
-                  >
-                    <RiDeleteBin6Line />
+                    <div
+                      className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
+                      onClick={() => {
+                        setDefaultValue(item);
+                        setIsOpen(true);
+                        setAction("delete");
+                      }}
+                    >
+                      <RiDeleteBin6Line />
+                    </div>
                   </div> */}
-                  </div>
                 </div>
               ))}
             </div>
