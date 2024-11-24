@@ -6,7 +6,7 @@ export const getFilterInventory = async (filterParam: {
 }) => {
   try {
     const response = await fetch(
-      "http://192.168.0.136:8000/api/inventory/filter/",
+      "http://127.0.0.1:8000/api/inventory/filter/",
       {
         method: "POST",
         headers: {
@@ -41,7 +41,7 @@ export const getFilterInventory = async (filterParam: {
 
 export const createInvoice = async (invoiceData: CreateInvoiceType) => {
   try {
-    const response = await fetch("http://192.168.0.136:8000/api/challan/create/", {
+    const response = await fetch("http://127.0.0.1:8000/api/challan/create/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export const createInvoice = async (invoiceData: CreateInvoiceType) => {
 export const getInvoice = async (page: number) => {
   try {
     const response = await fetch(
-      `http://192.168.0.136:8000/api/challan/view/${page}/`
+      `http://127.0.0.1:8000/api/challan/view/${page}/`
     );
 
     const data = await response.json();
@@ -107,7 +107,7 @@ export const getInvoice = async (page: number) => {
 
 export const getSingleInvoice = async (id: number) => {
   try {
-    const response = await fetch(`http://192.168.0.136:8000/api/challan/${id}/`);
+    const response = await fetch(`http://127.0.0.1:8000/api/challan/${id}/`);
 
     const data = await response.json();
 

@@ -3,7 +3,7 @@ import { CreatePorductionType } from "@/types";
 export const getProduction = async (page: number) => {
   try {
     const response = await fetch(
-      `http://192.168.0.136:8000/api/production/view/${page}/`
+      `http://127.0.0.1:8000/api/production/view/${page}/`
     );
 
     const data = await response.json();
@@ -33,7 +33,7 @@ export const createProduction = async (production: CreatePorductionType) => {
   try {
     console.log(production);
     const response = await fetch(
-      "http://192.168.0.136:8000/api/production/create/",
+      "http://127.0.0.1:8000/api/production/create/",
       {
         method: "POST",
         headers: {
@@ -72,7 +72,7 @@ export const updateProduction = async (
 ) => {
   try {
     const response = await fetch(
-      `http://192.168.0.136:8000/api/production/update/${id}/`,
+      `http://127.0.0.1:8000/api/production/update/${id}/`,
       {
         method: "PUT",
         headers: {
@@ -109,7 +109,7 @@ export const updateProduction = async (
 export const deleteProduction = async (id: number | undefined) => {
   try {
     const response = await fetch(
-      `http://192.168.0.136:8000/api/production/delete/${id}/`
+      `http://127.0.0.1:8000/api/production/delete/${id}/`
     );
     const data = await response.json();
 

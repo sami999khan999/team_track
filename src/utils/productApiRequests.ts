@@ -2,7 +2,7 @@ import { CreateProductType } from "@/types";
 
 export const createProduct = async (product: CreateProductType) => {
   try {
-    const response = await fetch(`http://192.168.0.136:8000/api/products/create/`, {
+    const response = await fetch(`http://127.0.0.1:8000/api/products/create/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export const createProduct = async (product: CreateProductType) => {
 export const getProducts = async (page: number) => {
   try {
     const response = await fetch(
-      `http://192.168.0.136:8000/api/products/view/${page}`
+      `http://127.0.0.1:8000/api/products/view/${page}`
     );
 
     const data = await response.json();
@@ -67,7 +67,7 @@ export const getProducts = async (page: number) => {
 export const deleteProduct = async (id: number | string) => {
   try {
     const response = await fetch(
-      `http://192.168.0.136:8000/api/products/delete/${id}`
+      `http://127.0.0.1:8000/api/products/delete/${id}`
     );
 
     const data = await response.json();
@@ -98,7 +98,7 @@ export const updateProduct = async (
 ) => {
   try {
     const response = await fetch(
-      `http://192.168.0.136:8000/api/products/update/${id}/`,
+      `http://127.0.0.1:8000/api/products/update/${id}/`,
       {
         method: "PUT",
         headers: {

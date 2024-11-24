@@ -72,13 +72,7 @@ const BillInvoiceModal = ({
             <div>
               {invoiceData.map((item, i) => (
                 <div key={i}>
-<<<<<<< HEAD
-                  <div
-                    className="flex text-primary-foreground bg-secondary justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-sm xl:text-lg gap-3 relative hover:bg-secondary-foreground duration-200 font-medium"
-                  >
-=======
                   <div className="flex text-primary-foreground bg-secondary justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-sm xl:text-lg gap-3 relative hover:bg-secondary-foreground duration-200 font-medium">
->>>>>>> c250766b34dcdc883111f4fd0be0319825ffeda8
                     <div className="w-1/12 xl:w-2/12 truncate-text">
                       {item.id}
                     </div>
