@@ -132,10 +132,10 @@ const ProductModal = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-[95%] xl:w-[50%] bg-secondary "
+        className="w-[95%] xl:w-[60%] bg-secondary "
       >
         {modalAction === "create" && (
-          <div className=" h-full w-full px-4 py-8 rounded-xl relative border border-border_color">
+          <div className=" h-full w-full px-4 py-12 rounded-xl relative border border-border_color">
             <div
               className="absolute top-4 right-4 text-2xl text-primary-foreground hover:bg-secondary-foreground w-fit p-1 rounded-md"
               onClick={() => {
@@ -195,13 +195,13 @@ const ProductModal = ({
               </div>
             </div>
             <button
-              className="bg-primary mt-6 py-2 px-4 w-full rounded-full text-lg font-semibold xl:text-xl text-background tracking-wider hover:bg-primary/90 cursor-pointer duration-200 hover:bg-secondary-foreground hover:text-primary-foreground text-center group"
+              className="submit-btn"
               disabled={isLoading}
               onClick={handleCreate}
             >
               {isLoading ? (
                 <div className="flex items-center justify-center w-full">
-                  <CgSpinnerTwo className="w-6 h-6 animate-spin text-background group-hover:text-primary-foreground" />
+                  <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
                 </div>
               ) : (
                 <div>Create Product</div>
@@ -270,13 +270,13 @@ const ProductModal = ({
               </div>
             </div>
             <button
-              className="bg-primary mt-6 py-2 px-4 w-full rounded-full text-lg font-semibold xl:text-xl text-background tracking-wider hover:bg-primary/90 cursor-pointer duration-200 hover:bg-secondary-foreground hover:text-primary-foreground text-center group"
+              className="submit-btn"
               disabled={isLoading}
               onClick={handleUpdate}
             >
               {isLoading ? (
                 <div className="flex items-center justify-center w-full">
-                  <CgSpinnerTwo className="w-6 h-6 animate-spin text-background group-hover:text-primary-foreground" />
+                  <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
                 </div>
               ) : (
                 <div>Update Product</div>

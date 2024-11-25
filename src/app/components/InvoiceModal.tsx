@@ -15,6 +15,7 @@ import Dropdown from "./Dropdown";
 import InvoiceCreateTable from "./InvoiceCreateTable";
 import { getCustoer } from "@/utils/customerApiRerquest";
 import { useRouter } from "next/navigation";
+import { CgSpinnerTwo } from "react-icons/cg";
 
 const InvoiceModal = ({
   setIsOpen,
@@ -56,6 +57,7 @@ const InvoiceModal = ({
   >();
   const [date, setData] = useState<string>();
   const [customerSelectError, setCustomerSelectError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const filterInventoryhandler = async () => {
     const data = {
@@ -76,18 +78,24 @@ const InvoiceModal = ({
       return;
     }
 
-    const data = {
-      customer_id: activeCustomerId,
-      inventory_id: filterdInventoryIds,
-      date: date ? date : "",
-    };
+    setIsLoading(true);
 
-    const response = await createInvoice(data);
+    setTimeout(async () => {
+      const data = {
+        customer_id: activeCustomerId,
+        inventory_id: filterdInventoryIds,
+        date: date ? date : "",
+      };
 
-    if (response.success) {
-      path.push(`invoice/${response.challan_id}`);
-      console.log(response);
-    }
+      const response = await createInvoice(data);
+
+      if (response.success) {
+        path.push(`invoice/${response.challan_id}`);
+        console.log(response);
+      }
+
+      setIsLoading(false);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -155,7 +163,7 @@ const InvoiceModal = ({
       // onClick={() => setIsOpen((prv) => !prv)}
     >
       <div
-        className="relative w-[95%] xl:w-[90%] h-[78%] overflow-auto bg-secondary border border-border_color rounded-xl px-4 xl:py-8 py-4 remove-scrollbar"
+        className="relative w-[95%] xl:w-[90%] h-[70%] overflow-auto bg-secondary border border-border_color rounded-xl px-4 xl:py-8 py-4 remove-scrollbar"
         // onClick={(e) => e.stopPropagation()}
       >
         <div
@@ -245,7 +253,7 @@ const InvoiceModal = ({
                   setSelectionError={setCustomerSelectError}
                   type="customer"
                 />
-                <p className="error_message">{customerSelectError}</p>
+                <p className="error_message absolute">{customerSelectError}</p>
               </div>
               <div className="w-full">
                 <input
@@ -267,11 +275,18 @@ const InvoiceModal = ({
               {filterdInventoryIds !== undefined &&
               filterdInventoryIds.length >= 1 ? (
                 <button
-                  className="bg-primary text-background px-10 py-2 rounded-full text-xl font-medium
+                  className="submit-btn mt-0 xl:w-[17rem]
                 "
                   onClick={invoiceCreateHandler}
+                  disabled={isLoading}
                 >
-                  Create Invoice
+                  {isLoading ? (
+                    <div className="flex items-center justify-center w-full">
+                      <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
+                    </div>
+                  ) : (
+                    <div>Create Invoice</div>
+                  )}
                 </button>
               ) : (
                 ""

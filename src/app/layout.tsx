@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import {} from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -40,6 +41,31 @@ export default function RootLayout({
     <html lang="en">
       <body className={` ${sourGummy.variable} ${baloo.variable}  antialiased`}>
         {children}
+        <Toaster
+          position="bottom-right"
+          reverseOrder={false}
+          // toastOptions={{
+          //   style: {
+          //     backgroundColor: "#1f2937", // Secondary (gray-800)
+          //     color: "#ef4444", // Red text
+          //     padding: "15px 4rem",
+          //     borderRadius: "0.375rem", // Rounded-md
+          //     boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Tailwind shadow-lg
+          //   },
+          //   success: {
+          //     style: {
+          //       backgroundColor: "#000000", // Black
+          //       color: "#ffffff", // White
+          //     },
+          //   },
+          //   error: {
+          //     style: {
+          //       backgroundColor: "#f87171", // Red-500
+          //       color: "#ffffff", // White
+          //     },
+          //   },
+          // }}
+        />
       </body>
     </html>
   );

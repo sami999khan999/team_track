@@ -156,10 +156,10 @@ const Invoice = ({ id }: { id: number }) => {
         id="pdf-content"
       >
         <div
-          className="absolute top-4 xl:top-8 left-4 xl:left-8 text-base xl:text-xl bg-secondary-foreground px-2 py-1 rounded-md"
+          className="absolute top-4 xl:top-8 left-4 xl:left-8 text-base xl:text-2xl text-primary-foreground px-4 py-1 rounded-md hover:bg-secondary-foreground duration-200"
           onClick={() => path.back()}
         >
-          <FaArrowLeftLong className="hover:animate-pulse" />
+          <FaArrowLeftLong />
         </div>
         <div className="header text-center py-10">
           <h1 className="text-2xl xl:text-4xl font-semibold text-primary">
