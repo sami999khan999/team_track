@@ -48,6 +48,8 @@ const MemoTable = () => {
     fetchMemo();
   }, [currentPage]);
 
+  console.log(memo);
+
   return (
     <div>
       {isOpen && <MemoModal setIsOpen={setIsOpen} />}
@@ -70,7 +72,7 @@ const MemoTable = () => {
 
         {!isLoading && memo.length > 0 && (
           <div className="overflow-x-auto">
-            <div className="w-[55rem] xl:w-full">
+            <div className="w-[45rem] xl:w-full">
               <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-4 mt-3 bg-background font-semibold tracking-wide uppercase">
                 <p className="w-1/12">ID</p>
                 <p className="flex-1">Challan No.</p>
@@ -86,14 +88,20 @@ const MemoTable = () => {
                     className="flex text-primary-foreground justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-xs xl:text-lg gap-4 relative hover:bg-secondary-foreground duration-200 font-medium bg-secondary capitalize"
                   >
                     <div className="w-1/12">{item.id}</div>
-                    <div className="flex-1">
+                    <div className="flex-1 flex">
                       {item.challan_no.map((challan, i) => (
-                        <p key={i}>{challan}</p>
+                        <p key={i}>
+                          {challan}
+                          {item.challan_no.length > 1 && ","}
+                        </p>
                       ))}
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 flex">
                       {item.products.map((product, i) => (
-                        <p key={i}>{product}</p>
+                        <p key={i}>
+                          {product}
+                          {item.products.length > 1 && ","}
+                        </p>
                       ))}
                     </div>
                     <div className="flex-1">{item.total_qty}</div>
