@@ -224,7 +224,7 @@ const AddFormModal = ({
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className="absolute top-4 right-4 rounded text-xl xl:text-3xl duration-300 origin-center text-primary-foreground hover:bg-secondary-foreground"
+          className="absolute top-5 right-5 rounded text-xl xl:text-3xl duration-300 origin-center text-primary-foreground hover:bg-secondary-foreground"
           onClick={() =>
             action && setIsFormOpen
               ? setIsFormOpen((prv) => !prv)
@@ -353,14 +353,10 @@ const AddFormModal = ({
               </div>
             </div>
           )}
-          <button
-            type="submit"
-            className="bg-primary mt-6 py-2 px-4 w-full rounded-full text-lg font-semibold xl:text-xl text-background tracking-wider hover:bg-primary/90 cursor-pointer duration-200 hover:bg-secondary-foreground hover:text-primary-foreground text-center group"
-            disabled={isLoading}
-          >
+          <button type="submit" className="submit-btn" disabled={isLoading}>
             {isLoading ? (
               <div className="flex items-center justify-center w-full">
-                <CgSpinnerTwo className="w-6 h-6 animate-spin text-background group-hover:text-primary-foreground" />
+                <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
               </div>
             ) : (
               <div>{title}</div>

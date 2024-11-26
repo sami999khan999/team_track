@@ -2,9 +2,12 @@
 
 import { SingleEmployeeBillType } from "@/types";
 import { getSingleEmployeeBill } from "@/utils/employeeBillApiRequests";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const EmployeePayment = ({ id }: { id: number }) => {
+  const path = useRouter();
   const [employeeBills, setEmployeeBills] = useState<
     SingleEmployeeBillType | undefined
   >();
@@ -23,20 +26,27 @@ const EmployeePayment = ({ id }: { id: number }) => {
   console.log(employeeBills);
 
   return (
-    <div className="bg-secondary w-full h-full xl:px-12 px-4 py-3 xl:py-8">
-      <h2 className="text-primary font-sour_gummy text-2xl border-b border-border_color pb-3 xl:pb-8 xl:text-3xl font-semibold text-center">
+    <div className="bg-secondary w-full h-full xl:px-12 px-4 py-10 xl:py-8 rounded-xl relative">
+      <h2 className="text-primary font-sour_gummy text-2xl border-b border-border_color pb-3 xl:pb-8 xl:text-3xl font-semibold text-center ">
         Employee Bill
       </h2>
 
-      <div className="mt-6 text-primary-foreground text-xl font-semibold flex flex-col xl:flex-row text-center xl:text-left justify-between gap-5">
-        <div className="bg-secondary-foreground flex-1 px-3 py-1 rounded-md space-y-1 hover:shadow-xl cursor-pointer duration-200 hover:scale-105">
+      <div
+        className="absolute top-4 xl:top-8 left-4 xl:left-8 text-base xl:text-2xl text-primary-foreground px-4 py-1 rounded-md hover:bg-secondary-foreground duration-200"
+        onClick={() => path.back()}
+      >
+        <FaArrowLeftLong />
+      </div>
+
+      <div className="mt-6 text-primary-foreground text-xl font-semibold flex flex-col xl:flex-row text-center xl:text-left justify-between gap-5 xl:gap-0">
+        <div className="border-4 border-border_color flex-1 px-6 xl:py-3 py-1 rounded-l-md space-y-1 hover:bg-secondary-foreground duration-200">
           <div className="border-b border-border_color">
             <span className="text-primary font-bold font-sour_gummy">ID:</span>{" "}
             {employeeBills?.employee.id}
           </div>
           <div className="font-semibold">{employeeBills?.employee.name}</div>
         </div>
-        <div className="bg-secondary-foreground flex-1 px-3 py-1 rounded-md space-y-1">
+        <div className="border-4 xl:border-y-4 border-border_color flex-1 px-6 xl:py-3 py-1 space-y-1 hover:bg-secondary-foreground duration-200">
           <div className="font-bold text-primary border-b border-border_color font-sour_gummy">
             Paid
           </div>
@@ -45,7 +55,7 @@ const EmployeePayment = ({ id }: { id: number }) => {
             {employeeBills?.grand_total}
           </div>
         </div>
-        <div className="bg-secondary-foreground flex-1 px-3 py-1 rounded-md space-y-1">
+        <div className="border-4 border-border_color flex-1 px-6 xl:py-3 py-1 rounded-r-md space-y-1 hover:bg-secondary-foreground duration-200">
           <div className="font-bold text-primary border-b border-border_color font-sour_gummy">
             Date
           </div>

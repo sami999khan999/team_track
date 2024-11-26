@@ -181,7 +181,7 @@ const ProductionModal = ({
             className="bg-secondary w-[90%] xl:w-[80%] border border-border_color rounded-xl px-3 xl:px-8 py-6 xl:py-8 relative"
           >
             <div
-              className="absolute xl:top-6 top-4 xl:right-6 right-4 text-2xl text-primary-foreground hover:bg-secondary-foreground p-1   w-fit rounded-md"
+              className="absolute xl:top-6 top-4 xl:right-6 right-4 text-2xl xl:text-3xl text-primary-foreground hover:bg-secondary-foreground p-1 w-fit rounded-md"
               onClick={() => {
                 setIsOpen((prv) => !prv);
               }}
@@ -287,13 +287,13 @@ const ProductionModal = ({
             </div>
             <div className="w-full flex items-center justify-center mt-5 xl:mt-8">
               <button
-                className="bg-primary mt-6 py-2 px-4 w-full rounded-full text-lg font-semibold xl:text-xl text-background tracking-wider hover:bg-primary/90 cursor-pointer duration-200 hover:bg-secondary-foreground hover:text-primary-foreground text-center group"
+                className="submit-btn"
                 disabled={isLoading}
                 onClick={handleSubmit}
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center w-full">
-                    <CgSpinnerTwo className="w-6 h-6 animate-spin text-background group-hover:text-primary-foreground" />
+                    <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
                   </div>
                 ) : (
                   <div>{defalutValue ? "Update" : "Create"} Production</div>

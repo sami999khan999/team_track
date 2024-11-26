@@ -45,8 +45,8 @@ const InvoiceCreateTable = ({
   return (
     <div className="">
       {inventories ? (
-        <div className="h-[15rem] xl:h-[18rem] overflow-y-auto remove-scrollbar">
-          <div className="flex gap-2 bg-background text-sm xl:text-xl text-primary-foreground px-4 py-3 font-medium sticky top-0 rounded-t-md">
+        <div className="h-[15rem] xl:h-[18rem] overflow-y-auto ">
+          <div className="flex gap-2 bg-background text-sm xl:text-xl text-primary-foreground px-4 py-3 font-medium  rounded-t-md capitalize">
             <p className="w-1/12 truncate-text">ID</p>
             <p className="flex-1 truncate-text">Employee</p>
             <p className="flex-1 truncate-text">Product</p>
@@ -54,7 +54,7 @@ const InvoiceCreateTable = ({
             <p className="flex-1 truncate-text">Quantity</p>
             {type === "selection" && <p>Select</p>}
           </div>
-          <div className="border border-border_color rounded-b-xl">
+          <div className="border-2 xl:border-4 border-t-0 border-border_color">
             {inventories?.map((inventory, i) => (
               <div
                 key={i}

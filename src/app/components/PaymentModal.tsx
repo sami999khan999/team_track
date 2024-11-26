@@ -11,6 +11,7 @@ import {
   getFilteredEmployeeBillData,
 } from "@/utils/employeeBillApiRequests";
 import BillFilterTable from "./BillFilterTable";
+import { CgSpinnerTwo } from "react-icons/cg";
 
 const PaymentModal = ({
   setIsopen,
@@ -42,6 +43,7 @@ const PaymentModal = ({
     FilteredBill[] | undefined
   >();
   const [isInvoiceModalOpen, setIsInvoiceModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const methodData = [
     {
@@ -93,32 +95,64 @@ const PaymentModal = ({
       filter_method: filterMethod,
     };
 
-    const response = await getFilteredEmployeeBillData(filterParameters);
+    try {
+      // Call API to fetch filtered data
+      const response = await getFilteredEmployeeBillData(filterParameters);
 
-    if (response?.success) {
-      setFilteredData(response.data);
+      if (response?.success) {
+        setFilteredData(response.data); // Set filtered data if response is successful
+      } else {
+        console.error(
+          "Error: Could not fetch filtered employee bill data",
+          response.message
+        );
+      }
+    } catch (error) {
+      console.error("Error during filter operation:", error); // Log any unexpected errors
     }
   };
 
   const billCreateHandler = async () => {
-    const response = await createBill(selectedData);
+    try {
+      if (!selectedData || selectedData?.length === 0) {
+        throw new Error("No data selected!");
+      }
 
-    if (response.success) {
-      setIsopen(false);
-      setReload((prv) => !prv);
+      setIsLoading(true);
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const response = await createBill(selectedData);
+
+      if (response.success) {
+        setIsopen(false);
+        setReload((prv) => !prv);
+      } else {
+        console.log("Error: Failed to create bill", response.message);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      const response = await getEmployee(employeeCurrentPage);
+      try {
+        const response = await getEmployee(employeeCurrentPage);
 
-      if (response.success) {
-        const firstElement = response.data.shift();
-        const totalPage = firstElement.total_page;
+        if (response.success) {
+          const firstElement = response.data.shift();
+          const totalPage = firstElement.total_page;
 
-        setEmployeeTotalpage(totalPage);
-        setEmployees(response.data);
+          setEmployeeTotalpage(totalPage);
+          setEmployees(response.data);
+        } else {
+          console.log("Error: Failed to fetch employees", response.message);
+        }
+      } catch (error) {
+        console.error("Error fetching employees:", error); // Logs the error to the console
       }
     };
 
@@ -226,7 +260,7 @@ const PaymentModal = ({
                 type="select"
               />
             </div>
-            <div className="border border-border_color"></div>
+            <div className="border-2 xl:border-4 border-border_color"></div>
             <div className="right xl:w-[50%] mb-4">
               {selectedData && selectedData?.length > 0 && (
                 <div>
@@ -234,11 +268,20 @@ const PaymentModal = ({
                     Selected Data
                   </div>
                   <BillFilterTable data={selectedData} method={filterMethod} />
-                  <div
-                    className="bg-primary rounded-full text-xl font-semibold text-center py-1 mt-6"
-                    onClick={billCreateHandler}
-                  >
-                    <button>Create Payment</button>
+                  <div className="flex items-center justify-center mt-4">
+                    <button
+                      className="submit-btn mt-0 xl:w-[17rem]"
+                      onClick={billCreateHandler}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <div className="flex items-center justify-center w-full">
+                          <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
+                        </div>
+                      ) : (
+                        <div>Create Invoice</div>
+                      )}
+                    </button>
                   </div>
                 </div>
               )}

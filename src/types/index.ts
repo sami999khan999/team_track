@@ -230,14 +230,31 @@ export type SingleEmployeeBillType = {
   date: string;
 };
 
-// amount: 234000;
-// products: "pc";
-// quantity: "6, 111";
-// rate: 2000;
-// sl_no: 1;
-// total_qty: 117;
+export type FilterMemoType = {
+  id: number;
+  products: string;
+  quantity: number;
+  total: string;
+  amount: string;
+  current_status: string;
+  date: string;
+};
 
-// {'sl_no': sl_no, 'products': f"{products[0].name}", 'quantity':f"{product_qty[:-2]}", 'total_qty':total_qty, 'rate':products[0].rate,'amount': amount}
+export type MemoType = {
+  id: number;
+  challan_no: number[];
+  products: string[];
+  total_qty: number;
+  amount: number;
+  date: string;
+};
+
+// 'id': item.id,
+//             'challan_no': challan,
+//             'products': products,
+//             'total_qty': item.total_yds,
+//             'amount': item.total_amount,
+//             'date': item.created_at.strftime("%d %b %y")         'date': item.created_at.strftime("%d %b %y")
 
 export type DropdownType = {
   id?: number | string;

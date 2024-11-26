@@ -65,6 +65,11 @@
   input {
     @apply border p-2 xl:p-3 rounded outline-none w-full text-lg xl:text-xl;
   }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--background) var(--secondary-foreground);
+  }
 }
 
 @layer components {
@@ -98,5 +103,9 @@
 
   .remove-scrollbar::-webkit-scrollbar {
     display: none; /* Webkit browsers */
+  }
+
+  .submit-btn {
+    @apply bg-primary mt-6 h-11 px-4 w-full rounded-full text-lg tracking-wide xl:text-xl text-background cursor-pointer duration-200 hover:bg-secondary-foreground hover:outline outline-border_color font-bold outline-2 hover:text-primary-foreground text-center hover:shadow-xl;
   }
 }

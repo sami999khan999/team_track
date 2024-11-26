@@ -19,23 +19,34 @@ const EmployeeTable = () => {
   const [totalPage, setTotalPage] = useState<number | undefined>(undefined);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [reload, setReload] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const columns = employees?.length > 0 ? Object.keys(employees[0]) : [];
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      const response = await getEmployee(currentPage);
+      setIsLoading(true);
 
-      if (response.success) {
-        const firstElememt = response.data.shift();
-        const totalPages = firstElememt ? firstElememt.total_page : undefined;
+      try {
+        const response = await getEmployee(currentPage);
 
-        setEmployees(response.data);
-        setTotalPage(totalPages);
-      } else {
-        console.log(response.message || "Failed to fetch employees");
+        if (response.success) {
+          const firstElememt = response.data.shift();
+          const totalPages = firstElememt ? firstElememt.total_page : undefined;
+
+          setEmployees(response.data);
+          setTotalPage(totalPages);
+        } else {
+          console.error(response.message || "Failed to fetch employees");
+          setEmployees([]);
+          setTotalPage(undefined);
+        }
+      } catch (err) {
+        console.error("Unexpected Error Fetching Employyees: ", err);
         setEmployees([]);
         setTotalPage(undefined);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -55,9 +66,6 @@ const EmployeeTable = () => {
               title="Add Employee"
               setIsFormOpen={setIsFormOpen}
               action="addEmployee"
-              // setData={setEmployees}
-              // data={employees}
-              // currentPage={currentPage}
               setCurrentPage={setCurrentPage}
               closeModal={() => {}}
               setReload={setReload}
@@ -69,13 +77,31 @@ const EmployeeTable = () => {
       <div className="w-full h-fit bg-secondary shadow-2xl shadow-[#19253859] px-2 py-6 xl:py-8 xl:px-8 rounded-xl">
         <TableActions setIsOpen={setIsFormOpen} tableName="Employee" />
 
+        {/* Loading State */}
+        {isLoading && (
+          <div className="text-primary-foreground tracking-wide text-xl xl:text-4xl text-center font-semibold flex items-center justify-center">
+            Loading...
+          </div>
+        )}
+
+        {/* No Data State */}
+        {!isLoading && employees.length === 0 && (
+          <div className="text-primary-foreground tracking-wide text-xl xl:text-3xl text-center font-semibold xl:my-[6rem] my-[2rem] flex w-full items-center justify-center">
+            <div className="w-fit px-6 py-2 rounded-lg cursor-pointer">
+              There are no employees available
+            </div>
+          </div>
+        )}
+
         {/* Table */}
-        <Table
-          tableData={employees}
-          columns={columns}
-          format="Employee"
-          setReload={setReload}
-        />
+        {!isLoading && employees.length > 0 && (
+          <Table
+            tableData={employees}
+            columns={columns}
+            format="Employee"
+            setReload={setReload}
+          />
+        )}
 
         <Pagination
           totalPage={totalPage}

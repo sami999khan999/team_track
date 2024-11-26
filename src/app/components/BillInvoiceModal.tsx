@@ -52,7 +52,7 @@ const BillInvoiceModal = ({
         </div>
 
         <div>
-          <p className="xl:text-3xl text-2xl text-primary font-semibold text-center py-6">
+          <p className="xl:text-3xl text-2xl text-primary font-semibold text-center py-6 font-sour_gummy">
             Select Inovice
           </p>
         </div>
@@ -117,9 +117,9 @@ const BillInvoiceModal = ({
           </div>
         </div>
 
-        <div className="w-full flex items-center justify-center mb-6">
+        <div className="w-full flex items-center justify-center mb-8 ">
           <button
-            className="bg-primary text-background font-semibold text-base xl:text-2xl w-full xl:w-fit px-20 py-1 rounded-full hover:bg-primary-foreground duration-200 mt-4"
+            className="submit-btn "
             onClick={() => setIsInvoiceModalOpen(false)}
           >
             Select
