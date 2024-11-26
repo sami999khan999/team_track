@@ -24,6 +24,8 @@ const Invoice = ({ id }: { id: number }) => {
     fetchInvoiceData();
   }, [id]);
 
+  console.log(invoiceData);
+
   const handlePrint = () => {
     const printContent = document.getElementById("pdf-content");
     const printButton = document.getElementById("print-button");
