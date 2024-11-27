@@ -84,3 +84,30 @@ export const getMemo = async (page: number) => {
     };
   }
 };
+
+export const getSingleMemo = async (id: number) => {
+  try {
+    const response = await fetch(`${url}api/memo/single/view/${id}/`);
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: "Failed to fetch memo",
+      };
+    }
+
+    const data = await response.json();
+
+    return {
+      success: true,
+      message: data.message || "Successfully Fetched Memo",
+      data: data,
+    };
+  } catch (err) {
+    console.log("Failed to fetch memo: ", err);
+    return {
+      success: false,
+      message: "Failed to fetch memo",
+    };
+  }
+};

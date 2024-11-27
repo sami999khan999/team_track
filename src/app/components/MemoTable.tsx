@@ -3,13 +3,14 @@
 import React, { useEffect, useState } from "react";
 import TableActions from "./TableActions";
 import MemoModal from "./MemoModal";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { MemoType } from "@/types";
 import { getMemo } from "@/utils/memoApiRequests";
 import Pagination from "./Pagination";
 
 const MemoTable = () => {
   const param = useSearchParams();
+  const path = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [memo, setMemo] = useState<MemoType[]>([]);
   const [currentPage, setCurrentPage] = useState(
@@ -25,6 +26,8 @@ const MemoTable = () => {
       try {
         const response = await getMemo(currentPage);
 
+        await new Promise((resolve) => setTimeout(resolve, 250));
+
         if (response.success) {
           const firstElement = response.data[0];
 
@@ -32,14 +35,19 @@ const MemoTable = () => {
             setTotalPages(firstElement.total_page);
           } else {
             console.error("Invalid response format: total_page is missing");
+            setTotalPages(undefined);
           }
 
           setMemo(response.data.slice(1));
         } else {
           console.error("Error Fetching Memo:", response.message);
+          setTotalPages(undefined);
+          setMemo([]);
         }
       } catch (err) {
-        console.error("Unexpected Error Fetching Memo:", err);
+        console.error("Unexpected Error While Fetching Memo:", err);
+        setTotalPages(undefined);
+        setMemo([]);
       } finally {
         setIsLoading(false);
       }
@@ -47,8 +55,6 @@ const MemoTable = () => {
 
     fetchMemo();
   }, [currentPage]);
-
-  console.log(memo);
 
   return (
     <div>
@@ -75,6 +81,7 @@ const MemoTable = () => {
             <div className="w-[45rem] xl:w-full">
               <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-4 mt-3 bg-background font-semibold tracking-wide uppercase">
                 <p className="w-1/12">ID</p>
+                <p className="flex-1">Cusotmer</p>
                 <p className="flex-1">Challan No.</p>
                 <p className="flex-1">Products</p>
                 <p className="flex-1">Total Qty</p>
@@ -86,13 +93,19 @@ const MemoTable = () => {
                   <div
                     key={i}
                     className="flex text-primary-foreground justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-xs xl:text-lg gap-4 relative hover:bg-secondary-foreground duration-200 font-medium bg-secondary capitalize"
+                    onClick={() => {
+                      path.push(`memo/${item.id}`);
+                    }}
                   >
                     <div className="w-1/12">{item.id}</div>
+                    <div className="flex-1">
+                      {item.customer.name} ({item.customer.id})
+                    </div>
                     <div className="flex-1 flex">
                       {item.challan_no.map((challan, i) => (
                         <p key={i}>
                           {challan}
-                          {item.challan_no.length > 1 && ","}
+                          {i < item.challan_no.length - 1 && ", "}
                         </p>
                       ))}
                     </div>
@@ -100,12 +113,12 @@ const MemoTable = () => {
                       {item.products.map((product, i) => (
                         <p key={i}>
                           {product}
-                          {item.products.length > 1 && ","}
+                          {i < item.products.length - 1 && ", "}
                         </p>
                       ))}
                     </div>
                     <div className="flex-1">{item.total_qty}</div>
-                    <div className="flex-1">{item.amount}</div>
+                    <div className="flex-1">{item.amount}/=</div>
                     <div className="flex-1">{item.date}</div>
                   </div>
                 ))}

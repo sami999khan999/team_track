@@ -30,6 +30,8 @@ const EmployeeTable = () => {
       try {
         const response = await getEmployee(currentPage);
 
+        await new Promise((resolve) => setTimeout(resolve, 250));
+
         if (response.success) {
           const firstElememt = response.data.shift();
           const totalPages = firstElememt ? firstElememt.total_page : undefined;

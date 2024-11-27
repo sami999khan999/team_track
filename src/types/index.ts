@@ -137,11 +137,13 @@ export type SelectInventoryType = {
   };
 };
 
-// 'id':item.id, 'production': production, 'quantity': item.total, 'current_status': item.current_status, 'date': item.created_at.date()
-
 export type InvoiceType = {
   id: number;
   products: string;
+  customer: {
+    id: number;
+    name: string;
+  };
   quantity: string;
   current_status: string;
   total: string;
@@ -243,18 +245,32 @@ export type FilterMemoType = {
 export type MemoType = {
   id: number;
   challan_no: number[];
+  customer: {
+    id: number;
+    name: string;
+  };
   products: string[];
   total_qty: number;
   amount: number;
   date: string;
 };
 
-// 'id': item.id,
-//             'challan_no': challan,
-//             'products': products,
-//             'total_qty': item.total_yds,
-//             'amount': item.total_amount,
-//             'date': item.created_at.strftime("%d %b %y")         'date': item.created_at.strftime("%d %b %y")
+export type MemoHeadingType = {
+  address: string;
+  customer: string;
+  date: string;
+  memo_id: number;
+  total_amount: number;
+};
+
+export type MemoColumnType = {
+  amount: number;
+  challan: number[];
+  products: string;
+  quantity: number;
+  rate: number;
+  slno: number;
+};
 
 export type DropdownType = {
   id?: number | string;

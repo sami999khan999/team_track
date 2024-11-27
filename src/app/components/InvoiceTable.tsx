@@ -12,9 +12,7 @@ const InvoiceTable = () => {
   const path = useRouter();
   const param = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
-  // const [action, setAction] = useState<
-  //   "create" | "update" | "delete" | undefined
-  // >();
+
   const [currentPage, setCurrentPage] = useState(
     Number(param.get("page")) || 1
   );
@@ -50,9 +48,10 @@ const InvoiceTable = () => {
           // setModalAction={setAction}
         />
         <div className="overflow-x-auto">
-          <div className="w-fit xl:w-auto">
+          <div className="w-[45rem] xl:w-auto">
             <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 bg-background font-semibold tracking-wide uppercase">
               <p className="w-1/12">ID</p>
+              <p className="flex-1 truncate-text">Customer</p>
               <p className="flex-1 truncate-text">Products</p>
               <p className="flex-1 truncate-text">Quantity</p>
               <p className="flex-1 truncate-text">Total</p>
@@ -71,6 +70,9 @@ const InvoiceTable = () => {
                   }}
                 >
                   <div className="w-1/12 truncate-text">{item.id}</div>
+                  <div className="flex-1 truncate-text">
+                    {item.customer.name} ({item.customer.id})
+                  </div>
                   <div className="flex-1 truncate-text">{item.products}</div>
                   <div className="flex-1 truncate-text">{item.quantity}</div>
                   <div className="flex-1 truncate-text">{item.total}</div>
