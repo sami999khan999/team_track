@@ -36,6 +36,7 @@ const InventoryModal = ({
   const [productionSelectionError, setProductionSelectionError] = useState("");
   const [statusSelectionError, setStatusSelectionError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   // console.log(productionId);
   // console.log(productionStatus);
 

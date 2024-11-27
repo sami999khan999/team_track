@@ -129,7 +129,7 @@ const MemoModal = ({
 
   return (
     <div className="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center justify-center z-20">
-      <div className="relative bg-secondary w-[95%] xl:w-[90%] h-[75%] border border-border_color rounded-lg py-6 xl:px-8 px-3 overflow-x-auto">
+      <div className="relative bg-secondary w-[95%] xl:w-[90%] h-[80%] border border-border_color rounded-lg py-6 xl:px-8 px-3 overflow-x-auto">
         <div
           className="absolute top-3 xl:top-5 right-3 xl:right-5 text-xl xl:text-3xl text-primary-foreground hover:bg-secondary-foreground xl:p-2 p-1 rounded-md"
           onClick={() => setIsOpen((prv) => !prv)}

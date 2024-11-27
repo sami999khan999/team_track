@@ -35,10 +35,11 @@ const MemoSingleView = ({ id }: { id: number }) => {
               setMemoColumnData(columns);
               setColumn(Object.keys(columns[0]));
             } else {
+              console.log("Invalid response format: Missing Column Data");
               setMemoColumnData([]);
             }
           } else {
-            console.log("Invalid response format: Missing heading data");
+            console.log("Invalid response format: Missing Heading Data");
             setMemoHeadingData(null);
             setMemoColumnData([]);
           }
@@ -47,8 +48,8 @@ const MemoSingleView = ({ id }: { id: number }) => {
           setMemoHeadingData(null);
           setMemoColumnData([]);
         }
-      } catch (err: any) {
-        console.error("Error while fetching memo data:", err.message || err);
+      } catch (err) {
+        console.error("Error while fetching memo data:", err);
         setMemoHeadingData(null);
         setMemoColumnData([]);
       } finally {
@@ -91,9 +92,11 @@ const MemoSingleView = ({ id }: { id: number }) => {
                         <div class="flex-1 break-words cursor-auto">
                           ${item.products}
                         </div>
-                        <div class="flex-1 break-words cursor-auto">
-                          ${item.challan}
-                        </div>
+                      <div class="flex-1 break-words cursor-auto">
+  ${item.challan
+    .map((product, i) => `${product}${i < item.challan.length - 1 ? ", " : ""}`)
+    .join("")}
+</div>
                         <div class="flex-1 break-words cursor-auto">
                           ${item.quantity}
                         </div>
@@ -305,16 +308,21 @@ const MemoSingleView = ({ id }: { id: number }) => {
                           {item.products}
                         </div>
                         <div className="flex-1 break-words cursor-auto">
-                          {item.challan}
+                          {item.challan.map((challanNumber, i) => (
+                            <p key={i}>
+                              {challanNumber}
+                              {i < item.challan.length - 1 && ", "}
+                            </p>
+                          ))}
                         </div>
                         <div className="flex-1 break-words cursor-auto">
                           {item.quantity}
                         </div>
                         <div className="flex-1 break-words cursor-auto">
-                          {item.rate}
+                          {item.rate}/=
                         </div>
                         <div className="w-1/12 break-words cursor-auto">
-                          {item.amount}
+                          {item.amount}/=
                         </div>
                       </div>
                     ))}
@@ -326,7 +334,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
                     <div className="flex-1"></div>
                     <div className="flex-1"></div>
                     <div className="w-1/12 font-bold">
-                      {memoHeadingData?.total_amount}
+                      {memoHeadingData?.total_amount}/=
                     </div>
                   </div>
                 </div>

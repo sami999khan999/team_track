@@ -5,10 +5,9 @@ import {
   updateProduct,
 } from "@/utils/productApiRequests";
 import React, { SetStateAction, useEffect, useState } from "react";
-import CategoryDropdown from "./CategoryDropdown";
-import { IoMdClose } from "react-icons/io";
-import { ImSpinner6 } from "react-icons/im";
 import { CgSpinnerTwo } from "react-icons/cg";
+import { IoMdClose } from "react-icons/io";
+import CategoryDropdown from "./CategoryDropdown";
 
 const ProductModal = ({
   modalAction,
@@ -18,18 +17,21 @@ const ProductModal = ({
   reload,
 }: {
   modalAction: "create" | "update" | "delete" | undefined;
-  activeProduct: ProductType | undefined;
+  activeProduct?: ProductType | undefined;
   setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
   setReload: React.Dispatch<SetStateAction<boolean>>;
   reload: boolean;
 }) => {
   const [productName, setProductName] = useState<string>("");
-  const [productRate, setProductRate] = useState<string | number>("");
+  const [productRate, setProductRate] = useState<number | undefined>();
+  const [productionCost, setProductionCost] = useState<number | undefined>();
+  const [otherCost, setOtherCost] = useState<number | undefined>();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [categoryId, setCategoryId] = useState<number | undefined>();
   const [inputError, setInputError] = useState({
     name: "",
     rate: "",
+    productionCost: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,6 +39,7 @@ const ProductModal = ({
     const newError = {
       name: !productName ? "Product name is required" : "",
       rate: !productRate ? "Product rate is required" : "",
+      productionCost: !productionCost ? "Production cost is required" : "",
     };
 
     if (!selectedCategory) {
@@ -50,12 +53,13 @@ const ProductModal = ({
     if (!hasError) {
       setIsLoading(true);
 
-      // Simulate a 2-second delay
       setTimeout(async () => {
         const data = {
           name: productName,
           rate: Number(productRate),
           category: categoryId,
+          production_cost: productionCost,
+          other_cost: otherCost ? otherCost : 0,
         };
 
         const response = await createProduct(data);
@@ -87,6 +91,7 @@ const ProductModal = ({
     const newError = {
       name: !productName ? "Product name is required" : "",
       rate: !productRate ? "Product rate is required" : "",
+      productionCost: !productionCost ? "Production cost is required" : "",
     };
 
     if (!selectedCategory) {
@@ -102,6 +107,8 @@ const ProductModal = ({
         name: productName,
         rate: Number(productRate),
         category: categoryId,
+        production_cost: productionCost,
+        other_cost: otherCost ? otherCost : 0,
       };
       console.log(data, activeProduct?.id);
 
@@ -119,7 +126,9 @@ const ProductModal = ({
   useEffect(() => {
     if (modalAction === "update" && activeProduct) {
       setProductName(activeProduct.name || "");
-      setProductRate(activeProduct.rate || "");
+      setProductRate(activeProduct.rate || undefined);
+      setProductionCost(activeProduct.production_cost || undefined);
+      setOtherCost(activeProduct.other_cost || undefined);
     }
   }, [modalAction, activeProduct]);
 
@@ -132,12 +141,12 @@ const ProductModal = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-[95%] xl:w-[60%] bg-secondary "
+        className="w-[95%] xl:w-[60%] bg-secondary rounded-xl border border-border_color"
       >
         {modalAction === "create" && (
-          <div className=" h-full w-full px-4 py-12 rounded-xl relative border border-border_color">
+          <div className="h-full w-full xl:px-8 p-3 py-12 relative ">
             <div
-              className="absolute top-4 right-4 text-2xl text-primary-foreground hover:bg-secondary-foreground w-fit p-1 rounded-md"
+              className="absolute xl:top-6 top-3 right-3 xl:right-6 text-2xl xl:text-3xl text-primary-foreground hover:bg-secondary-foreground w-fit p-1 rounded-md"
               onClick={() => {
                 setIsModalOpen((prv) => !prv);
               }}
@@ -153,8 +162,8 @@ const ProductModal = ({
                 Officiis magni esse est laudantium! Voluptas, dolore!
               </p>
             </div>
-            <div className="flex flex-col xl:flex-row mt-8 gap-8">
-              <div className="flex flex-col gap-2 xl:gap-4 xl:w-[50%] ">
+            <div className="flex flex-col mt-8 gap-8">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-3 gap-y-2">
                 <div>
                   <input
                     type="text"
@@ -177,14 +186,46 @@ const ProductModal = ({
                     placeholder="Product Rate"
                     className="border border-border_color text-primary-foreground text-base xl:text-xl  bg-secondary-foreground rounded-full py-2 px-6"
                     onChange={(e) => {
-                      setProductRate(e.target.value);
+                      setProductRate(Number(e.target.value));
                       setInputError({ ...inputError, rate: "" });
                     }}
                   />
                   <p className="error_message">{inputError.rate}</p>
                 </div>
+
+                <div>
+                  <input
+                    type="number"
+                    name="productionCost"
+                    value={productionCost}
+                    placeholder="Production Cost"
+                    className="border border-border_color text-primary-foreground text-base xl:text-xl  bg-secondary-foreground rounded-full py-2 px-6"
+                    onChange={(e) => {
+                      setProductionCost(Number(e.target.value));
+                      setInputError({ ...inputError, productionCost: "" });
+                    }}
+                  />
+                  <p className="error_message">{inputError.productionCost}</p>
+                </div>
+
+                <div>
+                  <input
+                    type="number"
+                    name="otherCost"
+                    value={otherCost}
+                    placeholder="Production Cost"
+                    className="border border-border_color text-primary-foreground text-base xl:text-xl  bg-secondary-foreground rounded-full py-2 px-6"
+                    onChange={(e) => {
+                      setOtherCost(Number(e.target.value));
+                    }}
+                  />
+                </div>
               </div>
-              <div className="xl:w-[50%]">
+              <div className="">
+                <div className="text-primary text-center w-full text-xl mb-2 font-semibold tracking-wide antialiased">
+                  Select Category
+                </div>
+
                 <CategoryDropdown
                   setReload={setReload}
                   reload={reload}
@@ -209,10 +250,11 @@ const ProductModal = ({
             </button>
           </div>
         )}
+
         {modalAction === "update" && (
-          <div className="h-full w-full px-4 py-8 relative rounded-xl border border-border_color">
+          <div className="h-full w-full xl:px-8 p-3 py-12 rounded-xl relative border border-border_color">
             <div
-              className="absolute top-4 right-4 text-2xl text-primary-foreground hover:bg-primary w-fit hover:text-background rounded-md"
+              className="absolute top-4 right-4 text-2xl text-primary-foreground hover:bg-secondary-foreground w-fit p-1 rounded-md"
               onClick={() => {
                 setIsModalOpen((prv) => !prv);
               }}
@@ -228,8 +270,8 @@ const ProductModal = ({
                 Officiis magni esse est laudantium! Voluptas, dolore!
               </p>
             </div>
-            <div className="flex flex-col xl:flex-row mt-6 gap-8">
-              <div className="flex flex-col gap-2 xl:gap-4 xl:w-[50%] ">
+            <div className="flex flex-col mt-8 gap-8">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-3 gap-y-2">
                 <div>
                   <input
                     type="text"
@@ -252,14 +294,42 @@ const ProductModal = ({
                     placeholder="Product Rate"
                     className="border border-border_color text-primary-foreground text-base xl:text-xl  bg-secondary-foreground rounded-full py-2 px-6"
                     onChange={(e) => {
-                      setProductRate(e.target.value);
+                      setProductRate(Number(e.target.value));
                       setInputError({ ...inputError, rate: "" });
                     }}
                   />
                   <p className="error_message">{inputError.rate}</p>
                 </div>
+
+                <div>
+                  <input
+                    type="number"
+                    name="productionCost"
+                    value={productionCost}
+                    placeholder="Production Cost"
+                    className="border border-border_color text-primary-foreground text-base xl:text-xl  bg-secondary-foreground rounded-full py-2 px-6"
+                    onChange={(e) => {
+                      setProductionCost(Number(e.target.value));
+                      setInputError({ ...inputError, productionCost: "" });
+                    }}
+                  />
+                  <p className="error_message">{inputError.productionCost}</p>
+                </div>
+
+                <div>
+                  <input
+                    type="number"
+                    name="otherCost"
+                    value={otherCost}
+                    placeholder="Production Cost"
+                    className="border border-border_color text-primary-foreground text-base xl:text-xl  bg-secondary-foreground rounded-full py-2 px-6"
+                    onChange={(e) => {
+                      setOtherCost(Number(e.target.value));
+                    }}
+                  />
+                </div>
               </div>
-              <div className="xl:w-[50%]">
+              <div className="">
                 <CategoryDropdown
                   setReload={setReload}
                   reload={reload}

@@ -43,17 +43,8 @@ const CustomerTable = () => {
     fetchCustomer();
   }, [currentPage, reload]);
 
-  // useEffect(() => {
-  //   const page = Number(param.get("page")) || 1;
-  //   setCurrentPage(page);
-  // }, [param]);
-
   return (
     <div>
-      {/* <div onClick={() => setIsFormOpen((prv) => !prv)}>
-        <AddButton text="Add Customer" />
-      </div> */}
-
       {isFormOpen && (
         <div className="">
           <div onClick={(e) => e.stopPropagation()}>
@@ -61,10 +52,6 @@ const CustomerTable = () => {
               title="Add Customer"
               setIsFormOpen={setIsFormOpen}
               action="addCustomer"
-              // setData={setcustomer}
-              // data={customer}
-              // currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
               closeModal={() => {}}
               setReload={setReload}
             />

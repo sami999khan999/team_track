@@ -17,6 +17,7 @@ const DorpdownHeader = ({
         <>
           <div className="w-1/6">ID</div>
           <div className="flex-1 truncate-text">Name</div>
+          <div className="flex-1 truncate-text">Mobile</div>
         </>
       )}
       {type === "product" && (
