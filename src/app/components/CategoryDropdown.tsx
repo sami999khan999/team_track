@@ -106,7 +106,7 @@ const CategoryDropdown = ({
             </div>
             <div>
               <div
-                className="py-2 xl:text-lg flex items-center gap-3 w-full bg-secondary-foreground text-primary-foreground font-semibold justify-center border border-border_color duration-200 cursor-pointer rounded-full mt-4 "
+                className="py-2 xl:text-lg flex items-center gap-3 w-full bg-secondary-foreground text-primary-foreground font-semibold justify-center border border-border_color duration-200 cursor-pointer rounded-full mt-2"
                 onClick={() => setInputOpen((prv) => !prv)}
               >
                 <p>Add Category</p>
@@ -133,7 +133,7 @@ const CategoryDropdown = ({
                   }}
                 />
                 <div
-                  className="px-5 border border-border_color flex items-center py-2 text-4xl bg-secondary-foreground hover:bg-secondary text-primary-foreground rounded rounded-r-full rounded-l-none duration-200"
+                  className="px-5 border border-border_color flex items-center py-1 xl:py-2 text-4xl bg-secondary-foreground hover:bg-secondary text-primary-foreground rounded rounded-r-full rounded-l-none duration-200"
                   onClick={addCtegory}
                 >
                   <IoMdArrowDropright />

@@ -61,6 +61,8 @@ const PaymentModal = ({
       invoiceId: "",
     };
 
+    setSelectedData([]);
+
     if (filterMethod === undefined) {
       newError.method = "Please select a method";
     }
@@ -159,9 +161,9 @@ const PaymentModal = ({
     fetchEmployees();
   }, [employeeCurrentPage]);
 
-  useEffect(() => {
-    setSelectedData([]);
-  }, [filterEmployeeId]);
+  // useEffect(() => {
+  //   setSelectedData([]);
+  // }, [filterEmployeeId]);
 
   return (
     <div>
@@ -173,7 +175,7 @@ const PaymentModal = ({
         />
       )}
       <div className="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center justify-center z-30">
-        <div className="relative w-[97%] xl:w-[90%] h-[80%] xl:h-[35rem] bg-secondary px-3 xl:px-8 py-6 xl:py-10 rounded-xl border border-border_color overflow-y-auto remove-scrollbar">
+        <div className="relative w-[97%] xl:w-[90%] h-[80%] xl:h-[70%] bg-secondary px-3 xl:px-8 py-6 xl:py-10 rounded-xl border border-border_color overflow-y-auto remove-scrollbar">
           <div
             className="absolute top-3 xl:top-5 right-3 xl:right-5 text-2xl xl:text-3xl rounded-md text-primary-foreground hover:bg-secondary-foreground  p-1"
             onClick={() => setIsopen((prv) => !prv)}
@@ -262,8 +264,8 @@ const PaymentModal = ({
             </div>
             <div className="border-2 xl:border-4 border-border_color"></div>
             <div className="right xl:w-[50%] mb-4">
-              {selectedData && selectedData?.length > 0 && (
-                <div>
+              {selectedData && selectedData?.length > 0 ? (
+                <div className="mt-7">
                   <div className="text-primary-foreground font-bold text-xl xl:text-2xl text-center ">
                     Selected Data
                   </div>
@@ -279,10 +281,18 @@ const PaymentModal = ({
                           <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
                         </div>
                       ) : (
-                        <div>Create Invoice</div>
+                        <div>Pay</div>
                       )}
                     </button>
                   </div>
+                </div>
+              ) : (
+                <div>
+                  {filteredData && filteredData?.length > 0 && (
+                    <div className="text-xl xl:text-3xl text-primary-foreground font-semibold text-center xl:mt-20">
+                      No Selected Data
+                    </div>
+                  )}
                 </div>
               )}
             </div>

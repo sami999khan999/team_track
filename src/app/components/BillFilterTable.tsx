@@ -17,6 +17,62 @@ const BillFilterTable = ({
 }) => {
   const columns = data && data?.length > 0 ? Object.keys(data[0]) : undefined;
 
+  const selectHandler = (item: FilteredBill) => {
+    if (!selectedData) {
+      if (setSelectedData) {
+        setSelectedData([item]);
+      }
+    } else {
+      const isSelected = selectedData.some(
+        (selectedItem) => selectedItem.id === item.id
+      );
+      console.log(isSelected);
+
+      if (isSelected) {
+        if (setSelectedData) {
+          setSelectedData(
+            selectedData.filter((selectedItem) => selectedItem.id !== item.id)
+          );
+        }
+      } else {
+        if (setSelectedData) {
+          setSelectedData([...selectedData, item]);
+        }
+      }
+    }
+  };
+
+  const isAllSelected = () => {
+    if (data && selectedData) {
+      return data.every((item1) =>
+        selectedData.some((item2) => item1.id === item2.id)
+      );
+    }
+  };
+
+  const selectAll = () => {
+    // if (selectedData?.length === 0) {
+    //   if (setSelectedData) setSelectedData(data);
+    // }
+
+    if (isAllSelected()) {
+      if (setSelectedData) setSelectedData([]);
+    } else {
+      if (data && setSelectedData) {
+        setSelectedData((prv) => {
+          if (prv) {
+            const newItems = data.filter(
+              (item1) => !prv.some((item2) => item1.id === item2.id)
+            );
+            return [...prv, ...newItems];
+          } else {
+            return data;
+          }
+        });
+      }
+    }
+  };
+
   return (
     <div>
       {data && (
@@ -24,7 +80,7 @@ const BillFilterTable = ({
           <div className="overflow-auto remove-scrollbar">
             {data.length > 0 ? (
               <div className="xl:w-full w-[40rem]">
-                <div className="flex text-primary-foreground bg-background px-4 py-2 xl:py-3 rounded-t-md mt-4 text-sm xl:text-base gap-3 uppercase font-semibold sticky top-0">
+                <div className="flex text-primary-foreground bg-background px-4 py-2 xl:py-3 rounded-t-md mt-4 text-sm xl:text-lg gap-3 uppercase font-semibold sticky top-0l">
                   {columns?.map((col, i) => (
                     <p
                       key={i}
@@ -35,13 +91,25 @@ const BillFilterTable = ({
                       {col}
                     </p>
                   ))}
-                  {type && <p>Select</p>}
+                  {type && (
+                    <div
+                      className="flex gap-2 items-center justify-center"
+                      onClick={selectAll}
+                    >
+                      <p>Select</p>
+                      {isAllSelected() ? (
+                        <ImCheckboxChecked />
+                      ) : (
+                        <ImCheckboxUnchecked />
+                      )}
+                    </div>
+                  )}
                 </div>
-                <div className="text-primary-foreground border border-border_color rounded-b-xl">
+                <div className="text-primary-foreground border-t-0 border border-border_color rounded-b-xl">
                   {data?.map((item, i) => (
                     <div
                       key={i}
-                      className={`flex gap-3 border-b border-border_color py-2 xl:py-3 text-sm capitalize xl:text-base px-4 ${
+                      className={`flex gap-3 border-b border-border_color py-2 xl:py-3 text-sm capitalize xl:text-lg px-4 ${
                         i === data.length - 1 && "border-none"
                       }`}
                     >
@@ -66,31 +134,7 @@ const BillFilterTable = ({
                         <div
                           className="xl:px-4 px-3 flex items-center"
                           onClick={() => {
-                            if (!selectedData) {
-                              if (setSelectedData) {
-                                setSelectedData([item]);
-                              }
-                            } else {
-                              const isSelected = selectedData.some(
-                                (selectedItem) => selectedItem.id === item.id
-                              );
-                              console.log(isSelected);
-
-                              if (isSelected) {
-                                if (setSelectedData) {
-                                  setSelectedData(
-                                    selectedData.filter(
-                                      (selectedItem) =>
-                                        selectedItem.id !== item.id
-                                    )
-                                  );
-                                }
-                              } else {
-                                if (setSelectedData) {
-                                  setSelectedData([...selectedData, item]);
-                                }
-                              }
-                            }
+                            selectHandler(item);
                           }}
                         >
                           {selectedData?.some(

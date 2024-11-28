@@ -30,11 +30,52 @@ const MemoFilterTable = ({
     }
   };
 
+  const isAllSelected = () => {
+    return data.every((item) =>
+      selectedData?.some((selItem) => selItem.id === item.id)
+    );
+  };
+
+  const allSelect = () => {
+    if (isAllSelected()) {
+      // Clear all selected data and IDs
+      if (setSelectedData) setSelectedData([]);
+      if (setSelectedId) setSelectedId([]);
+    } else {
+      if (data && setSelectedData) {
+        setSelectedData((prv) => {
+          if (prv) {
+            const newItems = data.filter(
+              (item1) => !prv.some((item2) => item1.id === item2.id)
+            );
+            const updatedData = [...prv, ...newItems];
+
+            if (setSelectedId) {
+              const selectedIds = updatedData.map((item) => item.id);
+              setSelectedId(selectedIds);
+            }
+
+            return updatedData;
+          } else {
+            const allData = data;
+
+            if (setSelectedId) {
+              const selectedIds = allData.map((item) => item.id);
+              setSelectedId(selectedIds);
+            }
+
+            return allData;
+          }
+        });
+      }
+    }
+  };
+
   return (
     <div className="overflow-y-auto">
       {data.length > 0 ? (
         <div className="h-[15rem] xl:h-[24rem] xl:w-full mt-4 w-[35rem]">
-          <div className="flex gap-2 bg-background text-sm xl:text-xl text-primary-foreground px-5 py-3 font-medium rounded-t-md capitalize">
+          <div className="flex gap-2 bg-background text-sm xl:text-lg text-primary-foreground px-5 py-3 font-medium rounded-t-md capitalize">
             <p className="w-1/12 truncate-text">ID</p>
             <p className="flex-1 truncate-text">products</p>
             <p className="flex-1 truncate-text">quantity</p>
@@ -42,13 +83,25 @@ const MemoFilterTable = ({
             <p className="flex-1 truncate-text">amount</p>
             <p className="flex-1 truncate-text">current_status</p>
             <p className="flex-1 truncate-text">Date</p>
-            {type === "selection" && <p className="w-1/12">Select</p>}
+            {type === "selection" && (
+              <div
+                className=" flex items-center justify-center space-x-2"
+                onClick={allSelect}
+              >
+                <p>Select</p>
+                {isAllSelected() ? (
+                  <ImCheckboxChecked />
+                ) : (
+                  <MdCheckBoxOutlineBlank />
+                )}
+              </div>
+            )}
           </div>
-          <div className="border-2 xl:border-4 border-t-0 border-border_color">
+          <div className="border rounded-b-xl border-t-0 border-border_color">
             {data.map((item, i) => (
               <div
                 key={i}
-                className={`flex gap-2 border-b border-border_color text-sm xl:text-xl text-primary-foreground px-4 py-2 hover:bg-secondary-foreground duration-200 ${
+                className={`flex gap-2 border-b border-border_color text-sm xl:text-lg text-primary-foreground px-4 py-2 hover:bg-secondary-foreground duration-200 ${
                   i === data.length - 1 && "border-none"
                 }`}
               >

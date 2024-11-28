@@ -40,13 +40,11 @@ const ProductionModal = ({
   const [employees, setEmployees] = useState<EmployeeType[]>();
 
   const [productionInput, setProductionInput] = useState({
-    rate: defalutValue ? defalutValue.rate : undefined,
     quantity: defalutValue ? defalutValue.quantity : undefined,
   });
   const [employeeId, setEmployeeId] = useState<number | undefined>(undefined);
   const [productId, setProductId] = useState<number | undefined>(undefined);
   const [inputError, setInputError] = useState({
-    rate: "",
     quantity: "",
     employee: "",
     products: "",
@@ -76,7 +74,6 @@ const ProductionModal = ({
 
   const handleSubmit = async () => {
     const newError = {
-      rate: !productionInput.rate ? "Enter Rate to continue" : "",
       quantity: !productionInput.quantity ? "Enter Quantity to continue" : "",
       employee: !employeeId ? "Select Employee to continue" : "",
       products: !productId ? "Select Product to continue" : "",
@@ -92,7 +89,6 @@ const ProductionModal = ({
     } else {
       setIsLoading(true);
       const data = {
-        rate: productionInput.rate,
         quantity: productionInput.quantity,
         employee: employeeId,
         product: productId,
@@ -102,7 +98,6 @@ const ProductionModal = ({
         const response = await createProduction(data);
 
         if (response.success) {
-          // setIsOpen(false);
           setReload((prv) => !prv);
         }
       }
@@ -111,7 +106,6 @@ const ProductionModal = ({
         const response = await updateProduction(defalutValue?.id, data);
 
         if (response.success) {
-          // setIsOpen(false);
           setReload((prv) => !prv);
         }
       }
@@ -178,7 +172,7 @@ const ProductionModal = ({
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-secondary w-[90%] xl:w-[80%] border border-border_color rounded-xl px-3 xl:px-8 py-6 xl:py-8 relative"
+            className="bg-secondary w-[90%] xl:w-[60%] border border-border_color rounded-xl px-3 xl:px-8 py-6 xl:py-12 relative"
           >
             <div
               className="absolute xl:top-6 top-4 xl:right-6 right-4 text-2xl xl:text-3xl text-primary-foreground hover:bg-secondary-foreground p-1 w-fit rounded-md"
@@ -195,7 +189,7 @@ const ProductionModal = ({
                   <p className="text-primary font-sour_gummy">
                     Update Production
                   </p>
-                  <div className="hidden xl:block text-base w-[60%]">
+                  <div className="hidden xl:block text-base w-[80%]">
                     To update production records, include{" "}
                     <span className="text-primary">
                       dropdowns for selecting an employee and product
@@ -221,12 +215,13 @@ const ProductionModal = ({
               )}
             </div>
             <div className="flex flex-col xl:flex-row mt-6 xl:mt-8 gap-6 xl:gap-10">
-              <div className="xl:w-[50%] space-y-3">
+              <div className="w-full space-y-3">
                 <p className="text-primary-foreground text-xl font-medium text-center">
                   Select{" "}
-                  <span className="text-primary font-semibold">Employee</span>{" "}
+                  <span className="text-primary font-semibold">Employee</span> ,
+                  <span className="text-primary font-semibold"> Product </span>
                   and
-                  <span className="text-primary font-semibold"> Product</span>
+                  <span className="text-primary font-semibold"> Quantity</span>
                 </p>
                 <Dropdown
                   data={employees}
@@ -252,26 +247,7 @@ const ProductionModal = ({
                 {inputError.products && (
                   <p className="error_message">{inputError.products}</p>
                 )}
-              </div>
-              <div className="border-b xl:border-l border-border_color"></div>
 
-              <div className="xl:w-[50%] space-y-2 xl:space-y-3">
-                <p className="text-primary-foreground text-xl font-medium text-center">
-                  Enter <span className="text-primary font-semibold">Rate</span>{" "}
-                  and
-                  <span className="text-primary font-semibold"> Quantity</span>
-                </p>
-                <input
-                  type="number"
-                  value={productionInput.rate}
-                  name="rate"
-                  placeholder="Emter Rate"
-                  onChange={handleInputChange}
-                  className="rounded-full bg-secondary-foreground border border-border_color px-4 xl:px-6 text-sm xl:text-xl py-2 text-primary-foreground font-medium"
-                />
-                {inputError.rate && (
-                  <p className="error_message">{inputError.rate}</p>
-                )}
                 <input
                   type="number"
                   value={productionInput.quantity}
@@ -287,7 +263,7 @@ const ProductionModal = ({
             </div>
             <div className="w-full flex items-center justify-center mt-5 xl:mt-8">
               <button
-                className="submit-btn"
+                className="submit-btn mt-0"
                 disabled={isLoading}
                 onClick={handleSubmit}
               >

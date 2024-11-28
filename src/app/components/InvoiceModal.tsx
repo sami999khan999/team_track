@@ -222,6 +222,7 @@ const InvoiceModal = ({
                     type="selection"
                     setFilterdInventoryIds={setFilterdInventoryIds}
                     filterdInventoryIds={filterdInventoryIds}
+                    filterdInventory={filterdInventory}
                     inventories={inventories}
                     setFilterdInventory={setFilterdInventory}
                   />
@@ -264,12 +265,22 @@ const InvoiceModal = ({
               </div>
             </div>
             <div>
-              <InvoiceCreateTable
-                type="selected"
-                // setFilterdInventoryIds={setFilterdInventoryIds}
-                // filterdInventoryIds={filterdInventoryIds}
-                inventories={filterdInventory}
-              />
+              {filterdInventory && filterdInventory?.length > 0 ? (
+                <InvoiceCreateTable
+                  type="selected"
+                  // setFilterdInventoryIds={setFilterdInventoryIds}
+                  // filterdInventoryIds={filterdInventoryIds}
+                  inventories={filterdInventory}
+                />
+              ) : (
+                <div>
+                  {inventories && inventories?.length > 0 && (
+                    <div className="text-xl xl:text-3xl text-primary-foreground font-semibold text-center xl:mt-20">
+                      No Selected Data
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
             <div className="w-full flex items-center justify-center">
               {filterdInventoryIds !== undefined &&

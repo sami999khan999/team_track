@@ -68,7 +68,6 @@ const EmployeeTable = () => {
               title="Add Employee"
               setIsFormOpen={setIsFormOpen}
               action="addEmployee"
-              setCurrentPage={setCurrentPage}
               closeModal={() => {}}
               setReload={setReload}
             />

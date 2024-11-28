@@ -13,10 +13,6 @@ const AddFormModal = ({
   title,
   setIsFormOpen,
   action,
-  // setData,
-  // data,
-  // currentPage,
-  setCurrentPage,
   closeModal,
   currentData,
   setReload,
@@ -24,10 +20,6 @@ const AddFormModal = ({
   title: string;
   setIsFormOpen?: Dispatch<SetStateAction<boolean>>;
   action: string;
-  // setData: React.Dispatch<React.SetStateAction<TableDataType[]>>;
-  // data: TableDataType[];
-  // currentPage: number;
-  setCurrentPage?: Dispatch<SetStateAction<number>>;
   closeModal: () => void;
   currentData?: TableDataType;
   setReload: Dispatch<SetStateAction<boolean>>;
@@ -105,10 +97,6 @@ const AddFormModal = ({
           if (response.success) {
             setReload((prv) => !prv);
 
-            if (setCurrentPage) {
-              setCurrentPage(1);
-            }
-
             if (setIsFormOpen) {
               setIsFormOpen(false);
             }
@@ -136,10 +124,6 @@ const AddFormModal = ({
 
           if (response.success) {
             setReload((prv) => !prv);
-
-            if (setCurrentPage) {
-              setCurrentPage(1);
-            }
 
             if (setIsFormOpen) {
               setIsFormOpen(false);

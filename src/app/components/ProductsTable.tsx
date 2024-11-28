@@ -31,6 +31,8 @@ const ProductsTable = () => {
 
   const activeProduct = products.find((porduct) => porduct.id === activeId);
 
+  console.log(activeProduct);
+
   useEffect(() => {
     const productsGet = async () => {
       const response = await getProducts(currentPage);
@@ -71,56 +73,66 @@ const ProductsTable = () => {
           setModalAction={setModalAction}
         />
 
-        <div>
-          <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 bg-background font-semibold tracking-wide uppercase ">
-            {columns.map((cols, i) => (
-              <div
-                key={i}
-                className={`truncate-text ${
-                  i === 0
-                    ? "w-1/12                                                      "
-                    : "flex-1"
-                } `}
-              >
-                {cols}
-              </div>
-            ))}
-            <div>Actions</div>
-          </div>
-          <div className="">
-            {products.map((product, i) => (
-              <div
-                key={i}
-                className={`flex justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 xl:text-xl gap-2 text-xs  text-primary-foreground font-medium relative hover:bg-secondary-foreground duration-200`}
-              >
-                <div className="w-1/12 truncate-text">{product.id}</div>
-                <div className="flex-1 truncate-text">{product.name}</div>
-                <div className="flex-1 truncate-text">{product.rate}</div>
-                <div className="flex-1 truncate-text">{product.category}</div>
-                <div className="flex items-center gap-2 text-primary-foreground ">
-                  <div
-                    className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
-                    onClick={() => {
-                      setActiveId(product.id);
-                      setModalAction("update");
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    <MdOutlineEdit />
+        <div className="overflow-x-auto">
+          <div className="w-[40rem] xl:w-full">
+            <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 bg-background font-semibold tracking-wide uppercase ">
+              {columns.map((cols, i) => (
+                <div
+                  key={i}
+                  className={`truncate-text ${
+                    i === 0
+                      ? "w-1/12                                                      "
+                      : "flex-1"
+                  } `}
+                >
+                  {cols}
+                </div>
+              ))}
+              <div>Actions</div>
+            </div>
+            <div className="">
+              {products.map((product, i) => (
+                <div
+                  key={i}
+                  className={`flex justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 xl:text-xl gap-2 text-xs  text-primary-foreground font-medium relative hover:bg-secondary-foreground duration-200`}
+                >
+                  <div className="w-1/12 truncate-text">{product.id}</div>
+                  <div className="flex-1 truncate-text capitalize">
+                    {product.name}
                   </div>
-                  <div
-                    className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
-                    onClick={() => {
-                      setActiveId(product.id);
-                      setModalAction("delete");
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    <RiDeleteBin6Line />
+                  <div className="flex-1 truncate-text">{product.category}</div>
+                  <div className="flex-1 truncate-text">{product.rate}/=</div>
+                  <div className="flex-1 truncate-text">
+                    {product.other_cost}/=
+                  </div>
+                  <div className="flex-1 truncate-text">
+                    {product.production_cost}/=
+                  </div>
+                  <div className="flex items-center gap-2 text-primary-foreground ">
+                    <div
+                      className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
+                      onClick={() => {
+                        setActiveId(product.id);
+                        setModalAction("update");
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      <MdOutlineEdit />
+                    </div>
+                    <div
+                      className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
+                      onClick={() => {
+                        setActiveId(product.id);
+                        setModalAction("delete");
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      <RiDeleteBin6Line />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 

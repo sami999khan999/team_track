@@ -47,8 +47,9 @@ export type CreateCustomerType = {
 };
 
 export type ProductType = {
-  id: number | string;
+  id: number;
   name: string;
+<<<<<<< HEAD
   rate: number | string;
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -59,12 +60,20 @@ export type ProductType = {
 =======
   category: string;
 >>>>>>> 2859cc141a0fec68a858f9ec78227c74e9134583
+=======
+  rate: number;
+  category: string;
+  production_cost: number;
+  other_cost: number;
+>>>>>>> 63770fd894cb8aabf5f2880a98d21c046208eb5d
 };
 
 export type CreateProductType = {
   name: string;
   rate: number | undefined;
   category: number | undefined;
+  production_cost: number | undefined;
+  other_cost: number | undefined;
 };
 
 export type CategoryType = {
@@ -96,7 +105,6 @@ export type PorductionType = {
 export type CreatePorductionType = {
   employee: number | undefined;
   product: number | undefined;
-  rate: number | undefined;
   quantity: number | undefined;
 };
 

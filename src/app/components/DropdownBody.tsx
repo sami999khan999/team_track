@@ -56,6 +56,7 @@ const DropdownBody = ({
         >
           <div className="w-1/6 truncate-text">{item.id}</div>
           <div className="flex-1 truncate-text">{item.name}</div>
+          <div className="flex-1 truncate-text">{item.mobile}</div>
         </div>
       )}
 
