@@ -14,6 +14,7 @@ const Dropdown = ({
   setValue,
   setSelectionError,
   defalutValue,
+  selectedItemName,
   type,
 }: {
   data: DropdownType[] | undefined;
@@ -24,6 +25,7 @@ const Dropdown = ({
   setSelectionError?: React.Dispatch<SetStateAction<string>>;
   setValue?: React.Dispatch<SetStateAction<string | undefined>>;
   defalutValue?: DropdownType;
+  selectedItemName?: string | undefined;
   type:
     | "product"
     | "employee"
@@ -40,9 +42,11 @@ const Dropdown = ({
     if (defalutValue) {
       if (type === "employee") {
         setSelectedItem(defalutValue?.employee?.name);
+        setSelectedId(undefined);
       }
       if (type === "product") {
         setSelectedItem(defalutValue?.product?.name);
+        setSelectedId(undefined);
       }
       if (type === "production") {
         setSelectedItem(defalutValue?.product?.name);

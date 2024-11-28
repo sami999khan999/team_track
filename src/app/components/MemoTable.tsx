@@ -33,12 +33,12 @@ const MemoTable = () => {
 
           if (firstElement?.total_page !== null) {
             setTotalPages(firstElement.total_page);
+            setMemo(response.data.slice(1));
           } else {
-            console.error("Invalid response format: total_page is missing");
+            console.error("Invalid Response Format: total_page is missing");
             setTotalPages(undefined);
+            setMemo([]);
           }
-
-          setMemo(response.data.slice(1));
         } else {
           console.error("Error Fetching Memo:", response.message);
           setTotalPages(undefined);

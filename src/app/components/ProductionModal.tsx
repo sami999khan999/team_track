@@ -203,7 +203,7 @@ const ProductionModal = ({
                   <p className="text-primary font-sour_gummy">
                     Creaate Production
                   </p>
-                  <div className="hidden xl:block text-base w-[60%]">
+                  <div className="hidden xl:block text-base ">
                     To create production records, include{" "}
                     <span className="text-primary">
                       dropdowns for selecting an employee and product
@@ -220,7 +220,7 @@ const ProductionModal = ({
                   Select{" "}
                   <span className="text-primary font-semibold">Employee</span> ,
                   <span className="text-primary font-semibold"> Product </span>
-                  and
+                  and Enter
                   <span className="text-primary font-semibold"> Quantity</span>
                 </p>
                 <Dropdown

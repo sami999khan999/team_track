@@ -267,6 +267,19 @@ export type MemoColumnType = {
   slno: number;
 };
 
+export type DashboardProductionType = {
+  employee: {
+    id: number | undefined;
+    name: string | undefined;
+  };
+
+  product: {
+    id: number | undefined;
+    name: string | undefined;
+  };
+  quantity: string;
+};
+
 export type DropdownType = {
   id?: number | string;
   name?: string;
@@ -278,15 +291,15 @@ export type DropdownType = {
   nid_no?: string;
 
   product?: {
-    id: number;
-    name: string;
+    id?: number | undefined;
+    name?: string | undefined;
     rate?: number;
   };
   employee?: {
-    id: number;
-    name: string;
+    id?: number | undefined;
+    name?: string | undefined;
   };
-  quantity?: number;
+  quantity?: number | string;
 
   status?: string;
 
