@@ -43,12 +43,14 @@ const DropdownBody = ({
               if (setId) setId(undefined);
               setSelectedItem(undefined);
               setSelectedId(undefined);
+              if (setValue) setValue(undefined);
               if (setSelectionError) setSelectionError("");
               setIsDropdownOpen((prv) => !prv);
             } else {
               if (setId) setId(currentId);
               setSelectedItem(item.name);
               setSelectedId(currentId);
+              if (setValue) setValue(item.name);
               if (setSelectionError) setSelectionError("");
               setIsDropdownOpen((prv) => !prv);
             }
@@ -70,11 +72,15 @@ const DropdownBody = ({
               if (setId) setId(undefined);
               setSelectedItem(undefined);
               setSelectedId(undefined);
+              if (setValue) setValue(undefined);
+              if (setSelectionError) setSelectionError("");
               setIsDropdownOpen((prv) => !prv);
             } else {
               if (setId) setId(currentId);
               setSelectedItem(item.name);
               setSelectedId(currentId);
+              if (setValue) setValue(item.name);
+              if (setSelectionError) setSelectionError("");
               setIsDropdownOpen((prv) => !prv);
             }
           }}
