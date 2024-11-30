@@ -97,12 +97,12 @@ const DashboardModal = ({
       }
 
       // Validate quantity format
-      const quantityRegex = /^(\d+(\+\d+)*)?$/; // Matches "38" or "23+48+4+..."
+      const quantityRegex = /^(\d+(\.\d+)?(\+\d+(\.\d+)?)*)?$/; // Matches "38" or "23+48+4+..."
       if (quantity === "") {
         error.quantity = "Please enter a quantity";
       } else if (!quantityRegex.test(quantity)) {
         error.quantity =
-          "Quantity must be in the format '23+48+...' or a single number";
+          "Quantity must be in the format '23+48.5+...' or a single number";
       }
 
       if (error.employee || error.product || error.quantity) {
@@ -169,12 +169,12 @@ const DashboardModal = ({
       }
 
       // Validate quantity format
-      const quantityRegex = /^(\d+(\+\d+)*)?$/; // Matches "38" or "23+48+4+..."
+      const quantityRegex = /^(\d+(\.\d+)?(\+\d+(\.\d+)?)*)?$/; // Matches "38" or "23+48+4+..."
       if (quantity === "") {
         error.quantity = "Please enter a quantity";
       } else if (!quantityRegex.test(quantity)) {
         error.quantity =
-          "Quantity must be in the format '23+48+...' or a single number";
+          "Quantity must be in the format '23+48.5+...' or a single number";
       }
 
       if (error.employee || error.product || error.quantity) {
@@ -489,19 +489,20 @@ const DashboardModal = ({
           >
             <IoMdClose className="transition-transform hover:rotate-90 origin-center" />
           </div>
-          <div className="text-center xl:pt-12 pt-8 pb-4  border-b border-border_color">
+          <div className="text-center xl:pt-10 pt-8 pb-4  border-b border-border_color flex flex-col items-center justify-center">
             <h2 className="xl:text-4xl text-2xl text-primary font-semibold">
               Create Invoice
             </h2>
-            <p className="text-primary-foreground text-xl mt-1 hidden xl:block">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-              consectetur, nostrum placeat non ullam cum.
+            <p className="text-primary-foreground text-xl mt-1 hidden xl:block w-[60%] text-center">
+              Easily generate and manage invoices in just a few clicks, ensuring
+              accuracy, professionalism, and seamless tracking for all your
+              business transactions.
             </p>
           </div>
 
           <div className="xl:px-8 px-3 pt-8">
             <div className="border-b-4 border-dotted border-border_color pb-8">
-              <p className="text-center xl:text-3xl text-2xl text-primary-foreground font-sour_gummy font-semibold mb-4">
+              <p className="text-center xl:text-3xl text-2xl text-primary-foreground font-sour_gummy font-semibold mb-2">
                 Select Employee
               </p>
               <Dropdown
@@ -513,16 +514,16 @@ const DashboardModal = ({
                 setSelectionError={setCustomerSelecteonError}
                 type="customer"
               />
-              <p className="error_message">{customerSelecteonError}</p>
+              <p className="error_message absolute">{customerSelecteonError}</p>
             </div>
 
             <div>
               <div className="border-b-4 border-dotted border-border_color ">
                 <div className="text-center xl:text-3xl text-2xl text-primary-foreground font-sour_gummy font-semibold mt-4">
-                  <p className="mb-4">Add Production</p>
+                  <p className="xl:mb-2">Add Production</p>
                 </div>
 
-                <div className="flex flex-col xl:flex-row w-full justify-between gap-4 xl:py-5">
+                <div className="flex flex-col xl:flex-row w-full justify-between gap-6 ">
                   <div className="flex-1">
                     <Dropdown
                       data={employees}
@@ -535,7 +536,9 @@ const DashboardModal = ({
                       defalutValue={employeeDefaultValue}
                       type="employee"
                     />
-                    <p className="error_message">{employeeSelectionError}</p>
+                    <p className="error_message absolute">
+                      {employeeSelectionError}
+                    </p>
                   </div>
                   <div className="flex-1">
                     <Dropdown
@@ -549,7 +552,9 @@ const DashboardModal = ({
                       defalutValue={productDefaultValue}
                       type="product"
                     />
-                    <p className="error_message">{productSelectionError}</p>
+                    <p className="error_message absolute">
+                      {productSelectionError}
+                    </p>
                   </div>
                   <div className="flex-1">
                     <input
@@ -562,22 +567,22 @@ const DashboardModal = ({
                       placeholder="Emter Quantity"
                       className="add_field xl:h-12"
                     />
-                    <p className="error_message">{quantityError}</p>
+                    <p className="error_message absolute">{quantityError}</p>
                   </div>
                   <div
                     className="flex items-center justify-center mb-3 xl:mb-0"
                     onClick={HandelClear}
                   >
-                    <div className="xl:border-4 border-2 w-fit border-border_color rounded-full xl:text-2xl text-xl text-primary-foreground p-2 hover:bg-primary hover:text-background duration-200">
-                      <IoMdClose />
+                    <div className="border xl:w-fit w-full border-border_color rounded-full  text-xl text-primary-foreground px-6 xl:py-2 hover:bg-secondary-foreground duration-200 flex items-center justify-center font-semibold">
+                      Clear
                     </div>
                   </div>
                 </div>
 
-                <div className="flex flex-col xl:flex-row items-center justify-center mt-4 gap-4 text-xl mb-4">
+                <div className="flex flex-col xl:flex-row items-center justify-center mb-4 xl:my-8 gap-4 text-xl w-full">
                   <button
                     onClick={addProductions}
-                    className="submit-btn w-fit mt-0"
+                    className="submit-btn xl:w-fit mt-0"
                   >
                     {activeProductionIndex === undefined
                       ? "+ Add Production"
@@ -654,7 +659,7 @@ const DashboardModal = ({
                     </div>
                     <div className="flex justify-center">
                       <button
-                        className="submit-btn xl:w-fit text-xl xl:px-20 xl:text-2xl"
+                        className="submit-btn xl:w-fit text-xl xl:px-20 xl:text-2xl mb-1"
                         onClick={submitHandler}
                         disabled={isLoading}
                       >

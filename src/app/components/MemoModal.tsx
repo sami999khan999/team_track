@@ -138,11 +138,12 @@ const MemoModal = ({
         </div>
         <div className="flex flex-col gap-2 items-center justify-center text-center border-b border-border_color pb-4">
           <h2 className="text-xl xl:text-3xl font-sour_gummy text-primary font-semibold text-center">
-            Create Cash Momo
+            Generate Cash Momo
           </h2>
-          <p className="text-primary-foreground text-lg w-[60%] hidden xl:block">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
-            minima impedit aliquid.
+          <p className="text-primary-foreground text-lg w-[70%] hidden xl:block">
+            Generate professional cash memos instantly to provide customers with
+            clear, accurate receipts, ensuring smooth transactions,
+            transparency, and a hassle-free checkout experience every time.
           </p>
         </div>
 
@@ -187,7 +188,7 @@ const MemoModal = ({
                 />
               </div>
             ) : (
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl xl:text-3xl font-semibold text-primary-foreground">
+              <div className="absolute top-[60%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl xl:text-3xl font-semibold text-primary-foreground">
                 Select <span className="text-primary">Customer</span> to get
                 started
               </div>

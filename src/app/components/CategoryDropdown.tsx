@@ -89,7 +89,7 @@ const CategoryDropdown = ({
               onClick={() => setDropdownOpen((prv) => !prv)}
             >
               <p
-                className={`text-base xl:text-xl ${
+                className={`text-base xl:text-xl font-normal ${
                   selectedCategory === "Inter a category!" && "text-red-500"
                 }`}
               >
@@ -106,7 +106,7 @@ const CategoryDropdown = ({
             </div>
             <div>
               <div
-                className="py-2 xl:text-lg flex items-center gap-3 w-full bg-secondary-foreground text-primary-foreground font-semibold justify-center border border-border_color duration-200 cursor-pointer rounded-full mt-2"
+                className="py-2 xl:text-lg flex items-center gap-3 w-full bg-secondary-foreground text-primary-foreground justify-center border border-border_color duration-200 cursor-pointer rounded-full mt-2"
                 onClick={() => setInputOpen((prv) => !prv)}
               >
                 <p>Add Category</p>

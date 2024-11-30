@@ -54,7 +54,7 @@ const NavLinks = () => {
           <Link
             key={i}
             href={navItem.path}
-            className={`group flex items-center gap-2 xl:rounded-r-xl px-1 xl:px-6 py-2 hover:bg-secondary-foreground duration-300 ${
+            className={`group flex items-center gap-2 px-1 xl:px-6 py-2 hover:bg-secondary-foreground duration-300 ${
               pathName === navItem.path ||
               (pathName.startsWith(navItem.path) && navItem.path !== "/")
                 ? "bg-primary hover:bg-slate-500/90"

@@ -158,8 +158,8 @@ const ProductModal = ({
                 Create Product
               </h2>
               <p className="text-primary-foreground w-[70%] text-center text-lg hidden xl:block">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Officiis magni esse est laudantium! Voluptas, dolore!
+                Easily add new products to your inventory with detailed
+                information for better management and smoother operations.
               </p>
             </div>
             <div className="flex flex-col mt-8 gap-8">
@@ -266,8 +266,8 @@ const ProductModal = ({
                 Update Product
               </h2>
               <p className="text-primary-foreground w-[70%] text-center text-lg hidden xl:block">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Officiis magni esse est laudantium! Voluptas, dolore!
+                Easily update new products to your inventory with detailed
+                information for better management and smoother operations.
               </p>
             </div>
             <div className="flex flex-col mt-8 gap-8">
