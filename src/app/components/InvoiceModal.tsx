@@ -177,8 +177,9 @@ const InvoiceModal = ({
             Create Invoice
           </h2>
           <p className="text-primary-foreground text-lg w-[60%] hidden xl:block">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
-            minima impedit aliquid.
+            Easily generate and manage invoices in just a few clicks, ensuring
+            accuracy, professionalism, and seamless tracking for all your
+            business transactions.
           </p>
         </div>
         <div className="mt-6 flex flex-col xl:flex-row gap-4 remove-scrollbar">

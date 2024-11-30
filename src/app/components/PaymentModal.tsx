@@ -187,8 +187,9 @@ const PaymentModal = ({
               Employee Payment
             </h2>
             <p className="text-primary-foreground text-lg w-[60%] hidden xl:block">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Recusandae minima impedit aliquid.
+              Simplify your payroll process with timely and accurate payments.
+              Ensure your team stays motivated and valued with secure,
+              hassle-free employee payment solutions.
             </p>
           </div>
 

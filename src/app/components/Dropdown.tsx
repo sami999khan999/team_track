@@ -75,7 +75,7 @@ const Dropdown = ({
         </div>
         {isDropdownOpen && (
           <div
-            className="absolute z-50 w-full self-center h-[14rem] top-14 bg-secondary border border-border_color rounded-md overflow-auto shadow-lg shadow-background text-primary-foreground text-base px-3"
+            className="absolute z-50 w-full self-center h-[14rem] top-14 bg-secondary border border-border_color rounded-md overflow-auto text-primary-foreground text-base px-3"
             onClick={(e) => e.stopPropagation()}
           >
             {/* <div className="flex px-4 bg-background rounded-t-md mt-2 gap-10 py-3 font-semibold">

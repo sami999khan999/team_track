@@ -60,7 +60,7 @@ const MemoTable = () => {
   return (
     <div>
       {isOpen && <MemoModal setIsOpen={setIsOpen} />}
-      <div className="w-full h-fit bg-secondary shadow-2xl shadow-[#19253859] px-2 py-6 xl:py-8 xl:px-8 rounded-xl mb-10">
+      <div className="w-full h-fit bg-secondary shadow-xl shadow-[#1925380c] px-2 py-6 xl:py-8 xl:px-8 rounded-xl mb-10">
         <TableActions setIsOpen={setIsOpen} tableName="Cash Memo" />
 
         {isLoading && (
