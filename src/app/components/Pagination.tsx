@@ -60,7 +60,7 @@ const Pagination = ({
                 {pageNumber().map((i) => (
                   <div
                     key={i}
-                    className={`text-center px-2 rounded-full ${
+                    className={`text-center flex items-center justify-center xl:w-7 w-5 xl:h-7 h-5 rounded-full ${
                       currentPage === i && "bg-primary text-secondary"
                     } `}
                     onClick={() => {

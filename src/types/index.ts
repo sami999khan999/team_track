@@ -293,6 +293,21 @@ export type DashboardProductionType = {
   quantity: string;
 };
 
+export type DashboardProductionCreateType = {
+  employee: number | undefined;
+  product: number | undefined;
+  qty: string;
+};
+
+export type SympleInvoiceCreateType = {
+  customer: number;
+  production: {
+    employee: number | undefined;
+    product: number | undefined;
+    qty: string;
+  }[];
+};
+
 export type DropdownType = {
   id?: number | string;
   name?: string;

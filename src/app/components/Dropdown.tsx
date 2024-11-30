@@ -63,7 +63,7 @@ const Dropdown = ({
         <div
           className="bg-secondary-foreground text-primary-foreground rounded-full py-2 px-5 border border-border_color text-base xl:text-xl flex items-center justify-between"
           onClick={() => {
-            setIsDropdownOpen(!isDropdownOpen); // This toggles the dropdown open/close state
+            setIsDropdownOpen(!isDropdownOpen);
           }}
         >
           <div>{selectedItem ? selectedItem : <p>Select {type}</p>}</div>
@@ -75,7 +75,7 @@ const Dropdown = ({
         </div>
         {isDropdownOpen && (
           <div
-            className="absolute z-50 w-full self-center h-[14rem] top-14 bg-secondary border border-border_color rounded-md overflow-auto remove-scrollbar text-primary-foreground text-base px-3"
+            className="absolute z-50 w-full self-center h-[14rem] top-14 bg-secondary border border-border_color rounded-md overflow-auto shadow-lg shadow-background text-primary-foreground text-base px-3"
             onClick={(e) => e.stopPropagation()}
           >
             {/* <div className="flex px-4 bg-background rounded-t-md mt-2 gap-10 py-3 font-semibold">

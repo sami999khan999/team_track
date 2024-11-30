@@ -8,6 +8,7 @@ import AddFormModal from "./AddFormModal";
 import Pagination from "./Pagination";
 import Table from "./Table";
 import TableActions from "./TableActions";
+import LoadingSkeleton from "./LoadingSkeleton";
 
 const EmployeeTable = () => {
   const param = useSearchParams();
@@ -33,20 +34,25 @@ const EmployeeTable = () => {
         await new Promise((resolve) => setTimeout(resolve, 250));
 
         if (response.success) {
-          const firstElememt = response.data.shift();
-          const totalPages = firstElememt ? firstElememt.total_page : undefined;
+          const firstElement = response.data[0];
 
-          setEmployees(response.data);
-          setTotalPage(totalPages);
+          if (firstElement?.total_page !== null) {
+            setTotalPage(firstElement.total_page);
+            setEmployees(response.data.slice(1));
+          } else {
+            console.error("Invalid Response Format: total_page is missing");
+            setTotalPage(undefined);
+            setEmployees([]);
+          }
         } else {
-          console.error(response.message || "Failed to fetch employees");
-          setEmployees([]);
+          console.error("Error Fetching Employees:", response.message);
           setTotalPage(undefined);
+          setEmployees([]);
         }
       } catch (err) {
-        console.error("Unexpected Error Fetching Employyees: ", err);
-        setEmployees([]);
+        console.error("Unexpected Error While Fetching Employees:", err);
         setTotalPage(undefined);
+        setEmployees([]);
       } finally {
         setIsLoading(false);
       }
@@ -54,10 +60,6 @@ const EmployeeTable = () => {
 
     fetchEmployees();
   }, [currentPage, reload]);
-
-  useEffect(() => {
-    path.push(`?page=${currentPage}`);
-  }, [currentPage, path]);
 
   return (
     <div className="">
@@ -80,9 +82,10 @@ const EmployeeTable = () => {
 
         {/* Loading State */}
         {isLoading && (
-          <div className="text-primary-foreground tracking-wide text-xl xl:text-4xl text-center font-semibold flex items-center justify-center">
-            Loading...
-          </div>
+          // <div className="text-primary-foreground tracking-wide text-xl xl:text-4xl text-center font-semibold flex items-center justify-center">
+          //   Loading...
+          // </div>
+          <LoadingSkeleton />
         )}
 
         {/* No Data State */}

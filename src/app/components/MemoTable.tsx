@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { MemoType } from "@/types";
 import { getMemo } from "@/utils/memoApiRequests";
 import Pagination from "./Pagination";
+import LoadingSkeleton from "./LoadingSkeleton";
 
 const MemoTable = () => {
   const param = useSearchParams();
@@ -63,13 +64,14 @@ const MemoTable = () => {
         <TableActions setIsOpen={setIsOpen} tableName="Cash Memo" />
 
         {isLoading && (
-          <div className="text-primary-foreground tracking-wide text-xl xl:text-4xl text-center font-semibold flex items-center justify-center">
-            Loading...
-          </div>
+          // <div className="text-primary-foreground tracking-wide text-xl xl:text-4xl text-center font-semibold flex items-center justify-center">
+          //   Loading...
+          // </div>
+          <LoadingSkeleton />
         )}
 
         {!isLoading && memo.length === 0 && (
-          <div className="text-primary-foreground tracking-wide text-xl xl:text-3xl text-center font-semibold xl:my-[6rem] my-[2rem] flex w-full items-center justify-center">
+          <div className="text-mutated tracking-wide text-xl xl:text-3xl text-center font-semibold xl:my-[6rem] my-[2rem] flex w-full items-center justify-center">
             <div className="w-fit px-6 py-2 rounded-lg cursor-pointer ">
               There are no memos available
             </div>
@@ -132,6 +134,8 @@ const MemoTable = () => {
           totalPage={totalpages}
         />
       </div>
+
+      {/* <LoadingSkeleton /> */}
     </div>
   );
 };
