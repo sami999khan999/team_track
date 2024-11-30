@@ -1,36 +1,31 @@
 "use client";
 
-import React, { SetStateAction, useEffect, useState } from "react";
-import { IoMdClose } from "react-icons/io";
-import AddFormModal from "./AddFormModal";
-import ProductionModal from "./ProductionModal";
-import ProductModal from "./ProductModal";
-import Dropdown from "./Dropdown";
 import {
   CustomerType,
+  DashboardProductionCreateType,
   DashboardProductionType,
   DropdownType,
   EmployeeType,
   ProductType,
 } from "@/types";
 import { getCustoer } from "@/utils/customerApiRerquest";
-import { getProducts } from "@/utils/productApiRequests";
 import { getEmployee } from "@/utils/employeeApiRequest";
+import { getProducts } from "@/utils/productApiRequests";
+import React, { SetStateAction, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { IoMdClose } from "react-icons/io";
+import Dropdown from "./Dropdown";
+import { ErrorToast, SuccessToast } from "./Toast";
+import { createInvoiceSimpleVersion } from "@/utils/invoiceApiRequests";
+import { useRouter } from "next/navigation";
+import { CgSpinnerTwo } from "react-icons/cg";
 
 const DashboardModal = ({
   setIsOpen,
-  setReload,
-  reload,
 }: {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
-  setReload: React.Dispatch<SetStateAction<boolean>>;
-  reload: boolean;
 }) => {
-  const [createAction, setCreateAction] = useState<
-    "employee" | "customer" | "product" | "production"
-  >();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const path = useRouter();
   const [customers, setCustomers] = useState<CustomerType[]>([]);
   const [customerTotalPage, setCustomerTotalPage] = useState<
     number | undefined
@@ -48,6 +43,7 @@ const DashboardModal = ({
   const [employeeCurrentPage, setEmployeeCurrentPage] = useState(1);
 
   const [products, setProducts] = useState<ProductType[]>([]);
+  const [originalProducts, setOriginalProducts] = useState<ProductType[]>([]);
   const [productTotalPage, setProductTotalPage] = useState<
     number | undefined
   >();
@@ -59,6 +55,7 @@ const DashboardModal = ({
   const [selectedProduct, setSelectedProduct] = useState<number | undefined>();
 
   const [productions, setProductions] = useState<DashboardProductionType[]>([]);
+
   const [activeProductionIndex, setActiveProductionIndex] = useState<
     number | undefined
   >();
@@ -78,6 +75,10 @@ const DashboardModal = ({
   const [employeeSelectionError, setEmployeeSelectionError] = useState("");
   const [productSelectionError, setProductSelectionError] = useState("");
   const [quantityError, setQuantityError] = useState("");
+  const [employeeWithDuplicates, setEmployeeWithDuplicates] = useState<
+    number[]
+  >([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const addProductions = () => {
     if (activeProductionIndex !== undefined) {
@@ -95,8 +96,13 @@ const DashboardModal = ({
         error.product = "Please select a product";
       }
 
+      // Validate quantity format
+      const quantityRegex = /^(\d+(\+\d+)*)?$/; // Matches "38" or "23+48+4+..."
       if (quantity === "") {
         error.quantity = "Please enter a quantity";
+      } else if (!quantityRegex.test(quantity)) {
+        error.quantity =
+          "Quantity must be in the format '23+48+...' or a single number";
       }
 
       if (error.employee || error.product || error.quantity) {
@@ -162,8 +168,13 @@ const DashboardModal = ({
         error.product = "Please select a product";
       }
 
+      // Validate quantity format
+      const quantityRegex = /^(\d+(\+\d+)*)?$/; // Matches "38" or "23+48+4+..."
       if (quantity === "") {
         error.quantity = "Please enter a quantity";
+      } else if (!quantityRegex.test(quantity)) {
+        error.quantity =
+          "Quantity must be in the format '23+48+...' or a single number";
       }
 
       if (error.employee || error.product || error.quantity) {
@@ -213,6 +224,139 @@ const DashboardModal = ({
 
   const removeHandler = (index: number) => {
     setProductions((prv) => prv.filter((_, i) => i !== index));
+
+    const removedProduction = productions[index];
+
+    setEmployeeWithDuplicates((prv) =>
+      prv.filter((element) => element !== removedProduction.employee.id)
+    );
+
+    // console.log(removedProduction);
+  };
+
+  const HandelClear = () => {
+    setActiveProductionIndex(undefined);
+    setSelectedProduct(undefined);
+    setSelectedEmployee(undefined);
+    setQuantity("");
+    setEmployeeDefaultValue({
+      employee: {
+        name: "",
+      },
+    });
+    setProductDefaultValue({
+      product: {
+        name: "",
+      },
+    });
+  };
+
+  const submitHandler = async () => {
+    try {
+      setIsLoading(true);
+
+      if (selectedCustomer === undefined) {
+        setCustomerSelecteonError("Please Select a Customer!");
+        return;
+      }
+
+      const formatedData = productions.map((production) => {
+        return {
+          employee: production.employee.id,
+          product: production.product.id,
+          qty: production.quantity,
+        };
+      });
+
+      const checkDuplicateProducts = (
+        data: DashboardProductionCreateType[]
+      ) => {
+        const errors: string[] = [];
+
+        const groupedData = data.reduce<{
+          [key: string]: DashboardProductionCreateType[];
+        }>((acc, item) => {
+          const key = `${item.employee}-${item.product}`;
+          if (!acc[key]) {
+            acc[key] = [];
+          }
+          acc[key].push(item);
+          return acc;
+        }, {});
+
+        Object.keys(groupedData).forEach((key) => {
+          if (groupedData[key].length > 1) {
+            const { employee, product } = groupedData[key][0];
+
+            setEmployeeWithDuplicates((prv) => {
+              return [...(prv || []), employee].filter(
+                (id): id is number => id !== undefined
+              );
+            });
+
+            errors.push(
+              `Employee ${employee} has duplicate product ${product}.`
+            );
+          }
+        });
+
+        return errors;
+      };
+
+      const errors = checkDuplicateProducts(formatedData);
+
+      if (errors.length > 0) {
+        toast.custom((t) => (
+          <ErrorToast visible={t.visible}>
+            <div>
+              <div>
+                {errors.map((error, i) => (
+                  <p key={i}>{error}</p>
+                ))}
+              </div>
+            </div>
+          </ErrorToast>
+        ));
+        return;
+      }
+
+      const invoiceCreateData = {
+        customer: selectedCustomer,
+        production: formatedData,
+      };
+
+      await new Promise((resolve) => resolve(setTimeout(resolve, 250)));
+
+      const response = await createInvoiceSimpleVersion(invoiceCreateData);
+
+      if (response.success) {
+        const invoiceId = response.data.challan_id;
+
+        if (invoiceId === undefined) {
+          console.log("Invalid Response Format: 'challan_id' Is Missing");
+        } else {
+          path.push(`/invoice/${invoiceId}`);
+        }
+
+        toast.custom((t) => (
+          <SuccessToast visible={t.visible}>{response.message}</SuccessToast>
+        ));
+      } else {
+        toast.custom((t) => (
+          <ErrorToast visible={t.visible}>{response.message}</ErrorToast>
+        ));
+        console.log("Error While Creating Invoice: ", response.message);
+      }
+    } catch (err) {
+      toast.custom((t) => (
+        <ErrorToast visible={t.visible}>
+          An unexpected error occurred!
+        </ErrorToast>
+      ));
+      console.log("Unexpected Error While Creating Invoice:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Fetch customer
@@ -290,20 +434,20 @@ const DashboardModal = ({
 
           if (firstElement.total_page !== null) {
             setProductTotalPage(firstElement.total_page);
-            setProducts(response.data.slice(1));
+            setOriginalProducts(response.data.slice(1));
           } else {
             console.error("Invalid Response Format: total_page is missing");
-            setProducts([]);
+            setOriginalProducts([]);
             setProductTotalPage(undefined);
           }
         } else {
           console.error("Error While Fetching Products: ", response.message);
-          setProducts([]);
+          setOriginalProducts([]);
           setProductTotalPage(undefined);
         }
       } catch (err) {
         console.error("Unexpected Error While Fetching Products: ", err);
-        setProducts([]);
+        setOriginalProducts([]);
         setProductTotalPage(undefined);
       }
     };
@@ -313,47 +457,30 @@ const DashboardModal = ({
 
   console.log(productions);
 
+  useEffect(() => {
+    if (selectedEmployee && originalProducts.length > 0) {
+      const filteredProductions = productions.filter(
+        (production) => production.employee.id === selectedEmployee
+      );
+
+      const productIdsToRemove = filteredProductions.map(
+        (production) => production.product.id
+      );
+
+      const updatedProducts = originalProducts.filter(
+        (product) => !productIdsToRemove.includes(product.id)
+      );
+
+      setProducts(updatedProducts);
+    } else {
+      setProducts(originalProducts);
+    }
+  }, [selectedEmployee, originalProducts, productions]);
+
   return (
     <div>
-      {createAction === "employee" && isModalOpen && (
-        <AddFormModal
-          title="Create Employee"
-          setIsFormOpen={setIsModalOpen}
-          action="addEmployee"
-          closeModal={() => {}}
-          setReload={setReload}
-        />
-      )}
-
-      {createAction === "customer" && isModalOpen && (
-        <AddFormModal
-          title="Create Customer"
-          setIsFormOpen={setIsModalOpen}
-          action="addCustomer"
-          closeModal={() => {}}
-          setReload={setReload}
-        />
-      )}
-
-      {createAction === "production" && isModalOpen && (
-        <ProductionModal
-          setIsOpen={setIsModalOpen}
-          action="create"
-          setReload={setReload}
-        />
-      )}
-
-      {createAction === "product" && isModalOpen && (
-        <ProductModal
-          modalAction="create"
-          setIsModalOpen={setIsModalOpen}
-          setReload={setReload}
-          reload={reload}
-        />
-      )}
-
       <div className="absolute top-0 left-0 w-full h-full backdrop-blur-md flex items-center justify-center z-10">
-        <div className="overflow-y-auto xl:w-[85%] w-[95%] h-[80%] xl:h-[90%] relative  bg-secondary rounded-xl border border-border_color xl:px-8 px-3 py-5">
+        <div className="overflow-y-auto xl:w-[85%] w-[95%] h-[80%] xl:h-[90%] relative  bg-secondary rounded-xl border border-border_color ">
           <div
             className="absolute xl:top-6 top-4 xl:right-6 right-4 text-2xl xl:text-3xl text-primary-foreground hover:bg-secondary-foreground p-1 w-fit rounded-md"
             onClick={() => {
@@ -362,52 +489,21 @@ const DashboardModal = ({
           >
             <IoMdClose className="transition-transform hover:rotate-90 origin-center" />
           </div>
-
-          <div className="pt-6 xl:pt-10">
-            <div className="text-center xl:text-3xl text-2xl text-primary font-sour_gummy font-semibold mb-4">
-              <p>Create</p>
-            </div>
-            <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 text-xl text-primary-foreground font-semibold border-b-4 border-border_color mb-4 xl:mb-8 pb-4 xl:pb-8">
-              <button
-                className="border border-border_color hover:bg-primary hover:text-background px-6 py-2 rounded-lg duration-200"
-                onClick={() => {
-                  setCreateAction("customer");
-                  setIsModalOpen((prv) => !prv);
-                }}
-              >
-                Create Customer
-              </button>
-              <button
-                className="border border-border_color hover:bg-primary hover:text-background px-6 py-2 rounded-lg duration-200"
-                onClick={() => {
-                  setCreateAction("employee");
-                  setIsModalOpen((prv) => !prv);
-                }}
-              >
-                Create Employee
-              </button>
-              <button
-                className="border border-border_color hover:bg-primary hover:text-background px-6 py-2 rounded-lg duration-200"
-                onClick={() => {
-                  setCreateAction("product");
-                  setIsModalOpen((prv) => !prv);
-                }}
-              >
-                Create Product
-              </button>
-              <button
-                className="border border-border_color hover:bg-primary hover:text-background px-6 py-2 rounded-lg duration-200"
-                onClick={() => {
-                  setCreateAction("production");
-                  setIsModalOpen((prv) => !prv);
-                }}
-              >
-                Create Production
-              </button>
-            </div>
+          <div className="text-center xl:pt-12 pt-8 pb-4  border-b border-border_color">
+            <h2 className="xl:text-4xl text-2xl text-primary font-semibold">
+              Create Invoice
+            </h2>
+            <p className="text-primary-foreground text-xl mt-1 hidden xl:block">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
+              consectetur, nostrum placeat non ullam cum.
+            </p>
           </div>
-          <div>
-            <div>
+
+          <div className="xl:px-8 px-3 pt-8">
+            <div className="border-b-4 border-dotted border-border_color pb-8">
+              <p className="text-center xl:text-3xl text-2xl text-primary-foreground font-sour_gummy font-semibold mb-4">
+                Select Employee
+              </p>
               <Dropdown
                 data={customers}
                 totalPage={customerTotalPage}
@@ -417,13 +513,13 @@ const DashboardModal = ({
                 setSelectionError={setCustomerSelecteonError}
                 type="customer"
               />
-              <p>{customerSelecteonError}</p>
+              <p className="error_message">{customerSelecteonError}</p>
             </div>
 
             <div>
-              <div className="border-b border-border_color xl:pb-8 pb-4">
-                <div className="text-center xl:text-3xl text-2xl text-primary font-sour_gummy font-semibold mt-4">
-                  <p>Add Production</p>
+              <div className="border-b-4 border-dotted border-border_color ">
+                <div className="text-center xl:text-3xl text-2xl text-primary-foreground font-sour_gummy font-semibold mt-4">
+                  <p className="mb-4">Add Production</p>
                 </div>
 
                 <div className="flex flex-col xl:flex-row w-full justify-between gap-4 xl:py-5">
@@ -468,17 +564,20 @@ const DashboardModal = ({
                     />
                     <p className="error_message">{quantityError}</p>
                   </div>
-                  {/* <div className="flex items-center justify-center mb-3 xl:mb-0">
+                  <div
+                    className="flex items-center justify-center mb-3 xl:mb-0"
+                    onClick={HandelClear}
+                  >
                     <div className="xl:border-4 border-2 w-fit border-border_color rounded-full xl:text-2xl text-xl text-primary-foreground p-2 hover:bg-primary hover:text-background duration-200">
                       <IoMdClose />
                     </div>
-                  </div> */}
+                  </div>
                 </div>
 
-                <div className="flex flex-col xl:flex-row items-center justify-center mt-4 gap-4 text-xl">
+                <div className="flex flex-col xl:flex-row items-center justify-center mt-4 gap-4 text-xl mb-4">
                   <button
                     onClick={addProductions}
-                    className="w-full xl:w-fit text-primary-foreground px-4 py-2 border border-border_color rounded-full hover:bg-secondary-foreground duration-200"
+                    className="submit-btn w-fit mt-0"
                   >
                     {activeProductionIndex === undefined
                       ? "+ Add Production"
@@ -494,9 +593,9 @@ const DashboardModal = ({
                 </div>
               </div>
 
-              <div className="mt-4 overflow-x-auto mb-6">
+              <div className="mt-6 overflow-x-auto mb-6">
                 {productions.length > 0 ? (
-                  <div className="w-[25rem] xl:w-full">
+                  <div className="w-[25rem] xl:w-full h-full">
                     <div className="text-primary-foreground text-base xl:text-xl font-semibold bg-background flex justify-between px-4 xl:px-6 py-3 rounded-t-md">
                       <p className="flex-1">Employee</p>
                       <p className="flex-1">Product</p>
@@ -507,32 +606,45 @@ const DashboardModal = ({
                       {productions.map((production, i) => (
                         <div
                           key={i}
-                          className="text-primary-foreground xl:text-xl flex justify-between xl:px-6 px-3 border-b border-secondary-foreground capitalize py-1"
-                          onClick={() => {
-                            // updateHandler(production, i);
-
-                            setActiveProductionIndex(i);
-
-                            setSelectedEmployee(production.employee.id);
-                            setSelectedProduct(production.product.id);
-                            setQuantity(production.quantity);
-
-                            setEmployeeDefaultValue(production);
-                            setProductDefaultValue(production);
-                          }}
+                          className={`flex justify-between xl:px-6 px-3 border-b border-secondary-foreground hover:bg-secondary-foreground duration-200 `}
                         >
-                          <div className="flex-1 flex items-center">
-                            {production.employee.name} ({production.employee.id}
-                            )
-                          </div>
-                          <div className="flex-1 flex items-center">
-                            {production.product.name} ({production.product.id})
-                          </div>
-                          <div className="flex-1 flex items-center">
-                            {production.quantity}
+                          <div
+                            key={i}
+                            className={`text-primary-foreground xl:text-xl flex justify-between capitalize w-full py-2 ${
+                              production.employee.id &&
+                              employeeWithDuplicates.includes(
+                                production.employee.id
+                              )
+                                ? "text-red-700"
+                                : ""
+                            }`}
+                            onClick={() => {
+                              // updateHandler(production, i);
+
+                              setActiveProductionIndex(i);
+
+                              setSelectedEmployee(production.employee.id);
+                              setSelectedProduct(production.product.id);
+                              setQuantity(production.quantity);
+
+                              setEmployeeDefaultValue(production);
+                              setProductDefaultValue(production);
+                            }}
+                          >
+                            <div className="flex-1 flex items-center">
+                              {production.employee.name} (
+                              {production.employee.id})
+                            </div>
+                            <div className="flex-1 flex items-center">
+                              {production.product.name} ({production.product.id}
+                              )
+                            </div>
+                            <div className="flex-1 flex items-center">
+                              {production.quantity}
+                            </div>
                           </div>
                           <div
-                            className="bg-secondary-foreground  px-4 text-xl group hover:bg-primary hover:text-background py-3"
+                            className="bg-secondary-foreground  px-3 text-xl group hover:bg-primary hover:text-background my-1 flex items-center text-primary-foreground "
                             onClick={() => removeHandler(i)}
                           >
                             <IoMdClose className="group-hover:scale-125 duration-200" />
@@ -540,9 +652,26 @@ const DashboardModal = ({
                         </div>
                       ))}
                     </div>
+                    <div className="flex justify-center">
+                      <button
+                        className="submit-btn xl:w-fit text-xl xl:px-20 xl:text-2xl"
+                        onClick={submitHandler}
+                        disabled={isLoading}
+                      >
+                        {isLoading ? (
+                          <div className="flex items-center justify-center w-full">
+                            <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
+                          </div>
+                        ) : (
+                          <div>Inventory</div>
+                        )}
+                      </button>
+                    </div>
                   </div>
                 ) : (
-                  <div></div>
+                  <div className="text-3xl text-center text-mutated font-semibold mt-6 overflow-hidden">
+                    No Productios
+                  </div>
                 )}
               </div>
             </div>

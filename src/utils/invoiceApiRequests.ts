@@ -1,4 +1,4 @@
-import { CreateInvoiceType } from "@/types";
+import { CreateInvoiceType, SympleInvoiceCreateType } from "@/types";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -127,6 +127,41 @@ export const getSingleInvoice = async (id: number) => {
       success: false,
       message: "Error fetching invoice",
       data: null,
+    };
+  }
+};
+
+export const createInvoiceSimpleVersion = async (
+  invoiceData: SympleInvoiceCreateType
+) => {
+  try {
+    const response = await fetch(`${url}api/invoice/create/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(invoiceData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message || "Can't create invoice",
+      };
+    }
+
+    return {
+      success: true,
+      message: data.message || "Invoice created successfully",
+      data: data,
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Error creating invoice",
     };
   }
 };

@@ -21,6 +21,8 @@ const config: Config = {
           foreground: "var(--secondary-foreground)",
         },
 
+        mutated: "var(--mutated)",
+
         sour_gummy: "var(--font-family-geist-mono)",
 
         card: "var(--card)",

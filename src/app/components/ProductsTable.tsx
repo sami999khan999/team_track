@@ -9,6 +9,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import Pagination from "./Pagination";
 import ProductModal from "./ProductModal";
 import TableActions from "./TableActions";
+import LoadingSkeleton from "./LoadingSkeleton";
 
 const ProductsTable = () => {
   const param = useSearchParams();
@@ -26,34 +27,48 @@ const ProductsTable = () => {
   const [totalPage, setTotalPage] = useState<number | undefined>(undefined);
   const [reload, setReload] = useState(false);
   const [products, setProducts] = useState<ProductType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const columns = products.length > 0 ? Object.keys(products[0]) : [];
 
   const activeProduct = products.find((porduct) => porduct.id === activeId);
 
-  console.log(activeProduct);
-
   useEffect(() => {
     const productsGet = async () => {
-      const response = await getProducts(currentPage);
+      setIsLoading(true);
 
-      if (response.success) {
-        const firstElement = response.data.shift();
-        const totalePage = firstElement ? firstElement.total_page : undefined;
+      try {
+        const response = await getProducts(currentPage);
 
-        setProducts(response?.data);
-        setTotalPage(totalePage);
+        await new Promise((resolve) => setTimeout(resolve, 250));
+
+        if (response.success) {
+          const firstElement = response.data[0];
+
+          if (firstElement?.total_page !== null) {
+            setTotalPage(firstElement.total_page);
+            setProducts(response.data.slice(1));
+          } else {
+            console.error("Invalid Response Format: total_page is missing");
+            setTotalPage(undefined);
+            setProducts([]);
+          }
+        } else {
+          console.error("Error Fetching Products:", response.message);
+          setTotalPage(undefined);
+          setProducts([]);
+        }
+      } catch (err) {
+        console.error("Unexpected Error While Fetching Products:", err);
+        setTotalPage(undefined);
+        setProducts([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     productsGet();
   }, [reload, currentPage]);
-
-  useEffect(() => {
-    path.push(`?page=${currentPage}`);
-  }, [currentPage, path]);
-
-  console.log(products);
 
   return (
     <div>
@@ -66,6 +81,7 @@ const ProductsTable = () => {
           reload={reload}
         />
       )}
+
       <div className="w-full h-fit bg-secondary px-2 py-6 xl:py-8 xl:px-8 rounded-2xl shadow-2xl shadow-[#19253859] ">
         <TableActions
           setIsOpen={setIsModalOpen}
@@ -73,68 +89,87 @@ const ProductsTable = () => {
           setModalAction={setModalAction}
         />
 
-        <div className="overflow-x-auto">
-          <div className="w-[40rem] xl:w-full">
-            <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 bg-background font-semibold tracking-wide uppercase ">
-              {columns.map((cols, i) => (
-                <div
-                  key={i}
-                  className={`truncate-text ${
-                    i === 0
-                      ? "w-1/12                                                      "
-                      : "flex-1"
-                  } `}
-                >
-                  {cols}
-                </div>
-              ))}
-              <div>Actions</div>
-            </div>
-            <div className="">
-              {products.map((product, i) => (
-                <div
-                  key={i}
-                  className={`flex justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 xl:text-xl gap-2 text-xs  text-primary-foreground font-medium relative hover:bg-secondary-foreground duration-200`}
-                >
-                  <div className="w-1/12 truncate-text">{product.id}</div>
-                  <div className="flex-1 truncate-text capitalize">
-                    {product.name}
-                  </div>
-                  <div className="flex-1 truncate-text">{product.category}</div>
-                  <div className="flex-1 truncate-text">{product.rate}/=</div>
-                  <div className="flex-1 truncate-text">
-                    {product.other_cost}/=
-                  </div>
-                  <div className="flex-1 truncate-text">
-                    {product.production_cost}/=
-                  </div>
-                  <div className="flex items-center gap-2 text-primary-foreground ">
-                    <div
-                      className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
-                      onClick={() => {
-                        setActiveId(product.id);
-                        setModalAction("update");
-                        setIsModalOpen(true);
-                      }}
-                    >
-                      <MdOutlineEdit />
-                    </div>
-                    <div
-                      className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
-                      onClick={() => {
-                        setActiveId(product.id);
-                        setModalAction("delete");
-                        setIsModalOpen(true);
-                      }}
-                    >
-                      <RiDeleteBin6Line />
-                    </div>
-                  </div>
-                </div>
-              ))}
+        {isLoading && (
+          // <div className="text-primary-foreground tracking-wide text-xl xl:text-4xl text-center font-semibold flex items-center justify-center">
+          //   Loading...
+          // </div>
+          <LoadingSkeleton />
+        )}
+
+        {!isLoading && products.length === 0 && (
+          <div className="text-mutated tracking-wide text-xl xl:text-3xl text-center font-semibold xl:my-[6rem] my-[2rem] flex w-full items-center justify-center">
+            <div className="w-fit px-6 py-2 rounded-lg cursor-pointer ">
+              There are no memos available
             </div>
           </div>
-        </div>
+        )}
+
+        {!isLoading && products.length > 0 && (
+          <div className="overflow-x-auto">
+            <div className="w-[40rem] xl:w-full">
+              <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 bg-background font-semibold tracking-wide uppercase ">
+                {columns.map((cols, i) => (
+                  <div
+                    key={i}
+                    className={`truncate-text ${
+                      i === 0
+                        ? "w-1/12                                                      "
+                        : "flex-1"
+                    } `}
+                  >
+                    {cols}
+                  </div>
+                ))}
+                <div>Actions</div>
+              </div>
+              <div className="">
+                {products.map((product, i) => (
+                  <div
+                    key={i}
+                    className={`flex justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 xl:text-xl gap-2 text-xs  text-primary-foreground font-medium relative hover:bg-secondary-foreground duration-200`}
+                  >
+                    <div className="w-1/12 truncate-text">{product.id}</div>
+                    <div className="flex-1 truncate-text capitalize">
+                      {product.name}
+                    </div>
+                    <div className="flex-1 truncate-text">
+                      {product.category}
+                    </div>
+                    <div className="flex-1 truncate-text">{product.rate}/=</div>
+                    <div className="flex-1 truncate-text">
+                      {product.other_cost}/=
+                    </div>
+                    <div className="flex-1 truncate-text">
+                      {product.production_cost}/=
+                    </div>
+                    <div className="flex items-center gap-2 text-primary-foreground ">
+                      <div
+                        className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
+                        onClick={() => {
+                          setActiveId(product.id);
+                          setModalAction("update");
+                          setIsModalOpen(true);
+                        }}
+                      >
+                        <MdOutlineEdit />
+                      </div>
+                      <div
+                        className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
+                        onClick={() => {
+                          setActiveId(product.id);
+                          setModalAction("delete");
+                          setIsModalOpen(true);
+                        }}
+                      >
+                        <RiDeleteBin6Line />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         <Pagination
           totalPage={totalPage}

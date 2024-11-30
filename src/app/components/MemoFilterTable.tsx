@@ -75,7 +75,7 @@ const MemoFilterTable = ({
     <div className="overflow-y-auto">
       {data.length > 0 ? (
         <div className="h-[15rem] xl:h-[24rem] xl:w-full mt-4 w-[35rem]">
-          <div className="flex gap-2 bg-background text-sm xl:text-lg text-primary-foreground px-5 py-3 font-medium rounded-t-md capitalize">
+          <div className="flex gap-2 bg-background text-base xl:text-xl text-primary-foreground px-5 py-3 font-medium rounded-t-md capitalize">
             <p className="w-1/12 truncate-text">ID</p>
             <p className="flex-1 truncate-text">products</p>
             <p className="flex-1 truncate-text">quantity</p>
@@ -85,14 +85,14 @@ const MemoFilterTable = ({
             <p className="flex-1 truncate-text">Date</p>
             {type === "selection" && (
               <div
-                className=" flex items-center justify-center space-x-2"
+                className="w-[5rem] flex items-center justify-center space-x-2"
                 onClick={allSelect}
               >
                 <p>Select</p>
                 {isAllSelected() ? (
-                  <ImCheckboxChecked />
+                  <ImCheckboxChecked className="text-xl" />
                 ) : (
-                  <MdCheckBoxOutlineBlank />
+                  <MdCheckBoxOutlineBlank className="text-xl" />
                 )}
               </div>
             )}
@@ -101,7 +101,7 @@ const MemoFilterTable = ({
             {data.map((item, i) => (
               <div
                 key={i}
-                className={`flex gap-2 border-b border-border_color text-sm xl:text-lg text-primary-foreground px-4 py-2 hover:bg-secondary-foreground duration-200 ${
+                className={`flex gap-2 border-b border-border_color text-base xl:text-lg text-primary-foreground px-4 py-3 hover:bg-secondary-foreground duration-200 ${
                   i === data.length - 1 && "border-none"
                 }`}
               >
@@ -113,7 +113,7 @@ const MemoFilterTable = ({
                 <p className="flex-1 truncate-text">{item.current_status}</p>
                 <p className="flex-1 truncate-text">{item.date}</p>
                 {type === "selection" && (
-                  <div className="w-1/12 flex items-center justify-center cursor-pointer">
+                  <div className="w-[5rem] text-xl flex items-center justify-center cursor-pointer">
                     <div onClick={() => handleCheckboxChange(item)}>
                       {selectedData?.some(
                         (selectedItem) => selectedItem.id === item.id
