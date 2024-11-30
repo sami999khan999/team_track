@@ -146,7 +146,7 @@ const ProductModal = ({
         {modalAction === "create" && (
           <div className="h-full w-full xl:px-8 p-3 py-12 relative ">
             <div
-              className="absolute xl:top-6 top-3 right-3 xl:right-6 text-2xl xl:text-3xl text-primary-foreground hover:bg-secondary-foreground w-fit p-1 rounded-md"
+              className="close-btn"
               onClick={() => {
                 setIsModalOpen((prv) => !prv);
               }}
@@ -155,7 +155,7 @@ const ProductModal = ({
             </div>
             <div className="border-b border-border_color flex flex-col items-center justify-center w-full gap-2 pb-6">
               <h2 className="text-2xl xl:text-3xl font-semibold text-center font-sour_gummy text-primary">
-                Create Product
+                Add Product
               </h2>
               <p className="text-primary-foreground w-[70%] text-center text-lg hidden xl:block">
                 Easily add new products to your inventory with detailed
@@ -163,14 +163,14 @@ const ProductModal = ({
               </p>
             </div>
             <div className="flex flex-col mt-8 gap-8">
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-3 gap-y-2">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-3 gap-y-4">
                 <div>
                   <input
                     type="text"
                     name="name"
                     value={productName}
                     placeholder="Product Name"
-                    className="border border-border_color text-primary-foreground text-base xl:text-xl bg-secondary-foreground rounded-full py-2 px-6"
+                    className="inputfield"
                     onChange={(e) => {
                       setProductName(e.target.value);
                       setInputError({ ...inputError, name: "" });
@@ -184,7 +184,7 @@ const ProductModal = ({
                     name="rate"
                     value={productRate}
                     placeholder="Product Rate"
-                    className="border border-border_color text-primary-foreground text-base xl:text-xl  bg-secondary-foreground rounded-full py-2 px-6"
+                    className="inputfield"
                     onChange={(e) => {
                       setProductRate(Number(e.target.value));
                       setInputError({ ...inputError, rate: "" });
@@ -199,7 +199,7 @@ const ProductModal = ({
                     name="productionCost"
                     value={productionCost}
                     placeholder="Production Cost"
-                    className="border border-border_color text-primary-foreground text-base xl:text-xl  bg-secondary-foreground rounded-full py-2 px-6"
+                    className="inputfield"
                     onChange={(e) => {
                       setProductionCost(Number(e.target.value));
                       setInputError({ ...inputError, productionCost: "" });
@@ -214,7 +214,7 @@ const ProductModal = ({
                     name="otherCost"
                     value={otherCost}
                     placeholder="Production Cost"
-                    className="border border-border_color text-primary-foreground text-base xl:text-xl  bg-secondary-foreground rounded-full py-2 px-6"
+                    className="inputfield"
                     onChange={(e) => {
                       setOtherCost(Number(e.target.value));
                     }}
@@ -242,10 +242,10 @@ const ProductModal = ({
             >
               {isLoading ? (
                 <div className="flex items-center justify-center w-full">
-                  <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
+                  <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
                 </div>
               ) : (
-                <div>Create Product</div>
+                <div>Add Product</div>
               )}
             </button>
           </div>
@@ -254,7 +254,7 @@ const ProductModal = ({
         {modalAction === "update" && (
           <div className="h-full w-full xl:px-8 p-3 py-12 rounded-xl relative border border-border_color">
             <div
-              className="absolute top-4 right-4 text-2xl text-primary-foreground hover:bg-secondary-foreground w-fit p-1 rounded-md"
+              className="close-btn"
               onClick={() => {
                 setIsModalOpen((prv) => !prv);
               }}
@@ -346,7 +346,7 @@ const ProductModal = ({
             >
               {isLoading ? (
                 <div className="flex items-center justify-center w-full">
-                  <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
+                  <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
                 </div>
               ) : (
                 <div>Update Product</div>

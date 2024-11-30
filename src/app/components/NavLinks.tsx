@@ -34,14 +34,12 @@ export const navLinks = [
 const NavLinks = () => {
   const pathName = usePathname();
 
-  console.log(pathName);
-
   return (
-    <div className="flex xl:flex-col xl:rounded-none justify-around xl:justify-between h-full">
+    <div className="flex xl:flex-col xl:rounded-none justify-around xl:justify-between h-full ">
       <div className="flex xl:flex-col justify-center xl:justify-start gap-2">
         {/* Sidebar Menu Icon */}
         <div className="hidden xl:block group mb-6">
-          <div className="relative px-6 h-[5.4rem] flex items-center mb-3 text-3xl gap-2 bg-primary">
+          <div className="relative text-background px-6 h-[5.4rem] flex items-center mb-3 text-3xl gap-2 bg-primary">
             <RiMenuUnfoldLine className="transition-transform duration-300 group-hover:rotate-180 transform origin-center" />
             <p className="absolute top-[28px] left-[4.5rem] opacity-0 text-2xl font-semibold tracking-wide transition-opacity duration-300 ease-in-out group-hover:opacity-100">
               NFT
@@ -54,10 +52,10 @@ const NavLinks = () => {
           <Link
             key={i}
             href={navItem.path}
-            className={`group flex items-center gap-2 px-1 xl:px-6 py-2 hover:bg-secondary-foreground duration-300 ${
+            className={`group flex items-center gap-2 px-1 xl:px-6 py-2 dark:hover:bg-secondary-foreground hover:bg-gray-200 duration-300 ${
               pathName === navItem.path ||
               (pathName.startsWith(navItem.path) && navItem.path !== "/")
-                ? "bg-primary hover:bg-slate-500/90"
+                ? "bg-primary dark:hover:bg-slate-500/90"
                 : ""
             }`}
           >

@@ -77,7 +77,7 @@ const EmployeeTable = () => {
         </div>
       )}
 
-      <div className="w-full h-fit bg-secondary shadow-2xl shadow-[#19253859] px-2 py-6 xl:py-8 xl:px-8 rounded-xl">
+      <div className="table-wrapper">
         <TableActions setIsOpen={setIsFormOpen} tableName="Employee" />
 
         {/* Loading State */}

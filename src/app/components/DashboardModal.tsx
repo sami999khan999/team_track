@@ -665,7 +665,7 @@ const DashboardModal = ({
                       >
                         {isLoading ? (
                           <div className="flex items-center justify-center w-full">
-                            <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
+                            <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
                           </div>
                         ) : (
                           <div>Inventory</div>

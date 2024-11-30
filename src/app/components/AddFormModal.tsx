@@ -208,14 +208,14 @@ const AddFormModal = ({
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className="absolute top-5 right-5 rounded text-xl xl:text-3xl duration-300 origin-center text-primary-foreground hover:bg-secondary-foreground"
+          className="absolute top-5 right-5 rounded text-xl xl:text-3xl duration-300 origin-center text-primary-foreground hover:bg-gray-100 dark:hover:bg-secondary-foreground"
           onClick={() =>
             action && setIsFormOpen
               ? setIsFormOpen((prv) => !prv)
               : closeModal()
           }
         >
-          <IoMdClose className="transition-transform hover:rotate-90" />
+          <IoMdClose className="transition-transform hover:rotate-90 origin-center  " />
         </button>
         <div className="w-full items-center xl:w-[28%] xl:mt-8 px-2">
           <h2 className="text-center text-lg xl:text-3xl font-semibold tracking-wider capitalize  font-sour_gummy text-primary">
@@ -249,7 +249,7 @@ const AddFormModal = ({
                   name="name"
                   value={employee.name}
                   onChange={employeeChangeHandler}
-                  className="add_field"
+                  className="inputfield"
                 />
                 <p className="error_message">{employeeInputError.name}</p>
               </div>
@@ -261,7 +261,7 @@ const AddFormModal = ({
                   name="address"
                   value={employee.address}
                   onChange={employeeChangeHandler}
-                  className="add_field "
+                  className="inputfield "
                 />
                 <p className="error_message">{employeeInputError.address}</p>
               </div>
@@ -273,7 +273,7 @@ const AddFormModal = ({
                   name="mobile"
                   value={employee.mobile}
                   onChange={employeeChangeHandler}
-                  className="add_field"
+                  className="inputfield"
                 />
                 <p className="error_message">{employeeInputError.mobile}</p>
               </div>
@@ -285,7 +285,7 @@ const AddFormModal = ({
                   name="nid_no"
                   value={employee.nid_no || ""}
                   onChange={employeeChangeHandler}
-                  className="add_field"
+                  className="inputfield"
                 />
                 <p className="error_message">{employeeInputError.nid_no}</p>
               </div>
@@ -299,7 +299,7 @@ const AddFormModal = ({
                   name="name"
                   value={customer.name}
                   onChange={customerChangeHandler}
-                  className="add_field"
+                  className="inputfield"
                 />
                 <p className="error_message">{customerInputError.name}</p>
               </div>
@@ -310,7 +310,7 @@ const AddFormModal = ({
                   name="company_name"
                   value={customer.company_name}
                   onChange={customerChangeHandler}
-                  className="add_field"
+                  className="inputfield"
                 />
               </div>
               <div>
@@ -320,7 +320,7 @@ const AddFormModal = ({
                   name="address"
                   value={customer.address}
                   onChange={customerChangeHandler}
-                  className="add_field"
+                  className="inputfield"
                 />
                 <p className="error_message">{customerInputError.address}</p>
               </div>
@@ -331,7 +331,7 @@ const AddFormModal = ({
                   name="mobile"
                   value={customer.mobile}
                   onChange={customerChangeHandler}
-                  className="add_field"
+                  className="inputfield"
                 />
                 <p className="error_message">{customerInputError.mobile}</p>
               </div>
@@ -340,7 +340,7 @@ const AddFormModal = ({
           <button type="submit" className="submit-btn" disabled={isLoading}>
             {isLoading ? (
               <div className="flex items-center justify-center w-full">
-                <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
+                <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
               </div>
             ) : (
               <div>{title}</div>

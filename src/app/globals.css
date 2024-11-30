@@ -4,26 +4,24 @@
 
 @layer base {
   :root {
-    --background: #f7f7f7;
-    --card: 222.86deg 17.07% 8.04%;
-
+    --background: #ffffff;
     --primary: #2dac5c;
-    --primary-foreground: #000000;
+    --primary-foreground: #222222;
     --secondary: #ffffff;
-    --secondary-foreground: #f0f0f0;
-    --border: #dfdfdfb7;
+    --secondary-foreground: #ffffff;
+    --border: #dddde0;
+    --underline: #e4e4e7;
     --mutated: #49596198;
   }
 
   .dark {
     --background: #020916;
-    --card: 222.86deg 17.07% 8.04%;
-
     --primary: #2dac5c;
     --primary-foreground: #97a3ad;
     --secondary: #111926;
     --secondary-foreground: #141e2e;
-    --border: rgb(41, 53, 61);
+    --border: rgb(39, 50, 58);
+    --underline: #141f30;
     --mutated: #495961c7;
   }
 }
@@ -76,6 +74,26 @@
   }
 
   .submit-btn {
-    @apply bg-primary mt-6 h-11 px-4 w-full rounded-full text-lg tracking-wide xl:text-xl text-background cursor-pointer duration-200 hover:bg-secondary-foreground hover:outline outline-border_color font-bold outline-2 hover:text-primary-foreground text-center hover:shadow-xl;
+    @apply bg-primary mt-6 h-11 px-4 w-full rounded-full text-lg tracking-wide xl:text-xl text-background cursor-pointer duration-200 hover:bg-secondary-foreground hover:outline outline-border_color font-semibold outline-2 hover:text-primary-foreground text-center hover:shadow-md;
+  }
+
+  .table-header {
+    @apply flex text-background justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 dark:bg-background dark:text-primary-foreground bg-primary font-medium tracking-wide uppercase rounded-t-lg;
+  }
+
+  .table-col {
+    @apply flex justify-between border-b border-underline px-4 xl:px-6 py-2 xl:py-4 xl:text-xl gap-2 text-xs text-primary-foreground relative hover:bg-gray-100 dark:hover:bg-secondary-foreground duration-200 cursor-auto;
+  }
+
+  .table-wrapper {
+    @apply w-full h-fit bg-secondary px-2 py-6 xl:py-8 xl:px-8 rounded-xl mb-4 border border-border_color;
+  }
+
+  .inputfield {
+    @apply border border-border_color text-primary-foreground text-base xl:text-xl bg-secondary-foreground rounded-full py-2 px-6 shadow-sm;
+  }
+
+  .close-btn {
+    @apply absolute xl:top-6 top-3 right-3 xl:right-6 text-2xl xl:text-3xl text-primary-foreground hover:bg-gray-100 dark:hover:bg-secondary-foreground w-fit p-1 rounded-md;
   }
 }

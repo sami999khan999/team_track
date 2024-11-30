@@ -60,7 +60,7 @@ const MemoTable = () => {
   return (
     <div>
       {isOpen && <MemoModal setIsOpen={setIsOpen} />}
-      <div className="w-full h-fit bg-secondary shadow-xl shadow-[#1925380c] px-2 py-6 xl:py-8 xl:px-8 rounded-xl mb-10">
+      <div className="table-wrapper">
         <TableActions setIsOpen={setIsOpen} tableName="Cash Memo" />
 
         {isLoading && (
@@ -81,7 +81,7 @@ const MemoTable = () => {
         {!isLoading && memo.length > 0 && (
           <div className="overflow-x-auto">
             <div className="w-[45rem] xl:w-full">
-              <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-4 mt-3 bg-background font-semibold tracking-wide uppercase">
+              <div className="table-header">
                 <p className="w-1/12">ID</p>
                 <p className="flex-1">Cusotmer</p>
                 <p className="flex-1">Challan No.</p>
@@ -94,7 +94,7 @@ const MemoTable = () => {
                 {memo.map((item, i) => (
                   <div
                     key={i}
-                    className="flex text-primary-foreground justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-xs xl:text-lg gap-4 relative hover:bg-secondary-foreground duration-200 font-medium bg-secondary capitalize"
+                    className="table-col"
                     onClick={() => {
                       path.push(`memo/${item.id}`);
                     }}
@@ -103,7 +103,7 @@ const MemoTable = () => {
                     <div className="flex-1">
                       {item.customer.name} ({item.customer.id})
                     </div>
-                    <div className="flex-1 flex">
+                    <div className="flex-1 flex gap-1">
                       {item.challan_no.map((challan, i) => (
                         <p key={i}>
                           {challan}
@@ -111,7 +111,7 @@ const MemoTable = () => {
                         </p>
                       ))}
                     </div>
-                    <div className="flex-1 flex">
+                    <div className="flex-1 flex gap-1">
                       {item.products.map((product, i) => (
                         <p key={i}>
                           {product}

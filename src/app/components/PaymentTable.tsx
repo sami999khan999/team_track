@@ -62,7 +62,7 @@ const PaymentTable = () => {
   return (
     <div>
       {isOpen && <PaymentModal setIsopen={setIsOpen} setReload={setReload} />}
-      <div className="w-full h-fit bg-secondary shadow-2xl shadow-[#19253859] px-2 py-6 xl:py-8 xl:px-8 rounded-xl mb-10">
+      <div className="table-wrapper">
         <TableActions setIsOpen={setIsOpen} tableName="Payment" />
 
         {isLoading && (
@@ -84,7 +84,7 @@ const PaymentTable = () => {
           <div className="overflow-x-auto">
             <div className="w-[45rem] xl:w-full">
               {/* Table Header */}
-              <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-4 mt-3 bg-background font-semibold tracking-wide uppercase">
+              <div className="table-header">
                 <p className="w-1/12">ID</p>
                 <p className="flex-1">Employee</p>
                 <p className="flex-1">Products</p>
@@ -99,7 +99,7 @@ const PaymentTable = () => {
                 {employeeBill.map((bill, i) => (
                   <div
                     key={i}
-                    className="flex text-primary-foreground justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-xs xl:text-lg gap-4 relative hover:bg-secondary-foreground duration-200 font-medium bg-secondary capitalize"
+                    className="table-col"
                     onClick={() => {
                       path.push(`/payment/${bill.id}`);
                     }}
@@ -111,7 +111,7 @@ const PaymentTable = () => {
                     <div className="flex-1">{bill.products}</div>
                     <div className="flex-1">{bill.production}</div>
                     <div className="flex-1">{bill.quantity}</div>
-                    <div className="flex-1">{bill.Amount}/=</div>
+                    <div className="flex-1">{bill.Amount}</div>
                     <div className="flex-1">{bill.current_status}</div>
                     <div className="flex-1">{bill.date}</div>
                   </div>

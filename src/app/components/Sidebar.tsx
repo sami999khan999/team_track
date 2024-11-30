@@ -13,7 +13,7 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="hidden xl:block h-full bg-secondary group w-20 hover:w-48 transition-all duration-300 ease-in-out">
+    <aside className="hidden xl:block h-full bg-secondary group w-20 hover:w-48 transition-all duration-300 ease-in-out border-r border-border_color">
       <NavLinks />
     </aside>
   );

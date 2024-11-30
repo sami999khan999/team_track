@@ -61,7 +61,7 @@ const Dropdown = ({
     <div className="w-full">
       <div className="relative">
         <div
-          className="bg-secondary-foreground text-primary-foreground rounded-full py-2 px-5 border border-border_color text-base xl:text-xl flex items-center justify-between"
+          className="bg-secondary-foreground text-primary-foreground rounded-full py-2 px-5 border border-border_color text-base xl:text-xl flex items-center justify-between shadow-sm"
           onClick={() => {
             setIsDropdownOpen(!isDropdownOpen);
           }}
@@ -75,7 +75,7 @@ const Dropdown = ({
         </div>
         {isDropdownOpen && (
           <div
-            className="absolute z-50 w-full self-center h-[14rem] top-14 bg-secondary border border-border_color rounded-md overflow-auto text-primary-foreground text-base px-3"
+            className="absolute z-50 w-full h-[14rem] top-14 bg-secondary border border-border_color rounded-md overflow-auto text-primary-foreground text-base px-3 shadow-md"
             onClick={(e) => e.stopPropagation()}
           >
             {/* <div className="flex px-4 bg-background rounded-t-md mt-2 gap-10 py-3 font-semibold">
@@ -116,7 +116,7 @@ const Dropdown = ({
       </div>
       {isDropdownOpen && (
         <div
-          className="absolute top-0 left-0  w-full h-full"
+          className="absolute top-0 left-0  w-full h-full z-40"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         ></div>
       )}

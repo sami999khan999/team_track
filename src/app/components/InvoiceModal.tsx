@@ -166,10 +166,7 @@ const InvoiceModal = ({
         className="relative w-[95%] xl:w-[90%] h-[70%] overflow-auto bg-secondary border border-border_color rounded-xl px-4 xl:py-8 py-4 remove-scrollbar"
         // onClick={(e) => e.stopPropagation()}
       >
-        <div
-          className="absolute top-2 xl:top-4 right-2 xl:right-4 hover:bg-secondary-foreground p-1 text-primary-foreground text-2xl xl:text-3xl rounded-md"
-          onClick={() => setIsOpen((prv) => !prv)}
-        >
+        <div className="close-btn" onClick={() => setIsOpen((prv) => !prv)}>
           <IoClose className=" transition-transform hover:rotate-90 origin-center" />
         </div>
         <div className="flex flex-col gap-2 items-center justify-center text-center border-b border-border_color pb-4">
@@ -206,7 +203,7 @@ const InvoiceModal = ({
                 />
               </div>
               <button
-                className="bg-primary px-4 xl:h-[2.9rem] h-[2rem] rounded-full text-xl font-semibold tracking-wide hover:bg-secondary-foreground hover:text-primary-foreground duration-200"
+                className="bg-primary px-4 xl:h-[2.9rem] h-[2rem] rounded-full text-xl font-semibold tracking-wide duration-200 submit-btn xl:w-fit mt-0"
                 onClick={filterInventoryhandler}
               >
                 Get
@@ -231,7 +228,7 @@ const InvoiceModal = ({
               </div>
             </div>
           </div>
-          <div className="border-t-4 xl:border-l-8 border-border_color"></div>
+          <div className="border-t-4 xl:border-l-4 border-border_color"></div>
 
           {inventories?.length === 0 ||
             (inventories === undefined && (
@@ -294,7 +291,7 @@ const InvoiceModal = ({
                 >
                   {isLoading ? (
                     <div className="flex items-center justify-center w-full">
-                      <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
+                      <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
                     </div>
                   ) : (
                     <div>Create Invoice</div>

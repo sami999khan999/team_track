@@ -1,6 +1,6 @@
 import { SelectInventoryType } from "@/types";
 import React, { SetStateAction } from "react";
-import { ImCheckboxChecked } from "react-icons/im";
+import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
 const InvoiceCreateTable = ({
@@ -114,14 +114,11 @@ const InvoiceCreateTable = ({
     }
   };
 
-  console.log(filterdInventory);
-  console.log(filterdInventoryIds);
-
   return (
     <div className="overflow-auto">
       {inventories ? (
         <div className="h-[15rem] xl:h-[18rem] w-[40rem] xl:w-full">
-          <div className="flex gap-2 bg-background text-sm xl:text-xl text-primary-foreground px-4 py-3 font-medium  rounded-t-md capitalize">
+          <div className="table-header py-4">
             <p className="w-1/12 truncate-text">ID</p>
             <p className="flex-1 truncate-text">Employee</p>
             <p className="flex-1 truncate-text">Product</p>
@@ -129,17 +126,16 @@ const InvoiceCreateTable = ({
             <p className="flex-1 truncate-text">Quantity</p>
             {type === "selection" && (
               <div
-                className="flex gap-2 justify-center items-center"
+                className="flex gap-2 justify-center items-center w-[6rem] "
                 onClick={handelAllSelect}
               >
                 <p>Select</p>
-                <div className="">
-                  {isAllSelected() ? (
-                    <ImCheckboxChecked />
-                  ) : (
-                    <MdCheckBoxOutlineBlank />
-                  )}
-                </div>
+
+                {isAllSelected() ? (
+                  <ImCheckboxChecked />
+                ) : (
+                  <ImCheckboxUnchecked />
+                )}
               </div>
             )}
           </div>
@@ -147,7 +143,7 @@ const InvoiceCreateTable = ({
             {inventories?.map((inventory, i) => (
               <div
                 key={i}
-                className={`flex gap-2 border-b border-border_color text-sm xl:text-xl text-primary-foreground px-4 py-2 hover:bg-secondary-foreground duration-200 ${
+                className={`table-col py-2 ${
                   i === inventories.length - 1 && "border-none"
                 }`}
               >
@@ -166,7 +162,7 @@ const InvoiceCreateTable = ({
                 </div>
                 {type === "selection" && (
                   <div
-                    className="px-3 flex items-center justify-center cursor-pointer"
+                    className="px-3 w-[6rem] flex items-center justify-center cursor-pointer"
                     onClick={() => handleSelect(inventory)}
                   >
                     <div className="">

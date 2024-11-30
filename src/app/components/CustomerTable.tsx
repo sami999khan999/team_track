@@ -80,7 +80,7 @@ const CustomerTable = () => {
         </div>
       )}
 
-      <div className="w-full h-fit bg-secondary px-2 py-6 xl:py-8 xl:px-8 rounded-xl">
+      <div className="table-wrapper">
         <TableActions setIsOpen={setIsFormOpen} tableName="Customer" />
 
         {isLoading && <LoadingSkeleton />}

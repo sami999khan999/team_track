@@ -36,7 +36,7 @@ const DropdownBody = ({
     <>
       {type === "employee" && (
         <div
-          className="flex px-4 gap-10 border-b border-border_color py-2 hover:bg-secondary-foreground duration-200"
+          className="table-col py-2"
           onClick={() => {
             const currentId = Number(item.id);
             if (selectedId === currentId) {
@@ -64,7 +64,7 @@ const DropdownBody = ({
 
       {type === "product" && (
         <div
-          className="flex px-4 gap-10 border-b border-border_color py-2 hover:bg-secondary-foreground duration-200"
+          className="table-col py-2 w-full"
           onClick={() => {
             const currentId = Number(item.id);
 
@@ -93,7 +93,7 @@ const DropdownBody = ({
 
       {type === "production" && (
         <div
-          className="flex px-4 gap-10 border-b border-border_color py-2 hover:bg-secondary-foreground duration-200"
+          className="table-col py-2"
           onClick={() => {
             const currentId = Number(item.id);
 
@@ -121,7 +121,7 @@ const DropdownBody = ({
 
       {type === "status" && (
         <div
-          className="flex px-4 gap-10 border-b border-border_color py-2 hover:bg-secondary-foreground duration-200"
+          className="table-col py-2"
           onClick={() => {
             if (setValue) setValue(item.status);
             setSelectedItem(item.status);
@@ -136,7 +136,7 @@ const DropdownBody = ({
 
       {type === "customer" && (
         <div
-          className="flex px-4 gap-10 border-b border-border_color py-2 hover:bg-secondary-foreground duration-200"
+          className="table-col py-2"
           onClick={() => {
             const currentId = Number(item.id);
 
@@ -165,7 +165,7 @@ const DropdownBody = ({
 
       {type === "Method" && (
         <div
-          className="flex px-4 border-b border-border_color py-2 hover:bg-secondary-foreground duration-200 capitalize"
+          className="table-col py-2"
           onClick={() => {
             if (setValue) setValue(item.method);
             setSelectedItem(item.method);

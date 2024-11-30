@@ -176,10 +176,7 @@ const PaymentModal = ({
       )}
       <div className="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center justify-center z-30">
         <div className="relative w-[97%] xl:w-[90%] h-[80%] xl:h-[70%] bg-secondary px-3 xl:px-8 py-6 xl:py-10 rounded-xl border border-border_color overflow-y-auto remove-scrollbar">
-          <div
-            className="absolute top-3 xl:top-5 right-3 xl:right-5 text-2xl xl:text-3xl rounded-md text-primary-foreground hover:bg-secondary-foreground  p-1"
-            onClick={() => setIsopen((prv) => !prv)}
-          >
+          <div className="close-btn" onClick={() => setIsopen((prv) => !prv)}>
             <IoCloseSharp className="transition-transform hover:rotate-90 duration-200 origin-center" />
           </div>
           <div className="flex flex-col gap-2 items-center justify-center text-center border-b border-border_color pb-4">
@@ -235,7 +232,7 @@ const PaymentModal = ({
                 </div>
                 <div className="">
                   <button
-                    className="bg-primary w-full xl:w-fit text-background rounded-full px-5 text-xl font-semibold py-1 xl:py-2"
+                    className="bg-primary w-full xl:w-fit text-background rounded-full px-5 text-xl font-semibold py-1 xl:py-2 submit-btn mt-0"
                     onClick={filterHandler}
                   >
                     Get
@@ -279,7 +276,7 @@ const PaymentModal = ({
                     >
                       {isLoading ? (
                         <div className="flex items-center justify-center w-full">
-                          <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
+                          <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
                         </div>
                       ) : (
                         <div>Pay</div>

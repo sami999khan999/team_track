@@ -82,7 +82,7 @@ const ProductionTable = () => {
           setReload={setReload}
         />
       )}
-      <div className="w-full h-fit bg-secondary shadow-2xl shadow-[#19253859] px-2 py-6 xl:py-8 xl:px-8 rounded-xl mb-4">
+      <div className="table-wrapper">
         <TableActions
           tableName="Production"
           setIsOpen={setIsOpen}
@@ -107,13 +107,11 @@ const ProductionTable = () => {
         {!isLoading && production.length > 0 && (
           <div className="overflow-x-auto">
             <div className="w-[40rem] xl:w-full">
-              <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-3 mt-3 bg-background font-semibold tracking-wide uppercase">
+              <div className="table-header">
                 {columns.map((col, i) => (
                   <div
                     key={i}
-                    className={`text-primary-foreground uppercase truncate-text ${
-                      i === 0 ? "w-1/12" : "flex-1"
-                    }`}
+                    className={`truncate-text ${i === 0 ? "w-1/12" : "flex-1"}`}
                   >
                     {col}
                   </div>
@@ -122,10 +120,7 @@ const ProductionTable = () => {
               </div>
               <div>
                 {production.map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex text-primary-foreground justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-xs xl:text-lg gap-3 relative hover:bg-secondary-foreground duration-200 font-medium bg-secondary "
-                  >
+                  <div key={i} className="table-col">
                     <div className="w-1/12 truncate-text">{item.id}</div>
                     <div className="flex-1 truncate-text">
                       {item.product.name}

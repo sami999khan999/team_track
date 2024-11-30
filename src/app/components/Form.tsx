@@ -127,7 +127,7 @@ const Form = () => {
       {/* Form container with submission handler */}
       <form
         onSubmit={submittHandler}
-        className="bg-card border w-[80%] xl:w-[33rem] flex flex-col items-center p-6 py-8 rounded transition ease-in-out duration-200 shadow-sm"
+        className="bg-card border w-[80%] xl:w-[33rem] flex flex-col items-center p-6 py-8 rounded transition ease-in-out duration-200 "
         noValidate
       >
         {/* Display title based on the page path */}

@@ -175,7 +175,7 @@ const ProductionModal = ({
             className="bg-secondary w-[90%] xl:w-[60%] border border-border_color rounded-xl px-3 xl:px-8 py-6 xl:py-12 relative"
           >
             <div
-              className="absolute xl:top-6 top-4 xl:right-6 right-4 text-2xl xl:text-3xl text-primary-foreground hover:bg-secondary-foreground p-1 w-fit rounded-md"
+              className="close-btn"
               onClick={() => {
                 setIsOpen((prv) => !prv);
               }}
@@ -200,9 +200,7 @@ const ProductionModal = ({
                 </div>
               ) : (
                 <div className="text-xl xl:text-3xl font-semibold flex flex-col items-center justify-center gap-2">
-                  <p className="text-primary font-sour_gummy">
-                    Creaate Production
-                  </p>
+                  <p className="text-primary font-sour_gummy">Add Production</p>
                   <div className="hidden xl:block text-base ">
                     To create production records, include{" "}
                     <span className="text-primary">
@@ -269,10 +267,10 @@ const ProductionModal = ({
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center w-full">
-                    <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
+                    <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
                   </div>
                 ) : (
-                  <div>{defalutValue ? "Update" : "Create"} Production</div>
+                  <div>{defalutValue ? "Update" : "Add"} Production</div>
                 )}
               </button>
             </div>

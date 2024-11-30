@@ -54,14 +54,9 @@ const MemoModal = ({
 
       if (response.success) {
         setFilteredData(response.data);
-        toast.custom((t) => (
-          <SuccessToast visible={t.visible}>Filtered Successfully</SuccessToast>
-        ));
       } else {
         console.log("Error fetching Filter Memo:", response.message);
-        toast.custom((t) => (
-          <ErrorToast visible={t.visible}>{response.message}</ErrorToast>
-        ));
+        setFilteredData(undefined);
       }
     } catch (err) {
       console.log("Error fetching Filter Memo:", err);
@@ -130,10 +125,7 @@ const MemoModal = ({
   return (
     <div className="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center justify-center z-20">
       <div className="relative bg-secondary w-[95%] xl:w-[90%] h-[80%] border border-border_color rounded-lg py-6 xl:px-8 px-3 overflow-x-auto">
-        <div
-          className="absolute top-3 xl:top-5 right-3 xl:right-5 text-xl xl:text-3xl text-primary-foreground hover:bg-secondary-foreground xl:p-2 p-1 rounded-md"
-          onClick={() => setIsOpen((prv) => !prv)}
-        >
+        <div className="close-btn" onClick={() => setIsOpen((prv) => !prv)}>
           <IoCloseSharp className="transition-transform hover:rotate-90 duration-200 origin-center" />
         </div>
         <div className="flex flex-col gap-2 items-center justify-center text-center border-b border-border_color pb-4">
@@ -169,7 +161,7 @@ const MemoModal = ({
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center w-full">
-                    <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
+                    <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
                   </div>
                 ) : (
                   <div>Get</div>
@@ -216,7 +208,7 @@ const MemoModal = ({
                 >
                   {isLoading ? (
                     <div className="flex items-center justify-center w-full">
-                      <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
+                      <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
                     </div>
                   ) : (
                     <div>Create Memo</div>

@@ -12,7 +12,7 @@ const DorpdownHeader = ({
     | "Method";
 }) => {
   return (
-    <div className="flex px-4 bg-background rounded-t-md mt-2 gap-10 py-3 font-semibold">
+    <div className="table-header py-3">
       {type === "employee" && (
         <>
           <div className="w-1/6">ID</div>

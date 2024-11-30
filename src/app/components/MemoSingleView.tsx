@@ -5,6 +5,7 @@ import { getSingleMemo } from "@/utils/memoApiRequests";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import SingleViewSkeletonLoader from "./SingleViewSkeletonLoader";
 
 const MemoSingleView = ({ id }: { id: number }) => {
   const path = useRouter();
@@ -60,8 +61,6 @@ const MemoSingleView = ({ id }: { id: number }) => {
     fetchMemoSingleData();
   }, [id]);
 
-  console.log(column);
-
   const handlePrint = () => {
     const printContent = document.getElementById("pdf-content");
     const printButton = document.getElementById("print-button");
@@ -85,7 +84,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
         const totalColumnHtml = memoColumnData
           .map(
             (item) => `
-          <div class="table-body border-b flex justify-between px-8 py-1 text-base gap-5 font-medium">
+          <div class="table-body border-b flex justify-between px-8 py-1 text-base gap-5">
             <div class="w-1/12 break-words cursor-auto">
                           ${item.slno}
                         </div>
@@ -141,7 +140,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
                     Garashin, Karatia, Tangail-Sadar call: 01711959527 Mail:
                     mustafatex@gmail.com
                   </p>
-                  <div class="border-b border-[#11a560]"></div>
+                  <div class="border-b border-gray-400"></div>
                 </div>
 
                 <div class="flex justify-between px-4">
@@ -160,7 +159,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
                 </div>
 
                 <div class="table w-full mt-4">
-                  <div class="flex text-white px-8 py-2 rounded-t-lg text-base bg-[#068a4c] w-full justify-between font-bold gap-5 capitalize">
+                  <div class="flex text-white px-8 py-2 rounded-t-lg text-base bg-[#2dac5c] w-full justify-between font-bold gap-5 capitalize">
                     <p class="w-1/12 break-words">slno</p>
                     <p class="flex-1 break-words">Products</p>
                     <p class="flex-1 break-words">Challan </p>
@@ -179,7 +178,8 @@ const MemoSingleView = ({ id }: { id: number }) => {
                     <div class="flex-1"></div>
                     <div class="w-[4rem] font-bold text-gray-900 text-lg">${grandTotal}</div>
                   </div>
-                </div>
+
+              
 
                 <div class="mt-20 text-right pr-4">
         <div class="inline-block text-center">
@@ -187,6 +187,30 @@ const MemoSingleView = ({ id }: { id: number }) => {
             <p class="mt-1 text-sm font-semibold text-gray-900">Authorized Signature</p>
         </div>
     </div>
+
+    <div>
+                <div class="bg-[#2dac5c] text-white text-center py-8 mt-8 rounded-xl">
+                  <h2 class="text-2xl font-bold">Thank You!</h2>
+                  <p class="mt-2 text-lg">
+                    Your business means the world to us!
+                  </p>
+                  <p class="mt-2 text-base">
+                    We appreciate your trust and look forward to serving you
+                    again.
+                  </p>
+                </div>
+
+                <div class=" text-black py-6 text-center text-lg">
+                  <p class="">
+                    For any inquiries, please contact us at |
+                    <span class="text-[#2dac5c] font-semibold tracking-wide">
+                      marufsarkar512@gmail.com
+                    </span>
+                  </p>
+                </div>
+              </div>
+                  
+                </div>
 
                 <div class="print-button" id="print-button">
                   <button onClick="window.print()">Print Invoice</button>
@@ -206,22 +230,16 @@ const MemoSingleView = ({ id }: { id: number }) => {
     }
   };
 
-  console.log(memoColumnData);
-  console.log(memoHeadingData);
-
   return (
     <div className="flex justify-center text-primary-foreground h-screen mt-5">
-      <div
-        className="relative bg-secondary w-[98%] xl:w-[80%] h-fit px-3 xl:px-10 pb-10 rounded-xl"
-        id="pdf-content"
-      >
+      <div className="relative bg-secondary w-[98%] xl:w-[90%] h-fit px-3 xl:px-10 pb-10 rounded-xl table-wrapper">
         <div
           className="absolute top-4 xl:top-8 left-4 xl:left-8 text-base xl:text-2xl text-primary-foreground px-4 py-1 rounded-md hover:bg-secondary-foreground duration-200"
           onClick={() => path.back()}
         >
           <FaArrowLeftLong />
         </div>
-        <div className="header text-center py-10">
+        <div className="header text-center pb-10 pt-4">
           <h1 className="text-2xl xl:text-4xl font-semibold text-primary">
             Next Fashion Textile
           </h1>
@@ -233,9 +251,10 @@ const MemoSingleView = ({ id }: { id: number }) => {
         </div>
 
         {isLoading && (
-          <div className="text-primary-foreground tracking-wide text-xl xl:text-4xl text-center font-semibold flex items-center justify-center">
-            Loading...
-          </div>
+          // <div className="text-primary-foreground tracking-wide text-xl xl:text-4xl text-center font-semibold flex items-center justify-center">
+          //   Loading...
+          // </div>
+          <SingleViewSkeletonLoader />
         )}
 
         {!isLoading &&
@@ -278,7 +297,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
 
               <div className="overflow-x-auto">
                 <div className="w-[40rem] xl:w-full mt-4">
-                  <div className="table-header flex text-primary-foreground uppercase font-semibold xl:px-8 px-4 py-3 rounded-t-lg text-xs xl:text-xl bg-background w-full justify-between gap-2 xl:gap-3">
+                  <div className="table-header py-3">
                     {column &&
                       column.map((col, i) => (
                         <p
@@ -297,17 +316,14 @@ const MemoSingleView = ({ id }: { id: number }) => {
 
                   <div>
                     {memoColumnData?.map((item, i) => (
-                      <div
-                        key={i}
-                        className="table-body border-b border-border_color flex justify-between px-4 xl:px-8 py-2 xl:text-lg text-sm gap-2 xl:gap-3 capitalize cursor-pointer hover:bg-secondary-foreground duration-200"
-                      >
+                      <div key={i} className="table-col py-2">
                         <div className="w-1/12 xl:w-1/12 break-words cursor-auto">
                           {item.slno}
                         </div>
                         <div className="flex-1 break-words cursor-auto">
                           {item.products}
                         </div>
-                        <div className="flex-1 break-words cursor-auto">
+                        <div className="flex-1 flex gap-1 break-words cursor-auto">
                           {item.challan.map((challanNumber, i) => (
                             <p key={i}>
                               {challanNumber}
