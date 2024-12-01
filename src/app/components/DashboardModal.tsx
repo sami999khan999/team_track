@@ -479,7 +479,7 @@ const DashboardModal = ({
 
   return (
     <div>
-      <div className="absolute top-0 left-0 w-full h-full backdrop-blur-md flex items-center justify-center z-10">
+      <div className="absolute top-0 left-0 w-full h-full backdrop-blur-md flex items-center justify-center z-20">
         <div className="overflow-y-auto xl:w-[85%] w-[95%] h-[80%] xl:h-[90%] relative  bg-secondary rounded-xl border border-border_color ">
           <div
             className="absolute xl:top-6 top-4 xl:right-6 right-4 text-2xl xl:text-3xl text-primary-foreground hover:bg-secondary-foreground p-1 w-fit rounded-md"
@@ -565,7 +565,7 @@ const DashboardModal = ({
                         setQuantityError("");
                       }}
                       placeholder="Emter Quantity"
-                      className="add_field xl:h-12"
+                      className="inputfield xl:h-12"
                     />
                     <p className="error_message absolute">{quantityError}</p>
                   </div>
@@ -665,7 +665,7 @@ const DashboardModal = ({
                       >
                         {isLoading ? (
                           <div className="flex items-center justify-center w-full">
-                            <CgSpinnerTwo className="animate-spin text-background group-hover:text-primary-foreground" />
+                            <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
                           </div>
                         ) : (
                           <div>Inventory</div>

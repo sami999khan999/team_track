@@ -80,7 +80,7 @@ const BillFilterTable = ({
           <div className="overflow-auto remove-scrollbar">
             {data.length > 0 ? (
               <div className="xl:w-full w-[40rem]">
-                <div className="flex text-primary-foreground bg-background px-4 py-2 xl:py-3 rounded-t-md mt-4 text-sm xl:text-lg gap-3 uppercase font-semibold sticky top-0l">
+                <div className="table-header py-4">
                   {columns?.map((col, i) => (
                     <p
                       key={i}
@@ -93,7 +93,7 @@ const BillFilterTable = ({
                   ))}
                   {type && (
                     <div
-                      className="flex gap-2 items-center justify-center"
+                      className="flex gap-2 items-center text-base justify-center w-[6rem]"
                       onClick={selectAll}
                     >
                       <p>Select</p>
@@ -105,11 +105,11 @@ const BillFilterTable = ({
                     </div>
                   )}
                 </div>
-                <div className="text-primary-foreground border-t-0 border border-border_color rounded-b-xl">
+                <div className="text-primary-foreground border-t-0 border border-border_color rounded-b-xl capitalize">
                   {data?.map((item, i) => (
                     <div
                       key={i}
-                      className={`flex gap-3 border-b border-border_color py-2 xl:py-3 text-sm capitalize xl:text-lg px-4 ${
+                      className={`table-col py-3 ${
                         i === data.length - 1 && "border-none"
                       }`}
                     >
@@ -132,7 +132,7 @@ const BillFilterTable = ({
                       <div className="flex-1 truncate-text">{item.amount}</div>
                       {type && (
                         <div
-                          className="xl:px-4 px-3 flex items-center"
+                          className="xl:px-4 px-3 text-base flex items-center w-[6rem] justify-center"
                           onClick={() => {
                             selectHandler(item);
                           }}

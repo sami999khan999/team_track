@@ -59,13 +59,11 @@ const InvoiceTable = () => {
     fetchInvoice();
   }, [currentPage]);
 
-  console.log(invoice);
-
   return (
     <div>
       {isOpen && <InvoiceModal setIsOpen={setIsOpen} />}
 
-      <div className="w-full h-fit bg-secondary shadow-2xl shadow-[#19253859] px-2 py-6 xl:py-8 xl:px-8 rounded-xl mb-10">
+      <div className="table-wrapper">
         <TableActions tableName="Invoice" setIsOpen={setIsOpen} />
 
         {isLoading && <LoadingSkeleton />}
@@ -82,7 +80,7 @@ const InvoiceTable = () => {
           <div className="overflow-x-auto">
             <div className="w-[45rem] xl:w-full">
               {/* Table Header */}
-              <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-4 mt-3 bg-background font-semibold tracking-wide uppercase">
+              <div className="table-header">
                 <p className="w-1/12">ID</p>
                 <p className="flex-1 truncate-text">Customer</p>
                 <p className="flex-1 truncate-text">Products</p>
@@ -97,20 +95,22 @@ const InvoiceTable = () => {
                 {invoice.map((item, i) => (
                   <div
                     key={i}
-                    className="flex text-primary-foreground justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-xs xl:text-lg gap-4 relative hover:bg-secondary-foreground duration-200 font-medium bg-secondary capitalize"
+                    className="table-col"
                     onClick={() => {
                       path.push(`/invoice/${item.id}`);
                     }}
                   >
-                    <div className="w-1/12">{item.id}</div>
-                    <div className="flex-1">
+                    <div className="w-1/12 truncate-text">{item.id}</div>
+                    <div className="flex-1 truncate-text">
                       {item.customer.name} ({item.customer.id})
                     </div>
-                    <div className="flex-1">{item.products}</div>
-                    <div className="flex-1">{item.quantity}</div>
-                    <div className="flex-1">{item.total}</div>
-                    <div className="flex-1">{item.current_status}</div>
-                    <div className="w-1/12">{item.date}</div>
+                    <div className="flex-1 truncate-text">{item.products}</div>
+                    <div className="flex-1 truncate-text">{item.quantity}</div>
+                    <div className="flex-1 truncate-text">{item.total}</div>
+                    <div className="flex-1 truncate-text">
+                      {item.current_status}
+                    </div>
+                    <div className="w-1/12 truncate-text">{item.date}</div>
                   </div>
                 ))}
               </div>

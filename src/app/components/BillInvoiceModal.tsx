@@ -59,7 +59,7 @@ const BillInvoiceModal = ({
 
         <div className="xl:mb-8">
           <div className="xl:h-[20rem] h-[14rem] overflow-y-auto remove-scrollbar">
-            <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-sm gap-3 bg-background font-semibold tracking-wide uppercase ">
+            <div className="table-header py-4 text-xl">
               <p className="w-1/12 xl:w-2/12">ID</p>
               <p className="flex-1 truncate-text">Products</p>
 
@@ -72,7 +72,7 @@ const BillInvoiceModal = ({
             <div>
               {invoiceData.map((item, i) => (
                 <div key={i}>
-                  <div className="flex text-primary-foreground bg-secondary justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 text-sm xl:text-lg gap-3 relative hover:bg-secondary-foreground duration-200 font-medium">
+                  <div className="table-col py-3">
                     <div className="w-1/12 xl:w-2/12 truncate-text">
                       {item.id}
                     </div>

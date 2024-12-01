@@ -5,26 +5,47 @@ import { getSingleInvoice } from "@/utils/invoiceApiRequests";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import SingleViewSkeletonLoader from "./SingleViewSkeletonLoader";
 
 const Invoice = ({ id }: { id: number }) => {
   const path = useRouter();
-  const [invoiceData, setInvoiceData] = useState<InvoiceDataType>();
+  const [invoiceData, setInvoiceData] = useState<InvoiceDataType | undefined>();
+  const [isLoading, setIsLoading] = useState(true);
 
   const columns = invoiceData ? Object.keys(invoiceData.total_column[0]) : [];
 
   useEffect(() => {
     const fetchInvoiceData = async () => {
-      const response = await getSingleInvoice(id);
+      try {
+        setIsLoading(true);
 
-      if (response.success) {
-        setInvoiceData(response.data);
+        await new Promise((resolve) => setTimeout(resolve, 250));
+
+        const response = await getSingleInvoice(id);
+
+        if (response.success) {
+          const data = response.data;
+
+          if (data) {
+            setInvoiceData(data);
+          } else {
+            console.log("Invalid response format: Missing Invoice Data");
+            setInvoiceData(undefined);
+          }
+        } else {
+          console.log("Error Fetching Invoice:", response.message);
+          setInvoiceData(undefined);
+        }
+      } catch (err) {
+        console.error("Unexpected Error While Fetching Invoice: ", err);
+        setInvoiceData(undefined);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchInvoiceData();
   }, [id]);
-
-  console.log(invoiceData);
 
   const handlePrint = () => {
     const printContent = document.getElementById("pdf-content");
@@ -50,7 +71,7 @@ const Invoice = ({ id }: { id: number }) => {
         const totalColumnHtml = invoiceData?.total_column
           .map(
             (item) => `
-          <div class="table-body border-b flex justify-between px-8 py-1 text-base gap-5 font-medium">
+          <div class="table-body border-b flex justify-between px-8 py-1 text-base gap-5">
             <div class="w-2/12 break-words capitalize">${item.employee}</div>
             <div class="w-3/12 break-words capitalize">${item.product}</div>
             <div class="flex-1 break-words ">${item.quantity}</div>
@@ -90,7 +111,7 @@ const Invoice = ({ id }: { id: number }) => {
                     Garashin, Karatia, Tangail-Sadar call: 01711959527 Mail:
                     mustafatex@gmail.com
                   </p>
-                  <div class="border-b border-[#11a560]"></div>
+                  <div class="border-b border-gray-400"></div>
                 </div>
   
                 <div class="flex justify-between px-4">
@@ -109,7 +130,7 @@ const Invoice = ({ id }: { id: number }) => {
                 </div>
   
                 <div class="table w-full mt-4">
-                  <div class="flex text-white px-8 py-2 rounded-t-lg text-base bg-[#068a4c] w-full justify-between font-bold gap-5">
+                  <div class="flex text-white px-8 py-2 rounded-t-lg text-base bg-[#2dac5c] w-full justify-between font-bold gap-5">
                     <p class="w-2/12 break-words">Employee</p>
                     <p class="w-3/12 break-words">Product</p>
                     <p class="flex-1 break-words">Rolls (yds)</p>
@@ -152,9 +173,9 @@ const Invoice = ({ id }: { id: number }) => {
   };
 
   return (
-    <div className="flex justify-center text-primary-foreground h-screen mt-5">
+    <div className="flex justify-center text-primary-foreground">
       <div
-        className="relative bg-secondary w-[98%] xl:w-[80%] h-fit px-3 xl:px-10 pb-10 rounded-xl"
+        className="relative bg-secondary w-[98%] xl:w-[90%] h-fit px-3 xl:px-10 pb-10 rounded-xl table-wrapper"
         id="pdf-content"
       >
         <div
@@ -163,7 +184,7 @@ const Invoice = ({ id }: { id: number }) => {
         >
           <FaArrowLeftLong />
         </div>
-        <div className="header text-center py-10">
+        <div className="header text-center pb-10 pt-4">
           <h1 className="text-2xl xl:text-4xl font-semibold text-primary">
             Next Fashion Textile
           </h1>
@@ -171,84 +192,108 @@ const Invoice = ({ id }: { id: number }) => {
             Garashin, Karatia, Tangail-Sadar call: 01711959527 Mail:
             mustafatex@gmail.com
           </p>
-          <div className="border border-border_color"></div>
+          <div className="border-b border-border_color"></div>
         </div>
 
-        <div className="customer-info flex justify-between px-4">
-          <div className="left">
-            <p className="customer-name tracking-wider font-bold text-base xl:text-xl capitalize">
-              {invoiceData?.customer_company
-                ? invoiceData?.customer_company
-                : invoiceData?.customer_name}
-            </p>
-            <p className="address text-sm xl:text-lg font-medium">
-              {invoiceData?.customer_address}
-            </p>
-          </div>
-          <div className="right text-base xl:text-xl">
-            <p>
-              Date:{" "}
-              <span className="bold font-semibold">{invoiceData?.date}</span>
-            </p>
-            <p>
-              Challan No:{" "}
-              <span className="bold font-semibold">
-                {invoiceData?.challan_no}
-              </span>
-            </p>
-          </div>
-        </div>
+        {isLoading && (
+          // <div className="text-primary-foreground tracking-wide text-xl xl:text-4xl text-center font-semibold flex items-center justify-center">
+          //   Loading...
+          // </div>
+          <SingleViewSkeletonLoader />
+        )}
 
-        <div className="table w-full mt-4">
-          <div className="table-header flex text-primary-foreground uppercase font-semibold xl:px-8 px-4 py-3 rounded-t-lg text-xs xl:text-xl bg-background w-full justify-between gap-2 xl:gap-3">
-            {columns.map((col, i) => (
-              <p
-                key={i}
-                className={`${i === 0 && "w-3/12 xl:w-2/12"} ${
-                  i === 1 && "w-3/12"
-                } ${i === 2 && "flex-1"} ${i === 3 && "w-2/12"} break-words`}
-              >
-                {col}
-              </p>
-            ))}
+        {!isLoading && invoiceData === undefined && (
+          <div className="text-primary-foreground tracking-wide text-xl xl:text-3xl text-center font-semibold xl:my-[6rem] my-[2rem] flex w-full items-center justify-center">
+            <div className="w-fit px-6 py-2 rounded-lg cursor-pointer ">
+              There is no memos available
+            </div>
           </div>
+        )}
 
+        {!isLoading && invoiceData !== undefined && (
           <div>
-            {invoiceData?.total_column.map((item, i) => (
-              <div
-                key={i}
-                className="table-body border-b border-border_color flex justify-between px-4 xl:px-8 py-2 xl:text-lg text-sm gap-2 xl:gap-3 capitalize cursor-pointer hover:bg-secondary-foreground duration-200"
-              >
-                <div className="w-3/12 xl:w-2/12 break-words cursor-auto">
-                  {item.employee}
+            <div className="customer-info flex justify-between px-4">
+              <div className="left">
+                <p className="customer-name tracking-wider font-bold text-base xl:text-xl capitalize">
+                  {invoiceData?.customer_company
+                    ? invoiceData?.customer_company
+                    : invoiceData?.customer_name}
+                </p>
+                <p className="address text-sm xl:text-lg font-medium">
+                  {invoiceData?.customer_address}
+                </p>
+              </div>
+              <div className="right text-base xl:text-xl">
+                <p>
+                  Date:{" "}
+                  <span className="bold font-semibold">
+                    {invoiceData?.date}
+                  </span>
+                </p>
+                <p>
+                  Challan No:{" "}
+                  <span className="bold font-semibold">
+                    {invoiceData?.challan_no}
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto">
+              <div className="table w-[30rem] xl:w-full mt-4">
+                <div className="table-header py-3">
+                  {columns.map((col, i) => (
+                    <p
+                      key={i}
+                      className={`${i === 0 && "w-3/12 xl:w-2/12"} ${
+                        i === 1 && "w-3/12"
+                      } ${i === 2 && "flex-1"} ${
+                        i === 3 && "w-2/12"
+                      } break-words`}
+                    >
+                      {col}
+                    </p>
+                  ))}
                 </div>
-                <div className="w-3/12 break-words cursor-auto">
-                  {item.product}
+
+                <div>
+                  {invoiceData?.total_column.map((item, i) => (
+                    <div key={i} className="table-col py-2">
+                      <div className="w-3/12 xl:w-2/12 break-words cursor-auto">
+                        {item.employee}
+                      </div>
+                      <div className="w-3/12 break-words cursor-auto">
+                        {item.product}
+                      </div>
+                      <div className="flex-1 break-words cursor-auto">
+                        {item.quantity}
+                      </div>
+                      <div className="w-2/12 break-words cursor-auto">
+                        {item.total}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="flex-1 break-words cursor-auto">
-                  {item.quantity}
-                </div>
-                <div className="w-2/12 break-words cursor-auto">
-                  {item.total}
+                <div className="px-4 xl:px-8 flex border-b border-border_color justify-between py-2 xl:py-3 text-sm xl:text-xl">
+                  <div className="w-2/12 font-bold">Total</div>
+                  <div className="w-3/12"></div>
+                  <div className="flex-1"></div>
+                  <div className="w-2/12 font-bold">
+                    {invoiceData?.grand_total}
+                  </div>
                 </div>
               </div>
-            ))}
+            </div>
+            <div className="w-full mt-10" id="print-button">
+              <button
+                onClick={handlePrint}
+                className="border border-border_color w-full xl:w-fit text-primary-foreground hover:bg-primary hover:text-background duration-200 font-medium tracking-wide px-8 py-1 rounded-full text-lg"
+              >
+                Print Invoice
+              </button>
+            </div>
           </div>
-          <div className="px-4 xl:px-8 flex border-b border-border_color justify-between py-2 xl:py-3 text-sm xl:text-xl">
-            <div className="w-2/12 font-bold">Total</div>
-            <div className="w-3/12"></div>
-            <div className="flex-1"></div>
-            <div className="w-2/12 font-bold">{invoiceData?.grand_total}</div>
-          </div>
-        </div>
-        <div className="w-full mt-10" id="print-button">
-          <button
-            onClick={handlePrint}
-            className="border border-border_color w-full xl:w-fit text-primary-foreground hover:bg-primary hover:text-background duration-200 font-semibold px-8 py-1 rounded-full text-lg"
-          >
-            Print Invoice
-          </button>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between w-full bg-secondary h-[5.4rem] xl:px-10 px-3 sticky top-0 border-b border-border_color">
+    <div className="flex items-center justify-between w-full bg-secondary h-[5.4rem] xl:px-10 px-3 sticky top-0 border-b border-border_color z-10">
       <h1
         className="xl:text-center flex-grow text-lg xl:text-4xl font-bold text-primary tracking-widest font-sour_gummy"
         // style={{ fontFamily: "var(--font-geist)" }}

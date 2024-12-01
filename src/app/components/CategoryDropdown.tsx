@@ -83,9 +83,9 @@ const CategoryDropdown = ({
     <>
       <div className="">
         <div className="flex justify-center items-center">
-          <div className="items-center space-y-2 w-full relative">
+          <div className="items-center space-y-4 w-full relative">
             <div
-              className="flex items-center justify-between gap-3 border border-border_color bg-secondary-foreground  text-primary-foreground py-2 w-full rounded-full px-6 cursor-pointer group font-semibold"
+              className="flex items-center justify-between gap-3 border border-border_color bg-secondary-foreground  text-primary-foreground py-2 w-full rounded-full px-6 cursor-pointer group font-semibold shadow-sm"
               onClick={() => setDropdownOpen((prv) => !prv)}
             >
               <p
@@ -106,7 +106,7 @@ const CategoryDropdown = ({
             </div>
             <div>
               <div
-                className="py-2 xl:text-lg flex items-center gap-3 w-full bg-secondary-foreground text-primary-foreground justify-center border border-border_color duration-200 cursor-pointer rounded-full mt-2"
+                className="py-2 xl:text-lg flex items-center gap-3 w-full bg-secondary-foreground text-primary-foreground justify-center border border-border_color duration-200 cursor-pointer rounded-full mt-2 shadow-sm"
                 onClick={() => setInputOpen((prv) => !prv)}
               >
                 <p>Add Category</p>
@@ -115,7 +115,7 @@ const CategoryDropdown = ({
             </div>
             {inputIsOpen && (
               <div
-                className="absolute w-full flex mt-2 items-center justify-center z-50"
+                className="absolute w-full flex mt-2 items-center justify-center z-50 shadow-md rounded-full"
                 onClick={(e) => e.stopPropagation()}
               >
                 <input
@@ -143,7 +143,7 @@ const CategoryDropdown = ({
 
             {dropdownOpen ? (
               <div
-                className="absolute w-full h-[10rem] transition-transform ease-in-out duration-200 overflow-auto rounded-lg z-50 remove-scrollbar bg-secondary-foreground border border-border_color"
+                className="absolute w-full h-[10rem] transition-transform ease-in-out duration-200 overflow-auto rounded-lg z-50 remove-scrollbar bg-secondary-foreground border border-border_color shadow-md"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="px-2 py-4 space-y-2">

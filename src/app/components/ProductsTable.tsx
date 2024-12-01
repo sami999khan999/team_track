@@ -82,7 +82,7 @@ const ProductsTable = () => {
         />
       )}
 
-      <div className="w-full h-fit bg-secondary px-2 py-6 xl:py-8 xl:px-8 rounded-2xl">
+      <div className="table-wrapper">
         <TableActions
           setIsOpen={setIsModalOpen}
           tableName="Products"
@@ -107,7 +107,7 @@ const ProductsTable = () => {
         {!isLoading && products.length > 0 && (
           <div className="overflow-x-auto">
             <div className="w-[40rem] xl:w-full">
-              <div className="flex text-primary-foreground justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 bg-background font-semibold tracking-wide uppercase ">
+              <div className="table-header">
                 {columns.map((cols, i) => (
                   <div
                     key={i}
@@ -124,10 +124,7 @@ const ProductsTable = () => {
               </div>
               <div className="">
                 {products.map((product, i) => (
-                  <div
-                    key={i}
-                    className={`flex justify-between border-b border-secondary-foreground px-4 xl:px-6 py-2 xl:py-4 xl:text-xl gap-2 text-xs  text-primary-foreground font-medium relative hover:bg-secondary-foreground duration-200`}
-                  >
+                  <div key={i} className={`table-col`}>
                     <div className="w-1/12 truncate-text">{product.id}</div>
                     <div className="flex-1 truncate-text capitalize">
                       {product.name}

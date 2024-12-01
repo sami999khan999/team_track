@@ -29,6 +29,8 @@ const config: Config = {
         card: "var(--card)",
 
         border_color: "var(--border)",
+
+        underline: "var(--underline)",
       },
 
       fontFamily: {
