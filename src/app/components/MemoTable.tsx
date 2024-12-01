@@ -99,11 +99,11 @@ const MemoTable = () => {
                       path.push(`memo/${item.id}`);
                     }}
                   >
-                    <div className="w-1/12">{item.id}</div>
-                    <div className="flex-1">
+                    <div className="w-1/12 truncate-text">{item.id}</div>
+                    <div className="flex-1 truncate-text">
                       {item.customer.name} ({item.customer.id})
                     </div>
-                    <div className="flex-1 flex gap-1">
+                    <div className="flex-1 flex gap-1 truncate-text">
                       {item.challan_no.map((challan, i) => (
                         <p key={i}>
                           {challan}
@@ -111,7 +111,7 @@ const MemoTable = () => {
                         </p>
                       ))}
                     </div>
-                    <div className="flex-1 flex gap-1">
+                    <div className="flex-1 flex gap-2 truncate-text">
                       {item.products.map((product, i) => (
                         <p key={i}>
                           {product}
@@ -119,9 +119,9 @@ const MemoTable = () => {
                         </p>
                       ))}
                     </div>
-                    <div className="flex-1">{item.total_qty}</div>
-                    <div className="flex-1">{item.amount}/=</div>
-                    <div className="flex-1">{item.date}</div>
+                    <div className="flex-1 truncate-text">{item.total_qty}</div>
+                    <div className="flex-1 truncate-text">{item.amount}/=</div>
+                    <div className="flex-1 truncate-text">{item.date}</div>
                   </div>
                 ))}
               </div>

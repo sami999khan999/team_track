@@ -47,8 +47,6 @@ const Invoice = ({ id }: { id: number }) => {
     fetchInvoiceData();
   }, [id]);
 
-  console.log(invoiceData);
-
   const handlePrint = () => {
     const printContent = document.getElementById("pdf-content");
     const printButton = document.getElementById("print-button");
@@ -175,8 +173,11 @@ const Invoice = ({ id }: { id: number }) => {
   };
 
   return (
-    <div className="flex justify-center text-primary-foreground h-screen mt-5">
-      <div className="relative bg-secondary w-[98%] xl:w-[90%] h-fit px-3 xl:px-10 pb-10 rounded-xl table-wrapper">
+    <div className="flex justify-center text-primary-foreground">
+      <div
+        className="relative bg-secondary w-[98%] xl:w-[90%] h-fit px-3 xl:px-10 pb-10 rounded-xl table-wrapper"
+        id="pdf-content"
+      >
         <div
           className="absolute top-4 xl:top-8 left-4 xl:left-8 text-base xl:text-2xl text-primary-foreground px-4 py-1 rounded-md hover:bg-secondary-foreground duration-200"
           onClick={() => path.back()}

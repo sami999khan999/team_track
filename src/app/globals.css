@@ -78,11 +78,11 @@
   }
 
   .table-header {
-    @apply flex text-background justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-2 mt-3 dark:bg-background dark:text-primary-foreground bg-primary font-medium tracking-wide uppercase rounded-t-lg;
+    @apply flex text-background justify-between px-4 xl:px-6 py-2 xl:py-4 xl:text-lg text-xs gap-4 mt-3 dark:bg-background dark:text-primary-foreground bg-primary font-medium tracking-wide uppercase rounded-t-lg;
   }
 
   .table-col {
-    @apply flex justify-between border-b border-underline px-4 xl:px-6 py-2 xl:py-4 xl:text-xl gap-2 text-xs text-primary-foreground relative hover:bg-gray-100 dark:hover:bg-secondary-foreground duration-200 cursor-auto;
+    @apply flex justify-between border-b border-underline px-4 xl:px-6 py-2 xl:py-4 xl:text-xl gap-4 text-xs text-primary-foreground relative hover:bg-gray-100 dark:hover:bg-secondary-foreground duration-200 cursor-auto;
   }
 
   .table-wrapper {
