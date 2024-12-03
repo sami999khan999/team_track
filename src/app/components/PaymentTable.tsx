@@ -92,7 +92,7 @@ const PaymentTable = () => {
                 <p className="flex-1">Quantity</p>
                 <p className="flex-1">Amount</p>
                 <p className="flex-1">Status</p>
-                <p className="flex-1">Date</p>
+                <p className="w-1/12">Date</p>
               </div>
               {/* Table Rows */}
               <div>
@@ -113,7 +113,7 @@ const PaymentTable = () => {
                     <div className="flex-1">{bill.quantity}</div>
                     <div className="flex-1">{bill.Amount}</div>
                     <div className="flex-1">{bill.current_status}</div>
-                    <div className="flex-1">{bill.date}</div>
+                    <div className="w-1/12">{bill.date}</div>
                   </div>
                 ))}
               </div>

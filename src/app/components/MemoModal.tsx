@@ -11,6 +11,7 @@ import MemoFilterTable from "./MemoFilterTable";
 import { ErrorToast, SuccessToast } from "./Toast";
 import { CgSpinnerTwo } from "react-icons/cg";
 import { useRouter } from "next/navigation";
+import { formatNumberWithCommas } from "@/utils/numberFormat";
 
 const MemoModal = ({
   setIsOpen,
@@ -35,6 +36,7 @@ const MemoModal = ({
     FilterMemoType[] | undefined
   >();
   const [selectedId, setSelectedId] = useState<number[] | undefined>();
+  const [totalAmount, setTotalAmount] = useState<number | undefined>();
   const [isLoading, setIsLoading] = useState(false);
 
   const getFilteredDataHandler = async () => {
@@ -86,6 +88,7 @@ const MemoModal = ({
             Memo Created Successfully
           </SuccessToast>
         ));
+        path.push(`memo/${response.data.cashmemo}`);
         setSelectedData(undefined);
       } else {
         console.log("Error creating Momo: ", response.message);
@@ -122,9 +125,20 @@ const MemoModal = ({
     fetchEmployees();
   }, [customerCurrentPage]);
 
+  useEffect(() => {
+    if (selectedData && selectedData?.length > 0) {
+      const total = selectedData.reduce(
+        (acc, item) => acc + Number(item.amount),
+        0
+      );
+
+      setTotalAmount(total);
+    }
+  }, [selectedData]);
+
   return (
     <div className="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center justify-center z-20">
-      <div className="relative bg-secondary w-[95%] xl:w-[90%] h-[80%] border border-border_color rounded-lg py-6 xl:px-8 px-3 overflow-x-auto">
+      <div className="relative bg-secondary w-[95%] xl:w-[90%] h-[80%] border border-border_color rounded-lg py-6 xl:px-8 px-3 overflow-x-auto remove-scrollbar">
         <div className="close-btn" onClick={() => setIsOpen((prv) => !prv)}>
           <IoCloseSharp className="transition-transform hover:rotate-90 duration-200 origin-center" />
         </div>
@@ -155,13 +169,13 @@ const MemoModal = ({
                 <p className="error_message">{customerSelectionError}</p>
               </div>
               <button
-                className="submit-btn mt-0 xl:w-[5rem] px-5  h-8 xl:h-12 disabled:cursor-not-allowed"
+                className="submit-btn mt-0 xl:w-[5rem] px-5 h-8 xl:h-12 disabled:cursor-not-allowed"
                 onClick={getFilteredDataHandler}
                 disabled={isLoading}
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center w-full">
-                    <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
+                    <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
                   </div>
                 ) : (
                   <div>Get</div>
@@ -189,12 +203,19 @@ const MemoModal = ({
 
           <div className="xl:border-r-4 border-t-4 border-border_color"></div>
 
-          <div className="right xl:w-[50%]">
+          <div className="right xl:w-[50%] overflow-x-hidden">
             {selectedData && selectedData?.length > 0 ? (
               <div>
-                <p className="text-xl xl:text-2xl text-primary-foreground font-semibold text-center mb-6">
-                  Selected Data
-                </p>
+                <div className="flex gap-6 text-primary-foreground text-sm xl:text-xl justify-between px-2 font-semibold mt-8">
+                  <div>
+                    <span className="text-primary">Selected:</span>{" "}
+                    {selectedData.length}
+                  </div>
+                  <div>
+                    <span className="text-primary">Total Amount:</span>{" "}
+                    {formatNumberWithCommas(totalAmount)}/=
+                  </div>
+                </div>
                 <MemoFilterTable
                   data={selectedData}
                   type="selected"
@@ -202,13 +223,13 @@ const MemoModal = ({
                   selectedData={selectedData}
                 />
                 <button
-                  className="submit-btn"
+                  className="submit-btn mx-0 h-9"
                   onClick={createMemoHandler}
                   disabled={isLoading}
                 >
                   {isLoading ? (
-                    <div className="flex items-center justify-center w-full">
-                      <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
+                    <div className="flex items-center justify-center w-full ">
+                      <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
                     </div>
                   ) : (
                     <div>Create Memo</div>
@@ -218,7 +239,7 @@ const MemoModal = ({
             ) : (
               filteredData &&
               filteredData?.length > 0 && (
-                <div className="text-xl xl:text-3xl text-primary-foreground font-semibold text-center xl:mt-20">
+                <div className="text-xl xl:text-3xl text-primary-foreground font-semibold text-center xl:mt-20 h-[5rem]">
                   No Selected Data
                 </div>
               )

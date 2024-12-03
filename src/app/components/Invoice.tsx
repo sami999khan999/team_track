@@ -71,7 +71,7 @@ const Invoice = ({ id }: { id: number }) => {
         const totalColumnHtml = invoiceData?.total_column
           .map(
             (item) => `
-          <div class="table-body border-b flex justify-between px-8 py-1 text-base gap-5">
+          <div class="table-body border-b flex justify-between px-8 py-1 text-sm gap-5">
             <div class="w-2/12 break-words capitalize">${item.employee}</div>
             <div class="w-3/12 break-words capitalize">${item.product}</div>
             <div class="flex-1 break-words ">${item.quantity}</div>
@@ -103,7 +103,7 @@ const Invoice = ({ id }: { id: number }) => {
               </style>
             </head>
             <body>
-              <div class="invoice-content flex flex-col items-center justify-center">
+              <div class="invoice-content flex flex-col items-center justify-center mt-2">
               <div class=" bg-white w-[95%]">
                 <div class="text-center pt-4 pb-3">
                   <h1 class="text-4xl mb-1 font-semibold">Next Fashion Textile</h1>
@@ -179,7 +179,7 @@ const Invoice = ({ id }: { id: number }) => {
         id="pdf-content"
       >
         <div
-          className="absolute top-4 xl:top-8 left-4 xl:left-8 text-base xl:text-2xl text-primary-foreground px-4 py-1 rounded-md hover:bg-secondary-foreground duration-200"
+          className="absolute top-4 xl:top-8 left-4 xl:left-8 text-base xl:text-2xl text-primary-foreground px-4 py-1 rounded-md dark:hover:bg-secondary-foreground duration-200 hover:bg-gray-100"
           onClick={() => path.back()}
         >
           <FaArrowLeftLong />

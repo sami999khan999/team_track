@@ -36,7 +36,7 @@ const DropdownBody = ({
     <>
       {type === "employee" && (
         <div
-          className="table-col py-2"
+          className="table-col text-base py-2"
           onClick={() => {
             const currentId = Number(item.id);
             if (selectedId === currentId) {
@@ -50,6 +50,7 @@ const DropdownBody = ({
               if (setId) setId(currentId);
               setSelectedItem(item.name);
               setSelectedId(currentId);
+              // console.log("Dropdown", currentId);
               if (setValue) setValue(item.name);
               if (setSelectionError) setSelectionError("");
               setIsDropdownOpen((prv) => !prv);
@@ -64,7 +65,7 @@ const DropdownBody = ({
 
       {type === "product" && (
         <div
-          className="table-col py-2 w-full"
+          className="table-col text-base py-2 "
           onClick={() => {
             const currentId = Number(item.id);
 
@@ -87,13 +88,13 @@ const DropdownBody = ({
         >
           <div className="w-1/6 truncate-text">{item.id}</div>
           <div className="flex-1 truncate-text">{item.name}</div>
-          <div className="flex-1 truncate-text">{item.rate}</div>
+          <div className="flex-1 truncate-text">{item.rate}/=</div>
         </div>
       )}
 
       {type === "production" && (
         <div
-          className="table-col py-2"
+          className="table-col text-base py-2"
           onClick={() => {
             const currentId = Number(item.id);
 
@@ -121,7 +122,7 @@ const DropdownBody = ({
 
       {type === "status" && (
         <div
-          className="table-col py-2"
+          className="table-col text-base py-2"
           onClick={() => {
             if (setValue) setValue(item.status);
             setSelectedItem(item.status);
@@ -136,7 +137,7 @@ const DropdownBody = ({
 
       {type === "customer" && (
         <div
-          className="table-col py-2"
+          className="table-col text-base py-2"
           onClick={() => {
             const currentId = Number(item.id);
 
@@ -165,7 +166,7 @@ const DropdownBody = ({
 
       {type === "Method" && (
         <div
-          className="table-col py-2"
+          className="table-col text-base py-2"
           onClick={() => {
             if (setValue) setValue(item.method);
             setSelectedItem(item.method);

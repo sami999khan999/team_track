@@ -23,8 +23,6 @@ const EmployeePayment = ({ id }: { id: number }) => {
     fetchEmployeeBill();
   }, [id]);
 
-  console.log(employeeBills);
-
   return (
     <div className="bg-secondary w-full h-full xl:px-12 px-4 py-10 xl:py-8 rounded-xl relative">
       <h2 className="text-primary font-sour_gummy text-2xl border-b border-border_color pb-3 xl:pb-8 xl:text-3xl font-semibold text-center ">

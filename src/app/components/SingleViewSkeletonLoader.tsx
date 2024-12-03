@@ -5,12 +5,12 @@ const SingleViewSkeletonLoader = () => {
     <div className="w-full ">
       <div className="flex justify-between px-4">
         <div className="space-y-3">
-          <div className="dark:bg-secondary-foreground w-[8rem] h-5"></div>
-          <div className="dark:bg-secondary-foreground w-[10rem] h-3"></div>
+          <div className="dark:bg-secondary-foreground bg-gray-200 w-[8rem] h-5"></div>
+          <div className="dark:bg-secondary-foreground bg-gray-200 w-[10rem] h-3"></div>
         </div>
         <div className="space-y-3">
-          <div className="dark:bg-secondary-foreground w-[8rem] h-5"></div>
-          <div className="dark:bg-secondary-foreground w-[10rem] h-3"></div>
+          <div className="dark:bg-secondary-foreground bg-gray-200 w-[8rem] h-5"></div>
+          <div className="dark:bg-secondary-foreground bg-gray-200 w-[10rem] h-3"></div>
         </div>
       </div>
 

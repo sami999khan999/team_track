@@ -1,4 +1,5 @@
 import { FilteredBill } from "@/types";
+import { formatNumberWithCommas } from "@/utils/numberFormat";
 import React, { SetStateAction } from "react";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 
@@ -76,11 +77,11 @@ const BillFilterTable = ({
   return (
     <div>
       {data && (
-        <div className="relative h-[10rem] xl:h-[16rem] overflow-y-auto remove-scrollbar mb-2">
-          <div className="overflow-auto remove-scrollbar">
+        <div className="overflow-auto relative h-[15rem] xl:h-[20rem] overflow-y-auto remove-scrollbar mb-2">
+          <div className="">
             {data.length > 0 ? (
               <div className="xl:w-full w-[40rem]">
-                <div className="table-header py-4">
+                <div className="table-header py-4 sticky top-0 z-20">
                   {columns?.map((col, i) => (
                     <p
                       key={i}
@@ -98,9 +99,9 @@ const BillFilterTable = ({
                     >
                       <p>Select</p>
                       {isAllSelected() ? (
-                        <ImCheckboxChecked />
+                        <ImCheckboxChecked className="text-sm" />
                       ) : (
-                        <ImCheckboxUnchecked />
+                        <ImCheckboxUnchecked className="text-sm" />
                       )}
                     </div>
                   )}
@@ -128,11 +129,15 @@ const BillFilterTable = ({
                       <div className="flex-1 truncate-text">
                         {item.quantity}
                       </div>
-                      <div className="flex-1 truncate-text">{item.rate}</div>
-                      <div className="flex-1 truncate-text">{item.amount}</div>
+                      <div className="flex-1 truncate-text">
+                        {formatNumberWithCommas(item.rate)}
+                      </div>
+                      <div className="flex-1 truncate-text">
+                        {formatNumberWithCommas(item.amount)}
+                      </div>
                       {type && (
                         <div
-                          className="xl:px-4 px-3 text-base flex items-center w-[6rem] justify-center"
+                          className="xl:px-4 px-3 text-sm flex items-center w-[6rem] justify-center"
                           onClick={() => {
                             selectHandler(item);
                           }}

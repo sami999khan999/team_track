@@ -204,7 +204,7 @@ const AddFormModal = ({
       }
     >
       <div
-        className="relative bg-secondary flex flex-col xl:flex-row xl:px-6 px-2 py-10 border border-border_color rounded-xl w-[90%] xl:w-[65%]"
+        className="relative bg-secondary flex flex-col xl:flex-row xl:px-6 px-2 py-10 border border-border_color rounded-xl w-[90%] xl:w-[65%] remove-scrollbar"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -340,7 +340,7 @@ const AddFormModal = ({
           <button type="submit" className="submit-btn" disabled={isLoading}>
             {isLoading ? (
               <div className="flex items-center justify-center w-full">
-                <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
+                <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
               </div>
             ) : (
               <div>{title}</div>

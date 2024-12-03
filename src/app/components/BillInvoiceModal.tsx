@@ -40,7 +40,7 @@ const BillInvoiceModal = ({
     <div className="absolute top-0 left-0 h-full w-full backdrop-blur-lg flex items-center justify-center z-50">
       <div className="relative border border-border_color rounded-xl bg-secondary w-[95%] xl:w-[60%] px-2 xl:px-6 ">
         <div
-          className="absolute top-3 xl:top-5 right-3 xl:right-5 text-2xl text-primary-foreground hover:bg-primary hover:text-background p-1 rounded-sm"
+          className="close-btn"
           onClick={() => {
             setIsInvoiceModalOpen((prv) => !prv);
             if (invoiceId) {
@@ -59,7 +59,7 @@ const BillInvoiceModal = ({
 
         <div className="xl:mb-8">
           <div className="xl:h-[20rem] h-[14rem] overflow-y-auto remove-scrollbar">
-            <div className="table-header py-4 text-xl">
+            <div className="table-header py-4 xl:text-xl">
               <p className="w-1/12 xl:w-2/12">ID</p>
               <p className="flex-1 truncate-text">Products</p>
 

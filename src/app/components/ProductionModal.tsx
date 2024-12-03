@@ -162,7 +162,7 @@ const ProductionModal = ({
         />
       ) : (
         <div
-          className="absolute top-0 left-0 w-full h-full backdrop-blur-md flex items-center justify-center z-20"
+          className="absolute top-0 left-0 w-full h-full backdrop-blur-md flex items-center justify-center z-20 remove-scrollbar"
           onClick={() => {
             setIsOpen((prv) => !prv);
             if (setDefalutValue) {
@@ -178,6 +178,9 @@ const ProductionModal = ({
               className="close-btn"
               onClick={() => {
                 setIsOpen((prv) => !prv);
+                if (setDefalutValue) {
+                  setDefalutValue(undefined);
+                }
               }}
             >
               <IoMdClose className="transition-transform hover:rotate-90 origin-center" />
@@ -267,7 +270,7 @@ const ProductionModal = ({
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center w-full">
-                    <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
+                    <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
                   </div>
                 ) : (
                   <div>{defalutValue ? "Update" : "Add"} Production</div>

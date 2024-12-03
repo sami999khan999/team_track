@@ -8,6 +8,7 @@ import { MemoType } from "@/types";
 import { getMemo } from "@/utils/memoApiRequests";
 import Pagination from "./Pagination";
 import LoadingSkeleton from "./LoadingSkeleton";
+import { formatNumberWithCommas } from "@/utils/numberFormat";
 
 const MemoTable = () => {
   const param = useSearchParams();
@@ -88,7 +89,7 @@ const MemoTable = () => {
                 <p className="flex-1">Products</p>
                 <p className="flex-1">Total Qty</p>
                 <p className="flex-1">Amount</p>
-                <p className="flex-1">Date</p>
+                <p className="w-1/12">Date</p>
               </div>
               <div>
                 {memo.map((item, i) => (
@@ -120,8 +121,10 @@ const MemoTable = () => {
                       ))}
                     </div>
                     <div className="flex-1 truncate-text">{item.total_qty}</div>
-                    <div className="flex-1 truncate-text">{item.amount}/=</div>
-                    <div className="flex-1 truncate-text">{item.date}</div>
+                    <div className="flex-1 truncate-text">
+                      {formatNumberWithCommas(item.amount)}/=
+                    </div>
+                    <div className="w-1/12 truncate-text">{item.date}</div>
                   </div>
                 ))}
               </div>

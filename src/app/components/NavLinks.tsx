@@ -52,30 +52,16 @@ const NavLinks = () => {
           <Link
             key={i}
             href={navItem.path}
-            className={`group flex items-center gap-2 px-1 xl:px-6 py-2 dark:hover:bg-secondary-foreground hover:bg-gray-200 duration-300 ${
+            className={`group flex items-center gap-2 px-1 xl:px-6 py-2  duration-300 text-primary-foreground ${
               pathName === navItem.path ||
               (pathName.startsWith(navItem.path) && navItem.path !== "/")
-                ? "bg-primary dark:hover:bg-slate-500/90"
-                : ""
+                ? "bg-primary text-secondary dark:hover:bg-secondary-foreground hover:bg-gray-200 hover:text-primary-foreground"
+                : "dark:hover:bg-secondary-foreground hover:bg-gray-200"
             }`}
           >
-            <div
-              className={`text-xl xl:text-2xl text-primary-foreground ${
-                pathName === navItem.path ||
-                (pathName.startsWith(navItem.path) && navItem.path !== "/")
-                  ? "text-secondary"
-                  : ""
-              }`}
-            >
-              {navItem.logo}
-            </div>
+            <div className={`text-xl xl:text-2xl  `}>{navItem.logo}</div>
             <p
-              className={`hidden xl:block text-primary-foreground opacity-0 text-lg font-semibold tracking-wide transition-opacity duration-300 ease-in-out group-hover:opacity-100 ${
-                pathName === navItem.path ||
-                (pathName.startsWith(navItem.path) && navItem.path !== "/")
-                  ? "text-secondary"
-                  : ""
-              }`}
+              className={`hidden xl:block opacity-0 text-lg font-semibold tracking-wide transition-opacity duration-300 ease-in-out group-hover:opacity-100`}
             >
               {navItem.name}
             </p>

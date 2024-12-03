@@ -40,9 +40,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={` ${sourGummy.variable} ${baloo.variable}  antialiased transition-colors`}
-      >
+      <body className={` ${sourGummy.variable} ${baloo.variable}  antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark">
           {children}
           <Toaster position="bottom-right" reverseOrder={false} />
