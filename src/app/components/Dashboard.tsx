@@ -8,6 +8,74 @@ import AddFormModal from "./AddFormModal";
 import ProductionModal from "./ProductionModal";
 import ProductModal from "./ProductModal";
 
+const dashboardData = {
+  employee: {
+    totalEmployee: 23,
+    activeEmployee: 20,
+    employeeOftheMounth: {
+      name: "sami",
+      id: 4,
+      totalEarned: 20000,
+      producedUnites: 432,
+    },
+
+    topEmployees: [
+      {
+        name: "ali",
+        id: 1,
+      },
+      {
+        name: "ali",
+        id: 2,
+      },
+      {
+        name: "ali",
+        id: 3,
+      },
+      {
+        name: "ali",
+        id: 4,
+      },
+      {
+        name: "ali",
+        id: 5,
+      },
+    ],
+  },
+
+  invoice: {
+    paid: 20,
+    notPaied: 5,
+    total: 25,
+  },
+
+  inventory: {
+    inStock: 20,
+    sold: 5,
+    total: 25,
+  },
+
+  totalCustomer: 20,
+
+  production: {
+    totalProduction: 20,
+    totalProductionInAMounth: 30,
+    paiedProduction: 15,
+    notPaiedProduction: 5,
+  },
+
+  products: {
+    totalProducts: 20,
+    topSoledProducts: {
+      name: "product1",
+      id: 1,
+      soldUnits: 10,
+    },
+  },
+
+  totalCategory: 4,
+};
+
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [reload, setReload] = useState(true);

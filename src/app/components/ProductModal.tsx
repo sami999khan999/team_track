@@ -213,7 +213,7 @@ const ProductModal = ({
                     type="number"
                     name="otherCost"
                     value={otherCost}
-                    placeholder="Production Cost"
+                    placeholder="Other Cost"
                     className="inputfield"
                     onChange={(e) => {
                       setOtherCost(Number(e.target.value));

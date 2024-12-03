@@ -104,16 +104,20 @@ const PaymentTable = () => {
                       path.push(`/payment/${bill.id}`);
                     }}
                   >
-                    <div className="w-1/12">{bill.id}</div>
-                    <div className="flex-1">
+                    <div className="w-1/12 truncate-text">{bill.id}</div>
+                    <div className="flex-1 truncate-text">
                       {bill.employee.name} ({bill.employee.id})
                     </div>
-                    <div className="flex-1">{bill.products}</div>
-                    <div className="flex-1">{bill.production}</div>
-                    <div className="flex-1">{bill.quantity}</div>
-                    <div className="flex-1">{bill.Amount}</div>
-                    <div className="flex-1">{bill.current_status}</div>
-                    <div className="w-1/12">{bill.date}</div>
+                    <div className="flex-1 truncate-text">{bill.products}</div>
+                    <div className="flex-1 truncate-text">
+                      {bill.production}
+                    </div>
+                    <div className="flex-1 truncate-text">{bill.quantity}</div>
+                    <div className="flex-1 truncate-text">{bill.Amount}</div>
+                    <div className="flex-1 truncate-text">
+                      {bill.current_status}
+                    </div>
+                    <div className="w-1/12 truncate-text">{bill.date}</div>
                   </div>
                 ))}
               </div>
