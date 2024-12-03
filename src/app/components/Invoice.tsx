@@ -184,7 +184,7 @@ const Invoice = ({ id }: { id: number }) => {
         >
           <FaArrowLeftLong />
         </div>
-        <div className="header text-center pb-10 pt-4">
+        <div className="header text-center xl:pb-10 pb-4 pt-4">
           <h1 className="text-2xl xl:text-4xl font-semibold text-primary">
             Next Fashion Textile
           </h1>
@@ -212,35 +212,66 @@ const Invoice = ({ id }: { id: number }) => {
 
         {!isLoading && invoiceData !== undefined && (
           <div>
-            <div className="customer-info flex justify-between px-4">
-              <div className="left">
-                <p className="customer-name tracking-wider font-bold text-base xl:text-xl capitalize">
-                  {invoiceData?.customer_company
-                    ? invoiceData?.customer_company
-                    : invoiceData?.customer_name}
-                </p>
-                <p className="address text-sm xl:text-lg font-medium">
-                  {invoiceData?.customer_address}
-                </p>
+            <div className="hidden xl:block">
+              <div className="customer-info flex justify-between px-4 ">
+                <div className="left">
+                  <p className="customer-name tracking-wider font-bold text-base xl:text-xl capitalize text-primary">
+                    {invoiceData?.customer_company
+                      ? invoiceData?.customer_company
+                      : invoiceData?.customer_name}
+                  </p>
+                  <p className="address text-sm xl:text-lg font-normal">
+                    {invoiceData?.customer_address}
+                  </p>
+                </div>
+                <div className="right text-base xl:text-xl">
+                  <p>
+                    Date:{" "}
+                    <span className="bold font-semibold text-primary">
+                      {invoiceData?.date}
+                    </span>
+                  </p>
+                  <p>
+                    Challan No:{" "}
+                    <span className="bold font-semibold text-primary">
+                      {invoiceData?.challan_no}
+                    </span>
+                  </p>
+                </div>
               </div>
-              <div className="right text-base xl:text-xl">
-                <p>
-                  Date:{" "}
-                  <span className="bold font-semibold">
-                    {invoiceData?.date}
-                  </span>
-                </p>
-                <p>
-                  Challan No:{" "}
-                  <span className="bold font-semibold">
-                    {invoiceData?.challan_no}
-                  </span>
-                </p>
+            </div>
+
+            <div className="xl:hidden ">
+              <div className="px-2 flex flex-col gap-4">
+                <div className="left text-center">
+                  <p className="customer-name tracking-wider font-bold text-base xl:text-xl capitalize text-primary">
+                    {invoiceData?.customer_company
+                      ? invoiceData?.customer_company
+                      : invoiceData?.customer_name}
+                  </p>
+                  <p className="address text-sm xl:text-lg font-medium">
+                    {invoiceData?.customer_address}
+                  </p>
+                </div>
+                <div className="right text-sm xl:text-xl flex justify-between">
+                  <p>
+                    Date:{" "}
+                    <span className="bold font-semibold text-primary">
+                      {invoiceData?.date}
+                    </span>
+                  </p>
+                  <p>
+                    Challan No:{" "}
+                    <span className="bold font-semibold text-primary">
+                      {invoiceData?.challan_no}
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
 
             <div className="overflow-x-auto">
-              <div className="table w-[30rem] xl:w-full mt-4">
+              <div className="table w-[30rem] xl:w-full xl:mt-2">
                 <div className="table-header py-3">
                   {columns.map((col, i) => (
                     <p
@@ -274,11 +305,11 @@ const Invoice = ({ id }: { id: number }) => {
                     </div>
                   ))}
                 </div>
-                <div className="px-4 xl:px-8 flex border-b border-border_color justify-between py-2 xl:py-3 text-sm xl:text-xl">
-                  <div className="w-2/12 font-bold">Total</div>
+                <div className="table-col py-3 text-base xl:text-xl">
+                  <div className="w-3/12 font-bold text-primary">Total</div>
                   <div className="w-3/12"></div>
                   <div className="flex-1"></div>
-                  <div className="w-2/12 font-bold">
+                  <div className="w-2/12 font-bold text-primary">
                     {invoiceData?.grand_total}
                   </div>
                 </div>
@@ -287,7 +318,7 @@ const Invoice = ({ id }: { id: number }) => {
             <div className="w-full mt-10" id="print-button">
               <button
                 onClick={handlePrint}
-                className="border border-border_color w-full xl:w-fit text-primary-foreground hover:bg-primary hover:text-background duration-200 font-medium tracking-wide px-8 py-1 rounded-full text-lg"
+                className="border border-border_color w-full xl:w-fit hover:bg-primary hover:text-background duration-200 font-medium tracking-wide px-8 py-1 rounded-full text-lg text-primary"
               >
                 Print Invoice
               </button>

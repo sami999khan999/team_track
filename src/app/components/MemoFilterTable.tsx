@@ -82,7 +82,6 @@ const MemoFilterTable = ({
             <p className="flex-1 truncate-text">quantity</p>
             <p className="flex-1 truncate-text">total</p>
             <p className="flex-1 truncate-text">amount</p>
-            <p className="flex-1 truncate-text">current_status</p>
             <p className="flex-1 truncate-text">Date</p>
             {type === "selection" && (
               <div

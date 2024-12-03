@@ -140,7 +140,10 @@ const ProductsTable = () => {
                       {formatNumberWithCommas(product.production_cost)}/=
                     </div>
                     <div className="w-1/12 truncate-text">
-                      {formatNumberWithCommas(product.other_cost)}/=
+                      {product.other_cost === 0
+                        ? 0
+                        : formatNumberWithCommas(product.other_cost)}
+                      /=
                     </div>
                     {/* <div className="flex items-center gap-2 text-primary-foreground ">
                       <div
