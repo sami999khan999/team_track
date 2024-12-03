@@ -4,12 +4,11 @@ import { PorductionType } from "@/types";
 import { getProduction } from "@/utils/productionApiRequests";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { MdOutlineEdit } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import LoadingSkeleton from "./LoadingSkeleton";
 import Pagination from "./Pagination";
 import ProductionModal from "./ProductionModal";
 import TableActions from "./TableActions";
-import LoadingSkeleton from "./LoadingSkeleton";
+import { formatNumberWithCommas } from "@/utils/numberFormat";
 
 const ProductionTable = () => {
   const path = useRouter();
@@ -111,16 +110,21 @@ const ProductionTable = () => {
                 {columns.map((col, i) => (
                   <div
                     key={i}
-                    className={`truncate-text ${i === 0 ? "w-1/12" : "flex-1"}`}
+                    className={`truncate-text ${
+                      i === 0 &&
+                      "w-1/12                                                      "
+                    } ${i === columns.length - 1 && "w-1/12"} ${
+                      i !== 0 && i !== columns.length - 1 && "flex-1"
+                    } `}
                   >
                     {col}
                   </div>
                 ))}
-                <div>ACTIONS</div>
+                {/* <div className="w-1/12">ACTIONS</div> */}
               </div>
               <div>
                 {production.map((item, i) => (
-                  <div key={i} className="table-col">
+                  <div key={i} className="table-col capitalize">
                     <div className="w-1/12 truncate-text">{item.id}</div>
                     <div className="flex-1 truncate-text">
                       {item.product.name}
@@ -129,10 +133,12 @@ const ProductionTable = () => {
                       {item.employee.name}
                     </div>
                     <div className="flex-1 truncate-text">{item.quantity}</div>
-                    <div className="flex-1 truncate-text">{item.rate}</div>
+                    <div className="flex-1 truncate-text">
+                      {formatNumberWithCommas(item.rate)}/=
+                    </div>
                     <div className="flex-1 truncate-text">{item.payment}</div>
-                    <div className="flex-1 truncate-text">{item.date}</div>
-                    <div className="flex  items-center xl:gap-3 text-primary-foreground px-1">
+                    <div className="w-1/12 truncate-text">{item.date}</div>
+                    {/* <div className="flex w-1/12  items-center xl:gap-0 text-primary-foreground ">
                       <div
                         className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
                         onClick={() => {
@@ -153,7 +159,7 @@ const ProductionTable = () => {
                       >
                         <RiDeleteBin6Line />
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 ))}
               </div>

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import SingleViewSkeletonLoader from "./SingleViewSkeletonLoader";
+import { formatNumberWithCommas } from "@/utils/numberFormat";
 
 const MemoSingleView = ({ id }: { id: number }) => {
   const path = useRouter();
@@ -84,7 +85,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
         const totalColumnHtml = memoColumnData
           .map(
             (item) => `
-          <div class="table-body border-b flex justify-between px-8 py-1 text-base gap-5">
+          <div class="table-body border-b flex justify-between px-8 py-1 text-sm gap-5">
             <div class="w-1/12 break-words cursor-auto">
                           ${item.slno}
                         </div>
@@ -100,10 +101,10 @@ const MemoSingleView = ({ id }: { id: number }) => {
                           ${item.quantity}
                         </div>
                         <div class="flex-1 break-words cursor-auto">
-                          ${item.rate}
+                          ${formatNumberWithCommas(item.rate)}/=
                         </div>
-                        <div class="w-[4rem] break-words cursor-auto">
-                          ${item.amount}
+                        <div class="flex-1 break-words cursor-auto">
+                          ${formatNumberWithCommas(item.amount)}/=
                         </div>
           </div>
         `
@@ -132,7 +133,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
               </style>
             </head>
             <body>
-              <div class="invoice-content flex flex-col items-center justify-center">
+              <div class="invoice-content flex flex-col items-center justify-center mt-2">
               <div class=" bg-white w-[100%]">
                 <div class="text-center pt-4 pb-3">
                   <h1 class="text-4xl mb-1 font-semibold">Next Fashion Textile</h1>
@@ -165,18 +166,20 @@ const MemoSingleView = ({ id }: { id: number }) => {
                     <p class="flex-1 break-words">Challan </p>
                     <p class="flex-1 break-words">Quantity</p>
                     <p class="flex-1 break-words">Rate</p>
-                    <p class="w-[4rem] break-words">Amount</p>
+                    <p class="flex-1 break-words">Amount</p>
                   </div>
 
                   ${totalColumnHtml}
 
-                  <div class="px-8 flex border-b justify-between py-2">
-                    <div class="w-1/12 font-bold text-gray-900 text-lg">Total</div>
-                    <div class="flex-1"></div>
-                    <div class=flex-1"></div>
+                  <div class="px-8 flex border-b justify-between py-2 gap-5">
+                    <div class="w-1/12 font-bold text-gray-900 text-base">Total</div>
                     <div class="flex-1"></div>
                     <div class="flex-1"></div>
-                    <div class="w-[4rem] font-bold text-gray-900 text-lg">${grandTotal}</div>
+                    <div class="flex-1"></div>
+                    <div class="flex-1"></div>
+                    <div class="flex-1 font-bold text-gray-900 text-base">${formatNumberWithCommas(
+                      grandTotal
+                    )}/=</div>
                   </div>
 
               
@@ -203,7 +206,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
                 <div class=" text-black py-6 text-center text-lg">
                   <p class="">
                     For any inquiries, please contact us at |
-                    <span class="text-[#2dac5c] font-semibold tracking-wide">
+                    <span class="text-gray-700 font-semibold tracking-wide">
                       marufsarkar512@gmail.com
                     </span>
                   </p>
@@ -338,22 +341,22 @@ const MemoSingleView = ({ id }: { id: number }) => {
                           {item.quantity}
                         </div>
                         <div className="flex-1 break-words cursor-auto">
-                          {item.rate}/=
+                          {formatNumberWithCommas(item.rate)}/=
                         </div>
                         <div className="w-1/12 break-words cursor-auto">
-                          {item.amount}/=
+                          {formatNumberWithCommas(item.amount)}/=
                         </div>
                       </div>
                     ))}
                   </div>
-                  <div className="px-4 xl:px-8 flex border-b border-border_color justify-between py-2 xl:py-3 text-sm xl:text-xl">
+                  <div className="px-4 xl:px-6 flex border-b border-border_color justify-between py-2 xl:py-3 text-sm xl:text-xl">
                     <div className="w-1/12 font-bold">Total</div>
                     <div className="flex-1"></div>
                     <div className="flex-1"></div>
                     <div className="flex-1"></div>
                     <div className="flex-1"></div>
                     <div className="w-1/12 font-bold">
-                      {memoHeadingData?.total_amount}/=
+                      {formatNumberWithCommas(memoHeadingData?.total_amount)}/=
                     </div>
                   </div>
                 </div>

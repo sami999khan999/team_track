@@ -95,7 +95,7 @@ const InvoiceTable = () => {
                 {invoice.map((item, i) => (
                   <div
                     key={i}
-                    className="table-col"
+                    className="table-col capitalize"
                     onClick={() => {
                       path.push(`/invoice/${item.id}`);
                     }}

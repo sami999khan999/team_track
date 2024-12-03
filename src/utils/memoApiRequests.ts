@@ -48,6 +48,7 @@ export const createMemo = async (selectedId: number[]) => {
     return {
       success: true,
       message: data.message || "Memo created successfully",
+      data: data,
     };
   } catch (err) {
     console.log("Failed To Create Memo: ", err);

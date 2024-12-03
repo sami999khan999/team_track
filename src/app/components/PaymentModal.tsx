@@ -12,6 +12,7 @@ import {
 } from "@/utils/employeeBillApiRequests";
 import BillFilterTable from "./BillFilterTable";
 import { CgSpinnerTwo } from "react-icons/cg";
+import { formatNumberWithCommas } from "@/utils/numberFormat";
 
 const PaymentModal = ({
   setIsopen,
@@ -43,6 +44,7 @@ const PaymentModal = ({
     FilteredBill[] | undefined
   >();
   const [isInvoiceModalOpen, setIsInvoiceModalOpen] = useState(false);
+  const [totalAmount, setTotalAmount] = useState<number | undefined>();
   const [isLoading, setIsLoading] = useState(false);
 
   const methodData = [
@@ -161,9 +163,13 @@ const PaymentModal = ({
     fetchEmployees();
   }, [employeeCurrentPage]);
 
-  // useEffect(() => {
-  //   setSelectedData([]);
-  // }, [filterEmployeeId]);
+  useEffect(() => {
+    if (selectedData && selectedData?.length > 0) {
+      const total = selectedData.reduce((acc, item) => acc + item.amount, 0);
+
+      setTotalAmount(total);
+    }
+  }, [selectedData]);
 
   return (
     <div>
@@ -174,12 +180,12 @@ const PaymentModal = ({
           setIsInvoiceModalOpen={setIsInvoiceModalOpen}
         />
       )}
-      <div className="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center justify-center z-30">
-        <div className="relative w-[97%] xl:w-[90%] h-[80%] xl:h-[70%] bg-secondary px-3 xl:px-8 py-6 xl:py-10 rounded-xl border border-border_color overflow-y-auto remove-scrollbar">
+      <div className="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center justify-center z-30 ">
+        <div className="relative w-[97%] xl:w-[90%] h-[80%] xl:h-[75%] bg-secondary px-3 xl:px-8 py-6 xl:pt-10 rounded-xl border border-border_color overflow-y-auto remove-scrollbar">
           <div className="close-btn" onClick={() => setIsopen((prv) => !prv)}>
             <IoCloseSharp className="transition-transform hover:rotate-90 duration-200 origin-center" />
           </div>
-          <div className="flex flex-col gap-2 items-center justify-center text-center border-b border-border_color pb-4">
+          <div className="flex flex-col gap-2 items-center justify-center text-center border-b border-border_color pb-3">
             <h2 className="text-xl xl:text-3xl font-sour_gummy text-primary font-semibold text-center">
               Employee Payment
             </h2>
@@ -232,7 +238,7 @@ const PaymentModal = ({
                 </div>
                 <div className="">
                   <button
-                    className="bg-primary w-full xl:w-fit text-background rounded-full px-5 text-xl font-semibold py-1 xl:py-2 submit-btn mt-0"
+                    className="submit-btn mt-0 h-8 xl:h-full"
                     onClick={filterHandler}
                   >
                     Get
@@ -260,23 +266,33 @@ const PaymentModal = ({
                 type="select"
               />
             </div>
-            <div className="border-2 xl:border-4 border-border_color"></div>
-            <div className="right xl:w-[50%] mb-4">
+            <div className="border-2 border-border_color"></div>
+            <div className="right xl:w-[50%]">
               {selectedData && selectedData?.length > 0 ? (
                 <div className="mt-7">
-                  <div className="text-primary-foreground font-bold text-xl xl:text-2xl text-center ">
-                    Selected Data
+                  <div className="flex gap-6 text-primary-foreground xl:text-xl justify-between px-2 font-semibold text-sm">
+                    <div>
+                      <span className="text-primary">Selected:</span>{" "}
+                      {selectedData.length}
+                    </div>
+                    <div>
+                      <span className="text-primary">Total Amount:</span>{" "}
+                      {formatNumberWithCommas(totalAmount)}/=
+                    </div>
                   </div>
+                  {/* <div className="text-primary-foreground font-bold text-xl xl:text-2xl text-center ">
+                    Selected Data
+                  </div> */}
                   <BillFilterTable data={selectedData} method={filterMethod} />
                   <div className="flex items-center justify-center mt-4">
                     <button
-                      className="submit-btn mt-0 xl:w-[17rem]"
+                      className="submit-btn mt-0 h-9 xl:w-[17rem]"
                       onClick={billCreateHandler}
                       disabled={isLoading}
                     >
                       {isLoading ? (
                         <div className="flex items-center justify-center w-full">
-                          <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
+                          <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
                         </div>
                       ) : (
                         <div>Pay</div>

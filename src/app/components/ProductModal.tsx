@@ -144,7 +144,7 @@ const ProductModal = ({
         className="w-[95%] xl:w-[60%] bg-secondary rounded-xl border border-border_color"
       >
         {modalAction === "create" && (
-          <div className="h-full w-full xl:px-8 p-3 py-12 relative ">
+          <div className="h-full w-full xl:px-8 p-3 py-8 relative remove-scrollbar">
             <div
               className="close-btn"
               onClick={() => {
@@ -242,7 +242,7 @@ const ProductModal = ({
             >
               {isLoading ? (
                 <div className="flex items-center justify-center w-full">
-                  <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
+                  <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
                 </div>
               ) : (
                 <div>Add Product</div>
@@ -252,7 +252,7 @@ const ProductModal = ({
         )}
 
         {modalAction === "update" && (
-          <div className="h-full w-full xl:px-8 p-3 py-12 rounded-xl relative border border-border_color">
+          <div className="h-full w-full xl:px-8 p-3 py-8 rounded-xl relative border border-border_color remove-scrollbar">
             <div
               className="close-btn"
               onClick={() => {
@@ -321,7 +321,7 @@ const ProductModal = ({
                     type="number"
                     name="otherCost"
                     value={otherCost}
-                    placeholder="Production Cost"
+                    placeholder="Other Cost"
                     className="border border-border_color text-primary-foreground text-base xl:text-xl  bg-secondary-foreground rounded-full py-2 px-6"
                     onChange={(e) => {
                       setOtherCost(Number(e.target.value));
@@ -346,7 +346,7 @@ const ProductModal = ({
             >
               {isLoading ? (
                 <div className="flex items-center justify-center w-full">
-                  <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
+                  <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
                 </div>
               ) : (
                 <div>Update Product</div>
@@ -357,7 +357,7 @@ const ProductModal = ({
 
         {modalAction === "delete" && (
           <div
-            className="flex items-center justify-center absolute  top-0 left-0  z-50 w-full h-full backdrop-blur-md"
+            className="flex items-center justify-center absolute  top-0 left-0  z-50 w-full h-full backdrop-blur-md remove-scrollbar"
             onClick={() => setIsModalOpen((prv) => !prv)}
           >
             <div

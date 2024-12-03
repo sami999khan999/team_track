@@ -87,6 +87,8 @@ const InvoiceModal = ({
         date: date ? date : "",
       };
 
+      console.log(data);
+
       const response = await createInvoice(data);
 
       if (response.success) {
@@ -264,12 +266,22 @@ const InvoiceModal = ({
             </div>
             <div>
               {filterdInventory && filterdInventory?.length > 0 ? (
-                <InvoiceCreateTable
-                  type="selected"
-                  // setFilterdInventoryIds={setFilterdInventoryIds}
-                  // filterdInventoryIds={filterdInventoryIds}
-                  inventories={filterdInventory}
-                />
+                <div className="relative">
+                  <div className="absolute xl:-top-4 -top-4 text-sm xl:text-lg text-primary pl-2 tracking-wide font-semibold">
+                    <p>
+                      Selected:{" "}
+                      <span className="text-primary-foreground">
+                        {filterdInventory.length}
+                      </span>
+                    </p>
+                  </div>
+                  <InvoiceCreateTable
+                    type="selected"
+                    // setFilterdInventoryIds={setFilterdInventoryIds}
+                    // filterdInventoryIds={filterdInventoryIds}
+                    inventories={filterdInventory}
+                  />
+                </div>
               ) : (
                 <div>
                   {inventories && inventories?.length > 0 && (
@@ -284,14 +296,14 @@ const InvoiceModal = ({
               {filterdInventoryIds !== undefined &&
               filterdInventoryIds.length >= 1 ? (
                 <button
-                  className="submit-btn mt-0 xl:w-[17rem]
+                  className="submit-btn mt-0 h-9 xl:w-[17rem]
                 "
                   onClick={invoiceCreateHandler}
                   disabled={isLoading}
                 >
                   {isLoading ? (
                     <div className="flex items-center justify-center w-full">
-                      <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
+                      <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
                     </div>
                   ) : (
                     <div>Create Invoice</div>

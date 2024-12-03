@@ -1,7 +1,6 @@
 import { SelectInventoryType } from "@/types";
 import React, { SetStateAction } from "react";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
-import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
 const InvoiceCreateTable = ({
   type,
@@ -115,10 +114,10 @@ const InvoiceCreateTable = ({
   };
 
   return (
-    <div className="overflow-auto">
+    <div className="overflow-auto remove-scrollbar">
       {inventories ? (
         <div className="h-[15rem] xl:h-[18rem] w-[40rem] xl:w-full">
-          <div className="table-header py-4">
+          <div className="table-header py-4 sticky top-0 z-20">
             <p className="w-1/12 truncate-text">ID</p>
             <p className="flex-1 truncate-text">Employee</p>
             <p className="flex-1 truncate-text">Product</p>
@@ -132,9 +131,9 @@ const InvoiceCreateTable = ({
                 <p>Select</p>
 
                 {isAllSelected() ? (
-                  <ImCheckboxChecked />
+                  <ImCheckboxChecked className="text-sm" />
                 ) : (
-                  <ImCheckboxUnchecked />
+                  <ImCheckboxUnchecked className="text-sm" />
                 )}
               </div>
             )}
@@ -162,14 +161,14 @@ const InvoiceCreateTable = ({
                 </div>
                 {type === "selection" && (
                   <div
-                    className="px-3 w-[6rem] flex items-center justify-center cursor-pointer"
+                    className="px-3 w-[6rem] flex items-center justify-center cursor-pointer text-sm"
                     onClick={() => handleSelect(inventory)}
                   >
                     <div className="">
                       {filterdInventoryIds?.includes(inventory.id) ? (
                         <ImCheckboxChecked />
                       ) : (
-                        <MdCheckBoxOutlineBlank />
+                        <ImCheckboxUnchecked />
                       )}
                     </div>
                   </div>

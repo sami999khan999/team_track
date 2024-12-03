@@ -37,6 +37,9 @@ const DashboardModal = ({
   const [customerSelecteonError, setCustomerSelecteonError] = useState("");
 
   const [employees, setEmployees] = useState<EmployeeType[]>([]);
+  const [originalEmployees, setOriginalEmployees] = useState<EmployeeType[]>(
+    []
+  );
   const [employeeTotalPage, setEmployeeTotalPage] = useState<
     number | undefined
   >();
@@ -78,6 +81,7 @@ const DashboardModal = ({
   const [employeeWithDuplicates, setEmployeeWithDuplicates] = useState<
     number[]
   >([]);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const addProductions = () => {
@@ -212,12 +216,12 @@ const DashboardModal = ({
           name: "",
         },
       });
-      setProductDefaultValue({
-        product: {
-          name: "",
-        },
-      });
-      setSelectedProduct(undefined);
+      // setProductDefaultValue({
+      //   product: {
+      //     name: "",
+      //   },
+      // });
+      // setSelectedProduct(undefined);
       setSelectedEmployee(undefined);
     }
   };
@@ -402,20 +406,20 @@ const DashboardModal = ({
 
           if (firstElement.total_page !== null) {
             setEmployeeTotalPage(firstElement.total_page);
-            setEmployees(response.data.slice(1));
+            setOriginalEmployees(response.data.slice(1));
           } else {
             console.error("Invalid Response Format: total_page is missing");
-            setEmployees([]);
+            setOriginalEmployees([]);
             setEmployeeTotalPage(undefined);
           }
         } else {
           console.error("Error While Fetching Employees: ", response.message);
-          setEmployees([]);
+          setOriginalEmployees([]);
           setEmployeeTotalPage(undefined);
         }
       } catch (err) {
         console.error("Unexpected Error While Fetching Employees: ", err);
-        setEmployees([]);
+        setOriginalEmployees([]);
         setEmployeeTotalPage(undefined);
       }
     };
@@ -455,8 +459,6 @@ const DashboardModal = ({
     fetchProducts();
   }, [productCurrentPage]);
 
-  console.log(productions);
-
   useEffect(() => {
     if (selectedEmployee && originalProducts.length > 0) {
       const filteredProductions = productions.filter(
@@ -477,12 +479,36 @@ const DashboardModal = ({
     }
   }, [selectedEmployee, originalProducts, productions]);
 
+  useEffect(() => {
+    if (selectedProduct && originalEmployees.length > 0) {
+      const filteredEmployees = productions.filter(
+        (production) => production.product.id === selectedProduct
+      );
+
+      const employeeIdsToRemove = filteredEmployees.map(
+        (production) => production.employee.id
+      );
+
+      const updatedEmployees = originalEmployees.filter(
+        (product) => !employeeIdsToRemove.includes(product.id)
+      );
+
+      console.log(updatedEmployees);
+      setEmployees(updatedEmployees);
+    } else {
+      setEmployees(originalEmployees);
+    }
+
+    console.log("================================");
+  }, [selectedProduct, originalEmployees, productions]);
+  console.log(selectedEmployee);
+
   return (
     <div>
-      <div className="absolute top-0 left-0 w-full h-full backdrop-blur-md flex items-center justify-center z-20">
-        <div className="overflow-y-auto xl:w-[85%] w-[95%] h-[80%] xl:h-[90%] relative  bg-secondary rounded-xl border border-border_color ">
+      <div className="absolute top-0 left-0 w-full h-full backdrop-blur-md flex items-center justify-center z-20 ">
+        <div className="overflow-y-auto xl:w-[85%] w-[95%] h-[80%] xl:h-[90%] relative  bg-secondary rounded-xl border border-border_color remove-scrollbar">
           <div
-            className="absolute xl:top-6 top-4 xl:right-6 right-4 text-2xl xl:text-3xl text-primary-foreground hover:bg-secondary-foreground p-1 w-fit rounded-md"
+            className="close-btn"
             onClick={() => {
               setIsOpen((prv) => !prv);
             }}
@@ -502,8 +528,8 @@ const DashboardModal = ({
 
           <div className="xl:px-8 px-3 pt-8">
             <div className="border-b-4 border-dotted border-border_color pb-8">
-              <p className="text-center xl:text-3xl text-2xl text-primary-foreground font-sour_gummy font-semibold mb-2">
-                Select Employee
+              <p className="text-center xl:text-3xl text-2xl text-primary-foreground font-sour_gummy font-semibold mb-2 ">
+                Select Customer
               </p>
               <Dropdown
                 data={customers}
@@ -518,7 +544,7 @@ const DashboardModal = ({
             </div>
 
             <div>
-              <div className="border-b-4 border-dotted border-border_color ">
+              <div className="border-b-4 border-dotted border-border_color mt-7">
                 <div className="text-center xl:text-3xl text-2xl text-primary-foreground font-sour_gummy font-semibold mt-4">
                   <p className="xl:mb-2">Add Production</p>
                 </div>
@@ -570,7 +596,7 @@ const DashboardModal = ({
                     <p className="error_message absolute">{quantityError}</p>
                   </div>
                   <div
-                    className="flex items-center justify-center mb-3 xl:mb-0"
+                    className="flex items-center justify-center mb-3 xl:mb-0 cursor-pointer"
                     onClick={HandelClear}
                   >
                     <div className="border xl:w-fit w-full border-border_color rounded-full  text-xl text-primary-foreground px-6 xl:py-2 hover:bg-secondary-foreground duration-200 flex items-center justify-center font-semibold">
@@ -601,7 +627,7 @@ const DashboardModal = ({
               <div className="mt-6 overflow-x-auto mb-6">
                 {productions.length > 0 ? (
                   <div className="w-[25rem] xl:w-full h-full">
-                    <div className="text-primary-foreground text-base xl:text-xl font-semibold bg-background flex justify-between px-4 xl:px-6 py-3 rounded-t-md">
+                    <div className="table-header">
                       <p className="flex-1">Employee</p>
                       <p className="flex-1">Product</p>
                       <p className="flex-1">Quantity</p>
@@ -609,10 +635,7 @@ const DashboardModal = ({
                     </div>
                     <div className="border border-t-0 border-border_color rounded-b-md">
                       {productions.map((production, i) => (
-                        <div
-                          key={i}
-                          className={`flex justify-between xl:px-6 px-3 border-b border-secondary-foreground hover:bg-secondary-foreground duration-200 `}
-                        >
+                        <div key={i} className={`table-col py-1`}>
                           <div
                             key={i}
                             className={`text-primary-foreground xl:text-xl flex justify-between capitalize w-full py-2 ${
@@ -665,7 +688,7 @@ const DashboardModal = ({
                       >
                         {isLoading ? (
                           <div className="flex items-center justify-center w-full">
-                            <CgSpinnerTwo className="animate-spin hover:text-gray-500 text-gray-800" />
+                            <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
                           </div>
                         ) : (
                           <div>Inventory</div>

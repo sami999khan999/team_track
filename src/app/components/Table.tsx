@@ -86,18 +86,21 @@ const Table = ({
               <p
                 key={i}
                 className={`${
-                  i === 0 ? "w-1/12 " : "flex-1 "
+                  i === 0 &&
+                  "w-1/12                                                      "
+                } ${i === columns.length - 1 && "w-1/12"} ${
+                  i !== 0 && i !== columns.length - 1 && "flex-1"
                 } cursor-pointer truncate-text`}
               >
                 {col}
               </p>
             );
           })}
-          <p className="cursor-pointer">Action</p>
+          {/* <p className="cursor-pointer">Action</p> */}
         </div>
         <div>
           {tableData?.map((data, i) => (
-            <div key={i} className="table-col">
+            <div key={i} className="table-col capitalize">
               {format === "Employee" ? (
                 <>
                   <div className="w-1/12 text-xs xl:text-xl">
@@ -112,7 +115,7 @@ const Table = ({
                   <div className="flex-1 truncate-text text-xs xl:text-xl">
                     {(data as EmployeeType).nid_no}
                   </div>
-                  <div className="flex-1 truncate-text text-xs xl:text-xl">
+                  <div className="w-1/12 truncate-text text-xs xl:text-xl">
                     {(data as EmployeeType).mobile}
                   </div>
                 </>
@@ -132,13 +135,13 @@ const Table = ({
                   <div className="flex-1 truncate-text text-xs xl:text-xl">
                     {(data as CustomerType).address}
                   </div>
-                  <div className="flex-1 truncate-text text-xs xl:text-xl">
+                  <div className="w-1/12 truncate-text text-xs xl:text-xl">
                     {(data as CustomerType).mobile}
                   </div>
                 </>
               )}
 
-              <div className="flex text-xs xl:text-base items-center gap-1 xl:gap-2 text-primary-foreground">
+              {/* <div className="flex text-xs xl:text-base items-center gap-1 xl:gap-2 text-primary-foreground">
                 <div
                   className="hover:bg-primary p-1 rounded-md hover:text-background duration-200 flex items-center justify-center"
                   onClick={() => {
@@ -158,7 +161,7 @@ const Table = ({
                 >
                   <RiDeleteBin6Line />
                 </div>
-              </div>
+              </div> */}
             </div>
           ))}
         </div>

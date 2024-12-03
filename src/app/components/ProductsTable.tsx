@@ -10,6 +10,8 @@ import Pagination from "./Pagination";
 import ProductModal from "./ProductModal";
 import TableActions from "./TableActions";
 import LoadingSkeleton from "./LoadingSkeleton";
+import { cp } from "fs";
+import { formatNumberWithCommas } from "@/utils/numberFormat";
 
 const ProductsTable = () => {
   const param = useSearchParams();
@@ -112,34 +114,35 @@ const ProductsTable = () => {
                   <div
                     key={i}
                     className={`truncate-text ${
-                      i === 0
-                        ? "w-1/12                                                      "
-                        : "flex-1"
+                      i === 0 &&
+                      "w-1/12                                                      "
+                    } ${i === columns.length - 1 && "w-1/12"} ${
+                      i !== 0 && i !== columns.length - 1 && "flex-1"
                     } `}
                   >
                     {cols}
                   </div>
                 ))}
-                <div>Actions</div>
+                {/* <div>Actions</div> */}
               </div>
-              <div className="">
+              <div>
                 {products.map((product, i) => (
-                  <div key={i} className={`table-col`}>
+                  <div key={i} className={`table-col capitalize`}>
                     <div className="w-1/12 truncate-text">{product.id}</div>
-                    <div className="flex-1 truncate-text capitalize">
-                      {product.name}
-                    </div>
+                    <div className="flex-1 truncate-text">{product.name}</div>
                     <div className="flex-1 truncate-text">
                       {product.category}
                     </div>
-                    <div className="flex-1 truncate-text">{product.rate}/=</div>
                     <div className="flex-1 truncate-text">
-                      {product.other_cost}/=
+                      {formatNumberWithCommas(product.rate)}/=
                     </div>
                     <div className="flex-1 truncate-text">
-                      {product.production_cost}/=
+                      {formatNumberWithCommas(product.production_cost)}/=
                     </div>
-                    <div className="flex items-center gap-2 text-primary-foreground ">
+                    <div className="w-1/12 truncate-text">
+                      {formatNumberWithCommas(product.other_cost)}/=
+                    </div>
+                    {/* <div className="flex items-center gap-2 text-primary-foreground ">
                       <div
                         className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
                         onClick={() => {
@@ -160,7 +163,7 @@ const ProductsTable = () => {
                       >
                         <RiDeleteBin6Line />
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 ))}
               </div>

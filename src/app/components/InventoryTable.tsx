@@ -99,7 +99,12 @@ const InventoryTable = () => {
                 {columns.map((col, i) => (
                   <p
                     key={i}
-                    className={`truncate-text ${i === 0 ? "w-1/12" : "flex-1"}`}
+                    className={`truncate-text ${
+                      i === 0 &&
+                      "w-1/12                                                      "
+                    } ${i === columns.length - 1 && "w-1/12"} ${
+                      i !== 0 && i !== columns.length - 1 && "flex-1"
+                    } `}
                   >
                     {col}
                   </p>
@@ -109,7 +114,7 @@ const InventoryTable = () => {
                 {inventory.map((item, i) => (
                   <div
                     key={i}
-                    className="table-col"
+                    className="table-col capitalize"
                     onClick={() => {
                       console.log(item);
                     }}
@@ -126,7 +131,7 @@ const InventoryTable = () => {
                     </div>
                     <div className="flex-1 truncate-text">{item.quantity}</div>
                     <div className="flex-1 truncate-text">{item.status}</div>
-                    <div className="flex-1 truncate-text">{item.date}</div>
+                    <div className="w-1/12 truncate-text">{item.date}</div>
 
                     {/* <div className="xl:px-5 px-3 text-primary-foreground">
                     <div

@@ -1,5 +1,6 @@
 import { FilterMemoType } from "@/types";
-import React, { SetStateAction } from "react";
+import { formatNumberWithCommas } from "@/utils/numberFormat";
+import React, { SetStateAction, useEffect } from "react";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
@@ -72,10 +73,10 @@ const MemoFilterTable = ({
   };
 
   return (
-    <div className="overflow-y-auto">
+    <div className="overflow-y-auto remove-scrollbar">
       {data.length > 0 ? (
-        <div className="h-[15rem] xl:h-[24rem] xl:w-full mt-4 w-[35rem]">
-          <div className="table-header pt-4">
+        <div className="h-[15rem] xl:h-[22rem] xl:w-full mt-4 w-[35rem]">
+          <div className="table-header pt-4 sticky top-0 z-20">
             <p className="w-1/12 truncate-text">ID</p>
             <p className="flex-1 truncate-text">products</p>
             <p className="flex-1 truncate-text">quantity</p>
@@ -90,9 +91,9 @@ const MemoFilterTable = ({
               >
                 <p>Select</p>
                 {isAllSelected() ? (
-                  <ImCheckboxChecked />
+                  <ImCheckboxChecked className="text-sm " />
                 ) : (
-                  <ImCheckboxUnchecked />
+                  <ImCheckboxUnchecked className="text-sm " />
                 )}
               </div>
             )}
@@ -109,18 +110,20 @@ const MemoFilterTable = ({
                 <p className="flex-1 truncate-text">{item.products}</p>
                 <p className="flex-1 truncate-text">{item.quantity}</p>
                 <p className="flex-1 truncate-text">{item.total}</p>
-                <p className="flex-1 truncate-text">{item.amount}</p>
+                <p className="flex-1 truncate-text">
+                  {formatNumberWithCommas(Number(item.amount))}
+                </p>
                 <p className="flex-1 truncate-text">{item.current_status}</p>
                 <p className="flex-1 truncate-text">{item.date}</p>
                 {type === "selection" && (
-                  <div className="w-[6rem] text-xl flex items-center justify-center cursor-pointer">
+                  <div className="w-[6rem] flex items-center text-sm justify-center cursor-pointer">
                     <div onClick={() => handleCheckboxChange(item)}>
                       {selectedData?.some(
                         (selectedItem) => selectedItem.id === item.id
                       ) ? (
                         <ImCheckboxChecked />
                       ) : (
-                        <MdCheckBoxOutlineBlank />
+                        <ImCheckboxUnchecked />
                       )}
                     </div>
                   </div>
@@ -130,7 +133,7 @@ const MemoFilterTable = ({
           </div>
         </div>
       ) : (
-        <div className="h-[15rem] xl:h-[24rem] text-primary-foreground font-bold xl:text-3xl text-xl text-center remove-scrollbar  mt-4">
+        <div className="h-[15rem] xl:h-[24rem] text-primary-foreground font-bold xl:text-3xl text-xl text-center    mt-4">
           <p className="pt-10">No Data Found</p>
         </div>
       )}
