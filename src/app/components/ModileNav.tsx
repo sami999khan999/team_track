@@ -13,7 +13,7 @@ const ModileNav = () => {
   }
 
   return (
-    <div className="w-full h-[3rem] xl:hidden rounded shadow-2xl shadow-background xl:rounded-none fixed bottom-0 bg-secondary z-20">
+    <div className="w-full h-[3rem] xl:hidden rounded shadow-2xl shadow-background xl:rounded-none fixed bottom-0 bg-secondary border-t border-border_color z-20">
       <NavLinks />
     </div>
   );

@@ -276,33 +276,62 @@ const MemoSingleView = ({ id }: { id: number }) => {
           memoHeadingData !== null &&
           memoColumnData.length > 0 && (
             <>
-              <div className="customer-info flex justify-between px-4">
-                <div className="left">
-                  <p className="customer-name tracking-wider font-bold text-base xl:text-xl capitalize">
-                    {memoHeadingData?.customer}
-                  </p>
-                  <p className="address text-sm xl:text-lg font-medium">
-                    {memoHeadingData?.address}
-                  </p>
+              <div className="hidden xl:block">
+                <div className="customer-info flex justify-between px-4 ">
+                  <div className="left">
+                    <p className="customer-name tracking-wider font-bold text-base xl:text-xl capitalize text-primary">
+                      {memoHeadingData?.customer}
+                    </p>
+                    <p className="address text-sm xl:text-lg font-normal">
+                      {memoHeadingData?.address}
+                    </p>
+                  </div>
+                  <div className="right text-base xl:text-xl">
+                    <p>
+                      Date:{" "}
+                      <span className="bold font-semibold text-primary">
+                        {memoHeadingData?.date}
+                      </span>
+                    </p>
+                    <p>
+                      Challan No:{" "}
+                      <span className="bold font-semibold text-primary">
+                        {memoHeadingData?.memo_id}
+                      </span>
+                    </p>
+                  </div>
                 </div>
-                <div className="right text-base xl:text-xl">
-                  <p>
-                    Date:{" "}
-                    <span className="bold font-semibold">
-                      {memoHeadingData?.date}
-                    </span>
-                  </p>
-                  <p>
-                    Challan No:{" "}
-                    <span className="bold font-semibold">
-                      {memoHeadingData?.memo_id}
-                    </span>
-                  </p>
+              </div>
+
+              <div className="xl:hidden ">
+                <div className="px-2 flex flex-col gap-4">
+                  <div className="left text-center">
+                    <p className="customer-name tracking-wider font-bold text-base xl:text-xl capitalize text-primary">
+                      {memoHeadingData?.customer}
+                    </p>
+                    <p className="address text-sm xl:text-lg font-medium">
+                      {memoHeadingData?.address}
+                    </p>
+                  </div>
+                  <div className="right text-sm xl:text-xl flex justify-between">
+                    <p>
+                      Date:{" "}
+                      <span className="bold font-semibold text-primary">
+                        {memoHeadingData?.date}
+                      </span>
+                    </p>
+                    <p>
+                      Challan No:{" "}
+                      <span className="bold font-semibold text-primary">
+                        {memoHeadingData?.memo_id}
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
 
               <div className="overflow-x-auto">
-                <div className="w-[40rem] xl:w-full mt-4">
+                <div className="w-[41rem] xl:w-full mt-4">
                   <div className="table-header py-3">
                     {column &&
                       column.map((col, i) => (
@@ -350,12 +379,12 @@ const MemoSingleView = ({ id }: { id: number }) => {
                     ))}
                   </div>
                   <div className="px-4 xl:px-6 flex border-b border-border_color justify-between py-2 xl:py-3 text-sm xl:text-xl">
-                    <div className="w-1/12 font-bold">Total</div>
+                    <div className="w-1/12 font-bold text-primary">Total</div>
                     <div className="flex-1"></div>
                     <div className="flex-1"></div>
                     <div className="flex-1"></div>
                     <div className="flex-1"></div>
-                    <div className="w-1/12 font-bold">
+                    <div className="w-1/12 font-bold text-primary">
                       {formatNumberWithCommas(memoHeadingData?.total_amount)}/=
                     </div>
                   </div>

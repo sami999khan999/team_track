@@ -308,6 +308,49 @@ export type SympleInvoiceCreateType = {
   }[];
 };
 
+export type DashboardData = {
+  employee: {
+    totalEmployee: number;
+    activeEmployee: number;
+    employeeOftheMounth: {
+      name: string;
+      id: number;
+      totalEarned: number;
+      producedUnites: number;
+    };
+    topEmployees: {
+      name: string;
+      id: number;
+    }[];
+  };
+  invoice: {
+    paid: number;
+    notPaied: number;
+    total: number;
+  };
+  inventory: {
+    inStock: number;
+    sold: number;
+    total: number;
+  };
+  totalCustomer: number;
+  production: {
+    totalProduction: number;
+    totalProductionInAMounth: number;
+    paiedProduction: number;
+    notPaiedProduction: number;
+  };
+  products: {
+    totalProducts: number;
+    topSoledProducts: {
+      name: string;
+      id: number;
+      soldUnits: number;
+    };
+  };
+  totalCategory: number;
+};
+
 export type DropdownType = {
   id?: number | string;
   name?: string;

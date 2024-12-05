@@ -15,7 +15,7 @@ import {
 } from "react-icons/md";
 import { RiCustomerServiceFill, RiMenuUnfoldLine } from "react-icons/ri";
 
-export const navLinks = [
+export const navitems = [
   { path: "/", name: "Dashboard", logo: <MdDashboard /> },
   {
     path: "/products",
@@ -48,7 +48,7 @@ const NavLinks = () => {
         </div>
 
         {/* Navigation Links */}
-        {navLinks.map((navItem, i) => (
+        {navitems.map((navItem, i) => (
           <Link
             key={i}
             href={navItem.path}
