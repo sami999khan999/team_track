@@ -1,8 +1,7 @@
 import { FilterMemoType } from "@/types";
 import { formatNumberWithCommas } from "@/utils/numberFormat";
-import React, { SetStateAction, useEffect } from "react";
+import React, { SetStateAction } from "react";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
-import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
 const MemoFilterTable = ({
   data,

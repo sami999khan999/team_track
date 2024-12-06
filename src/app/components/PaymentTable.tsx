@@ -58,7 +58,7 @@ const PaymentTable = () => {
     };
 
     fetchEmployeeBill();
-  }, [currentPage]);
+  }, [currentPage, reload]);
 
   return (
     <div>

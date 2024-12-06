@@ -1,13 +1,11 @@
 import { CustomerType, EmployeeType } from "@/types";
-import React, { useState } from "react";
-import { MdOutlineEdit } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import AddFormModal from "./AddFormModal";
-import DeleteModal from "./DeleteModal";
 import { deleteCustomer } from "@/utils/customerApiRerquest";
 import { deleteEmployee } from "@/utils/employeeApiRequest";
 import { usePathname } from "next/navigation";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
+import AddFormModal from "./AddFormModal";
+import DeleteModal from "./DeleteModal";
 import { ErrorToast, SuccessToast } from "./Toast";
 
 // type TableDataType = EmployeeType | CustomerType;

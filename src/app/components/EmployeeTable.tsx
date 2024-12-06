@@ -13,7 +13,6 @@ import { logo } from "@/utils/logo";
 
 const EmployeeTable = () => {
   const param = useSearchParams();
-  const path = useRouter();
   const [employees, setEmployees] = useState<EmployeeType[]>([]);
   const [currentPage, setCurrentPage] = useState(
     Number(param.get("page")) || 1

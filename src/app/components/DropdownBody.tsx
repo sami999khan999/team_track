@@ -1,7 +1,7 @@
 "use client";
 
 import { DropdownType } from "@/types";
-import React, { SetStateAction, useState } from "react";
+import React, { SetStateAction } from "react";
 
 const DropdownBody = ({
   type,

@@ -12,7 +12,6 @@ import { formatNumberWithCommas } from "@/utils/numberFormat";
 import { logo } from "@/utils/logo";
 
 const ProductionTable = () => {
-  const path = useRouter();
   const param = useSearchParams();
 
   const [currentPage, setCurrentPage] = useState(

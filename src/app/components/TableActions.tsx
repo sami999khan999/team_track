@@ -1,8 +1,7 @@
 import React, { SetStateAction } from "react";
+import { HiPlus } from "react-icons/hi";
 import { IoFilterSharp } from "react-icons/io5";
 import { MdOutlineSort } from "react-icons/md";
-import { HiPlus } from "react-icons/hi";
-import { CiShoppingCart } from "react-icons/ci";
 
 const TableActions = ({
   setIsOpen,

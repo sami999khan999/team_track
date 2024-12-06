@@ -1,22 +1,18 @@
 "use client";
 
 import { ProductType } from "@/types";
+import { logo } from "@/utils/logo";
+import { formatNumberWithCommas } from "@/utils/numberFormat";
 import { getProducts } from "@/utils/productApiRequests";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { MdOutlineEdit } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import LoadingSkeleton from "./LoadingSkeleton";
 import Pagination from "./Pagination";
 import ProductModal from "./ProductModal";
 import TableActions from "./TableActions";
-import LoadingSkeleton from "./LoadingSkeleton";
-import { cp } from "fs";
-import { formatNumberWithCommas } from "@/utils/numberFormat";
-import { logo } from "@/utils/logo";
 
 const ProductsTable = () => {
   const param = useSearchParams();
-  const path = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalAction, setModalAction] = useState<
     "create" | "update" | "delete" | undefined
