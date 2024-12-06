@@ -47,8 +47,8 @@ const dashboardData: DashboardData = {
   },
 
   invoice: {
-    paid: 20,
-    notPaied: 5,
+    receivedPayment: 20,
+    pending: 5,
     total: 25,
   },
 
@@ -63,8 +63,8 @@ const dashboardData: DashboardData = {
   production: {
     totalProduction: 20,
     totalProductionInAMounth: 30,
-    paiedProduction: 15,
-    notPaiedProduction: 5,
+    paid: 15,
+    due: 5,
   },
 
   products: {
@@ -378,18 +378,20 @@ const Dashboard = () => {
                     <div className="border border-border_color"></div>
 
                     <div className="space-y-4 w-full">
-                      <div className="text-2xl opacity-30">Paid</div>
+                      <div className="text-2xl opacity-30">
+                        Received Payment
+                      </div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData.invoice.paid}
+                        {dashboardData.invoice.receivedPayment}
                       </div>
                     </div>
 
                     <div className="border border-border_color"></div>
 
                     <div className="space-y-4 w-full">
-                      <div className="text-2xl opacity-30">Not Paied</div>
+                      <div className="text-2xl opacity-30">Pending</div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData.invoice.notPaied}
+                        {dashboardData.invoice.pending}
                       </div>
                     </div>
                   </div>
@@ -426,7 +428,7 @@ const Dashboard = () => {
                     <div className="border border-border_color"></div>
 
                     <div className="space-y-4 w-full">
-                      <div className="text-2xl opacity-30">Not Paied</div>
+                      <div className="text-2xl opacity-30">In Stock</div>
                       <div className="text-3xl text-primary font-semibold">
                         {dashboardData.inventory.inStock}
                       </div>
@@ -470,15 +472,15 @@ const Dashboard = () => {
                     <div className="space-y-4 w-full">
                       <div className="text-2xl opacity-30">Paid</div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData.production.paiedProduction}
+                        {dashboardData.production.paid}
                       </div>
                     </div>
                     <div className="border border-border_color"></div>
 
                     <div className="space-y-4 w-full">
-                      <div className="text-2xl opacity-30">Not Paid</div>
+                      <div className="text-2xl opacity-30">Due</div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData.production.notPaiedProduction}
+                        {dashboardData.production.due}
                       </div>
                     </div>
                   </div>
