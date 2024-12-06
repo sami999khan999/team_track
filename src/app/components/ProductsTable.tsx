@@ -17,9 +17,9 @@ const ProductsTable = () => {
   const [modalAction, setModalAction] = useState<
     "create" | "update" | "delete" | undefined
   >();
-  const [activeId, setActiveId] = useState<number | undefined | string>(
-    undefined
-  );
+  // const [activeId, setActiveId] = useState<number | undefined | string>(
+  //   undefined
+  // );
   const [currentPage, setCurrentPage] = useState(
     Number(param.get("page")) || 1
   );
@@ -30,7 +30,7 @@ const ProductsTable = () => {
 
   const columns = products.length > 0 ? Object.keys(products[0]) : [];
 
-  const activeProduct = products.find((porduct) => porduct.id === activeId);
+  // const activeProduct = products.find((porduct) => porduct.id === activeId);
 
   useEffect(() => {
     const productsGet = async () => {
@@ -74,7 +74,7 @@ const ProductsTable = () => {
       {isModalOpen && (
         <ProductModal
           modalAction={modalAction}
-          activeProduct={activeProduct}
+          // activeProduct={activeProduct}
           setIsModalOpen={setIsModalOpen}
           setReload={setReload}
           reload={reload}
