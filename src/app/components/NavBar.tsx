@@ -1,12 +1,9 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import { usePathname } from "next/navigation";
 import ThemeToggler from "./ThemeToggler";
 
 const NavBar = () => {
-  const path = useRouter();
-
   const pathname = usePathname();
 
   if (pathname === "/login" || pathname === "/signup") {

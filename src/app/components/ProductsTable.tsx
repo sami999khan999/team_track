@@ -4,7 +4,7 @@ import { ProductType } from "@/types";
 import { logo } from "@/utils/logo";
 import { formatNumberWithCommas } from "@/utils/numberFormat";
 import { getProducts } from "@/utils/productApiRequests";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoadingSkeleton from "./LoadingSkeleton";
 import Pagination from "./Pagination";

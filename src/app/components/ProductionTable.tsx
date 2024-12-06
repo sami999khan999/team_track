@@ -1,15 +1,15 @@
 "use client";
 
 import { PorductionType } from "@/types";
+import { logo } from "@/utils/logo";
+import { formatNumberWithCommas } from "@/utils/numberFormat";
 import { getProduction } from "@/utils/productionApiRequests";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoadingSkeleton from "./LoadingSkeleton";
 import Pagination from "./Pagination";
 import ProductionModal from "./ProductionModal";
 import TableActions from "./TableActions";
-import { formatNumberWithCommas } from "@/utils/numberFormat";
-import { logo } from "@/utils/logo";
 
 const ProductionTable = () => {
   const param = useSearchParams();

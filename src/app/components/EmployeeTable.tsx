@@ -2,14 +2,14 @@
 
 import { EmployeeType } from "@/types";
 import { getEmployee } from "@/utils/employeeApiRequest";
-import { useRouter, useSearchParams } from "next/navigation";
+import { logo } from "@/utils/logo";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import AddFormModal from "./AddFormModal";
+import LoadingSkeleton from "./LoadingSkeleton";
 import Pagination from "./Pagination";
 import Table from "./Table";
 import TableActions from "./TableActions";
-import LoadingSkeleton from "./LoadingSkeleton";
-import { logo } from "@/utils/logo";
 
 const EmployeeTable = () => {
   const param = useSearchParams();
