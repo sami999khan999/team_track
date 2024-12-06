@@ -13,6 +13,8 @@ import {
 import BillFilterTable from "./BillFilterTable";
 import { CgSpinnerTwo } from "react-icons/cg";
 import { formatNumberWithCommas } from "@/utils/numberFormat";
+import toast from "react-hot-toast";
+import { ErrorToast, SuccessToast } from "./Toast";
 
 const PaymentModal = ({
   setIsopen,
@@ -100,11 +102,10 @@ const PaymentModal = ({
     };
 
     try {
-      // Call API to fetch filtered data
       const response = await getFilteredEmployeeBillData(filterParameters);
 
       if (response?.success) {
-        setFilteredData(response.data); // Set filtered data if response is successful
+        setFilteredData(response.data);
       } else {
         console.error(
           "Error: Could not fetch filtered employee bill data",
@@ -112,7 +113,7 @@ const PaymentModal = ({
         );
       }
     } catch (error) {
-      console.error("Error during filter operation:", error); // Log any unexpected errors
+      console.error("Error during filter operation:", error);
     }
   };
 
@@ -131,11 +132,24 @@ const PaymentModal = ({
       if (response.success) {
         setIsopen(false);
         setReload((prv) => !prv);
+
+        toast.custom((t) => (
+          <SuccessToast visible={t.visible}>
+            Payment Created Successfully!
+          </SuccessToast>
+        ));
       } else {
         console.log("Error: Failed to create bill", response.message);
+
+        toast.custom((t) => (
+          <ErrorToast visible={t.visible}>Failed To Create Payment!</ErrorToast>
+        ));
       }
     } catch (err) {
       console.log(err);
+      toast.custom((t) => (
+        <ErrorToast visible={t.visible}>Failed To Create Payment!</ErrorToast>
+      ));
     } finally {
       setIsLoading(false);
     }
@@ -286,7 +300,7 @@ const PaymentModal = ({
                   <BillFilterTable data={selectedData} method={filterMethod} />
                   <div className="flex items-center justify-center mt-4">
                     <button
-                      className="submit-btn mt-0 h-9 xl:w-[17rem]"
+                      className="submit-btn mt-0 xl:w-[17rem]"
                       onClick={billCreateHandler}
                       disabled={isLoading}
                     >

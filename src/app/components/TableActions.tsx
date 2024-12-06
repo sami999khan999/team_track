@@ -8,12 +8,14 @@ const TableActions = ({
   setIsOpen,
   tableName,
   setModalAction,
+  logo,
 }: {
   setIsOpen?: React.Dispatch<SetStateAction<boolean>>;
   tableName: string;
   setModalAction?: React.Dispatch<
     SetStateAction<"create" | "update" | "delete" | undefined>
   >;
+  logo: React.ReactNode;
 }) => {
   return (
     <div className="">
@@ -41,7 +43,7 @@ const TableActions = ({
 
       <div className="flex flex-col xl:flex-row gap-4 justify-between text-center ">
         <div className="text-xl flex items-center justify-center gap-4 xl:text-left font-sour_gummy xl:text-3xl font-semibold tracking-wider text-primary-foreground">
-          <CiShoppingCart className="text-2xl xl:text-4xl font-bold" />
+          {logo}
           <p>{`${tableName}`}</p>
         </div>
         <div className="flex gap-2 justify-around">

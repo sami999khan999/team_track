@@ -4,8 +4,10 @@ import { CustomerType, EmployeeType } from "@/types";
 import { createCustomer, updateCustomer } from "@/utils/customerApiRerquest";
 import { createEmployee, updateEmployee } from "@/utils/employeeApiRequest";
 import React, { Dispatch, SetStateAction, useState } from "react";
+import toast from "react-hot-toast";
 import { CgSpinnerTwo } from "react-icons/cg";
 import { IoMdClose } from "react-icons/io";
+import { ErrorToast, SuccessToast } from "./Toast";
 
 type TableDataType = EmployeeType | CustomerType;
 
@@ -100,6 +102,20 @@ const AddFormModal = ({
             if (setIsFormOpen) {
               setIsFormOpen(false);
             }
+
+            toast.custom((t) => (
+              <SuccessToast visible={t.visible}>
+                Employee Added Successfully!
+              </SuccessToast>
+            ));
+          } else {
+            console.log(response.message);
+
+            toast.custom((t) => (
+              <ErrorToast visible={t.visible}>
+                Failed To Add Employee!
+              </ErrorToast>
+            ));
           }
 
           setIsLoading(false);
@@ -128,6 +144,20 @@ const AddFormModal = ({
             if (setIsFormOpen) {
               setIsFormOpen(false);
             }
+
+            toast.custom((t) => (
+              <SuccessToast visible={t.visible}>
+                Customer Add Successfully!
+              </SuccessToast>
+            ));
+          } else {
+            console.log(response.message);
+
+            toast.custom((t) => (
+              <ErrorToast visible={t.visible}>
+                Failed To Update Customer!
+              </ErrorToast>
+            ));
           }
 
           setReload(false);
@@ -160,6 +190,20 @@ const AddFormModal = ({
             if (response.success) {
               setReload((prv) => !prv);
               closeModal();
+
+              toast.custom((t) => (
+                <SuccessToast visible={t.visible}>
+                  Employee Updated Successfully!
+                </SuccessToast>
+              ));
+            } else {
+              console.log(response.message);
+
+              toast.custom((t) => (
+                <ErrorToast visible={t.visible}>
+                  Failed To Updated Employee!
+                </ErrorToast>
+              ));
             }
 
             setIsLoading(false);
@@ -185,6 +229,20 @@ const AddFormModal = ({
             if (response.success) {
               setReload((prv) => !prv);
               closeModal();
+
+              toast.custom((t) => (
+                <SuccessToast visible={t.visible}>
+                  Customer Added Successfully!
+                </SuccessToast>
+              ));
+            } else {
+              console.log(response.message);
+
+              toast.custom((t) => (
+                <ErrorToast visible={t.visible}>
+                  Failed To Add Customer!
+                </ErrorToast>
+              ));
             }
 
             setIsLoading(false);

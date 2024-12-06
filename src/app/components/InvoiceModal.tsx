@@ -16,6 +16,8 @@ import InvoiceCreateTable from "./InvoiceCreateTable";
 import { getCustoer } from "@/utils/customerApiRerquest";
 import { useRouter } from "next/navigation";
 import { CgSpinnerTwo } from "react-icons/cg";
+import toast from "react-hot-toast";
+import { ErrorToast, SuccessToast } from "./Toast";
 
 const InvoiceModal = ({
   setIsOpen,
@@ -87,13 +89,22 @@ const InvoiceModal = ({
         date: date ? date : "",
       };
 
-      console.log(data);
-
       const response = await createInvoice(data);
 
       if (response.success) {
         path.push(`invoice/${response.challan_id}`);
-        console.log(response);
+
+        toast.custom((t) => (
+          <SuccessToast visible={t.visible}>
+            Invoice Created Successfully!
+          </SuccessToast>
+        ));
+      } else {
+        console.log(response.message);
+
+        toast.custom((t) => (
+          <ErrorToast visible={t.visible}>Failed To Create Invoice!</ErrorToast>
+        ));
       }
 
       setIsLoading(false);
@@ -165,7 +176,7 @@ const InvoiceModal = ({
       // onClick={() => setIsOpen((prv) => !prv)}
     >
       <div
-        className="relative w-[95%] xl:w-[90%] h-[70%] overflow-auto bg-secondary border border-border_color rounded-xl px-4 xl:py-8 py-4 remove-scrollbar"
+        className="relative w-[95%] xl:w-[90%] h-[75%] overflow-auto bg-secondary border border-border_color rounded-xl px-4 xl:py-8 py-4 remove-scrollbar"
         // onClick={(e) => e.stopPropagation()}
       >
         <div className="close-btn" onClick={() => setIsOpen((prv) => !prv)}>
@@ -296,7 +307,7 @@ const InvoiceModal = ({
               {filterdInventoryIds !== undefined &&
               filterdInventoryIds.length >= 1 ? (
                 <button
-                  className="submit-btn mt-0 h-9 xl:w-[17rem]
+                  className="submit-btn mt-0 xl:w-[17rem]
                 "
                   onClick={invoiceCreateHandler}
                   disabled={isLoading}

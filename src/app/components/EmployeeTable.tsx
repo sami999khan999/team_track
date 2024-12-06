@@ -9,6 +9,7 @@ import Pagination from "./Pagination";
 import Table from "./Table";
 import TableActions from "./TableActions";
 import LoadingSkeleton from "./LoadingSkeleton";
+import { logo } from "@/utils/logo";
 
 const EmployeeTable = () => {
   const param = useSearchParams();
@@ -78,7 +79,11 @@ const EmployeeTable = () => {
       )}
 
       <div className="table-wrapper">
-        <TableActions setIsOpen={setIsFormOpen} tableName="Employee" />
+        <TableActions
+          setIsOpen={setIsFormOpen}
+          tableName="Employee"
+          logo={logo.Employees}
+        />
 
         {/* Loading State */}
         {isLoading && (

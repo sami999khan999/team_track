@@ -8,6 +8,7 @@ import { EmployeeBillType } from "@/types";
 import { getEmployeeBill } from "@/utils/employeeBillApiRequests";
 import { useRouter, useSearchParams } from "next/navigation";
 import LoadingSkeleton from "./LoadingSkeleton";
+import { logo } from "@/utils/logo";
 
 const PaymentTable = () => {
   const path = useRouter();
@@ -63,7 +64,11 @@ const PaymentTable = () => {
     <div>
       {isOpen && <PaymentModal setIsopen={setIsOpen} setReload={setReload} />}
       <div className="table-wrapper">
-        <TableActions setIsOpen={setIsOpen} tableName="Payment" />
+        <TableActions
+          setIsOpen={setIsOpen}
+          tableName="Payment"
+          logo={logo.Payment}
+        />
 
         {isLoading && (
           // <div className="text-primary-foreground tracking-wide text-xl xl:text-4xl text-center font-semibold flex items-center justify-center">

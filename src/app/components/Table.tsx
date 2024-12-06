@@ -7,6 +7,8 @@ import DeleteModal from "./DeleteModal";
 import { deleteCustomer } from "@/utils/customerApiRerquest";
 import { deleteEmployee } from "@/utils/employeeApiRequest";
 import { usePathname } from "next/navigation";
+import toast from "react-hot-toast";
+import { ErrorToast, SuccessToast } from "./Toast";
 
 // type TableDataType = EmployeeType | CustomerType;
 
@@ -28,8 +30,6 @@ const Table = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const path = usePathname();
-
-  console.log(tableData);
 
   // const handleActionClick = (id: number) => {
   //   setActiveId(activeId === id ? null : id);
@@ -55,6 +55,20 @@ const Table = ({
           closeModal();
         }
         setReload((prv) => !prv);
+
+        toast.custom((t) => (
+          <SuccessToast visible={t.visible}>
+            Employee Deleted Successfully!
+          </SuccessToast>
+        ));
+      } else {
+        console.log(response.message);
+
+        toast.custom((t) => (
+          <ErrorToast visible={t.visible}>
+            Failed To Delete Employee!
+          </ErrorToast>
+        ));
       }
     }
 
@@ -67,6 +81,20 @@ const Table = ({
           closeModal();
         }
         setReload((prv) => !prv);
+
+        toast.custom((t) => (
+          <SuccessToast visible={t.visible}>
+            Customer Deleted Successfully!
+          </SuccessToast>
+        ));
+      } else {
+        console.log(response.message);
+
+        toast.custom((t) => (
+          <ErrorToast visible={t.visible}>
+            Failed To Delete Customer!
+          </ErrorToast>
+        ));
       }
     }
   };

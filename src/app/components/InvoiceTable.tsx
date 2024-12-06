@@ -5,9 +5,14 @@ import TableActions from "./TableActions";
 import Pagination from "./Pagination";
 import InvoiceModal from "./InvoiceModal";
 import { InvoiceType } from "@/types";
-import { getInvoice } from "@/utils/invoiceApiRequests";
+import { deleteInvoice, getInvoice } from "@/utils/invoiceApiRequests";
 import { useRouter, useSearchParams } from "next/navigation";
 import LoadingSkeleton from "./LoadingSkeleton";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import DeleteModal from "./DeleteModal";
+import toast from "react-hot-toast";
+import { ErrorToast, SuccessToast } from "./Toast";
+import { logo } from "@/utils/logo";
 
 const InvoiceTable = () => {
   const path = useRouter();
@@ -19,8 +24,15 @@ const InvoiceTable = () => {
   );
   const [totalPage, setTotalPage] = useState<number | undefined>(1);
   const [invoice, setInvoice] = useState<InvoiceType[]>([]);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [activeElement, setActiveElement] = useState({
+    id: 0,
+    name: "",
+  });
 
   const [isLoading, setIsLoading] = useState(true);
+  const [reload, setReload] = useState(false);
+  const [deleteIsLoading, setDeleteIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchInvoice = async () => {
@@ -57,14 +69,58 @@ const InvoiceTable = () => {
     };
 
     fetchInvoice();
-  }, [currentPage]);
+  }, [currentPage, reload]);
+
+  const deleteHandler = async () => {
+    try {
+      setDeleteIsLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 250));
+      const id = activeElement.id;
+      const response = await deleteInvoice(id);
+      if (response.success) {
+        setReload(true);
+        setIsDeleteModalOpen(false);
+        toast.custom((t) => (
+          <SuccessToast visible={t.visible}>
+            Invoice Deleted Successfully!
+          </SuccessToast>
+        ));
+      } else {
+        console.log("Error While Deleting Invoice: ", response.message);
+        toast.custom((t) => (
+          <ErrorToast visible={t.visible}>Can Not Deleted Invoice!</ErrorToast>
+        ));
+      }
+    } catch (err) {
+      console.log("Unexpected Error While Deleting Invoice: ", err);
+      toast.custom((t) => (
+        <ErrorToast visible={t.visible}>Can Not Deleted Invoice!</ErrorToast>
+      ));
+    } finally {
+      setDeleteIsLoading(false);
+    }
+  };
 
   return (
     <div>
       {isOpen && <InvoiceModal setIsOpen={setIsOpen} />}
 
+      {isDeleteModalOpen && (
+        <DeleteModal
+          activeElement={activeElement}
+          handler={deleteHandler}
+          setIsOpen={setIsDeleteModalOpen}
+          title="Delete Invoice"
+          isLoading={deleteIsLoading}
+        />
+      )}
+
       <div className="table-wrapper">
-        <TableActions tableName="Invoice" setIsOpen={setIsOpen} />
+        <TableActions
+          tableName="Invoice"
+          setIsOpen={setIsOpen}
+          logo={logo.Invoice}
+        />
 
         {isLoading && <LoadingSkeleton />}
 
@@ -87,7 +143,10 @@ const InvoiceTable = () => {
                 <p className="flex-1 truncate-text">Quantity</p>
                 <p className="flex-1 truncate-text">Total</p>
                 <p className="flex-1 truncate-text">Status</p>
-                <p className="w-1/12 truncate-text">Date</p>
+                <p className="flex-1 truncate-text">Date</p>
+                <p className="w-[4rem] truncate-text flex justify-center">
+                  Date
+                </p>
               </div>
 
               {/* Table Rows */}
@@ -110,7 +169,26 @@ const InvoiceTable = () => {
                     <div className="flex-1 truncate-text">
                       {item.current_status}
                     </div>
-                    <div className="w-1/12 truncate-text">{item.date}</div>
+                    <div className="flex-1 truncate-text">{item.date}</div>
+                    <div
+                      className="w-[4rem] flex items-center justify-center text-primary-foreground"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      <div
+                        className="w-full flex items-center justify-center hover:bg-primary hover:text-background p-1 rounded-sm duration-200"
+                        onClick={() => {
+                          setIsDeleteModalOpen(true);
+                          setActiveElement({
+                            id: item.id,
+                            name: item.customer.name,
+                          });
+                        }}
+                      >
+                        <RiDeleteBin6Line />
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>

@@ -81,6 +81,7 @@ const DashboardModal = ({
   const [employeeWithDuplicates, setEmployeeWithDuplicates] = useState<
     number[]
   >([]);
+  const [date, setDate] = useState<string>();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -327,9 +328,10 @@ const DashboardModal = ({
       const invoiceCreateData = {
         customer: selectedCustomer,
         production: formatedData,
+        date: date ? date : "",
       };
 
-      await new Promise((resolve) => resolve(setTimeout(resolve, 250)));
+      await new Promise((resolve) => setTimeout(resolve, 250));
 
       const response = await createInvoiceSimpleVersion(invoiceCreateData);
 
@@ -498,10 +500,7 @@ const DashboardModal = ({
     } else {
       setEmployees(originalEmployees);
     }
-
-    console.log("================================");
   }, [selectedProduct, originalEmployees, productions]);
-  console.log(selectedEmployee);
 
   return (
     <div>
@@ -531,16 +530,29 @@ const DashboardModal = ({
               <p className="text-center xl:text-3xl text-2xl text-primary-foreground font-sour_gummy font-semibold mb-2 ">
                 Select Customer
               </p>
-              <Dropdown
-                data={customers}
-                totalPage={customerTotalPage}
-                currentPage={customerCurrentPage}
-                setCurrentPage={setCustomerCurrentPage}
-                setId={setSelectedCustomer}
-                setSelectionError={setCustomerSelecteonError}
-                type="customer"
-              />
-              <p className="error_message absolute">{customerSelecteonError}</p>
+              <div className="flex flex-col xl:flex-row gap-6">
+                <div className="w-full">
+                  <Dropdown
+                    data={customers}
+                    totalPage={customerTotalPage}
+                    currentPage={customerCurrentPage}
+                    setCurrentPage={setCustomerCurrentPage}
+                    setId={setSelectedCustomer}
+                    setSelectionError={setCustomerSelecteonError}
+                    type="customer"
+                  />
+                  <p className="error_message absolute">
+                    {customerSelecteonError}
+                  </p>
+                </div>
+                <div className="w-full">
+                  <input
+                    type="date"
+                    className="inputfield"
+                    onChange={(e) => setDate(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
 
             <div>
@@ -672,7 +684,7 @@ const DashboardModal = ({
                             </div>
                           </div>
                           <div
-                            className="bg-secondary-foreground  px-3 text-xl group hover:bg-primary hover:text-background my-1 flex items-center text-primary-foreground "
+                            className="bg-secondary-foreground  px-3 text-xl group hover:bg-primary hover:text-background my-1 flex items-center text-primary-foreground rounded-sm"
                             onClick={() => removeHandler(i)}
                           >
                             <IoMdClose className="group-hover:scale-125 duration-200" />
@@ -682,7 +694,7 @@ const DashboardModal = ({
                     </div>
                     <div className="flex justify-center">
                       <button
-                        className="submit-btn xl:w-fit text-xl xl:px-20 xl:text-2xl mb-1"
+                        className="submit-btn xl:w-fit xl:px-20 xl:text-2xl mb-1"
                         onClick={submitHandler}
                         disabled={isLoading}
                       >
@@ -691,7 +703,7 @@ const DashboardModal = ({
                             <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
                           </div>
                         ) : (
-                          <div>Inventory</div>
+                          <div className="text-xl">Create Invoice</div>
                         )}
                       </button>
                     </div>

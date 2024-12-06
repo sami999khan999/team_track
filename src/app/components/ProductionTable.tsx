@@ -9,6 +9,7 @@ import Pagination from "./Pagination";
 import ProductionModal from "./ProductionModal";
 import TableActions from "./TableActions";
 import { formatNumberWithCommas } from "@/utils/numberFormat";
+import { logo } from "@/utils/logo";
 
 const ProductionTable = () => {
   const path = useRouter();
@@ -86,6 +87,7 @@ const ProductionTable = () => {
           tableName="Production"
           setIsOpen={setIsOpen}
           setModalAction={setModalAction}
+          logo={logo.Production}
         />
 
         {isLoading && (
@@ -133,8 +135,9 @@ const ProductionTable = () => {
                       {item.employee.name}
                     </div>
                     <div className="flex-1 truncate-text">{item.quantity}</div>
-                    <div className="flex-1 truncate-text">
-                      {formatNumberWithCommas(item.rate)}/=
+                    <div className="flex-1 truncate-text ">
+                      {formatNumberWithCommas(item.rate)}
+                      <span className="xl:text-sm text-[8px]"> TK</span>
                     </div>
                     <div className="flex-1 truncate-text">{item.payment}</div>
                     <div className="w-1/12 truncate-text">{item.date}</div>

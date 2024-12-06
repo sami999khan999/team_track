@@ -12,6 +12,7 @@ import TableActions from "./TableActions";
 import LoadingSkeleton from "./LoadingSkeleton";
 import { cp } from "fs";
 import { formatNumberWithCommas } from "@/utils/numberFormat";
+import { logo } from "@/utils/logo";
 
 const ProductsTable = () => {
   const param = useSearchParams();
@@ -89,6 +90,7 @@ const ProductsTable = () => {
           setIsOpen={setIsModalOpen}
           tableName="Products"
           setModalAction={setModalAction}
+          logo={logo.Products}
         />
 
         {isLoading && (
