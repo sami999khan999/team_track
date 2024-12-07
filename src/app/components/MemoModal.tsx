@@ -50,8 +50,6 @@ const MemoModal = ({
       setSelectedData(undefined);
       setIsLoading(true);
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
       const response = await getFilterMemo(customerActiveId);
 
       if (response.success) {
@@ -173,13 +171,7 @@ const MemoModal = ({
                 onClick={getFilteredDataHandler}
                 disabled={isLoading}
               >
-                {isLoading ? (
-                  <div className="flex items-center justify-center w-full">
-                    <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
-                  </div>
-                ) : (
-                  <div>Get</div>
-                )}
+                <div>Get</div>
               </button>
             </div>
 
@@ -222,19 +214,21 @@ const MemoModal = ({
                   setSelectedData={setSelectedData}
                   selectedData={selectedData}
                 />
-                <button
-                  className="submit-btn mx-0 h-9"
-                  onClick={createMemoHandler}
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <div className="flex items-center justify-center w-full ">
-                      <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
-                    </div>
-                  ) : (
-                    <div>Create Memo</div>
-                  )}
-                </button>
+                <div className="w-full flex items-center justify-center">
+                  <button
+                    className="submit-btn mx-0 xl:w-fit xl:px-16"
+                    onClick={createMemoHandler}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <div className="flex items-center justify-center w-full ">
+                        <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
+                      </div>
+                    ) : (
+                      <div>Create Memo</div>
+                    )}
+                  </button>
+                </div>
               </div>
             ) : (
               filteredData &&

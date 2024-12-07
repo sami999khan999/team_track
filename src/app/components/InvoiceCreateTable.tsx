@@ -117,7 +117,7 @@ const InvoiceCreateTable = ({
     <div className="overflow-auto remove-scrollbar">
       {inventories ? (
         <div className="h-[15rem] xl:h-[18rem] w-[40rem] xl:w-full">
-          <div className="table-header py-4 sticky top-0 z-20">
+          <div className="table-header py-4 z-20">
             <p className="w-1/12 truncate-text">ID</p>
             <p className="flex-1 truncate-text">Employee</p>
             <p className="flex-1 truncate-text">Product</p>

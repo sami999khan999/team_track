@@ -1,28 +1,25 @@
 "use client";
 
 import { ProductType } from "@/types";
+import { logo } from "@/utils/logo";
+import { formatNumberWithCommas } from "@/utils/numberFormat";
 import { getProducts } from "@/utils/productApiRequests";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { MdOutlineEdit } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import LoadingSkeleton from "./LoadingSkeleton";
 import Pagination from "./Pagination";
 import ProductModal from "./ProductModal";
 import TableActions from "./TableActions";
-import LoadingSkeleton from "./LoadingSkeleton";
-import { cp } from "fs";
-import { formatNumberWithCommas } from "@/utils/numberFormat";
 
 const ProductsTable = () => {
   const param = useSearchParams();
-  const path = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalAction, setModalAction] = useState<
     "create" | "update" | "delete" | undefined
   >();
-  const [activeId, setActiveId] = useState<number | undefined | string>(
-    undefined
-  );
+  // const [activeId, setActiveId] = useState<number | undefined | string>(
+  //   undefined
+  // );
   const [currentPage, setCurrentPage] = useState(
     Number(param.get("page")) || 1
   );
@@ -33,7 +30,7 @@ const ProductsTable = () => {
 
   const columns = products.length > 0 ? Object.keys(products[0]) : [];
 
-  const activeProduct = products.find((porduct) => porduct.id === activeId);
+  // const activeProduct = products.find((porduct) => porduct.id === activeId);
 
   useEffect(() => {
     const productsGet = async () => {
@@ -77,7 +74,7 @@ const ProductsTable = () => {
       {isModalOpen && (
         <ProductModal
           modalAction={modalAction}
-          activeProduct={activeProduct}
+          // activeProduct={activeProduct}
           setIsModalOpen={setIsModalOpen}
           setReload={setReload}
           reload={reload}
@@ -89,6 +86,7 @@ const ProductsTable = () => {
           setIsOpen={setIsModalOpen}
           tableName="Products"
           setModalAction={setModalAction}
+          logo={logo.Products}
         />
 
         {isLoading && (

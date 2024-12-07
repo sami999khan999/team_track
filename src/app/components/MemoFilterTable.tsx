@@ -1,8 +1,7 @@
 import { FilterMemoType } from "@/types";
 import { formatNumberWithCommas } from "@/utils/numberFormat";
-import React, { SetStateAction, useEffect } from "react";
+import React, { SetStateAction } from "react";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
-import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
 const MemoFilterTable = ({
   data,
@@ -112,7 +111,6 @@ const MemoFilterTable = ({
                 <p className="flex-1 truncate-text">
                   {formatNumberWithCommas(Number(item.amount))}
                 </p>
-                <p className="flex-1 truncate-text">{item.current_status}</p>
                 <p className="flex-1 truncate-text">{item.date}</p>
                 {type === "selection" && (
                   <div className="w-[6rem] flex items-center text-sm justify-center cursor-pointer">

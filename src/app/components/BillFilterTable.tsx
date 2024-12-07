@@ -81,7 +81,7 @@ const BillFilterTable = ({
           <div className="">
             {data.length > 0 ? (
               <div className="xl:w-full w-[40rem]">
-                <div className="table-header py-4 sticky top-0 z-20">
+                <div className="table-header xl:py-4 py-3">
                   {columns?.map((col, i) => (
                     <p
                       key={i}
@@ -94,7 +94,7 @@ const BillFilterTable = ({
                   ))}
                   {type && (
                     <div
-                      className="flex gap-2 items-center text-base justify-center w-[6rem]"
+                      className="flex gap-2 items-center justify-center w-[6rem]"
                       onClick={selectAll}
                     >
                       <p>Select</p>

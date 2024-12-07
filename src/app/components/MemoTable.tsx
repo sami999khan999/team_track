@@ -9,6 +9,7 @@ import { getMemo } from "@/utils/memoApiRequests";
 import Pagination from "./Pagination";
 import LoadingSkeleton from "./LoadingSkeleton";
 import { formatNumberWithCommas } from "@/utils/numberFormat";
+import { logo } from "@/utils/logo";
 
 const MemoTable = () => {
   const param = useSearchParams();
@@ -62,7 +63,11 @@ const MemoTable = () => {
     <div>
       {isOpen && <MemoModal setIsOpen={setIsOpen} />}
       <div className="table-wrapper">
-        <TableActions setIsOpen={setIsOpen} tableName="Cash Memo" />
+        <TableActions
+          setIsOpen={setIsOpen}
+          tableName="Cash Memo"
+          logo={logo.Memo}
+        />
 
         {isLoading && (
           // <div className="text-primary-foreground tracking-wide text-xl xl:text-4xl text-center font-semibold flex items-center justify-center">

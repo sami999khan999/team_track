@@ -9,6 +9,7 @@ import Pagination from "./Pagination";
 import Table from "./Table";
 import TableActions from "./TableActions";
 import LoadingSkeleton from "./LoadingSkeleton";
+import { logo } from "@/utils/logo";
 
 type TableDataType = EmployeeType | CustomerType;
 
@@ -81,7 +82,11 @@ const CustomerTable = () => {
       )}
 
       <div className="table-wrapper">
-        <TableActions setIsOpen={setIsFormOpen} tableName="Customer" />
+        <TableActions
+          setIsOpen={setIsFormOpen}
+          tableName="Customer"
+          logo={logo.Customers}
+        />
 
         {isLoading && <LoadingSkeleton />}
 

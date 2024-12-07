@@ -165,3 +165,29 @@ export const createInvoiceSimpleVersion = async (
     };
   }
 };
+
+export const deleteInvoice = async (id: number) => {
+  try {
+    const response = await fetch(`${url}api/challan/delete/${id}/`);
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message || "Can't delete invoice",
+      };
+    }
+
+    return {
+      success: true,
+      message: data.message || "Invoice deleted successfully",
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Error deleting invoice",
+    };
+  }
+};

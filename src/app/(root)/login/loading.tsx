@@ -1,7 +1,9 @@
 import Loading from "@/app/components/Loading";
 
 const loading = () => {
-  return <Loading />;
+  return (
+    <Loading />
+  );
 };
 
 export default loading;

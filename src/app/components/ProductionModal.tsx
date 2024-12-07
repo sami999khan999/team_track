@@ -13,6 +13,8 @@ import { CgSpinnerTwo } from "react-icons/cg";
 import { IoMdClose } from "react-icons/io";
 import DeleteModal from "./DeleteModal";
 import Dropdown from "./Dropdown";
+import toast from "react-hot-toast";
+import { ErrorToast, SuccessToast } from "./Toast";
 
 const ProductionModal = ({
   setIsOpen,
@@ -39,9 +41,7 @@ const ProductionModal = ({
   >(undefined);
   const [employees, setEmployees] = useState<EmployeeType[]>();
 
-  const [productionInput, setProductionInput] = useState({
-    quantity: defalutValue ? defalutValue.quantity : undefined,
-  });
+  const [quantity, setQuantity] = useState<number | undefined>(undefined);
   const [employeeId, setEmployeeId] = useState<number | undefined>(undefined);
   const [productId, setProductId] = useState<number | undefined>(undefined);
   const [inputError, setInputError] = useState({
@@ -62,19 +62,30 @@ const ProductionModal = ({
     if (response.success) {
       setIsOpen(false);
       setReload((prv) => !prv);
+
+      toast.custom((t) => (
+        <SuccessToast visible={t.visible}>
+          Production Deleted Successfully!
+        </SuccessToast>
+      ));
+    } else {
+      console.log(response.message);
+
+      toast.custom((t) => (
+        <ErrorToast visible={t.visible}>
+          Failed To Delete Production!
+        </ErrorToast>
+      ));
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProductionInput({
-      ...productionInput,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setProductionInput(Number(e.target.value));
+  // };
 
   const handleSubmit = async () => {
     const newError = {
-      quantity: !productionInput.quantity ? "Enter Quantity to continue" : "",
+      quantity: !quantity ? "Enter Quantity to continue" : "",
       employee: !employeeId ? "Select Employee to continue" : "",
       products: !productId ? "Select Product to continue" : "",
     };
@@ -89,36 +100,68 @@ const ProductionModal = ({
     } else {
       setIsLoading(true);
       const data = {
-        quantity: productionInput.quantity,
+        quantity: quantity,
         employee: employeeId,
         product: productId,
       };
 
       if (action === "create") {
+        await new Promise((resolve) => setTimeout(resolve, 250));
+
         const response = await createProduction(data);
 
         if (response.success) {
+          setQuantity(undefined);
           setReload((prv) => !prv);
+          setIsLoading(false);
+
+          toast.custom((t) => (
+            <SuccessToast visible={t.visible}>
+              Production Created Successfully!
+            </SuccessToast>
+          ));
+        } else {
+          console.log(response.message);
+
+          toast.custom((t) => (
+            <ErrorToast visible={t.visible}>
+              Failed To Create Production!
+            </ErrorToast>
+          ));
         }
       }
 
       if (action === "update") {
+        await new Promise((resolve) => setTimeout(resolve, 250));
         const response = await updateProduction(defalutValue?.id, data);
 
         if (response.success) {
           setReload((prv) => !prv);
+          setIsOpen(false);
+          setIsLoading(false);
+
+          toast.custom((t) => (
+            <SuccessToast visible={t.visible}>
+              Product Updated Successfully!
+            </SuccessToast>
+          ));
+        } else {
+          console.log(response.message);
+
+          toast.custom((t) => (
+            <ErrorToast visible={t.visible}>
+              Failed To Update Production!
+            </ErrorToast>
+          ));
         }
       }
-
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
     }
   };
 
   useEffect(() => {
     setEmployeeId(defalutValue ? defalutValue.employee.id : undefined);
     setProductId(defalutValue ? defalutValue.product.id : undefined);
+    setQuantity(defalutValue ? defalutValue.quantity : undefined);
   }, [defalutValue]);
 
   useEffect(() => {
@@ -172,7 +215,7 @@ const ProductionModal = ({
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-secondary w-[90%] xl:w-[60%] border border-border_color rounded-xl px-3 xl:px-8 py-6 xl:py-12 relative"
+            className="bg-secondary w-[90%] xl:w-[70%] border border-border_color rounded-xl px-3 xl:px-8 py-6 xl:py-12 relative"
           >
             <div
               className="close-btn"
@@ -251,10 +294,10 @@ const ProductionModal = ({
 
                 <input
                   type="number"
-                  value={productionInput.quantity}
+                  value={quantity}
                   name="quantity"
                   placeholder="Emter Quabtity"
-                  onChange={handleInputChange}
+                  onChange={(e) => setQuantity(Number(e.target.value))}
                   className="rounded-full bg-secondary-foreground border border-border_color px-4 xl:px-6 text-sm xl:text-xl py-2 text-primary-foreground font-medium"
                 />
                 {inputError.quantity && (

@@ -324,8 +324,8 @@ export type DashboardData = {
     }[];
   };
   invoice: {
-    paid: number;
-    notPaied: number;
+    receivedPayment: number;
+    pending: number;
     total: number;
   };
   inventory: {
@@ -337,8 +337,8 @@ export type DashboardData = {
   production: {
     totalProduction: number;
     totalProductionInAMounth: number;
-    paiedProduction: number;
-    notPaiedProduction: number;
+    paid: number;
+    due: number;
   };
   products: {
     totalProducts: number;

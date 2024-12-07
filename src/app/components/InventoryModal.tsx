@@ -6,6 +6,8 @@ import DeleteModal from "./DeleteModal";
 import Dropdown from "./Dropdown";
 import { CgSpinnerTwo } from "react-icons/cg";
 import { IoMdClose } from "react-icons/io";
+import toast from "react-hot-toast";
+import { ErrorToast, SuccessToast } from "./Toast";
 
 const InventoryModal = ({
   setIsOpen,
@@ -83,6 +85,20 @@ const InventoryModal = ({
           if (response.success) {
             setIsOpen((prv) => !prv);
             setReload((prv) => !prv);
+
+            toast.custom((t) => (
+              <SuccessToast visible={t.visible}>
+                Inventory Created Successfully!
+              </SuccessToast>
+            ));
+          } else {
+            console.log(response.message);
+
+            toast.custom((t) => (
+              <ErrorToast visible={t.visible}>
+                Failed To Create Inventory!
+              </ErrorToast>
+            ));
           }
         }
 
@@ -95,6 +111,20 @@ const InventoryModal = ({
           if (response.success) {
             setIsOpen((prv) => !prv);
             setReload((prv) => !prv);
+
+            toast.custom((t) => (
+              <SuccessToast visible={t.visible}>
+                Inventory Updated Successfully!
+              </SuccessToast>
+            ));
+          } else {
+            console.log(response.message);
+
+            toast.custom((t) => (
+              <ErrorToast visible={t.visible}>
+                Failed To Update Inventory!
+              </ErrorToast>
+            ));
           }
         }
 

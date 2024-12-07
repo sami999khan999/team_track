@@ -1,31 +1,27 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import { usePathname } from "next/navigation";
 import ThemeToggler from "./ThemeToggler";
 
 const NavBar = () => {
-  const path = useRouter();
-
   const pathname = usePathname();
 
-  // Hide the sidebar on login or signup pages
   if (pathname === "/login" || pathname === "/signup") {
     return null;
   }
 
-  const logOutHandler = () => {
-    const cookieName = "userSession";
-    document.cookie = `${cookieName}=; Max-Age=0; path=/`;
+  // const logOutHandler = () => {
+  //   const cookieName = "userSession";
+  //   document.cookie = `${cookieName}=; Max-Age=0; path=/`;
 
-    const cookieDeleted = !document.cookie
-      .split("; ")
-      .find((cookie) => cookie.startsWith(`${cookieName}=`));
+  //   const cookieDeleted = !document.cookie
+  //     .split("; ")
+  //     .find((cookie) => cookie.startsWith(`${cookieName}=`));
 
-    if (cookieDeleted) {
-      path.push("/login");
-    }
-  };
+  //   if (cookieDeleted) {
+  //     path.push("/login");
+  //   }
+  // };
 
   return (
     <div className="flex items-center justify-between w-full bg-secondary h-[5.4rem] xl:px-10 px-3 sticky top-0 border-b border-border_color z-10">

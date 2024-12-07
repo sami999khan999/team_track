@@ -1,5 +1,4 @@
 import MemoTable from "@/app/components/MemoTable";
-import { Suspense } from "react";
 
 const page = () => {
   return (

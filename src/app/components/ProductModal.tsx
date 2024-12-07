@@ -5,9 +5,11 @@ import {
   updateProduct,
 } from "@/utils/productApiRequests";
 import React, { SetStateAction, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { CgSpinnerTwo } from "react-icons/cg";
 import { IoMdClose } from "react-icons/io";
 import CategoryDropdown from "./CategoryDropdown";
+import { ErrorToast, SuccessToast } from "./Toast";
 
 const ProductModal = ({
   modalAction,
@@ -36,24 +38,24 @@ const ProductModal = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCreate = async () => {
-    const newError = {
-      name: !productName ? "Product name is required" : "",
-      rate: !productRate ? "Product rate is required" : "",
-      productionCost: !productionCost ? "Production cost is required" : "",
-    };
-
-    if (!selectedCategory) {
-      setSelectedCategory("Enter a category!");
-    }
-
-    setInputError(newError);
-
-    const hasError = Object.values(newError).some((error) => error);
-
-    if (!hasError) {
+    try {
       setIsLoading(true);
 
-      setTimeout(async () => {
+      const newError = {
+        name: !productName ? "Product name is required" : "",
+        rate: !productRate ? "Product rate is required" : "",
+        productionCost: !productionCost ? "Production cost is required" : "",
+      };
+
+      if (!selectedCategory) {
+        setSelectedCategory("Enter a category!");
+      }
+
+      setInputError(newError);
+
+      const hasError = Object.values(newError).some((error) => error);
+
+      if (!hasError) {
         const data = {
           name: productName,
           rate: Number(productRate),
@@ -62,15 +64,37 @@ const ProductModal = ({
           other_cost: otherCost ? otherCost : 0,
         };
 
+        await new Promise((resolve) => setTimeout(resolve, 250));
+
         const response = await createProduct(data);
 
         if (response.success) {
           setIsModalOpen((prv) => !prv);
           setReload((prv) => !prv);
-        }
 
-        setIsLoading(false);
-      }, 1000);
+          toast.custom((t) => (
+            <SuccessToast visible={t.visible}>
+              Product Created Successfully!
+            </SuccessToast>
+          ));
+        } else {
+          console.log(response.message);
+          toast.custom((t) => (
+            <ErrorToast visible={t.visible}>
+              Failed To Create Product!
+            </ErrorToast>
+          ));
+        }
+      } else {
+        return;
+      }
+    } catch (err) {
+      console.log(err);
+      toast.custom((t) => (
+        <ErrorToast visible={t.visible}>Failed To Create Product!</ErrorToast>
+      ));
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -81,45 +105,78 @@ const ProductModal = ({
       if (response.success) {
         setIsModalOpen((prv) => !prv);
         setReload((prv) => !prv);
+        toast.custom((t) => (
+          <SuccessToast visible={t.visible}>
+            Product Deleted Successfully!
+          </SuccessToast>
+        ));
       } else {
         console.log(response.message);
+        toast.custom((t) => (
+          <ErrorToast visible={t.visible}>Can Not Deleted Invoice!</ErrorToast>
+        ));
       }
     }
   };
 
   const handleUpdate = async () => {
-    const newError = {
-      name: !productName ? "Product name is required" : "",
-      rate: !productRate ? "Product rate is required" : "",
-      productionCost: !productionCost ? "Production cost is required" : "",
-    };
-
-    if (!selectedCategory) {
-      setSelectedCategory("Inter a category!");
-    }
-
-    setInputError(newError);
-
-    const hasError = Object.values(newError).some((error) => error);
-
-    if (!hasError) {
-      const data = {
-        name: productName,
-        rate: Number(productRate),
-        category: categoryId,
-        production_cost: productionCost,
-        other_cost: otherCost ? otherCost : 0,
+    try {
+      setIsLoading(true);
+      const newError = {
+        name: !productName ? "Product name is required" : "",
+        rate: !productRate ? "Product rate is required" : "",
+        productionCost: !productionCost ? "Production cost is required" : "",
       };
-      console.log(data, activeProduct?.id);
 
-      const response = await updateProduct(activeProduct?.id, data);
-
-      if (response.success) {
-        setIsModalOpen((prv) => !prv);
-        setReload((prv) => !prv);
-      } else {
-        console.log(response.message);
+      if (!selectedCategory) {
+        setSelectedCategory("Inter a category!");
       }
+
+      setInputError(newError);
+
+      const hasError = Object.values(newError).some((error) => error);
+
+      if (!hasError) {
+        const data = {
+          name: productName,
+          rate: Number(productRate),
+          category: categoryId,
+          production_cost: productionCost,
+          other_cost: otherCost ? otherCost : 0,
+        };
+        console.log(data, activeProduct?.id);
+
+        const response = await updateProduct(activeProduct?.id, data);
+
+        if (response.success) {
+          setIsModalOpen((prv) => !prv);
+          setReload((prv) => !prv);
+
+          toast.custom((t) => (
+            <SuccessToast visible={t.visible}>
+              Product Created Successfully!
+            </SuccessToast>
+          ));
+        } else {
+          console.log(response.message);
+
+          toast.custom((t) => (
+            <ErrorToast visible={t.visible}>
+              Failed To Create Product!
+            </ErrorToast>
+          ));
+        }
+      } else {
+        return;
+      }
+    } catch (err) {
+      console.log(err);
+
+      toast.custom((t) => (
+        <ErrorToast visible={t.visible}>Failed To Create Product!</ErrorToast>
+      ));
+    } finally {
+      setIsLoading(false);
     }
   };
 

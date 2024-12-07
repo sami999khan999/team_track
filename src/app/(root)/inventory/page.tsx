@@ -1,12 +1,10 @@
 import InventoryTable from "@/app/components/InventoryTable";
-import React, { Suspense } from "react";
+import React from "react";
 
 const page = () => {
   return (
     <div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <InventoryTable />
-      </Suspense>
+      <InventoryTable />
     </div>
   );
 };

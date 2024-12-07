@@ -47,8 +47,8 @@ const dashboardData: DashboardData = {
   },
 
   invoice: {
-    paid: 20,
-    notPaied: 5,
+    receivedPayment: 20,
+    pending: 5,
     total: 25,
   },
 
@@ -63,8 +63,8 @@ const dashboardData: DashboardData = {
   production: {
     totalProduction: 20,
     totalProductionInAMounth: 30,
-    paiedProduction: 15,
-    notPaiedProduction: 5,
+    paid: 15,
+    due: 5,
   },
 
   products: {
@@ -130,7 +130,7 @@ const Dashboard = () => {
       {isOpen && <DashboardModal setIsOpen={setIsOpen} />}
 
       <div
-        className="absolute xl:bottom-10 bottom-16 xl:right-10 right-4 text-primary-foreground xl:text-4xl text-2xl border border-border_color rounded-full p-3 hover:text-primary bg-background group transition-all duration-200 xl:w-[4rem] w-[3rem] hover:xl:w-[10rem] hover:w-[8rem] z-50"
+        className="absolute xl:bottom-10 bottom-16 xl:right-10 right-4 text-primary-foreground xl:text-4xl text-2xl border border-border_color rounded-full p-3 hover:text-primary bg-background group transition-all duration-200 xl:w-[4rem] w-[3rem] hover:xl:w-[10rem] hover:w-[8rem] z-50 "
         onClick={() => setIsOpen((prv) => !prv)}
       >
         <p className="opacity-0 group-hover:opacity-100 absolute bottom-[7px] xl:bottom-[10px]  right-3 bg-background text-xl xl:text-2xl text-primary-foreground px-2 py-1 rounded-md transition-all duration-200 font-semibold">
@@ -139,8 +139,8 @@ const Dashboard = () => {
         <IoMdAdd className="text-right" />
       </div>
 
-      <div className="xl:space-y-10 space-y-5 mb-10 capitalize">
-        <div className="bg-secondary w-full xl:px-6 xl:py-8 py-4 rounded-xl border border-border_color flex flex-col xl:flex-row justify-center items-center xl:gap-10 gap-3">
+      <div className="xl:space-y-10 space-y-5 mb-10 capitalize ">
+        <div className="bg-secondary w-full xl:px-6 xl:py-8 py-4 rounded-xl border border-border_color flex flex-col xl:flex-row justify-center items-center xl:gap-10 gap-3 shadow-sm">
           <div className="text-center xl:text-3xl text-2xl text-primary font-semibold flex items-center justify-center h-full">
             <p>Create</p>
           </div>
@@ -189,12 +189,12 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="w-full xl:px-6 xl:py-8 py-3 rounded-xl border border-border_color flex flex-col bg-secondary items-center gap-3">
+        <div className="w-full xl:px-6 xl:py-8 py-3 rounded-xl border border-border_color flex flex-col bg-secondary items-center gap-3 shadow-sm">
           <div className="xl:text-left text-center w-full px-4 xl:text-3xl text-2xl text-primary font-semibold mt-3">
             OverView
           </div>
 
-          <div className="w-full px-2 py-2 flex xl:gap-8 gap-2 h-[40vh]">
+          <div className="w-full px-2 py-2 flex xl:gap-8 gap-2 h-[40vh] ">
             <div className="grid grid-cols-2 xl:w-[50%] w-[65%] xl:gap-3 gap-1">
               {/* Employee Card */}
               <OverviewCard
@@ -250,7 +250,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="w-full xl:px-6 xl:py-8 rounded-xl border border-border_color flex flex-col bg-secondary items-center gap-3">
+        <div className="w-full xl:px-6 xl:py-8 rounded-xl border border-border_color flex flex-col bg-secondary items-center gap-3 shadow-sm">
           <div className="w-full flex flex-col xl:flex-row gap-10 px-2 py-6">
             <div className="xl:w-[60%]">
               <div className="xl:text-left text-center w-full px-2 xl:text-3xl text-2xl text-primary font-semibold xl:mb-4 mb-3 xl:mt-0">
@@ -300,7 +300,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="xl:w-[40%]">
+            <div className="xl:w-[40%] ">
               <div className="xl:text-left text-center w-full px-2 xl:text-3xl text-2xl text-primary font-semibold xl:mb-4 mb-3 mt-3 xl:mt-0">
                 Top Employees
               </div>
@@ -359,7 +359,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="w-full xl:px-6 xl:py-8 py-4 rounded-xl border border-border_color flex flex-col xl:flex-row bg-secondary items-center gap-3">
+        <div className="w-full xl:px-6 xl:py-8 py-4 rounded-xl border border-border_color flex flex-col xl:flex-row bg-secondary items-center gap-3 shadow-sm">
           <div className="xl:w-[50%] w-full px-2">
             <div className="xl:text-left text-center w-full px-2 xl:text-3xl text-2xl text-primary font-semibold xl:mb-4 mb-3 xl:mt-0">
               Invoice
@@ -378,18 +378,20 @@ const Dashboard = () => {
                     <div className="border border-border_color"></div>
 
                     <div className="space-y-4 w-full">
-                      <div className="text-2xl opacity-30">Paid</div>
+                      <div className="text-2xl opacity-30">
+                        Received Payment
+                      </div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData.invoice.paid}
+                        {dashboardData.invoice.receivedPayment}
                       </div>
                     </div>
 
                     <div className="border border-border_color"></div>
 
                     <div className="space-y-4 w-full">
-                      <div className="text-2xl opacity-30">Not Paied</div>
+                      <div className="text-2xl opacity-30">Pending</div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData.invoice.notPaied}
+                        {dashboardData.invoice.pending}
                       </div>
                     </div>
                   </div>
@@ -426,7 +428,7 @@ const Dashboard = () => {
                     <div className="border border-border_color"></div>
 
                     <div className="space-y-4 w-full">
-                      <div className="text-2xl opacity-30">Not Paied</div>
+                      <div className="text-2xl opacity-30">In Stock</div>
                       <div className="text-3xl text-primary font-semibold">
                         {dashboardData.inventory.inStock}
                       </div>
@@ -438,7 +440,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="w-full xl:px-6 xl:py-8 py-4 rounded-xl border border-border_color flex flex-col xl:flex-row bg-secondary items-center gap-3">
+        <div className="w-full xl:px-6 xl:py-8 py-4 rounded-xl border border-border_color flex flex-col xl:flex-row bg-secondary items-center gap-3 shadow-sm">
           <div className=" w-full px-2">
             <div className="xl:text-left text-center w-full px-2 xl:text-3xl text-2xl text-primary font-semibold xl:mb-4 mb-3 xl:mt-0">
               Production
@@ -470,15 +472,15 @@ const Dashboard = () => {
                     <div className="space-y-4 w-full">
                       <div className="text-2xl opacity-30">Paid</div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData.production.paiedProduction}
+                        {dashboardData.production.paid}
                       </div>
                     </div>
                     <div className="border border-border_color"></div>
 
                     <div className="space-y-4 w-full">
-                      <div className="text-2xl opacity-30">Not Paid</div>
+                      <div className="text-2xl opacity-30">Due</div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData.production.notPaiedProduction}
+                        {dashboardData.production.due}
                       </div>
                     </div>
                   </div>
@@ -488,7 +490,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="w-full xl:px-6 xl:py-8 py-4 rounded-xl border border-border_color flex flex-col xl:flex-row bg-secondary items-center gap-3">
+        <div className="w-full xl:px-6 xl:py-8 py-4 rounded-xl border border-border_color flex flex-col xl:flex-row bg-secondary items-center gap-3 shadow-sm">
           <div className=" w-full px-2">
             <div className="xl:text-left text-center w-full px-2 xl:text-3xl text-2xl text-primary font-semibold xl:mb-4 mb-3 xl:mt-0">
               Top Sold Product

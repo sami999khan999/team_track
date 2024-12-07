@@ -2,17 +2,17 @@
 
 import { EmployeeType } from "@/types";
 import { getEmployee } from "@/utils/employeeApiRequest";
-import { useRouter, useSearchParams } from "next/navigation";
+import { logo } from "@/utils/logo";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import AddFormModal from "./AddFormModal";
+import LoadingSkeleton from "./LoadingSkeleton";
 import Pagination from "./Pagination";
 import Table from "./Table";
 import TableActions from "./TableActions";
-import LoadingSkeleton from "./LoadingSkeleton";
 
 const EmployeeTable = () => {
   const param = useSearchParams();
-  const path = useRouter();
   const [employees, setEmployees] = useState<EmployeeType[]>([]);
   const [currentPage, setCurrentPage] = useState(
     Number(param.get("page")) || 1
@@ -78,7 +78,11 @@ const EmployeeTable = () => {
       )}
 
       <div className="table-wrapper">
-        <TableActions setIsOpen={setIsFormOpen} tableName="Employee" />
+        <TableActions
+          setIsOpen={setIsFormOpen}
+          tableName="Employee"
+          logo={logo.Employees}
+        />
 
         {/* Loading State */}
         {isLoading && (

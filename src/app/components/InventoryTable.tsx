@@ -8,6 +8,7 @@ import InventoryModal from "./InventoryModal";
 import Pagination from "./Pagination";
 import TableActions from "./TableActions";
 import LoadingSkeleton from "./LoadingSkeleton";
+import { logo } from "@/utils/logo";
 
 const InventoryTable = () => {
   const param = useSearchParams();
@@ -80,6 +81,7 @@ const InventoryTable = () => {
           tableName="Inventory"
           setIsOpen={setIsOpen}
           setModalAction={setAction}
+          logo={logo.Inventory}
         />
 
         {isLoading && <LoadingSkeleton />}
