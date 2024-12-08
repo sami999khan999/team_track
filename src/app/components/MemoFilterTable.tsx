@@ -110,6 +110,7 @@ const MemoFilterTable = ({
                 <p className="flex-1 truncate-text">{item.total}</p>
                 <p className="flex-1 truncate-text">
                   {formatNumberWithCommas(Number(item.amount))}
+                  <span className="xl:text-sm text-[8px]"> TK</span>
                 </p>
                 <p className="flex-1 truncate-text">{item.date}</p>
                 {type === "selection" && (

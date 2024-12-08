@@ -291,7 +291,8 @@ const PaymentModal = ({
                     </div>
                     <div>
                       <span className="text-primary">Total Amount:</span>{" "}
-                      {formatNumberWithCommas(totalAmount)}/=
+                      {formatNumberWithCommas(totalAmount)}
+                      <span className="xl:text-sm text-[8px]"> TK</span>
                     </div>
                   </div>
                   {/* <div className="text-primary-foreground font-bold text-xl xl:text-2xl text-center ">

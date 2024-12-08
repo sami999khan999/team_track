@@ -51,6 +51,7 @@ const EmployeePayment = ({ id }: { id: number }) => {
             <div>
               <span className="font-normal">Grand Total: </span>{" "}
               {employeeBills?.grand_total}
+              <span className="xl:text-sm text-[8px]"> TK</span>
             </div>
           </div>
 
@@ -77,9 +78,15 @@ const EmployeePayment = ({ id }: { id: number }) => {
                 <p className="w-1/12">{item.sl_no}</p>
                 <p className="flex-1">{item.products}</p>
                 <p className="flex-1">{item.quantity}</p>
-                <p className="flex-1">{item.rate}</p>
+                <p className="flex-1">
+                  {item.rate}
+                  <span className="xl:text-sm text-[8px]"> TK</span>
+                </p>
                 <p className="flex-1">{item.total_qty}</p>
-                <p className="flex-1">{item.amount}</p>
+                <p className="flex-1">
+                  {item.amount}
+                  <span className="xl:text-sm text-[8px]"> TK</span>
+                </p>
               </div>
             ))}
           </div>

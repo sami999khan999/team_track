@@ -299,7 +299,7 @@ export type DashboardData = {
   employee: {
     totalEmployee: number;
     activeEmployee: number;
-    employeeOftheMounth: {
+    employeeOftheMonth: {
       name: string;
       id: number;
       totalEarned: number;
@@ -324,7 +324,7 @@ export type DashboardData = {
   production: {
     totalProduction: number;
     totalProductionInAMounth: number;
-    paid: number;
+    // paid: number;
     due: number;
   };
   products: {
