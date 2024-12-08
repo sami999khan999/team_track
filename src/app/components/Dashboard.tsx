@@ -108,7 +108,7 @@ const Dashboard = () => {
     };
 
     fetchDashboaedData();
-  }, []);
+  }, [reload]);
 
   return (
     <div className="">
@@ -301,12 +301,12 @@ const Dashboard = () => {
                 <div className="flex flex-col xl:flex-row gap-4 w-full">
                   <div className="w-full flex items-center justify-center">
                     <div className=" w-full flex flex-col xl:flex-row justify-between gap-4 px-4 py-3 xl:py-8 text-center rounded-lg">
-                      <div className="space-y-4">
+                      <div className="space-y-4 ">
                         <p className="text-2xl opacity-50">
                           ID : {dashboardData?.employee.employeeOftheMonth.id}
                         </p>
 
-                        <p className="xl:text-2xl text-xl uppercase text-primary-foreground">
+                        <p className="xl:text-2xl text-xl uppercase text-primary-foreground item.amount">
                           {dashboardData?.employee.employeeOftheMonth.name}
                         </p>
                       </div>

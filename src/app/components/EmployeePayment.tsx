@@ -2,6 +2,7 @@
 
 import { SingleEmployeeBillType } from "@/types";
 import { getSingleEmployeeBill } from "@/utils/employeeBillApiRequests";
+import { formatNumberWithCommas } from "@/utils/numberFormat";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -50,7 +51,7 @@ const EmployeePayment = ({ id }: { id: number }) => {
             <div className="font-bold text-primary  font-sour_gummy">Paid</div>
             <div>
               <span className="font-normal">Grand Total: </span>{" "}
-              {employeeBills?.grand_total}
+              {formatNumberWithCommas(employeeBills?.grand_total)}
               <span className="xl:text-sm text-[8px]"> TK</span>
             </div>
           </div>
@@ -79,12 +80,12 @@ const EmployeePayment = ({ id }: { id: number }) => {
                 <p className="flex-1">{item.products}</p>
                 <p className="flex-1">{item.quantity}</p>
                 <p className="flex-1">
-                  {item.rate}
+                  {formatNumberWithCommas(item.rate)}
                   <span className="xl:text-sm text-[8px]"> TK</span>
                 </p>
                 <p className="flex-1">{item.total_qty}</p>
                 <p className="flex-1">
-                  {item.amount}
+                  {formatNumberWithCommas(item.amount)}
                   <span className="xl:text-sm text-[8px]"> TK</span>
                 </p>
               </div>
