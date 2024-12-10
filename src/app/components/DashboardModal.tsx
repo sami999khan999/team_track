@@ -504,8 +504,8 @@ const DashboardModal = ({
 
   return (
     <div>
-      <div className="absolute top-0 left-0 w-full h-full backdrop-blur-md flex items-center justify-center z-20 ">
-        <div className="overflow-y-auto xl:w-[85%] w-[95%] h-[80%] xl:h-[90%] relative  bg-secondary rounded-xl border border-border_color remove-scrollbar">
+      <div className="absolute top-0 left-0 w-full h-full backdrop-blur-md flex items-center justify-center z-50">
+        <div className="overflow-y-auto xl:w-[85%] w-[95%] h-[90%] relative  bg-secondary rounded-xl border border-border_color remove-scrollbar">
           <div
             className="close-btn"
             onClick={() => {

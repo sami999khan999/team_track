@@ -152,7 +152,7 @@ const Dashboard = () => {
       {isOpen && <DashboardModal setIsOpen={setIsOpen} />}
 
       <div
-        className="absolute xl:bottom-10 bottom-16 xl:right-10 right-4 text-primary-foreground xl:text-4xl text-2xl border border-border_color rounded-full p-3 hover:text-primary bg-background group transition-all duration-200 xl:w-[4rem] w-[3rem] hover:xl:w-[10rem] hover:w-[8rem] z-50 "
+        className="absolute xl:bottom-10 bottom-16 xl:right-10 right-4 text-primary-foreground xl:text-4xl text-2xl border border-border_color rounded-full p-3 hover:text-primary bg-background group transition-all duration-200 xl:w-[4rem] w-[3rem] hover:xl:w-[10rem] hover:w-[8rem] z-40"
         onClick={() => setIsOpen((prv) => !prv)}
       >
         <p className="opacity-0 group-hover:opacity-100 absolute bottom-[7px] xl:bottom-[10px]  right-3 bg-background text-xl xl:text-2xl text-primary-foreground px-2 py-1 rounded-md transition-all duration-200 font-semibold">
