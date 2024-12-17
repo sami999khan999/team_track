@@ -50,6 +50,7 @@ export const deleteEmployee = async (id: number | undefined) => {
   try {
     const response = await fetch(`${url}api/employee/delete/${id}/`);
 
+    console.log(response);
     if (!response.ok) {
       return { success: false, message: "Failed to delete employee" };
     }

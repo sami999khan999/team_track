@@ -123,7 +123,7 @@ const ProductsTable = () => {
                     {cols}
                   </div>
                 ))}
-                <div>Actions</div>
+                <div className="w-[5rem]">Actions</div>
               </div>
               <div>
                 {products.map((product, i) => (
@@ -147,7 +147,7 @@ const ProductsTable = () => {
                         : formatNumberWithCommas(product.other_cost)}
                       <span className="xl:text-sm text-[8px]"> TK</span>
                     </div>
-                    <div className="flex items-center gap-2 text-primary-foreground ">
+                    <div className="w-[5rem] flex items-center justify-center gap-2 text-primary-foreground">
                       <div
                         className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
                         onClick={() => {

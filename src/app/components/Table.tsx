@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import AddFormModal from "./AddFormModal";
 import DeleteModal from "./DeleteModal";
 import { ErrorToast, SuccessToast } from "./Toast";
+import { MdOutlineEdit } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 // type TableDataType = EmployeeType | CustomerType;
 
@@ -122,7 +124,7 @@ const Table = ({
               </p>
             );
           })}
-          {/* <p className="cursor-pointer">Action</p> */}
+          <p className="cursor-pointer xl:w-[5rem] w-[3rem]">Action</p>
         </div>
         <div>
           {tableData?.map((data, i) => (
@@ -167,7 +169,7 @@ const Table = ({
                 </>
               )}
 
-              {/* <div className="flex text-xs xl:text-base items-center gap-1 xl:gap-2 text-primary-foreground">
+              <div className="flex xl:w-[5rem] w-[3rem] justify-center items-center gap-1 xl:gap-2 text-primary-foreground">
                 <div
                   className="hover:bg-primary p-1 rounded-md hover:text-background duration-200 flex items-center justify-center"
                   onClick={() => {
@@ -187,7 +189,7 @@ const Table = ({
                 >
                   <RiDeleteBin6Line />
                 </div>
-              </div> */}
+              </div>
             </div>
           ))}
         </div>

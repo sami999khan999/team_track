@@ -25,10 +25,10 @@ const InvoiceTable = () => {
   const [totalPage, setTotalPage] = useState<number | undefined>(1);
   const [invoice, setInvoice] = useState<InvoiceType[]>([]);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [activeElement, setActiveElement] = useState({
-    id: 0,
-    name: "",
-  });
+  const [activeElement, setActiveElement] = useState<{
+    id: number | undefined;
+    name: string | undefined;
+  }>();
 
   const [isLoading, setIsLoading] = useState(true);
   const [reload, setReload] = useState(false);
@@ -75,7 +75,7 @@ const InvoiceTable = () => {
     try {
       setDeleteIsLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 250));
-      const id = activeElement.id;
+      const id = activeElement?.id;
       const response = await deleteInvoice(id);
       if (response.success) {
         setReload(true);
@@ -110,7 +110,7 @@ const InvoiceTable = () => {
           activeElement={activeElement}
           handler={deleteHandler}
           setIsOpen={setIsDeleteModalOpen}
-          title="Delete Invoice"
+          title="Invoice"
           isLoading={deleteIsLoading}
         />
       )}
@@ -145,7 +145,7 @@ const InvoiceTable = () => {
                 <p className="flex-1 truncate-text">Status</p>
                 <p className="flex-1 truncate-text">Date</p>
                 <p className="w-[4rem] truncate-text flex justify-center">
-                  Date
+                  Delete
                 </p>
               </div>
 

@@ -9,7 +9,7 @@ const DeleteModal = ({
   title,
   isLoading,
 }: {
-  activeElement: { id: number | undefined; name: string | undefined };
+  activeElement?: { id: number | undefined; name: string | undefined };
   handler: () => void;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
