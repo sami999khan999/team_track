@@ -130,10 +130,12 @@ const BillFilterTable = ({
                         {item.quantity}
                       </div>
                       <div className="flex-1 truncate-text">
-                        {formatNumberWithCommas(item.rate)}/=
+                        {formatNumberWithCommas(item.rate)}
+                        <span className="xl:text-sm text-[8px]"> TK</span>
                       </div>
                       <div className="flex-1 truncate-text">
-                        {formatNumberWithCommas(item.amount)}/=
+                        {formatNumberWithCommas(item.amount)}
+                        <span className="xl:text-sm text-[8px]"> TK</span>
                       </div>
                       {type && (
                         <div

@@ -370,10 +370,12 @@ const MemoSingleView = ({ id }: { id: number }) => {
                           {item.quantity}
                         </div>
                         <div className="flex-1 break-words cursor-auto">
-                          {formatNumberWithCommas(item.rate)}/=
+                          {formatNumberWithCommas(item.rate)}
+                          <span className="xl:text-sm text-[8px]"> TK</span>
                         </div>
                         <div className="w-1/12 break-words cursor-auto">
-                          {formatNumberWithCommas(item.amount)}/=
+                          {formatNumberWithCommas(item.amount)}
+                          <span className="xl:text-sm text-[8px]"> TK</span>
                         </div>
                       </div>
                     ))}
@@ -385,7 +387,8 @@ const MemoSingleView = ({ id }: { id: number }) => {
                     <div className="flex-1"></div>
                     <div className="flex-1"></div>
                     <div className="w-1/12 font-bold text-primary">
-                      {formatNumberWithCommas(memoHeadingData?.total_amount)}/=
+                      {formatNumberWithCommas(memoHeadingData?.total_amount)}
+                      <span className="xl:text-sm text-[8px]"> TK</span>
                     </div>
                   </div>
                 </div>

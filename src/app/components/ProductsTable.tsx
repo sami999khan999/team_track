@@ -132,16 +132,18 @@ const ProductsTable = () => {
                       {product.category}
                     </div>
                     <div className="flex-1 truncate-text">
-                      {formatNumberWithCommas(product.rate)}/=
+                      {formatNumberWithCommas(product.rate)}
+                      <span className="xl:text-sm text-[8px]"> TK</span>
                     </div>
                     <div className="flex-1 truncate-text">
-                      {formatNumberWithCommas(product.production_cost)}/=
+                      {formatNumberWithCommas(product.production_cost)}
+                      <span className="xl:text-sm text-[8px]"> TK</span>
                     </div>
                     <div className="w-1/12 truncate-text">
                       {product.other_cost === 0
                         ? 0
                         : formatNumberWithCommas(product.other_cost)}
-                      /=
+                      <span className="xl:text-sm text-[8px]"> TK</span>
                     </div>
                     {/* <div className="flex items-center gap-2 text-primary-foreground ">
                       <div

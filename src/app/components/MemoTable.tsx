@@ -127,7 +127,8 @@ const MemoTable = () => {
                     </div>
                     <div className="flex-1 truncate-text">{item.total_qty}</div>
                     <div className="flex-1 truncate-text">
-                      {formatNumberWithCommas(item.amount)}/=
+                      {formatNumberWithCommas(item.amount)}
+                      <span className="xl:text-sm text-[8px]"> TK</span>
                     </div>
                     <div className="w-1/12 truncate-text">{item.date}</div>
                   </div>

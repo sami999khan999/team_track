@@ -118,7 +118,10 @@ const PaymentTable = () => {
                       {bill.production}
                     </div>
                     <div className="flex-1 truncate-text">{bill.quantity}</div>
-                    <div className="flex-1 truncate-text">{bill.Amount}</div>
+                    <div className="flex-1 truncate-text">
+                      {bill.Amount}
+                      <span className="xl:text-sm text-[8px]"> TK</span>
+                    </div>
                     <div className="flex-1 truncate-text">
                       {bill.current_status}
                     </div>
