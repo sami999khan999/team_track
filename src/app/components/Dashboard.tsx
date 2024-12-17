@@ -412,7 +412,7 @@ const Dashboard = () => {
                   <div className=" w-full flex flex-col xl:flex-row justify-between gap-4 px-4 py-3 xl:py-8 text-center rounded-lg">
                     <div className="space-y-4 w-full">
                       <p className="text-2xl opacity-30">Total</p>
-                      <p className="xl:text-2xl text-xl text-primary">
+                      <p className="text-3xl  text-primary">
                         {dashboardData?.invoice.total}
                       </p>
                     </div>
@@ -452,7 +452,7 @@ const Dashboard = () => {
                   <div className=" w-full flex flex-col xl:flex-row justify-between gap-4 px-4 py-3 xl:py-8 text-center rounded-lg">
                     <div className="space-y-4 w-full">
                       <p className="text-2xl opacity-30">Total</p>
-                      <p className="xl:text-2xl text-xl text-primary">
+                      <p className="text-3xl text-primary">
                         {dashboardData?.inventory.total}
                       </p>
                     </div>
@@ -493,7 +493,7 @@ const Dashboard = () => {
                   <div className=" w-full flex flex-col xl:flex-row justify-between gap-4 px-4 py-3 xl:py-8 text-center rounded-lg">
                     <div className="space-y-4 w-full">
                       <p className="text-2xl opacity-30">Total</p>
-                      <p className="xl:text-2xl text-xl text-primary">
+                      <p className="text-3xl text-primary">
                         {dashboardData?.production.totalProduction}
                       </p>
                     </div>

@@ -155,7 +155,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
                   </div>
                   <div class="text-base">
                     <p>Date: <span class="bold font-semibold text-gray-950">${date}</span></p>
-                    <p>Challan No: <span class="bold font-semibold text-gray-950">${challanNo}</span></p>
+                    <p>Memo No: <span class="bold font-semibold text-gray-950">${challanNo}</span></p>
                   </div>
                 </div>
 
@@ -203,10 +203,10 @@ const MemoSingleView = ({ id }: { id: number }) => {
                   </p>
                 </div>
 
-                <div class=" text-black py-6 text-center text-lg">
+                <div class=" text-gray-600 py-4 text-center text-sm">
                   <p class="">
                     For any inquiries, please contact us at |
-                    <span class="text-gray-700 font-semibold tracking-wide">
+                    <span class="font-semibold tracking-wide">
                       marufsarkar512@gmail.com
                     </span>
                   </p>
@@ -294,7 +294,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
                       </span>
                     </p>
                     <p>
-                      Challan No:{" "}
+                      Memo No:{" "}
                       <span className="bold font-semibold text-primary">
                         {memoHeadingData?.memo_id}
                       </span>

@@ -198,7 +198,7 @@ const ProductModal = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-[95%] xl:w-[60%] bg-secondary rounded-xl border border-border_color"
+        className="w-[95%] xl:w-[60%] bg-secondary rounded-xl "
       >
         {modalAction === "create" && (
           <div className="h-full w-full xl:px-8 p-3 py-8 relative remove-scrollbar">
@@ -414,7 +414,7 @@ const ProductModal = ({
 
         {modalAction === "delete" && (
           <div
-            className="flex items-center justify-center absolute  top-0 left-0  z-50 w-full h-full backdrop-blur-md remove-scrollbar"
+            className="flex items-center justify-center absolute top-0 left-0  z-50 w-full h-full backdrop-blur-md remove-scrollbar"
             onClick={() => setIsModalOpen((prv) => !prv)}
           >
             <div
