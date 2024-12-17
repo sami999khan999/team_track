@@ -353,7 +353,7 @@ const Dashboard = () => {
                       {/* {dashboardData.employee.topEmployees[0].id}. */}1.
                     </div>
                     <div className="w-full text-center opacity-80">
-                      {dashboardData?.employee.topEmployees[0].name}
+                      {dashboardData?.employee.topEmployees[0]?.name}
                     </div>
                   </div>
 
@@ -363,7 +363,7 @@ const Dashboard = () => {
                         {/* {dashboardData.employee.topEmployees[1].id}. */}2.
                       </div>
                       <div className="w-full text-center opacity-80">
-                        {dashboardData?.employee.topEmployees[1].name}
+                        {dashboardData?.employee.topEmployees[1]?.name}
                       </div>
                     </div>
 
@@ -372,7 +372,7 @@ const Dashboard = () => {
                         {/* {dashboardData.employee.topEmployees[2].id}. */}3.
                       </div>
                       <div className="w-full text-center opacity-80 truncate-text">
-                        {dashboardData?.employee.topEmployees[2].name}
+                        {dashboardData?.employee.topEmployees[2]?.name}
                       </div>
                     </div>
 
@@ -381,7 +381,7 @@ const Dashboard = () => {
                         {/* {dashboardData.employee.topEmployees[3].id}. */}4.
                       </div>
                       <div className="w-full text-center opacity-80 truncate-text">
-                        {dashboardData?.employee.topEmployees[3].name}
+                        {dashboardData?.employee.topEmployees[3]?.name}
                       </div>
                     </div>
 
@@ -390,7 +390,7 @@ const Dashboard = () => {
                         {/* {dashboardData.employee.topEmployees[4].id}. */}5.
                       </div>
                       <div className="w-full text-center opacity-80 truncate-text">
-                        {dashboardData?.employee.topEmployees[4].name}
+                        {dashboardData?.employee.topEmployees[4]?.name}
                       </div>
                     </div>
                   </div>
