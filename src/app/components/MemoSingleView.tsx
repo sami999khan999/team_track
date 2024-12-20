@@ -15,6 +15,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
   const [memoColumnData, setMemoColumnData] = useState<MemoColumnType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [column, setColumn] = useState<string[]>();
+  const [format, setFormat] = useState<"format1" | "format2">("format1");
 
   useEffect(() => {
     const fetchMemoSingleData = async () => {
@@ -23,7 +24,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
 
         await new Promise((resolve) => setTimeout(resolve, 250));
 
-        const response = await getSingleMemo(id);
+        const response = await getSingleMemo(id, format);
 
         if (response.success) {
           const headingData = response.data[0];
@@ -31,6 +32,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
           if (headingData) {
             setMemoHeadingData(headingData);
 
+            console.log(response);
             const columns = response.data.slice(1);
 
             if (columns.length > 0) {
@@ -60,7 +62,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
     };
 
     fetchMemoSingleData();
-  }, [id]);
+  }, [id, format]);
 
   const handlePrint = () => {
     const printContent = document.getElementById("pdf-content");
@@ -83,32 +85,46 @@ const MemoSingleView = ({ id }: { id: number }) => {
         const challanNo = memoHeadingData?.memo_id;
         const grandTotal = memoHeadingData?.total_amount;
         const totalColumnHtml = memoColumnData
-          .map(
-            (item) => `
-          <div class="table-body border-b flex justify-between px-8 py-1 text-sm gap-5">
-            <div class="w-1/12 break-words cursor-auto">
-                          ${item.slno}
-                        </div>
-                        <div class="flex-1 break-words cursor-auto">
-                          ${item.products}
-                        </div>
-                      <div class="flex-1 break-words cursor-auto">
-  ${item.challan
-    .map((product, i) => `${product}${i < item.challan.length - 1 ? ", " : ""}`)
-    .join("")}
-</div>
-                        <div class="flex-1 break-words cursor-auto">
-                          ${item.quantity}
-                        </div>
-                        <div class="flex-1 break-words cursor-auto">
-                          ${formatNumberWithCommas(item.rate)}/=
-                        </div>
-                        <div class="flex-1 break-words cursor-auto">
-                          ${formatNumberWithCommas(item.amount)}/=
-                        </div>
-          </div>
-        `
-          )
+          .map((item) => {
+            const challanContent =
+              format === "format1"
+                ? item.challan
+                    ?.map(
+                      (product, i) =>
+                        `${product}${
+                          item.challan && i < item.challan.length - 1
+                            ? ", "
+                            : ""
+                        }`
+                    )
+                    .join("")
+                : item.date
+                ? item.date
+                : "";
+
+            return `
+            <div class="table-body border-b flex justify-between px-8 py-1 text-sm gap-5">
+              <div class="w-1/12 break-words cursor-auto">
+                ${item.slno}
+              </div>
+              <div class="flex-1 break-words cursor-auto">
+                ${item.products}
+              </div>
+              <div class="flex-1 break-words cursor-auto">
+                ${challanContent}
+              </div>
+              <div class="flex-1 break-words cursor-auto">
+                ${item.quantity}
+              </div>
+              <div class="flex-1 break-words cursor-auto">
+                ${formatNumberWithCommas(item.rate)}/=
+              </div>
+              <div class="flex-1 break-words cursor-auto">
+                ${formatNumberWithCommas(item.amount)}/=
+              </div>
+            </div>
+          `;
+          })
           .join("");
 
         printWindow.document.write(`
@@ -155,7 +171,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
                   </div>
                   <div class="text-base">
                     <p>Date: <span class="bold font-semibold text-gray-950">${date}</span></p>
-                    <p>Challan No: <span class="bold font-semibold text-gray-950">${challanNo}</span></p>
+                    <p>Memo No: <span class="bold font-semibold text-gray-950">${challanNo}</span></p>
                   </div>
                 </div>
 
@@ -163,7 +179,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
                   <div class="flex text-white px-8 py-2 rounded-t-lg text-base bg-[#2dac5c] w-full justify-between font-bold gap-5 capitalize">
                     <p class="w-1/12 break-words">slno</p>
                     <p class="flex-1 break-words">Products</p>
-                    <p class="flex-1 break-words">Challan </p>
+                    <p class="flex-1 break-words"></p>
                     <p class="flex-1 break-words">Quantity</p>
                     <p class="flex-1 break-words">Rate</p>
                     <p class="flex-1 break-words">Amount</p>
@@ -203,10 +219,10 @@ const MemoSingleView = ({ id }: { id: number }) => {
                   </p>
                 </div>
 
-                <div class=" text-black py-6 text-center text-lg">
+                <div class=" text-gray-600 py-4 text-center text-sm">
                   <p class="">
                     For any inquiries, please contact us at |
-                    <span class="text-gray-700 font-semibold tracking-wide">
+                    <span class="font-semibold tracking-wide">
                       marufsarkar512@gmail.com
                     </span>
                   </p>
@@ -236,16 +252,36 @@ const MemoSingleView = ({ id }: { id: number }) => {
   return (
     <div className="flex justify-center text-primary-foreground   ">
       <div
-        className="relative bg-secondary w-[98%] xl:w-[90%] h-fit px-3 xl:px-10 pb-10 rounded-xl table-wrapper"
+        className="relative bg-secondary w-[98%] xl:w-[90%] h-fit px-3 xl:px-10 pb-10 rounded-xl table-wrapper mb-10"
         id="pdf-content"
       >
         <div
-          className="absolute top-4 xl:top-8 left-4 xl:left-8 text-base xl:text-2xl text-primary-foreground px-4 py-1 rounded-md hover:bg-secondary-foreground duration-200"
+          className="absolute w-fit top-4 xl:top-8 left-4 xl:left-8 text-base xl:text-2xl text-primary-foreground px-4 py-1 rounded-md hover:bg-secondary-foreground duration-200"
           onClick={() => path.back()}
         >
           <FaArrowLeftLong />
         </div>
-        <div className="header text-center pb-10 pt-4">
+
+        <div className="absolute top-4 xl:top-8 right-4 xl:right-8 flex gap-3 1080p:text-xl 720p:text-base text-xs rounded-full bg-secondary-foreground font-semibold ">
+          <div
+            className={`${
+              format === "format1" && "bg-primary text-background rounded-full"
+            } px-5 py-1`}
+            onClick={() => setFormat("format1")}
+          >
+            Format-1
+          </div>
+          <div
+            className={`${
+              format === "format2" && "bg-primary text-background rounded-full"
+            } px-5 py-1`}
+            onClick={() => setFormat("format2")}
+          >
+            Format-2
+          </div>
+        </div>
+
+        <div className="header text-center pb-5 pt-4 mt-5">
           <h1 className="text-2xl xl:text-4xl font-semibold text-primary">
             Next Fashion Textile
           </h1>
@@ -277,7 +313,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
           memoColumnData.length > 0 && (
             <>
               <div className="hidden xl:block">
-                <div className="customer-info flex justify-between px-4 ">
+                <div className="customer-info flex justify-between px-4">
                   <div className="left">
                     <p className="customer-name tracking-wider font-bold text-base xl:text-xl capitalize text-primary">
                       {memoHeadingData?.customer}
@@ -294,7 +330,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
                       </span>
                     </p>
                     <p>
-                      Challan No:{" "}
+                      Memo No:{" "}
                       <span className="bold font-semibold text-primary">
                         {memoHeadingData?.memo_id}
                       </span>
@@ -358,13 +394,21 @@ const MemoSingleView = ({ id }: { id: number }) => {
                         <div className="flex-1 break-words cursor-auto">
                           {item.products}
                         </div>
-                        <div className="flex-1 flex gap-1 break-words cursor-auto">
-                          {item.challan.map((challanNumber, i) => (
-                            <p key={i}>
-                              {challanNumber}
-                              {i < item.challan.length - 1 && ", "}
-                            </p>
-                          ))}
+                        <div className="flex-1 ">
+                          {format === "format1" ? (
+                            <div className="flex gap-1 break-words cursor-auto">
+                              {item.challan?.map((challanNumber, i) => (
+                                <p key={i}>
+                                  {challanNumber}
+                                  {item.challan &&
+                                    i < item.challan.length - 1 &&
+                                    ", "}
+                                </p>
+                              ))}
+                            </div>
+                          ) : (
+                            <div>{item.date}</div>
+                          )}
                         </div>
                         <div className="flex-1 break-words cursor-auto">
                           {item.quantity}

@@ -3,13 +3,17 @@
 import { PorductionType } from "@/types";
 import { logo } from "@/utils/logo";
 import { formatNumberWithCommas } from "@/utils/numberFormat";
-import { getProduction } from "@/utils/productionApiRequests";
+import { deleteProduction, getProduction } from "@/utils/productionApiRequests";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import LoadingSkeleton from "./LoadingSkeleton";
 import Pagination from "./Pagination";
 import ProductionModal from "./ProductionModal";
 import TableActions from "./TableActions";
+import DeleteModal from "./DeleteModal";
+import { ErrorToast, SuccessToast } from "./Toast";
+import toast from "react-hot-toast";
 
 const ProductionTable = () => {
   const param = useSearchParams();
@@ -28,6 +32,12 @@ const ProductionTable = () => {
   >();
   const [production, setProduction] = useState<PorductionType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [activeElement, setActiveElement] = useState<{
+    id: number | undefined;
+    name: string | undefined;
+  }>();
+  const [deleteIsLoading, setDeleteIsLoading] = useState(false);
 
   const columns = production?.length > 0 ? Object.keys(production[0]) : [];
 
@@ -68,6 +78,40 @@ const ProductionTable = () => {
     productions();
   }, [currentPage, reload]);
 
+  const deleteHandler = async () => {
+    try {
+      setDeleteIsLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 250));
+      const id = activeElement?.id;
+
+      const response = await deleteProduction(id);
+
+      if (response.success) {
+        setReload(true);
+        setIsDeleteModalOpen(false);
+        toast.custom((t) => (
+          <SuccessToast visible={t.visible}>
+            Production Deleted Successfully!
+          </SuccessToast>
+        ));
+      } else {
+        console.log("Error While Deleting Invoice: ", response.message);
+        toast.custom((t) => (
+          <ErrorToast visible={t.visible}>
+            Can Not Deleted Production!
+          </ErrorToast>
+        ));
+      }
+    } catch (err) {
+      console.log("Unexpected Error While Deleting Invoice: ", err);
+      toast.custom((t) => (
+        <ErrorToast visible={t.visible}>Can Not Deleted Production!</ErrorToast>
+      ));
+    } finally {
+      setDeleteIsLoading(false);
+    }
+  };
+
   console.log(production);
 
   return (
@@ -81,6 +125,17 @@ const ProductionTable = () => {
           setReload={setReload}
         />
       )}
+
+      {isDeleteModalOpen && (
+        <DeleteModal
+          activeElement={activeElement}
+          handler={deleteHandler}
+          setIsOpen={setIsDeleteModalOpen}
+          title="Production"
+          isLoading={deleteIsLoading}
+        />
+      )}
+
       <div className="table-wrapper">
         <TableActions
           tableName="Production"
@@ -121,7 +176,7 @@ const ProductionTable = () => {
                     {col}
                   </div>
                 ))}
-                {/* <div className="w-1/12">ACTIONS</div> */}
+                <div className="w-[4rem]">ACTIONS</div>
               </div>
               <div>
                 {production.map((item, i) => (
@@ -140,28 +195,25 @@ const ProductionTable = () => {
                     </div>
                     <div className="flex-1 truncate-text">{item.payment}</div>
                     <div className="w-1/12 truncate-text">{item.date}</div>
-                    {/* <div className="flex w-1/12  items-center xl:gap-0 text-primary-foreground ">
+                    <div
+                      className="w-[4rem] flex items-center justify-center text-primary-foreground"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
                       <div
-                        className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
+                        className="w-full flex items-center justify-center hover:bg-primary hover:text-background p-1 rounded-sm duration-200"
                         onClick={() => {
-                          setDefalutValue(item);
-                          setIsOpen(true);
-                          setModalAction("update");
-                        }}
-                      >
-                        <MdOutlineEdit />
-                      </div>
-                      <div
-                        className="hover:bg-primary p-1 rounded-md hover:text-gray-200 duration-200"
-                        onClick={() => {
-                          setDefalutValue(item);
-                          setIsOpen(true);
-                          setModalAction("delete");
+                          setIsDeleteModalOpen(true);
+                          setActiveElement({
+                            id: item.id,
+                            name: item.product.name,
+                          });
                         }}
                       >
                         <RiDeleteBin6Line />
                       </div>
-                    </div> */}
+                    </div>
                   </div>
                 ))}
               </div>

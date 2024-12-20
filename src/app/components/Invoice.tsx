@@ -172,6 +172,8 @@ const Invoice = ({ id }: { id: number }) => {
     }
   };
 
+  console.log(invoiceData?.grand_total);
+
   return (
     <div className="flex justify-center text-primary-foreground">
       <div

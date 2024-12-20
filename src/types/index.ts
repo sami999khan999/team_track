@@ -273,7 +273,8 @@ export type MemoHeadingType = {
 
 export type MemoColumnType = {
   amount: number;
-  challan: number[];
+  challan?: number[];
+  date?: string;
   products: string;
   quantity: number;
   rate: number;

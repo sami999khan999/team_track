@@ -230,11 +230,11 @@ const Dashboard = () => {
                   Employee
                 </div>
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 1080p:text-[7rem] 720p:text-[5rem] sm:text-[4rem] text-[3rem] opacity-5">
-                  {logo.Employees}
+                  {logo?.Employees}
                 </div>
                 <div className="text-primary 1080p:text-5xl 720p:text-4xl sm:text-3xl text-2xl border-border_color rounded-full xl:w-28 sm:w-20 w-16 aspect-square flex items-center justify-center group-hover:1080p:text-[5rem] group-hover:720p:text-[3rem] duration-200 ease-in-out origin-center relative ">
-                  {dashboardData?.employee.totalEmployee}/
-                  {dashboardData?.employee.activeEmployee}
+                  {dashboardData?.employee?.totalEmployee}/
+                  {dashboardData?.employee?.activeEmployee}
                   <div className="absolute text-primary-foreground 1080p:text-base bottom-0 1080p:-left-4 1080p:-bottom-1 720p:left-0 720p:text-xs 720p:bottom-5 opacity-0 group-hover:opacity-60 duration-300 text-[8px] left-0">
                     Total
                   </div>
@@ -255,14 +255,14 @@ const Dashboard = () => {
               <OverviewCard
                 logo={logo.Products}
                 title="Products"
-                value={dashboardData?.products.totalProducts}
+                value={dashboardData?.products?.totalProducts}
               />
 
               {/* Productions Card */}
               <OverviewCard
                 logo={logo.Production}
                 title="Productions"
-                value={dashboardData?.production.totalProduction}
+                value={dashboardData?.production?.totalProduction}
               />
             </div>
 
@@ -271,14 +271,14 @@ const Dashboard = () => {
               <OverviewCard
                 logo={logo.Inventory}
                 title="Inventories"
-                value={dashboardData?.inventory.total}
+                value={dashboardData?.inventory?.total}
               />
 
               {/* Invoices Card */}
               <OverviewCard
                 logo={logo.Invoice}
                 title="Invoices"
-                value={dashboardData?.invoice.total}
+                value={dashboardData?.invoice?.total}
               />
 
               {/* Categories Card */}
@@ -303,11 +303,11 @@ const Dashboard = () => {
                     <div className=" w-full flex flex-col xl:flex-row justify-between gap-4 px-4 py-3 xl:py-8 text-center rounded-lg">
                       <div className="space-y-4 ">
                         <p className="text-2xl opacity-50">
-                          ID : {dashboardData?.employee.employeeOftheMonth.id}
+                          ID : {dashboardData?.employee?.employeeOftheMonth?.id}
                         </p>
 
                         <p className="xl:text-2xl text-xl uppercase text-primary-foreground item.amount">
-                          {dashboardData?.employee.employeeOftheMonth.name}
+                          {dashboardData?.employee?.employeeOftheMonth?.name}
                         </p>
                       </div>
                       <div className="border border-border_color"></div>
@@ -318,8 +318,8 @@ const Dashboard = () => {
                         </div>
                         <div className="text-3xl text-primary font-semibold">
                           {
-                            dashboardData?.employee.employeeOftheMonth
-                              .producedUnites
+                            dashboardData?.employee?.employeeOftheMonth
+                              ?.producedUnites
                           }
                         </div>
                       </div>
@@ -330,8 +330,8 @@ const Dashboard = () => {
                         <div className="text-2xl opacity-30">Total Earned</div>
                         <div className="text-3xl text-primary font-semibold">
                           {
-                            dashboardData?.employee.employeeOftheMonth
-                              .totalEarned
+                            dashboardData?.employee?.employeeOftheMonth
+                              ?.totalEarned
                           }
                         </div>
                       </div>
@@ -353,7 +353,7 @@ const Dashboard = () => {
                       {/* {dashboardData.employee.topEmployees[0].id}. */}1.
                     </div>
                     <div className="w-full text-center opacity-80">
-                      {dashboardData?.employee.topEmployees[0].name}
+                      {dashboardData?.employee?.topEmployees[0]?.name}
                     </div>
                   </div>
 
@@ -363,7 +363,7 @@ const Dashboard = () => {
                         {/* {dashboardData.employee.topEmployees[1].id}. */}2.
                       </div>
                       <div className="w-full text-center opacity-80">
-                        {dashboardData?.employee.topEmployees[1].name}
+                        {dashboardData?.employee?.topEmployees[1]?.name}
                       </div>
                     </div>
 
@@ -372,7 +372,7 @@ const Dashboard = () => {
                         {/* {dashboardData.employee.topEmployees[2].id}. */}3.
                       </div>
                       <div className="w-full text-center opacity-80 truncate-text">
-                        {dashboardData?.employee.topEmployees[2].name}
+                        {dashboardData?.employee?.topEmployees[2]?.name}
                       </div>
                     </div>
 
@@ -381,7 +381,7 @@ const Dashboard = () => {
                         {/* {dashboardData.employee.topEmployees[3].id}. */}4.
                       </div>
                       <div className="w-full text-center opacity-80 truncate-text">
-                        {dashboardData?.employee.topEmployees[3].name}
+                        {dashboardData?.employee?.topEmployees[3]?.name}
                       </div>
                     </div>
 
@@ -390,7 +390,7 @@ const Dashboard = () => {
                         {/* {dashboardData.employee.topEmployees[4].id}. */}5.
                       </div>
                       <div className="w-full text-center opacity-80 truncate-text">
-                        {dashboardData?.employee.topEmployees[4].name}
+                        {dashboardData?.employee?.topEmployees[4]?.name}
                       </div>
                     </div>
                   </div>
@@ -412,8 +412,8 @@ const Dashboard = () => {
                   <div className=" w-full flex flex-col xl:flex-row justify-between gap-4 px-4 py-3 xl:py-8 text-center rounded-lg">
                     <div className="space-y-4 w-full">
                       <p className="text-2xl opacity-30">Total</p>
-                      <p className="xl:text-2xl text-xl text-primary">
-                        {dashboardData?.invoice.total}
+                      <p className="text-3xl  text-primary">
+                        {dashboardData?.invoice?.total}
                       </p>
                     </div>
                     <div className="border border-border_color"></div>
@@ -423,7 +423,7 @@ const Dashboard = () => {
                         Received Payment
                       </div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData?.invoice.receivedPayment}
+                        {dashboardData?.invoice?.receivedPayment}
                       </div>
                     </div>
 
@@ -432,7 +432,7 @@ const Dashboard = () => {
                     <div className="space-y-4 w-full">
                       <div className="text-2xl opacity-30">Pending</div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData?.invoice.pending}
+                        {dashboardData?.invoice?.pending}
                       </div>
                     </div>
                   </div>
@@ -452,8 +452,8 @@ const Dashboard = () => {
                   <div className=" w-full flex flex-col xl:flex-row justify-between gap-4 px-4 py-3 xl:py-8 text-center rounded-lg">
                     <div className="space-y-4 w-full">
                       <p className="text-2xl opacity-30">Total</p>
-                      <p className="xl:text-2xl text-xl text-primary">
-                        {dashboardData?.inventory.total}
+                      <p className="text-3xl text-primary">
+                        {dashboardData?.inventory?.total}
                       </p>
                     </div>
 
@@ -462,7 +462,7 @@ const Dashboard = () => {
                     <div className="space-y-4 w-full">
                       <div className="text-2xl opacity-30">Sold</div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData?.inventory.sold}
+                        {dashboardData?.inventory?.sold}
                       </div>
                     </div>
 
@@ -471,7 +471,7 @@ const Dashboard = () => {
                     <div className="space-y-4 w-full">
                       <div className="text-2xl opacity-30">In Stock</div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData?.inventory.inStock}
+                        {dashboardData?.inventory?.inStock}
                       </div>
                     </div>
                   </div>
@@ -493,8 +493,8 @@ const Dashboard = () => {
                   <div className=" w-full flex flex-col xl:flex-row justify-between gap-4 px-4 py-3 xl:py-8 text-center rounded-lg">
                     <div className="space-y-4 w-full">
                       <p className="text-2xl opacity-30">Total</p>
-                      <p className="xl:text-2xl text-xl text-primary">
-                        {dashboardData?.production.totalProduction}
+                      <p className="text-3xl text-primary">
+                        {dashboardData?.production?.totalProduction}
                       </p>
                     </div>
                     <div className="border border-border_color"></div>
@@ -504,7 +504,7 @@ const Dashboard = () => {
                         Total In a Mounth
                       </div>
                       <div className="text-3xl text-primary font-semibold truncate-text">
-                        {dashboardData?.production.totalProductionInAMounth}
+                        {dashboardData?.production?.totalProductionInAMounth}
                       </div>
                     </div>
 
@@ -521,7 +521,7 @@ const Dashboard = () => {
                     <div className="space-y-4 w-full">
                       <div className="text-2xl opacity-30">Due</div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData?.production.due}
+                        {dashboardData?.production?.due}
                       </div>
                     </div>
                   </div>
@@ -543,10 +543,10 @@ const Dashboard = () => {
                   <div className=" w-full flex flex-col xl:flex-row justify-between gap-4 px-4 py-3 xl:py-8 text-center rounded-lg">
                     <div className="space-y-4 w-full">
                       <p className="text-2xl opacity-30">
-                        ID : {dashboardData?.products.topSoledProducts.id}
+                        ID : {dashboardData?.products?.topSoledProducts?.id}
                       </p>
                       <p className="xl:text-2xl text-xl text-primary ">
-                        {dashboardData?.products.topSoledProducts.name}
+                        {dashboardData?.products?.topSoledProducts?.name}
                       </p>
                     </div>
                     <div className="border border-border_color"></div>
@@ -554,7 +554,7 @@ const Dashboard = () => {
                     <div className="space-y-4 w-full">
                       <div className="text-2xl opacity-30">Sold Units</div>
                       <div className="text-3xl text-primary font-semibold">
-                        {dashboardData?.products.topSoledProducts.soldUnits}
+                        {dashboardData?.products?.topSoledProducts?.soldUnits}
                       </div>
                     </div>
                   </div>

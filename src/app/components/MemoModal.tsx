@@ -78,7 +78,7 @@ const MemoModal = ({
       setIsLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      const response = await createMemo(selectedId);
+      const response = await createMemo(selectedId, "4%");
 
       if (response.success) {
         toast.custom((t) => (
