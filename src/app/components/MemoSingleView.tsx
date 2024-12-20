@@ -85,47 +85,46 @@ const MemoSingleView = ({ id }: { id: number }) => {
         const challanNo = memoHeadingData?.memo_id;
         const grandTotal = memoHeadingData?.total_amount;
         const totalColumnHtml = memoColumnData
-          .map(
-            (item) => `
-          <div class="table-body border-b flex justify-between px-8 py-1 text-sm gap-5">
-            <div class="w-1/12 break-words cursor-auto">
-                          ${item.slno}
-                        </div>
-                        <div class="flex-1 break-words cursor-auto">
-                          ${item.products}
-                        </div>
-                      <div class="flex-1 break-words cursor-auto">
-  ${
-    format === "format1" ? (
-      <div>
-        $
-        {item.challan &&
-          item.challan
-            .map(
-              (product, i) =>
-                `${product}${
-                  item.challan && i < item.challan.length - 1 ? ", " : ""
-                }`
-            )
-            .join("")}
-      </div>
-    ) : (
-      <div>{item.date}</div>
-    )
-  }
-</div>
-                        <div class="flex-1 break-words cursor-auto">
-                          ${item.quantity}
-                        </div>
-                        <div class="flex-1 break-words cursor-auto">
-                          ${formatNumberWithCommas(item.rate)}/=
-                        </div>
-                        <div class="flex-1 break-words cursor-auto">
-                          ${formatNumberWithCommas(item.amount)}/=
-                        </div>
-          </div>
-        `
-          )
+          .map((item) => {
+            const challanContent =
+              format === "format1"
+                ? item.challan
+                    ?.map(
+                      (product, i) =>
+                        `${product}${
+                          item.challan && i < item.challan.length - 1
+                            ? ", "
+                            : ""
+                        }`
+                    )
+                    .join("")
+                : item.date
+                ? item.date
+                : "";
+
+            return `
+            <div class="table-body border-b flex justify-between px-8 py-1 text-sm gap-5">
+              <div class="w-1/12 break-words cursor-auto">
+                ${item.slno}
+              </div>
+              <div class="flex-1 break-words cursor-auto">
+                ${item.products}
+              </div>
+              <div class="flex-1 break-words cursor-auto">
+                ${challanContent}
+              </div>
+              <div class="flex-1 break-words cursor-auto">
+                ${item.quantity}
+              </div>
+              <div class="flex-1 break-words cursor-auto">
+                ${formatNumberWithCommas(item.rate)}/=
+              </div>
+              <div class="flex-1 break-words cursor-auto">
+                ${formatNumberWithCommas(item.amount)}/=
+              </div>
+            </div>
+          `;
+          })
           .join("");
 
         printWindow.document.write(`
@@ -180,7 +179,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
                   <div class="flex text-white px-8 py-2 rounded-t-lg text-base bg-[#2dac5c] w-full justify-between font-bold gap-5 capitalize">
                     <p class="w-1/12 break-words">slno</p>
                     <p class="flex-1 break-words">Products</p>
-                    <p class="flex-1 break-words">Challan </p>
+                    <p class="flex-1 break-words"></p>
                     <p class="flex-1 break-words">Quantity</p>
                     <p class="flex-1 break-words">Rate</p>
                     <p class="flex-1 break-words">Amount</p>
@@ -395,9 +394,9 @@ const MemoSingleView = ({ id }: { id: number }) => {
                         <div className="flex-1 break-words cursor-auto">
                           {item.products}
                         </div>
-                        <div className="">
+                        <div className="flex-1 ">
                           {format === "format1" ? (
-                            <div className="flex-1 flex gap-1 break-words cursor-auto">
+                            <div className="flex gap-1 break-words cursor-auto">
                               {item.challan?.map((challanNumber, i) => (
                                 <p key={i}>
                                   {challanNumber}
