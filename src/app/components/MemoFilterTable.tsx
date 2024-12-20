@@ -74,7 +74,7 @@ const MemoFilterTable = ({
   return (
     <div className="overflow-y-auto remove-scrollbar">
       {data.length > 0 ? (
-        <div className="h-[15rem] xl:h-[22rem] xl:w-full mt-4 w-[35rem]">
+        <div className="h-[15rem] xl:h-[22rem] xl:w-full w-[35rem]">
           <div className="table-header pt-4 sticky top-0 z-20">
             <p className="w-1/12 truncate-text">ID</p>
             <p className="flex-1 truncate-text">products</p>

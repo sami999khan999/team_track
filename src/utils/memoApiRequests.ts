@@ -28,7 +28,8 @@ export const getFilterMemo = async (id: number) => {
 
 export const createMemo = async (
   selectedId: number[],
-  discount: number | string
+  discount: number | undefined,
+  discountFormat: string | undefined
 ) => {
   try {
     const response = await fetch(`${url}api/memo/create/`, {
