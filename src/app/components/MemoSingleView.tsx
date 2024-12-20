@@ -15,6 +15,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
   const [memoColumnData, setMemoColumnData] = useState<MemoColumnType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [column, setColumn] = useState<string[]>();
+  const [format, setFormat] = useState<"format1" | "format2">("format1");
 
   useEffect(() => {
     const fetchMemoSingleData = async () => {
@@ -23,7 +24,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
 
         await new Promise((resolve) => setTimeout(resolve, 250));
 
-        const response = await getSingleMemo(id);
+        const response = await getSingleMemo(id, format);
 
         if (response.success) {
           const headingData = response.data[0];
@@ -31,6 +32,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
           if (headingData) {
             setMemoHeadingData(headingData);
 
+            console.log(response);
             const columns = response.data.slice(1);
 
             if (columns.length > 0) {
@@ -60,7 +62,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
     };
 
     fetchMemoSingleData();
-  }, [id]);
+  }, [id, format]);
 
   const handlePrint = () => {
     const printContent = document.getElementById("pdf-content");
@@ -93,9 +95,24 @@ const MemoSingleView = ({ id }: { id: number }) => {
                           ${item.products}
                         </div>
                       <div class="flex-1 break-words cursor-auto">
-  ${item.challan
-    .map((product, i) => `${product}${i < item.challan.length - 1 ? ", " : ""}`)
-    .join("")}
+  ${
+    format === "format1" ? (
+      <div>
+        $
+        {item.challan &&
+          item.challan
+            .map(
+              (product, i) =>
+                `${product}${
+                  item.challan && i < item.challan.length - 1 ? ", " : ""
+                }`
+            )
+            .join("")}
+      </div>
+    ) : (
+      <div>{item.date}</div>
+    )
+  }
 </div>
                         <div class="flex-1 break-words cursor-auto">
                           ${item.quantity}
@@ -236,16 +253,36 @@ const MemoSingleView = ({ id }: { id: number }) => {
   return (
     <div className="flex justify-center text-primary-foreground   ">
       <div
-        className="relative bg-secondary w-[98%] xl:w-[90%] h-fit px-3 xl:px-10 pb-10 rounded-xl table-wrapper"
+        className="relative bg-secondary w-[98%] xl:w-[90%] h-fit px-3 xl:px-10 pb-10 rounded-xl table-wrapper mb-10"
         id="pdf-content"
       >
         <div
-          className="absolute top-4 xl:top-8 left-4 xl:left-8 text-base xl:text-2xl text-primary-foreground px-4 py-1 rounded-md hover:bg-secondary-foreground duration-200"
+          className="absolute w-fit top-4 xl:top-8 left-4 xl:left-8 text-base xl:text-2xl text-primary-foreground px-4 py-1 rounded-md hover:bg-secondary-foreground duration-200"
           onClick={() => path.back()}
         >
           <FaArrowLeftLong />
         </div>
-        <div className="header text-center pb-10 pt-4">
+
+        <div className="absolute top-4 xl:top-8 right-4 xl:right-8 flex gap-3 1080p:text-xl 720p:text-base text-xs rounded-full bg-secondary-foreground font-semibold ">
+          <div
+            className={`${
+              format === "format1" && "bg-primary text-background rounded-full"
+            } px-5 py-1`}
+            onClick={() => setFormat("format1")}
+          >
+            Format-1
+          </div>
+          <div
+            className={`${
+              format === "format2" && "bg-primary text-background rounded-full"
+            } px-5 py-1`}
+            onClick={() => setFormat("format2")}
+          >
+            Format-2
+          </div>
+        </div>
+
+        <div className="header text-center pb-5 pt-4 mt-5">
           <h1 className="text-2xl xl:text-4xl font-semibold text-primary">
             Next Fashion Textile
           </h1>
@@ -277,7 +314,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
           memoColumnData.length > 0 && (
             <>
               <div className="hidden xl:block">
-                <div className="customer-info flex justify-between px-4 ">
+                <div className="customer-info flex justify-between px-4">
                   <div className="left">
                     <p className="customer-name tracking-wider font-bold text-base xl:text-xl capitalize text-primary">
                       {memoHeadingData?.customer}
@@ -358,13 +395,21 @@ const MemoSingleView = ({ id }: { id: number }) => {
                         <div className="flex-1 break-words cursor-auto">
                           {item.products}
                         </div>
-                        <div className="flex-1 flex gap-1 break-words cursor-auto">
-                          {item.challan.map((challanNumber, i) => (
-                            <p key={i}>
-                              {challanNumber}
-                              {i < item.challan.length - 1 && ", "}
-                            </p>
-                          ))}
+                        <div className="">
+                          {format === "format1" ? (
+                            <div className="flex-1 flex gap-1 break-words cursor-auto">
+                              {item.challan?.map((challanNumber, i) => (
+                                <p key={i}>
+                                  {challanNumber}
+                                  {item.challan &&
+                                    i < item.challan.length - 1 &&
+                                    ", "}
+                                </p>
+                              ))}
+                            </div>
+                          ) : (
+                            <div>{item.date}</div>
+                          )}
                         </div>
                         <div className="flex-1 break-words cursor-auto">
                           {item.quantity}

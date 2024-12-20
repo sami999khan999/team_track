@@ -26,14 +26,17 @@ export const getFilterMemo = async (id: number) => {
   }
 };
 
-export const createMemo = async (selectedId: number[]) => {
+export const createMemo = async (
+  selectedId: number[],
+  discount: number | string
+) => {
   try {
     const response = await fetch(`${url}api/memo/create/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ challan: selectedId }),
+      body: JSON.stringify({ challan: selectedId, discount: discount }),
     });
 
     const data = await response.json();
@@ -86,9 +89,15 @@ export const getMemo = async (page: number) => {
   }
 };
 
-export const getSingleMemo = async (id: number) => {
+export const getSingleMemo = async (id: number, format: string) => {
   try {
-    const response = await fetch(`${url}api/memo/single/view/${id}/`);
+    const response = await fetch(`${url}api/memo/single/view/${id}/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ format: format }),
+    });
 
     if (!response.ok) {
       return {
