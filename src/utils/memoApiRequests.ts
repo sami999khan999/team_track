@@ -91,16 +91,13 @@ export const getMemo = async (page: number) => {
 
 export const getSingleMemo = async (id: number, format: string) => {
   try {
-    const response = await fetch(
-      `${url}api/memo/single/view/${id}/`
-      //   {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ format: format }),
-      // }
-    );
+    const response = await fetch(`${url}api/memo/single/view/${id}/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ format: format }),
+    });
 
     if (!response.ok) {
       return {
