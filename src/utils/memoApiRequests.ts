@@ -30,10 +30,12 @@ export const createMemo = async ({
   challanId,
   discountMethod,
   discount,
+  date,
 }: {
   challanId: number[];
   discountMethod: "percent" | "amount" | null;
   discount: number;
+  date: string;
 }) => {
   try {
     const response = await fetch(`${url}api/memo/create/`, {
@@ -45,6 +47,7 @@ export const createMemo = async ({
         challan: challanId,
         discount: discount,
         discountMethod: discountMethod,
+        date: date,
       }),
     });
 
