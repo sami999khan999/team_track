@@ -36,16 +36,17 @@ export const createMemo = async ({
   discount: number;
 }) => {
   try {
-    const response = await fetch(
-      `${url}api/memo/create/`
-      //   {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ challan: selectedId, discount: discount }),
-      // }
-    );
+    const response = await fetch(`${url}api/memo/create/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        challan: challanId,
+        discount: discount,
+        discountMethod: discountMethod,
+      }),
+    });
 
     const data = await response.json();
 

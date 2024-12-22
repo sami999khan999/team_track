@@ -201,7 +201,7 @@ const ProductModal = ({
         className="w-[95%] xl:w-[60%] bg-secondary rounded-xl "
       >
         {modalAction === "create" && (
-          <div className="h-full w-full xl:px-8 p-3 py-8 relative remove-scrollbar">
+          <div className="h-full w-full xl:px-8 p-3 py-8 relative remove-scrollbar border border-border_color">
             <div
               className="close-btn"
               onClick={() => {
