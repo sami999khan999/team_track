@@ -12,6 +12,7 @@ import { ErrorToast, SuccessToast } from "./Toast";
 import { CgSpinnerTwo } from "react-icons/cg";
 import { useRouter } from "next/navigation";
 import { formatNumberWithCommas } from "@/utils/numberFormat";
+import { Span } from "next/dist/trace";
 
 const MemoModal = ({
   setIsOpen,
@@ -37,6 +38,10 @@ const MemoModal = ({
   >();
   const [selectedId, setSelectedId] = useState<number[] | undefined>();
   const [totalAmount, setTotalAmount] = useState<number | undefined>();
+  const [discount, setDiscount] = useState("");
+  const [discountInputError, setDiscountInputError] = useState("");
+  const [totalAfterDiscount, setTotalAfterDiscount] = useState<number>();
+  const [removeDiscount, setRemoveDiscount] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const getFilteredDataHandler = async () => {
@@ -68,6 +73,31 @@ const MemoModal = ({
     }
   };
 
+  const addDiscountHandler = () => {
+    const matcher = /^(?:\d+(\.\d+)?|(\d+(\.\d+)?)%)?$/;
+    if (!matcher.test(discount)) {
+      setDiscountInputError("Invalid discount input");
+      return;
+    } else if (discount === "") {
+      setDiscountInputError("Enter a value!");
+
+      return;
+    } else {
+      if (discount[discount.length - 1] === "%") {
+        const discountPersent = Number(discount.slice(0, discount.length - 1));
+        const totalDiscount = (Number(totalAmount) / 100) * discountPersent;
+
+        const totalAmountAfterDiscount = Number(totalAmount) - totalDiscount;
+
+        setTotalAfterDiscount(totalAmountAfterDiscount);
+      } else {
+        const totalAmountAfterDiscount = Number(totalAmount) - Number(discount);
+
+        setTotalAfterDiscount(totalAmountAfterDiscount);
+      }
+    }
+  };
+
   const createMemoHandler = async () => {
     try {
       if (!selectedId) {
@@ -78,7 +108,7 @@ const MemoModal = ({
       setIsLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      const response = await createMemo(selectedId, "4%");
+      const response = await createMemo(selectedId, 4, "persent");
 
       if (response.success) {
         toast.custom((t) => (
@@ -130,13 +160,15 @@ const MemoModal = ({
         0
       );
 
+      setDiscount("");
+      setTotalAfterDiscount(undefined);
       setTotalAmount(total);
     }
-  }, [selectedData]);
+  }, [selectedData, removeDiscount]);
 
   return (
     <div className="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center justify-center z-20">
-      <div className="relative bg-secondary w-[95%] xl:w-[90%] h-[80%] border border-border_color rounded-lg py-6 xl:px-8 px-3 overflow-x-auto remove-scrollbar">
+      <div className="relative bg-secondary w-[95%] xl:w-[90%] h-[85%] border border-border_color rounded-lg py-6 xl:px-8 px-3 overflow-x-auto remove-scrollbar">
         <div className="close-btn" onClick={() => setIsOpen((prv) => !prv)}>
           <IoCloseSharp className="transition-transform hover:rotate-90 duration-200 origin-center" />
         </div>
@@ -167,11 +199,11 @@ const MemoModal = ({
                 <p className="error_message">{customerSelectionError}</p>
               </div>
               <button
-                className="submit-btn mt-0 xl:w-[5rem] px-5 h-8 xl:h-12 disabled:cursor-not-allowed"
+                className="submit-btn mt-0 xl:w-fit disabled:cursor-not-allowed xl:h-11 h-8"
                 onClick={getFilteredDataHandler}
                 disabled={isLoading}
               >
-                <div>Get</div>
+                Get
               </button>
             </div>
 
@@ -186,9 +218,11 @@ const MemoModal = ({
                 />
               </div>
             ) : (
-              <div className="absolute top-[60%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl xl:text-3xl font-semibold text-primary-foreground">
-                Select <span className="text-primary">Customer</span> to get
-                started
+              <div className="absolute w-full top-[70%] xl:top-[60%] flex justify-center text-xl xl:text-3xl font-semibold text-primary-foreground">
+                <p>
+                  Select <span className="text-primary">Customer</span> to get
+                  started
+                </p>
               </div>
             )}
           </div>
@@ -198,36 +232,85 @@ const MemoModal = ({
           <div className="right xl:w-[50%] overflow-x-hidden">
             {selectedData && selectedData?.length > 0 ? (
               <div>
-                <div className="flex gap-6 text-primary-foreground text-sm xl:text-xl justify-between px-2 font-semibold mt-8">
-                  <div>
-                    <span className="text-primary">Selected:</span>{" "}
-                    {selectedData.length}
+                <div className="flex flex-col xl:flex-row gap-3">
+                  <div className="w-full">
+                    <input
+                      type="text"
+                      placeholder="Enter discount [ 1000 or 10% ]"
+                      className="inputfield"
+                      value={discount}
+                      onChange={(e) => {
+                        setDiscount(e.target.value);
+                        setDiscountInputError("");
+                      }}
+                    />
+                    <p className="error_message">{discountInputError}</p>
                   </div>
-                  <div>
-                    <span className="text-primary">Total Amount:</span>{" "}
-                    {formatNumberWithCommas(totalAmount)}/=
-                  </div>
-                </div>
-                <MemoFilterTable
-                  data={selectedData}
-                  type="selected"
-                  setSelectedData={setSelectedData}
-                  selectedData={selectedData}
-                />
-                <div className="w-full flex items-center justify-center">
                   <button
-                    className="submit-btn mx-0 xl:w-fit xl:px-16"
-                    onClick={createMemoHandler}
-                    disabled={isLoading}
+                    className="submit-btn mt-0 xl:w-fit xl:h-11 h-8"
+                    onClick={addDiscountHandler}
                   >
-                    {isLoading ? (
-                      <div className="flex items-center justify-center w-full ">
-                        <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
-                      </div>
-                    ) : (
-                      <div>Create Memo</div>
-                    )}
+                    Add
                   </button>
+                  <button
+                    className="submit-btn mt-0 xl:w-fit xl:h-11 h-8"
+                    onClick={() => {
+                      setRemoveDiscount((prv) => !prv);
+                      setTotalAfterDiscount(undefined);
+                      setDiscount("");
+                    }}
+                  >
+                    Remove
+                  </button>
+                </div>
+
+                <div>
+                  <div className="flex gap-6 text-primary-foreground text-sm xl:text-xl justify-between px-2 font-semibold mt-8">
+                    <div>
+                      <span className="text-primary">Selected: </span>
+                      {selectedData.length}
+                    </div>
+                    <div className="flex gap-2">
+                      <span className="text-primary">Total Amount: </span>
+                      {totalAfterDiscount ? (
+                        <div className="flex justify-center items-center gap-3">
+                          <p className="line-through xl:text-lg text-xs">
+                            {formatNumberWithCommas(totalAmount)}
+                          </p>
+                          <p>
+                            {formatNumberWithCommas(totalAfterDiscount)}
+                            <span className="xl:text-sm text-[8px]"> TK</span>
+                          </p>
+                        </div>
+                      ) : (
+                        <span>
+                          {formatNumberWithCommas(totalAmount)}
+                          <span className="xl:text-sm text-[8px]"> TK</span>
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <MemoFilterTable
+                    data={selectedData}
+                    type="selected"
+                    setSelectedData={setSelectedData}
+                    selectedData={selectedData}
+                  />
+                  <div className="w-full flex items-center justify-center">
+                    <button
+                      className="submit-btn mx-0 xl:w-fit xl:px-16"
+                      onClick={createMemoHandler}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <div className="flex items-center justify-center w-full ">
+                          <CgSpinnerTwo className="animate-spin text-primary-foreground dark:text-background" />
+                        </div>
+                      ) : (
+                        <div>Create Memo</div>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             ) : (

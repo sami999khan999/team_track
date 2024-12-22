@@ -245,7 +245,7 @@ const InvoiceModal = ({
 
           {inventories?.length === 0 ||
             (inventories === undefined && (
-              <div className="hidden xl:block absolute top-[50%] left-[35%] text-primary-foreground font-bold text-2xl">
+              <div className="hidden xl:flex absolute top-[70%] w-full justify-center items-center text-primary-foreground font-bold text-2xl">
                 <p>
                   Select <span className="text-primary">Product</span> and{" "}
                   <span className="text-primary">Employee</span> to get started

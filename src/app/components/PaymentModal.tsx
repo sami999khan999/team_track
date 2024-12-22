@@ -251,10 +251,7 @@ const PaymentModal = ({
                   <p className="error_message">{employeeSelectionError}</p>
                 </div>
                 <div className="">
-                  <button
-                    className="submit-btn mt-0 h-8 xl:h-full"
-                    onClick={filterHandler}
-                  >
+                  <button className="submit-btn mt-0" onClick={filterHandler}>
                     Get
                   </button>
                 </div>
