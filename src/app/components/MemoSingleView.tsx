@@ -110,18 +110,20 @@ const MemoSingleView = ({ id }: { id: number }) => {
               <div class="flex-1 break-words cursor-auto">
                 ${item.products}
               </div>
-              <div class="flex-1 break-words cursor-auto">
-                ${challanContent}
-              </div>
+               <div class="flex-1 break-words cursor-auto">
+               ${challanContent}
+             </div>
               <div class="flex-1 break-words cursor-auto">
                 ${item.quantity}
               </div>
               <div class="flex-1 break-words cursor-auto">
                 ${formatNumberWithCommas(item.rate)}/=
               </div>
+            
               <div class="flex-1 break-words cursor-auto">
                 ${formatNumberWithCommas(item.amount)}/=
               </div>
+
             </div>
           `;
           })
@@ -129,115 +131,121 @@ const MemoSingleView = ({ id }: { id: number }) => {
 
         printWindow.document.write(`
           <html>
-            <head>
-              <title>Invoice</title>
-               <script src="https://cdn.tailwindcss.com"></script>
-              <style>
-                /* Styles go here */
-
-                  .break-words {
-    overflow-wrap: break-word; /* Ensures text breaks within container */
-    word-wrap: break-word; /* Provides similar behavior */
-    white-space: normal; /* Allows text to wrap to new lines */
-    word-break: break-word; /* Breaks long words as needed */
-  }
+  <head>
+    <title>Invoice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Styles go here */
+      .break-words {
+        overflow-wrap: break-word; /* Ensures text breaks within container */
+        word-wrap: break-word; /* Provides similar behavior */
+        white-space: normal; /* Allows text to wrap to new lines */
+        word-break: break-word; /* Breaks long words as needed */
+      }
       @media print {
-    .print-button {
-      display: none;
-    }
-  }
-              </style>
-            </head>
-            <body>
-              <div class="invoice-content flex flex-col items-center justify-center mt-2">
-              <div class=" bg-white w-[100%]">
-                <div class="text-center pt-4 pb-3">
-                  <h1 class="text-4xl mb-1 font-semibold">Next Fashion Textile</h1>
-                  <p class="text-base mb-1 text-[#5c5f63] font-medium">
-                    Garashin, Karatia, Tangail-Sadar call: 01711959527 Mail:
-                    mustafatex@gmail.com
-                  </p>
-                  <div class="border-b border-gray-400"></div>
-                </div>
-
-                <div class="flex justify-between px-4">
-                  <div class="text-gray-900">
-                    <p class="tracking-wide font-bold text-lg capitalize">
-                      ${customerName}
-                    </p>
-                    <p class="text-base font-medium capitalize ">
-                      ${customerAddress}
-                    </p>
-                  </div>
-                  <div class="text-base">
-                    <p>Date: <span class="bold font-semibold text-gray-950">${date}</span></p>
-                    <p>Memo No: <span class="bold font-semibold text-gray-950">${challanNo}</span></p>
-                  </div>
-                </div>
-
-                <div class="table w-full mt-4">
-                  <div class="flex text-white px-8 py-2 rounded-t-lg text-base bg-[#2dac5c] w-full justify-between font-bold gap-5 capitalize">
-                    <p class="w-1/12 break-words">slno</p>
-                    <p class="flex-1 break-words">Products</p>
-                    <p class="flex-1 break-words"></p>
-                    <p class="flex-1 break-words">Quantity</p>
-                    <p class="flex-1 break-words">Rate</p>
-                    <p class="flex-1 break-words">Amount</p>
-                  </div>
-
-                  ${totalColumnHtml}
-
-                  <div class="px-8 flex border-b justify-between py-2 gap-5">
-                    <div class="w-1/12 font-bold text-gray-900 text-base">Total</div>
-                    <div class="flex-1"></div>
-                    <div class="flex-1"></div>
-                    <div class="flex-1"></div>
-                    <div class="flex-1"></div>
-                    <div class="flex-1 font-bold text-gray-900 text-base">${formatNumberWithCommas(
-                      grandTotal
-                    )}/=</div>
-                  </div>
-
-              
-
-                <div class="mt-20 text-right pr-4">
-        <div class="inline-block text-center">
-            <div class="border-t-2 border-gray-900 w-48"></div> <!-- Signature line -->
-            <p class="mt-1 text-sm font-semibold text-gray-900">Authorized Signature</p>
+        .print-button {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="invoice-content flex flex-col items-center justify-center mt-2">
+      <div class="bg-white w-[100%]">
+        <div class="text-center pt-4 pb-3">
+          <h1 class="text-4xl mb-1 font-semibold">Next Fashion Textile</h1>
+          <p class="text-base mb-1 text-[#5c5f63] font-medium">
+            Garashin, Karatia, Tangail-Sadar call: 01711959527 Mail:
+            mustafatex@gmail.com
+          </p>
+          <div class="border-b border-gray-400"></div>
         </div>
+
+        <div class="flex justify-between px-4">
+          <div class="text-gray-900">
+            <p class="tracking-wide font-bold text-lg capitalize">
+              ${customerName}
+            </p>
+            <p class="text-base font-medium capitalize ">
+              ${customerAddress}
+            </p>
+          </div>
+          <div class="text-base">
+            <p>Date: <span class="bold font-semibold text-gray-950">${date}</span></p>
+            <p>Memo No: <span class="bold font-semibold text-gray-950">${challanNo}</span></p>
+          </div>
+        </div>
+
+        <div class="table w-full mt-4">
+          <div class="flex text-white px-8 py-2 rounded-t-lg text-base bg-[#2dac5c] w-full justify-between font-bold gap-5 capitalize">
+            <p class="w-1/12 break-words">slno</p>
+            <p class="flex-1 break-words">Products</p>
+            <p class="flex-1 break-words ${
+              format === "format1" ? "" : "hidden"
+            }">
+              Challan
+            </p>
+             <p class="flex-1 break-words ${
+               format === "format2" ? "" : "hidden"
+             }">
+              Date
+            </p>
+            <p class="flex-1 break-words">Quantity</p>
+            <p class="flex-1 break-words">Rate</p>
+        
+            <p class="flex-1 break-words">Amount</p>
+          </div>
+
+          ${totalColumnHtml}
+
+          <div class="px-8 flex border-b justify-between py-2 gap-5">
+            <div class="w-1/12 font-bold text-gray-900 text-base">Total</div>
+            <div class="flex-1"></div>
+            <div class="flex-1"></div>
+            <div class="flex-1"></div>
+            <div class="flex-1"></div>
+            <div class="flex-1 font-bold text-gray-900 text-base">${formatNumberWithCommas(
+              grandTotal
+            )}/=</div>
+          </div>
+
+          <div class="mt-20 text-right pr-4">
+            <div class="inline-block text-center">
+              <div class="border-t-2 border-gray-900 w-48"></div> <!-- Signature line -->
+              <p class="mt-1 text-sm font-semibold text-gray-900">Authorized Signature</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="bg-[#2dac5c] text-white text-center py-8 mt-8 rounded-xl">
+              <h2 class="text-2xl font-bold">Thank You!</h2>
+              <p class="mt-2 text-lg">
+                Your business means the world to us!
+              </p>
+              <p class="mt-2 text-base">
+                We appreciate your trust and look forward to serving you again.
+              </p>
+            </div>
+
+            <div class="text-gray-600 py-4 text-center text-sm">
+              <p class="">
+                For any inquiries, please contact us at |
+                <span class="font-semibold tracking-wide">
+                  marufsarkar512@gmail.com
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="print-button" id="print-button">
+          <button onClick="window.print()">Print Invoice</button>
+        </div>
+      </div>
     </div>
+  </body>
+</html>
 
-    <div>
-                <div class="bg-[#2dac5c] text-white text-center py-8 mt-8 rounded-xl">
-                  <h2 class="text-2xl font-bold">Thank You!</h2>
-                  <p class="mt-2 text-lg">
-                    Your business means the world to us!
-                  </p>
-                  <p class="mt-2 text-base">
-                    We appreciate your trust and look forward to serving you
-                    again.
-                  </p>
-                </div>
-
-                <div class=" text-gray-600 py-4 text-center text-sm">
-                  <p class="">
-                    For any inquiries, please contact us at |
-                    <span class="font-semibold tracking-wide">
-                      marufsarkar512@gmail.com
-                    </span>
-                  </p>
-                </div>
-              </div>
-                  
-                </div>
-
-                <div class="print-button" id="print-button">
-                  <button onClick="window.print()">Print Invoice</button>
-                </div>
-              </div>
-              </div>
-            </body>
-          </html>
         `);
 
         printWindow.document.close();
@@ -389,7 +397,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
                     {memoColumnData?.map((item, i) => (
                       <div key={i} className="table-col py-2">
                         <div className="w-1/12 xl:w-1/12 break-words cursor-auto">
-                          {item.slno}
+                          {format === "format1" ? item.slno : item.challanid}
                         </div>
                         <div className="flex-1 break-words cursor-auto">
                           {item.products}
