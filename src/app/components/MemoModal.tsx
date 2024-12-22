@@ -3,16 +3,15 @@
 import { CustomerType, FilterMemoType } from "@/types";
 import { getCustoer } from "@/utils/customerApiRerquest";
 import { createMemo, getFilterMemo } from "@/utils/memoApiRequests";
+import { formatNumberWithCommas } from "@/utils/numberFormat";
+import { useRouter } from "next/navigation";
 import React, { SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { CgSpinnerTwo } from "react-icons/cg";
 import { IoCloseSharp } from "react-icons/io5";
 import Dropdown from "./Dropdown";
 import MemoFilterTable from "./MemoFilterTable";
 import { ErrorToast, SuccessToast } from "./Toast";
-import { CgSpinnerTwo } from "react-icons/cg";
-import { useRouter } from "next/navigation";
-import { formatNumberWithCommas } from "@/utils/numberFormat";
-import { Span } from "next/dist/trace";
 
 const MemoModal = ({
   setIsOpen,
@@ -39,6 +38,7 @@ const MemoModal = ({
   const [selectedId, setSelectedId] = useState<number[] | undefined>();
   const [totalAmount, setTotalAmount] = useState<number | undefined>();
   const [discount, setDiscount] = useState("");
+  const [finalDiscount, setFinalDiscount] = useState("");
   const [discountInputError, setDiscountInputError] = useState("");
   const [totalAfterDiscount, setTotalAfterDiscount] = useState<number>();
   const [removeDiscount, setRemoveDiscount] = useState(false);
@@ -90,10 +90,12 @@ const MemoModal = ({
         const totalAmountAfterDiscount = Number(totalAmount) - totalDiscount;
 
         setTotalAfterDiscount(totalAmountAfterDiscount);
+        setFinalDiscount(discount);
       } else {
         const totalAmountAfterDiscount = Number(totalAmount) - Number(discount);
 
         setTotalAfterDiscount(totalAmountAfterDiscount);
+        setFinalDiscount(discount);
       }
     }
   };
@@ -105,10 +107,30 @@ const MemoModal = ({
         return;
       }
 
+      const discountMethod: "percent" | "amount" | null =
+        finalDiscount !== ""
+          ? finalDiscount[finalDiscount.length - 1] === "%"
+            ? "percent"
+            : "amount"
+          : null;
+
+      const discountAmount =
+        discountMethod !== null
+          ? discountMethod === "percent"
+            ? finalDiscount.slice(0, finalDiscount.length - 1)
+            : finalDiscount
+          : 0;
+
+      const data = {
+        challanId: selectedId,
+        discount: Number(discountAmount),
+        discountMethod: discountMethod,
+      };
+
       setIsLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      const response = await createMemo(selectedId, 4, "persent");
+      const response = await createMemo(data);
 
       if (response.success) {
         toast.custom((t) => (
@@ -174,7 +196,7 @@ const MemoModal = ({
         </div>
         <div className="flex flex-col gap-2 items-center justify-center text-center border-b border-border_color pb-4">
           <h2 className="text-xl xl:text-3xl font-sour_gummy text-primary font-semibold text-center">
-            Generate Cash Momo
+            Generate Cash Memo
           </h2>
           <p className="text-primary-foreground text-lg w-[70%] hidden xl:block">
             Generate professional cash memos instantly to provide customers with
@@ -257,7 +279,9 @@ const MemoModal = ({
                     onClick={() => {
                       setRemoveDiscount((prv) => !prv);
                       setTotalAfterDiscount(undefined);
+                      setDiscountInputError("");
                       setDiscount("");
+                      setFinalDiscount("");
                     }}
                   >
                     Remove

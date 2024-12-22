@@ -265,7 +265,8 @@ export type MemoColumnType = {
   products: string;
   quantity: number;
   rate: number;
-  slno: number;
+  slno?: number;
+  challanid?: number;
 };
 
 export type DashboardProductionType = {
