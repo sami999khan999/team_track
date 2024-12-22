@@ -43,6 +43,7 @@ const MemoModal = ({
   const [totalAfterDiscount, setTotalAfterDiscount] = useState<number>();
   const [removeDiscount, setRemoveDiscount] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [date, setDate] = useState("");
 
   const getFilteredDataHandler = async () => {
     try {
@@ -125,6 +126,7 @@ const MemoModal = ({
         challanId: selectedId,
         discount: Number(discountAmount),
         discountMethod: discountMethod,
+        date: date ? date : "",
       };
 
       setIsLoading(true);
@@ -207,26 +209,36 @@ const MemoModal = ({
 
         <div className="flex flex-col xl:flex-row justify-between gap-4 mt-6">
           <div className="left w-full xl:w-[50%] flex flex-col gap-2">
-            <div className="w-full flex flex-col xl:flex-row gap-3">
-              <div className="w-full">
-                <Dropdown
-                  data={customers}
-                  currentPage={customerCurrentPage}
-                  totalPage={customerTotalpage}
-                  setCurrentPage={setCustomerCurrentPage}
-                  setId={setCustomerActiveId}
-                  setSelectionError={setCustomerSelectionError}
-                  type="customer"
-                />
-                <p className="error_message">{customerSelectionError}</p>
+            <div className="space-y-3">
+              <div className="w-full flex flex-col xl:flex-row gap-3">
+                <div className="w-full">
+                  <Dropdown
+                    data={customers}
+                    currentPage={customerCurrentPage}
+                    totalPage={customerTotalpage}
+                    setCurrentPage={setCustomerCurrentPage}
+                    setId={setCustomerActiveId}
+                    setSelectionError={setCustomerSelectionError}
+                    type="customer"
+                  />
+                  <p className="error_message">{customerSelectionError}</p>
+                </div>
+                <button
+                  className="submit-btn mt-0 xl:w-fit disabled:cursor-not-allowed xl:h-11 h-8"
+                  onClick={getFilteredDataHandler}
+                  disabled={isLoading}
+                >
+                  Get
+                </button>
               </div>
-              <button
-                className="submit-btn mt-0 xl:w-fit disabled:cursor-not-allowed xl:h-11 h-8"
-                onClick={getFilteredDataHandler}
-                disabled={isLoading}
-              >
-                Get
-              </button>
+
+              <div>
+                <input
+                  type="date"
+                  className="inputfield "
+                  onChange={(e) => setDate(e.target.value)}
+                />
+              </div>
             </div>
 
             {filteredData ? (
