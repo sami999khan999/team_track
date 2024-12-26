@@ -9,7 +9,8 @@ const DorpdownHeader = ({
     | "production"
     | "status"
     | "customer"
-    | "Method";
+    | "Method"
+    | "categories";
 }) => {
   return (
     <div className="table-header py-3">
@@ -49,6 +50,13 @@ const DorpdownHeader = ({
           <div className="w-1/6">ID</div>
           <div className="flex-1 truncate-text">Name</div>
           <div className="flex-1 truncate-text">Company Name</div>
+        </>
+      )}
+
+      {type === "categories" && (
+        <>
+          <div className="flex-1 truncate-text">Name</div>
+          <div className="flex-1 truncate-text">Unit</div>
         </>
       )}
 

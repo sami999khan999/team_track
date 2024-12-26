@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import TableActions from "./TableActions";
-import Pagination from "./Pagination";
-import InvoiceModal from "./InvoiceModal";
-import { InvoiceType } from "@/types";
+import { DeleteDataType, InvoiceType } from "@/types";
 import { deleteInvoice, getInvoice } from "@/utils/invoiceApiRequests";
-import { useRouter, useSearchParams } from "next/navigation";
-import LoadingSkeleton from "./LoadingSkeleton";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import DeleteModal from "./DeleteModal";
-import toast from "react-hot-toast";
-import { ErrorToast, SuccessToast } from "./Toast";
 import { logo } from "@/utils/logo";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import DeleteTimerModal from "./DeleteTimerModal";
+import InvoiceModal from "./InvoiceModal";
+import LoadingSkeleton from "./LoadingSkeleton";
+import Pagination from "./Pagination";
+import TableActions from "./TableActions";
+import { ErrorToast, SuccessToast } from "./Toast";
 
 const InvoiceTable = () => {
   const path = useRouter();
@@ -25,13 +25,13 @@ const InvoiceTable = () => {
   const [totalPage, setTotalPage] = useState<number | undefined>(1);
   const [invoice, setInvoice] = useState<InvoiceType[]>([]);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [activeElement, setActiveElement] = useState<{
-    id: number | undefined;
-    name: string | undefined;
-  }>();
+  const [activeElement, setActiveElement] = useState<
+    DeleteDataType | undefined
+  >();
 
   const [isLoading, setIsLoading] = useState(true);
   const [reload, setReload] = useState(false);
+  const [deleteRelatedData, setDeleteRelatedData] = useState(false);
   const [deleteIsLoading, setDeleteIsLoading] = useState(false);
 
   useEffect(() => {
@@ -73,10 +73,10 @@ const InvoiceTable = () => {
 
   const deleteHandler = async () => {
     try {
-      setDeleteIsLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 250));
       const id = activeElement?.id;
       const response = await deleteInvoice(id);
+
       if (response.success) {
         setReload(true);
         setIsDeleteModalOpen(false);
@@ -96,8 +96,6 @@ const InvoiceTable = () => {
       toast.custom((t) => (
         <ErrorToast visible={t.visible}>Can Not Deleted Invoice!</ErrorToast>
       ));
-    } finally {
-      setDeleteIsLoading(false);
     }
   };
 
@@ -106,12 +104,21 @@ const InvoiceTable = () => {
       {isOpen && <InvoiceModal setIsOpen={setIsOpen} />}
 
       {isDeleteModalOpen && (
-        <DeleteModal
-          activeElement={activeElement}
-          handler={deleteHandler}
+        // <DeleteModal
+        //   activeElement={activeElement}
+        //   handler={deleteHandler}
+        //   setIsOpen={setIsDeleteModalOpen}
+        //   title="Invoice"
+        //   isLoading={deleteIsLoading}
+        // />
+        <DeleteTimerModal
+          element={activeElement}
+          setDeleteRelatedData={setDeleteRelatedData}
+          deleteRelatedData={deleteRelatedData}
+          deleteHandler={deleteHandler}
           setIsOpen={setIsDeleteModalOpen}
-          title="Invoice"
           isLoading={deleteIsLoading}
+          title="Invoice"
         />
       )}
 
@@ -182,7 +189,10 @@ const InvoiceTable = () => {
                           setIsDeleteModalOpen(true);
                           setActiveElement({
                             id: item.id,
-                            name: item.customer.name,
+                            customer: item.customer.name,
+                            products: item.products,
+                            current_status: item.current_status,
+                            date: item.date,
                           });
                         }}
                       >
