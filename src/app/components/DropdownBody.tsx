@@ -24,7 +24,8 @@ const DropdownBody = ({
     | "status"
     | "customer"
     | "Method"
-    | "categories";
+    | "categories"
+    | "unit";
   i: number;
   setId?: React.Dispatch<SetStateAction<number | undefined>>;
   setValue?: React.Dispatch<SetStateAction<string | undefined>>;
@@ -205,6 +206,20 @@ const DropdownBody = ({
               }}
             />
           </div>
+        </div>
+      )}
+
+      {type === "unit" && (
+        <div
+          className="table-col text-base py-2"
+          onClick={() => {
+            if (setValue) setValue(item.unit);
+            setSelectedItem(item.unit);
+            setIsDropdownOpen((prv) => !prv);
+            if (setSelectionError) setSelectionError("");
+          }}
+        >
+          <div className="">{item.unit}</div>
         </div>
       )}
     </>

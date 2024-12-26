@@ -10,7 +10,8 @@ const DorpdownHeader = ({
     | "status"
     | "customer"
     | "Method"
-    | "categories";
+    | "categories"
+    | "unit";
 }) => {
   return (
     <div className="table-header py-3">
@@ -62,6 +63,8 @@ const DorpdownHeader = ({
       )}
 
       {type === "Method" && <div>Method</div>}
+
+      {type === "unit" && <div>Unit</div>}
     </div>
   );
 };

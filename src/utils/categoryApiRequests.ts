@@ -1,5 +1,3 @@
-import { CreateContextOptions } from "vm";
-
 const url = process.env.NEXT_PUBLIC_API_URL;
 
 export const getCategories = async () => {
@@ -30,7 +28,10 @@ export const getCategories = async () => {
   }
 };
 
-export const createCategory = async (category: CreateContextOptions) => {
+export const createCategory = async (category: {
+  name: string;
+  unit: string | undefined;
+}) => {
   try {
     const response = await fetch(`${url}api/catagory/create/`, {
       method: "POST",
