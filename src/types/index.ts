@@ -378,4 +378,7 @@ export type DeleteDataType = {
   current_status?: string;
   total?: string;
   date?: string;
+  employee?: string;
+  amount?: string;
+  status?: string;
 };

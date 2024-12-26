@@ -174,7 +174,13 @@ export const deleteInvoice = async ({
   deleteRelatedData: boolean;
 }) => {
   try {
-    const response = await fetch(`${url}api/challan/delete/${id}/`);
+    const response = await fetch(`${url}api/challan/delete/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: id, deleteRelatedData: deleteRelatedData }),
+    });
 
     const data = await response.json();
 
@@ -193,7 +199,7 @@ export const deleteInvoice = async ({
     console.log(err);
     return {
       success: false,
-      message: "Error deleting invoice",
+      message: "Error deleting Invoice",
     };
   }
 };

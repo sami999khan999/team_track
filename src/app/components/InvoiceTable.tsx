@@ -110,13 +110,6 @@ const InvoiceTable = () => {
       {isOpen && <InvoiceModal setIsOpen={setIsOpen} />}
 
       {isDeleteModalOpen && (
-        // <DeleteModal
-        //   activeElement={activeElement}
-        //   handler={deleteHandler}
-        //   setIsOpen={setIsDeleteModalOpen}
-        //   title="Invoice"
-        //   isLoading={deleteIsLoading}
-        // />
         <DeleteTimerModal
           element={activeElement}
           setDeleteRelatedData={setDeleteRelatedData}
