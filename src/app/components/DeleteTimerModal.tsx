@@ -1,12 +1,12 @@
 "use client";
 
 import { DeleteDataType } from "@/types";
-import React, { useEffect, useState } from "react";
-import { IoCloseSharp } from "react-icons/io5";
-import { SuccessToast } from "./Toast";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { CgSpinnerTwo } from "react-icons/cg";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
+import { IoCloseSharp } from "react-icons/io5";
+import { SuccessToast } from "./Toast";
 
 const DeleteTimerModal = ({
   element,
@@ -60,6 +60,7 @@ const DeleteTimerModal = ({
               <div className="table-header mt-6">
                 {columnData.map((col, i) => (
                   <div
+                    key={i}
                     className={` ${
                       i === 0 || i === RowData.length - 1
                         ? "w-[4rem] xl:w-[7rem]"
@@ -74,6 +75,7 @@ const DeleteTimerModal = ({
                 <div className="table-col capitalize">
                   {RowData.map((row, i) => (
                     <div
+                      key={i}
                       className={` ${
                         i === 0 || i === RowData.length - 1
                           ? "w-[4rem] xl:w-[7rem]"
