@@ -258,7 +258,7 @@ export type MemoType = {
     name: string;
   };
   products: string[];
-  total_qty: number;
+  total_qty: string;
   amount: number;
   date: string;
 };
@@ -379,4 +379,16 @@ export type DropdownType = {
   company_name?: string;
 
   method?: string;
+
+  unit?: string;
+};
+
+export type DeleteDataType = {
+  id?: number;
+  products?: string;
+  customer?: string;
+  quantity?: string;
+  current_status?: string;
+  total?: string;
+  date?: string;
 };

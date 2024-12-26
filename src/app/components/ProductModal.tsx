@@ -28,7 +28,9 @@ const ProductModal = ({
   const [productRate, setProductRate] = useState<number | undefined>();
   const [productionCost, setProductionCost] = useState<number | undefined>();
   const [otherCost, setOtherCost] = useState<number | undefined>();
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
+    ""
+  );
   const [categoryId, setCategoryId] = useState<number | undefined>();
   const [inputError, setInputError] = useState({
     name: "",
@@ -189,6 +191,8 @@ const ProductModal = ({
     }
   }, [modalAction, activeProduct]);
 
+  console.log(categoryId, selectedCategory);
+
   return (
     <div
       className="flex items-center justify-center absolute top-0 left-0  z-50 w-full h-full backdrop-blur-md"
@@ -201,7 +205,7 @@ const ProductModal = ({
         className="w-[95%] xl:w-[60%] bg-secondary rounded-xl "
       >
         {modalAction === "create" && (
-          <div className="h-full w-full xl:px-8 p-3 py-8 relative remove-scrollbar border border-border_color">
+          <div className="h-full w-full xl:px-8 p-3 py-8 relative remove-scrollbar border border-border_color rounded-xl">
             <div
               className="close-btn"
               onClick={() => {
@@ -279,9 +283,9 @@ const ProductModal = ({
                 </div>
               </div>
               <div className="">
-                <div className="text-primary text-center w-full text-xl mb-2 font-semibold tracking-wide antialiased">
+                {/* <div className="text-primary text-center w-full text-xl mb-2 font-semibold tracking-wide antialiased">
                   Select Category
-                </div>
+                </div> */}
 
                 <CategoryDropdown
                   setReload={setReload}

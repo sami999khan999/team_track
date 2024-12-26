@@ -26,6 +26,8 @@ const MemoSingleView = ({ id }: { id: number }) => {
 
         const response = await getSingleMemo(id, format);
 
+        console.log(response);
+
         if (response.success) {
           const headingData = response.data[0];
 

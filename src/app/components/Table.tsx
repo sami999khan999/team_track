@@ -124,7 +124,7 @@ const Table = ({
               </p>
             );
           })}
-          <p className="cursor-pointer xl:w-[5rem] w-[3rem]">Action</p>
+          <p className="cursor-pointer xl:w-[6rem] w-[3rem]">Action</p>
         </div>
         <div>
           {tableData?.map((data, i) => (
@@ -169,7 +169,7 @@ const Table = ({
                 </>
               )}
 
-              <div className="flex xl:w-[5rem] w-[3rem] justify-center items-center gap-1 xl:gap-2 text-primary-foreground">
+              <div className="flex xl:w-[6rem] w-[3rem] justify-center items-center gap-1 xl:gap-2 text-primary-foreground">
                 <div
                   className="hover:bg-primary p-1 rounded-md hover:text-background duration-200 flex items-center justify-center"
                   onClick={() => {
