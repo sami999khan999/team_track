@@ -133,3 +133,41 @@ export const getSingleMemo = async (id: number, format: string) => {
     };
   }
 };
+
+export const deleteMemo = async ({
+  id,
+  deleteRelatedData,
+}: {
+  id: number | undefined;
+  deleteRelatedData: boolean;
+}) => {
+  try {
+    const response = await fetch(`${url}api/memo/delete/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: id, deleteRelatedData: deleteRelatedData }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message || "Can't delete Memo",
+      };
+    }
+
+    return {
+      success: true,
+      message: data.message || "Memo deleted successfully",
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Error deleting Memo",
+    };
+  }
+};
