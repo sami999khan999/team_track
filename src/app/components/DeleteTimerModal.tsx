@@ -16,6 +16,7 @@ const DeleteTimerModal = ({
   isLoading,
   title,
   deleteRelatedData,
+  checkBoxMessage,
 }: {
   element: DeleteDataType | undefined;
   setDeleteRelatedData: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,6 +25,7 @@ const DeleteTimerModal = ({
   isLoading: boolean;
   title: string;
   deleteRelatedData: boolean;
+  checkBoxMessage: string;
 }) => {
   // const [isDisabled, setIsDisabled] = useState(true);
   const [deletInput, setDeletInput] = useState("");
@@ -94,7 +96,7 @@ const DeleteTimerModal = ({
 
           <div className="">
             <div className="flex items-center gap-3 xl:text-xl text-base font-light text-primary-foreground mb-1">
-              <p>Would you like to delete any releted Data?</p>
+              <p className="text-xs xl:text-xl">{checkBoxMessage}</p>
               <div
                 className="text-primary cursor-pointer xl:text-lg text-sm"
                 onClick={() => {
@@ -108,9 +110,9 @@ const DeleteTimerModal = ({
                 )}
               </div>
             </div>
-            <p className="xl:text-xl text-base font-light text-primary-foreground mb-1">
+            <div className="xl:text-xl flex gap-2 text-base font-light text-primary-foreground mb-1">
               To confirm, type{" "}
-              <span
+              <div
                 className="text-primary font-semibold cursor-pointer"
                 onClick={() => {
                   navigator.clipboard.writeText(textToCopy);
@@ -121,9 +123,9 @@ const DeleteTimerModal = ({
                 }}
               >
                 "Delete {title}"
-              </span>{" "}
+              </div>{" "}
               in the box below
-            </p>
+            </div>
             <input
               type="text"
               className="inputfield rounded-md bg-secondary"

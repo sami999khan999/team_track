@@ -118,6 +118,7 @@ const InvoiceTable = () => {
           setIsOpen={setIsDeleteModalOpen}
           isLoading={deleteIsLoading}
           title="Invoice"
+          checkBoxMessage="Would you like to delete any releted Data?"
         />
       )}
 

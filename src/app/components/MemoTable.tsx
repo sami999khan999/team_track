@@ -4,12 +4,13 @@ import React, { useEffect, useState } from "react";
 import TableActions from "./TableActions";
 import MemoModal from "./MemoModal";
 import { useRouter, useSearchParams } from "next/navigation";
-import { MemoType } from "@/types";
+import { DeleteDataType, MemoType } from "@/types";
 import { getMemo } from "@/utils/memoApiRequests";
 import Pagination from "./Pagination";
 import LoadingSkeleton from "./LoadingSkeleton";
 import { formatNumberWithCommas } from "@/utils/numberFormat";
 import { logo } from "@/utils/logo";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 const MemoTable = () => {
   const param = useSearchParams();
@@ -19,6 +20,11 @@ const MemoTable = () => {
   const [currentPage, setCurrentPage] = useState(
     Number(param.get("page")) || 1
   );
+  const [activeElement, setActiveElement] = useState<
+    DeleteDataType | undefined
+  >();
+  const [isDeleteOpen, setIsDeleteModalOpen] = useState();
+
   const [totalpages, setTotalPages] = useState<number | undefined>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -131,6 +137,28 @@ const MemoTable = () => {
                       <span className="xl:text-sm text-[8px]"> TK</span>
                     </div>
                     <div className="w-1/12 truncate-text">{item.date}</div>
+                    <div
+                      className="w-[4rem] flex items-center justify-center text-primary-foreground"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      <div
+                        className="w-full flex items-center justify-center hover:bg-primary hover:text-background p-1 rounded-sm duration-200"
+                        onClick={() => {
+                          setIsDeleteModalOpen(true);
+                          setActiveElement({
+                            id: item.id,
+                            customer: item.customer.name,
+                            products: item.products,
+                            current_status: item.current_status,
+                            date: item.date,
+                          });
+                        }}
+                      >
+                        <RiDeleteBin6Line />
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
