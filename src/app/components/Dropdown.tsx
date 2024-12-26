@@ -33,7 +33,8 @@ const Dropdown = ({
     | "status"
     | "customer"
     | "Method"
-    | "categories";
+    | "categories"
+    | "unit";
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | undefined>();

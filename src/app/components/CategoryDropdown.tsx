@@ -10,53 +10,38 @@ import React, { SetStateAction, useEffect, useState } from "react";
 import { IoIosArrowDown, IoMdAdd, IoMdArrowDropright } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import Dropdown from "./Dropdown";
+import CreateCategoryModal from "./CreateCategoryModal";
 
 const CategoryDropdown = ({
   setReload,
   reload,
-  selectedCategory,
+  // selectedCategory,
   setSelectedCategory,
   setCategoryId,
+  setCreateCategoryModalisOpen,
 }: {
   setReload: React.Dispatch<SetStateAction<boolean>>;
   reload: boolean;
-  selectedCategory: string | undefined;
+  // selectedCategory: string | undefined;
   setSelectedCategory: React.Dispatch<SetStateAction<string | undefined>>;
   setCategoryId: React.Dispatch<SetStateAction<number | undefined>>;
+  setCreateCategoryModalisOpen: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [inputIsOpen, setInputOpen] = useState(false);
-  const [categoryInput, setCategoryInput] = useState("");
+  // const [inputIsOpen, setInputOpen] = useState(false);
   const [categories, setCategories] = useState<CategoryType[]>();
   const [categoriesCurrentPage, setCategoriesCurrentPage] = useState(1);
 
-  const handleCategoryClick = (category: string, event: React.MouseEvent) => {
-    event.stopPropagation();
-    setDropdownOpen(false);
-    setSelectedCategory(category);
-  };
+  // const handleCategoryClick = (category: string, event: React.MouseEvent) => {
+  //   event.stopPropagation();
+  //   setDropdownOpen(false);
+  //   setSelectedCategory(category);
+  // };
 
   // const handleBackdropClick = () => {
   //   setDropdownOpen(false);
   //   setInputOpen(false);
   // };
-
-  const addCtegory = async () => {
-    setInputOpen(false);
-
-    const category = {
-      name: categoryInput,
-    };
-
-    const response = await createCategory(category);
-
-    if (response.success) {
-      setReload((prv) => !prv);
-      setCategoryInput("");
-    } else {
-      console.log(response.message);
-    }
-  };
 
   const deleteCategory = async (id: number) => {
     console.log(id);
@@ -82,6 +67,8 @@ const CategoryDropdown = ({
     fetchCategories();
   }, [reload]);
 
+  console.log(categories);
+
   return (
     <>
       <div className="flex justify-center items-center">
@@ -98,13 +85,13 @@ const CategoryDropdown = ({
           <div>
             <div
               className="py-2 xl:text-lg flex items-center gap-3 w-full bg-secondary-foreground text-primary-foreground justify-center border border-border_color duration-200 cursor-pointer rounded-full mt-2 shadow-sm"
-              onClick={() => setInputOpen((prv) => !prv)}
+              onClick={() => setCreateCategoryModalisOpen((prv) => !prv)}
             >
               <p>Add Category</p>
               <IoMdAdd />
             </div>
           </div>
-          {/* {inputIsOpen && <div></div>} */}
+          {/* {inputIsOpen && <CreateCategoryModal />} */}
         </div>
       </div>
 
