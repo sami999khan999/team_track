@@ -2,6 +2,7 @@
 
 import { DropdownType } from "@/types";
 import React, { SetStateAction } from "react";
+import { IoMdClose } from "react-icons/io";
 
 const DropdownBody = ({
   type,
@@ -14,6 +15,7 @@ const DropdownBody = ({
   setSelectedId,
   selectedId,
   setSelectedItem,
+  deleteHandler,
 }: {
   type:
     | "product"
@@ -32,6 +34,7 @@ const DropdownBody = ({
   setSelectedId: React.Dispatch<SetStateAction<number | undefined>>;
   selectedId: number | undefined;
   setSelectedItem: React.Dispatch<SetStateAction<string | undefined>>;
+  deleteHandler?: (id: number) => void;
 }) => {
   return (
     <>
@@ -192,6 +195,16 @@ const DropdownBody = ({
         >
           <div className="flex-1 xl:text-xl text-sm">{item.name}</div>
           <div className="flex-1 xl:text-xl text-sm">{item.unit}</div>
+          <div
+            className="w-[2rem] flex items-center justify-center text-xl hover:bg-gray-300 dark:hover:bg-secondary rounded-md"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <IoMdClose
+              onClick={() => {
+                if (deleteHandler) deleteHandler(Number(item.id));
+              }}
+            />
+          </div>
         </div>
       )}
     </>

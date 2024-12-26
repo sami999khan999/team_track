@@ -57,6 +57,7 @@ const DorpdownHeader = ({
         <>
           <div className="flex-1 truncate-text">Name</div>
           <div className="flex-1 truncate-text">Unit</div>
+          <div className="w-[2rem] truncate-text"></div>
         </>
       )}
 

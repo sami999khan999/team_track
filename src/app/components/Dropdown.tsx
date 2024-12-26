@@ -15,6 +15,7 @@ const Dropdown = ({
   setSelectionError,
   defalutValue,
   type,
+  deleteHandler,
 }: {
   data: DropdownType[] | undefined;
   totalPage?: number | undefined;
@@ -24,6 +25,7 @@ const Dropdown = ({
   setSelectionError?: React.Dispatch<SetStateAction<string>>;
   setValue?: React.Dispatch<SetStateAction<string | undefined>>;
   defalutValue?: DropdownType;
+  deleteHandler?: (id: number) => void;
   type:
     | "product"
     | "employee"
@@ -102,6 +104,7 @@ const Dropdown = ({
                       setSelectedId={setSelectedId}
                       selectedId={selectedId}
                       setSelectedItem={setSelectedItem}
+                      deleteHandler={deleteHandler}
                     />
                   </div>
                 ))}
