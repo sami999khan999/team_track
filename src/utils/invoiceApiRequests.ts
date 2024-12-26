@@ -166,7 +166,13 @@ export const createInvoiceSimpleVersion = async (
   }
 };
 
-export const deleteInvoice = async (id: number | undefined) => {
+export const deleteInvoice = async ({
+  id,
+  deleteRelatedData,
+}: {
+  id: number | undefined;
+  deleteRelatedData: boolean;
+}) => {
   try {
     const response = await fetch(`${url}api/challan/delete/${id}/`);
 

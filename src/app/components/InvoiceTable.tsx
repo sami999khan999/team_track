@@ -73,9 +73,13 @@ const InvoiceTable = () => {
 
   const deleteHandler = async () => {
     try {
+      setDeleteIsLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 250));
       const id = activeElement?.id;
-      const response = await deleteInvoice(id);
+      const response = await deleteInvoice({
+        id: id,
+        deleteRelatedData: deleteRelatedData,
+      });
 
       if (response.success) {
         setReload(true);
@@ -96,6 +100,8 @@ const InvoiceTable = () => {
       toast.custom((t) => (
         <ErrorToast visible={t.visible}>Can Not Deleted Invoice!</ErrorToast>
       ));
+    } finally {
+      setDeleteIsLoading(false);
     }
   };
 
