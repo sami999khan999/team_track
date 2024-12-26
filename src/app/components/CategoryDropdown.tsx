@@ -59,6 +59,7 @@ const CategoryDropdown = ({
   };
 
   const deleteCategory = async (id: number) => {
+    console.log(id);
     const response = await categoryDelete(id);
 
     if (response.success) {
@@ -81,8 +82,6 @@ const CategoryDropdown = ({
     fetchCategories();
   }, [reload]);
 
-  console.log(categories);
-
   return (
     <>
       <div className="flex justify-center items-center">
@@ -94,6 +93,7 @@ const CategoryDropdown = ({
             type="categories"
             setId={setCategoryId}
             setValue={setSelectedCategory}
+            deleteHandler={deleteCategory}
           />
           <div>
             <div

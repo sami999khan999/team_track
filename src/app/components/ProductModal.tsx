@@ -191,7 +191,7 @@ const ProductModal = ({
     }
   }, [modalAction, activeProduct]);
 
-  console.log(categoryId, selectedCategory);
+  // console.log(categoryId, selectedCategory);
 
   return (
     <div

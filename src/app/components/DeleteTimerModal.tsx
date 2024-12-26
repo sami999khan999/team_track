@@ -124,7 +124,7 @@ const DeleteTimerModal = ({
             </p>
             <input
               type="text"
-              className="inputfield rounded-md border-red-400 dark:border-red-900 bg-background"
+              className="inputfield rounded-md bg-secondary"
               onChange={(e) => setDeletInput(e.target.value)}
             />
             <button
