@@ -121,11 +121,9 @@ const BillFilterTable = ({
                       <div className="flex-1 truncate-text">
                         {item.product.name} ({item.product.id})
                       </div>
-                      {method === "challan" && (
-                        <div className="flex-1 truncate-text">
-                          {item.challan?.id}
-                        </div>
-                      )}
+                      {/* {method === "challan" && (
+                        <div className="flex-1 truncate-text">{item.date}</div>
+                      )} */}
                       <div className="flex-1 truncate-text">
                         {item.quantity}
                       </div>
@@ -137,6 +135,7 @@ const BillFilterTable = ({
                         {formatNumberWithCommas(item.amount)}
                         <span className="xl:text-sm text-[8px]"> TK</span>
                       </div>
+                      <div className="flex-1 truncate-text">{item.date}</div>
                       {type && (
                         <div
                           className="xl:px-4 px-3 text-sm flex items-center w-[6rem] justify-center"

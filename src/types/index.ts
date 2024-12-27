@@ -192,10 +192,11 @@ export type FilteredBill = {
     name: string;
     category: string;
   };
-  challan?: {
-    id: number;
-    date: string;
-  };
+  // challan?: {
+  //   id: number;
+  //   date: string;
+  // };
+  date: string;
   quantity: number;
   rate: number;
   amount: number;
