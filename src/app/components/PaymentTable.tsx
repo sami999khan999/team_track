@@ -119,7 +119,8 @@ const PaymentTable = () => {
           deleteHandler={deleteHandler}
           setIsOpen={setIsDeleteModalOpen}
           isLoading={deleteIsLoading}
-          title="Invoice"
+          title="Bill"
+          checkBoxMessage="Would you like to change production payment status?"
         />
       )}
       <div className="table-wrapper">

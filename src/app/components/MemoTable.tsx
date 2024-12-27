@@ -4,12 +4,16 @@ import React, { useEffect, useState } from "react";
 import TableActions from "./TableActions";
 import MemoModal from "./MemoModal";
 import { useRouter, useSearchParams } from "next/navigation";
-import { MemoType } from "@/types";
-import { getMemo } from "@/utils/memoApiRequests";
+import { DeleteDataType, MemoType } from "@/types";
+import { deleteMemo, getMemo } from "@/utils/memoApiRequests";
 import Pagination from "./Pagination";
 import LoadingSkeleton from "./LoadingSkeleton";
 import { formatNumberWithCommas } from "@/utils/numberFormat";
 import { logo } from "@/utils/logo";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import DeleteTimerModal from "./DeleteTimerModal";
+import { ErrorToast, SuccessToast } from "./Toast";
+import toast from "react-hot-toast";
 
 const MemoTable = () => {
   const param = useSearchParams();
@@ -19,8 +23,50 @@ const MemoTable = () => {
   const [currentPage, setCurrentPage] = useState(
     Number(param.get("page")) || 1
   );
+  const [activeElement, setActiveElement] = useState<
+    DeleteDataType | undefined
+  >();
+  const [isDeleteOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteRelatedData, setDeleteRelatedData] = useState(false);
+  const [deleteIsLoading, setDeleteIsLoading] = useState(false);
+
   const [totalpages, setTotalPages] = useState<number | undefined>();
+  const [reload, setReload] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const deleteHandler = async () => {
+    try {
+      setDeleteIsLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 250));
+      const id = activeElement?.id;
+      const response = await deleteMemo({
+        id: id,
+        deleteRelatedData: deleteRelatedData,
+      });
+
+      if (response.success) {
+        setReload(true);
+        setIsDeleteModalOpen(false);
+        toast.custom((t) => (
+          <SuccessToast visible={t.visible}>
+            Memo Deleted Successfully!
+          </SuccessToast>
+        ));
+      } else {
+        console.log("Error While Deleting Invoice: ", response.message);
+        toast.custom((t) => (
+          <ErrorToast visible={t.visible}>Can Not Deleted Memo!</ErrorToast>
+        ));
+      }
+    } catch (err) {
+      console.log("Unexpected Error While Deleting Invoice: ", err);
+      toast.custom((t) => (
+        <ErrorToast visible={t.visible}>Can Not Deleted Memo!</ErrorToast>
+      ));
+    } finally {
+      setDeleteIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchMemo = async () => {
@@ -57,11 +103,25 @@ const MemoTable = () => {
     };
 
     fetchMemo();
-  }, [currentPage]);
+  }, [currentPage, reload]);
 
   return (
     <div>
       {isOpen && <MemoModal setIsOpen={setIsOpen} />}
+
+      {isDeleteOpen && (
+        <DeleteTimerModal
+          element={activeElement}
+          setDeleteRelatedData={setDeleteRelatedData}
+          deleteRelatedData={deleteRelatedData}
+          deleteHandler={deleteHandler}
+          setIsOpen={setIsDeleteModalOpen}
+          isLoading={deleteIsLoading}
+          title="Memo"
+          checkBoxMessage="Would you like to delete any releted Data?"
+        />
+      )}
+
       <div className="table-wrapper">
         <TableActions
           setIsOpen={setIsOpen}
@@ -94,7 +154,8 @@ const MemoTable = () => {
                 <p className="flex-1">Products</p>
                 <p className="flex-1">Total Qty</p>
                 <p className="flex-1">Amount</p>
-                <p className="w-1/12">Date</p>
+                <p className="flex-1">Date</p>
+                <p className="w-[4rem] ">Delete</p>
               </div>
               <div>
                 {memo.map((item, i) => (
@@ -130,7 +191,29 @@ const MemoTable = () => {
                       {formatNumberWithCommas(item.amount)}
                       <span className="xl:text-sm text-[8px]"> TK</span>
                     </div>
-                    <div className="w-1/12 truncate-text">{item.date}</div>
+                    <div className="flex-1 truncate-text">{item.date}</div>
+                    <div
+                      className="w-[4rem] flex items-center justify-center text-primary-foreground"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      <div
+                        className="w-full flex items-center justify-center hover:bg-primary hover:text-background p-1 rounded-sm duration-200"
+                        onClick={() => {
+                          setIsDeleteModalOpen(true);
+                          setActiveElement({
+                            id: item.id,
+                            customer: item.customer.name,
+                            total_qty: item.total_qty,
+                            amount: item.amount,
+                            date: item.date,
+                          });
+                        }}
+                      >
+                        <RiDeleteBin6Line />
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>

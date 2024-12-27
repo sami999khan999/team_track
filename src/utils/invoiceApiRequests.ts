@@ -187,7 +187,7 @@ export const deleteInvoice = async ({
     if (!response.ok) {
       return {
         success: false,
-        message: data.message || "Can't delete invoice",
+        message: data.message || "Can't delete Invoice",
       };
     }
 
