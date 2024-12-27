@@ -59,6 +59,8 @@ const PaymentModal = ({
     },
   ];
 
+  console.log(date);
+
   const filterHandler = async () => {
     const newError = {
       method: "",
@@ -272,7 +274,7 @@ const PaymentModal = ({
 
               <BillFilterTable
                 data={filteredData}
-                method={filterMethod}
+                // method={filterMethod}
                 setSelectedData={setSelectedData}
                 selectedData={selectedData}
                 type="select"
@@ -302,7 +304,10 @@ const PaymentModal = ({
                   {/* <div className="text-primary-foreground font-bold text-xl xl:text-2xl text-center ">
                     Selected Data
                   </div> */}
-                  <BillFilterTable data={selectedData} method={filterMethod} />
+                  <BillFilterTable
+                    data={selectedData}
+                    // method={filterMethod}
+                  />
                   <div className="flex items-center justify-center mt-4">
                     <button
                       className="submit-btn mt-0 xl:w-[17rem]"

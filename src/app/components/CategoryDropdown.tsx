@@ -1,16 +1,10 @@
 "use client";
 
 import { CategoryType } from "@/types";
-import {
-  categoryDelete,
-  createCategory,
-  getCategories,
-} from "@/utils/categoryApiRequests";
+import { categoryDelete, getCategories } from "@/utils/categoryApiRequests";
 import React, { SetStateAction, useEffect, useState } from "react";
-import { IoIosArrowDown, IoMdAdd, IoMdArrowDropright } from "react-icons/io";
-import { RxCross2 } from "react-icons/rx";
+import { IoMdAdd } from "react-icons/io";
 import Dropdown from "./Dropdown";
-import CreateCategoryModal from "./CreateCategoryModal";
 
 const CategoryDropdown = ({
   setReload,
@@ -27,7 +21,7 @@ const CategoryDropdown = ({
   setCategoryId: React.Dispatch<SetStateAction<number | undefined>>;
   setCreateCategoryModalisOpen: React.Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
   // const [inputIsOpen, setInputOpen] = useState(false);
   const [categories, setCategories] = useState<CategoryType[]>();
   const [categoriesCurrentPage, setCategoriesCurrentPage] = useState(1);

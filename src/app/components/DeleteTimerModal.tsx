@@ -122,7 +122,7 @@ const DeleteTimerModal = ({
                   ));
                 }}
               >
-                "Delete {title}"
+                {`"Delete ${title}"`}
               </div>{" "}
               in the box below
             </div>

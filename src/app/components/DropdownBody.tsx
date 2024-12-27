@@ -189,7 +189,7 @@ const DropdownBody = ({
           onClick={() => {
             if (setValue) setValue(item.name);
             setSelectedItem(item.name);
-            setId && setId(Number(item.id));
+            if (setId) setId(Number(item.id));
             setIsDropdownOpen((prv) => !prv);
             if (setSelectionError) setSelectionError("");
           }}

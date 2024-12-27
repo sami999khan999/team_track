@@ -5,13 +5,13 @@ import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 
 const BillFilterTable = ({
   data,
-  method,
+  // method,
   setSelectedData,
   selectedData,
   type,
 }: {
   data: FilteredBill[] | undefined;
-  method: string | undefined;
+  // method: string | undefined;
   setSelectedData?: React.Dispatch<SetStateAction<FilteredBill[] | undefined>>;
   selectedData?: FilteredBill[] | undefined;
   type?: string;
