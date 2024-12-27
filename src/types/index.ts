@@ -257,6 +257,7 @@ export type MemoHeadingType = {
   date: string;
   memo_id: number;
   total_amount: number;
+  total_after_discount: number;
 };
 
 export type MemoColumnType = {

@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import SingleViewSkeletonLoader from "./SingleViewSkeletonLoader";
 import { formatNumberWithCommas } from "@/utils/numberFormat";
+import DiscountModal from "./DiscountModal";
 
 const MemoSingleView = ({ id }: { id: number }) => {
   const path = useRouter();
@@ -16,6 +17,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [column, setColumn] = useState<string[]>();
   const [format, setFormat] = useState<"format1" | "format2">("format1");
+  const [isDiscountModal, setIsDiscountModal] = useState(false);
 
   useEffect(() => {
     const fetchMemoSingleData = async () => {
@@ -106,8 +108,8 @@ const MemoSingleView = ({ id }: { id: number }) => {
 
             return `
             <div class="table-body border-b flex justify-between px-8 py-1 text-sm gap-5">
-              <div class="w-1/12 break-words cursor-auto">
-                ${item.slno}
+              <div class="w-[5rem] break-words cursor-auto">
+                ${format === "format1" ? item.slno : item.challanid}
               </div>
               <div class="flex-1 break-words cursor-auto">
                 ${item.products}
@@ -180,7 +182,16 @@ const MemoSingleView = ({ id }: { id: number }) => {
 
         <div class="table w-full mt-4">
           <div class="flex text-white px-8 py-2 rounded-t-lg text-base bg-[#2dac5c] w-full justify-between font-bold gap-5 capitalize">
-            <p class="w-1/12 break-words">slno</p>
+            <p class="w-[5rem] break-words ${
+              format === "format2" && "hidden"
+            }">slno</p>
+            
+            <p class="w-[5rem] break-words ${
+              format === "format1" && "hidden"
+            }">challan id</p>
+
+            
+
             <p class="flex-1 break-words">Products</p>
             <p class="flex-1 break-words ${
               format === "format1" ? "" : "hidden"
@@ -448,17 +459,35 @@ const MemoSingleView = ({ id }: { id: number }) => {
                 </div>
               </div>
 
-              <div className="w-full mt-10" id="print-button">
+              <div
+                className="w-full mt-10 xl:space-x-4 space-y-2"
+                id="print-button"
+              >
                 <button
                   onClick={handlePrint}
                   className="border border-border_color w-full xl:w-fit text-primary-foreground hover:bg-primary hover:text-background duration-200 font-semibold px-8 py-1 rounded-full text-lg"
                 >
                   Print Invoice
                 </button>
+                <button
+                  onClick={() => setIsDiscountModal(true)}
+                  className="border border-border_color w-full xl:w-fit text-primary-foreground hover:bg-primary hover:text-background duration-200 font-semibold px-8 py-1 rounded-full text-lg"
+                >
+                  Add Discount{" "}
+                </button>
               </div>
             </>
           )}
       </div>
+      {isDiscountModal && (
+        <DiscountModal
+          isModalOpen={setIsDiscountModal}
+          discountData={{
+            total: memoHeadingData?.total_amount,
+            total_after_discount: memoHeadingData?.total_after_discount,
+          }}
+        />
+      )}
     </div>
   );
 };

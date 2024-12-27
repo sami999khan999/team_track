@@ -48,6 +48,7 @@ const PaymentModal = ({
   const [isInvoiceModalOpen, setIsInvoiceModalOpen] = useState(false);
   const [totalAmount, setTotalAmount] = useState<number | undefined>();
   const [isLoading, setIsLoading] = useState(false);
+  const [date, setDate] = useState("");
 
   const methodData = [
     {
@@ -279,6 +280,12 @@ const PaymentModal = ({
             </div>
             <div className="border-2 border-border_color"></div>
             <div className="right xl:w-[50%]">
+              <input
+                type="date"
+                className="inputfield"
+                onChange={(e) => setDate(e.target.value)}
+              />
+
               {selectedData && selectedData?.length > 0 ? (
                 <div className="mt-7">
                   <div className="flex gap-6 text-primary-foreground xl:text-xl justify-between px-2 font-semibold text-sm">

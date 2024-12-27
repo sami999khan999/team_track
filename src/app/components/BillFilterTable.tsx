@@ -86,7 +86,7 @@ const BillFilterTable = ({
                     <p
                       key={i}
                       className={`truncate-text ${
-                        i === 0 ? "w-1/12" : "flex-1 "
+                        i === 0 ? "w-[2.5rem]" : "flex-1 "
                       }`}
                     >
                       {col}
@@ -114,7 +114,7 @@ const BillFilterTable = ({
                         i === data.length - 1 && "border-none"
                       }`}
                     >
-                      <div className="w-1/12 truncate-text">{item.id}</div>
+                      <div className="w-[2.5rem] truncate-text">{item.id}</div>
                       <div className="flex-1 truncate-text">
                         {item.employee.name} ({item.employee.id})
                       </div>
