@@ -106,7 +106,7 @@ export type InventoryType = {
     name: string;
   };
   production: number;
-  quantity: number;
+  quantity: string;
   status: "IN-STOCK" | "OUT-OF-STOCK";
   date: string;
 };

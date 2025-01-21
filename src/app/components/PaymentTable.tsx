@@ -86,17 +86,17 @@ const PaymentTable = () => {
             setTotalPage(firstElement.total_page);
             setEmployeeBill(response.data.slice(1));
           } else {
-            console.error("Invalid Response Format: total_page is missing");
+            console.log("Invalid Response Format: total_page is missing");
             setTotalPage(undefined);
             setEmployeeBill([]);
           }
         } else {
-          console.error("Error Fetching Employee Bill:", response.message);
+          console.log("Error Fetching Employee Bill:", response.message);
           setTotalPage(undefined);
           setEmployeeBill([]);
         }
       } catch (error) {
-        console.error("Unexpected Error Fetching Employee Bill:", error);
+        console.log("Unexpected Error Fetching Employee Bill:", error);
         setTotalPage(undefined);
         setEmployeeBill([]);
       } finally {

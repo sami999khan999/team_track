@@ -149,7 +149,7 @@ const MemoModal = ({
         ));
       }
     } catch (err) {
-      console.log("Error creating Momo: ", err);
+      console.log("Unexpected Error creating Momo: ", err);
     } finally {
       setIsLoading(false);
     }

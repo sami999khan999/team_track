@@ -171,3 +171,41 @@ export const deleteMemo = async ({
     };
   }
 };
+
+export const updateDiscount = async ({
+  amount,
+  method,
+}: {
+  amount: number;
+  method: "number" | "percent";
+}) => {
+  try {
+    const response = await fetch(`${url}api/memo/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ discount: amount, discountMethod: method }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message || "Can't update discount",
+      };
+    }
+
+    return {
+      success: true,
+      message: data.message || "Discount updated successfully",
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      message: "Error updating discount",
+    };
+  }
+};

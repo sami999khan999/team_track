@@ -18,6 +18,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
   const [column, setColumn] = useState<string[]>();
   const [format, setFormat] = useState<"format1" | "format2">("format1");
   const [isDiscountModal, setIsDiscountModal] = useState(false);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const fetchMemoSingleData = async () => {
@@ -66,7 +67,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
     };
 
     fetchMemoSingleData();
-  }, [id, format]);
+  }, [id, format, reload]);
 
   const handlePrint = () => {
     const printContent = document.getElementById("pdf-content");
@@ -486,6 +487,7 @@ const MemoSingleView = ({ id }: { id: number }) => {
             total: memoHeadingData?.total_amount,
             total_after_discount: memoHeadingData?.total_after_discount,
           }}
+          setReload={setReload}
         />
       )}
     </div>
